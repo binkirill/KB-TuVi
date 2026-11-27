@@ -434,9 +434,9 @@
         <div class="ai-loader">
           <div class="ai-spinner"></div>
           <div>
-            Đang luận giải chuyên sâu theo cổ pháp Đông – Tây...
+            🔥💸 Đang đốt token AI của Kuang Bin để luận giải, hãy thương lấy Kuang nhiều hơn nhé 🥺👉👈🍜
             <span id="kb-ai-timer-sec">${AI_STATE.elapsed}s</span>
-            <div style="font-size:12px;font-weight:400;color:#7a6235;margin-top:2px;">Bài luận sẽ hiện chữ trực tiếp ngay khi AI phân tích xong từng mục.</div>
+            <div style="font-size:12px;font-weight:600;color:#7a6235;margin-top:3px;">Bài luận sẽ hiện chữ trực tiếp ngay khi AI vắt chất xám phân tích xong từng mục... 🤪✨</div>
           </div>
         </div>`;
     } else if (AI_STATE.error) {

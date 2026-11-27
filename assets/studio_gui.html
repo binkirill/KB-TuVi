@@ -512,11 +512,25 @@
   .guide-card[data-card-vibe="tinh-duyen"] .guide-title {
     font-family: "Playpen Sans", "Be Vietnam Pro", cursive;
     font-weight: 800;
-    font-size: 1.32rem;
+    font-size: 1.15rem;
+    color: #C82578;
+  }
+  .rainbow-grad-txt {
     background: linear-gradient(90deg, #E11D48, #D97706, #059669, #2563EB, #9333EA);
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: transparent;
+  }
+  .emoji-vivid {
+    display: inline-block;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    -webkit-text-fill-color: initial !important;
+    color: initial !important;
+    font-style: normal;
   }
   @keyframes sexyPulse {
     0%, 100% { transform: scale(1); }
@@ -1200,12 +1214,16 @@
     line-height: 1.28;
     letter-spacing: 0.01em;
     margin: 0 0 0.42rem;
+    color: var(--sc-ink);
+    filter: drop-shadow(0 2px 10px rgba(182, 125, 30, 0.16));
+  }
+  .section-head h1 .h1-grad {
     background: linear-gradient(90deg, #9E1136 0%, #D93848 25%, #B67D1E 50%, #0D8A74 75%, #9333EA 100%);
     background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: transparent;
-    filter: drop-shadow(0 2px 10px rgba(182, 125, 30, 0.16));
     animation: heroGradientFlow 7s linear infinite;
   }
   .sam-subline {
@@ -1683,7 +1701,7 @@
   .namthan-pop-bubble {
     margin-top: 1.05rem;
     background: #FFFFFF;
-    color: var(--sc-ink);
+    color: #1C1635 !important;
     border: 2.5px solid var(--sc-accent);
     border-radius: 22px;
     padding: 0.95rem 1.3rem;
@@ -1706,16 +1724,22 @@
     display: block;
     font-family: var(--sc-font-display);
     font-size: 1.24rem;
-    color: var(--sc-accent);
+    color: #B91C2E;
     line-height: 1.2;
+  }
+  html[data-vibe="gieo-que"] .namthan-pop-bubble strong {
+    color: #0B7A67;
+  }
+  html[data-vibe="tinh-duyen"] .namthan-pop-bubble strong {
+    color: #C82578;
   }
   .namthan-pop-bubble span {
     display: block;
-    font-size: 0.94rem;
+    font-size: 0.96rem;
     font-weight: 700;
-    color: var(--sc-ink);
-    margin-top: 0.25rem;
-    line-height: 1.45;
+    color: #1E1B38 !important;
+    margin-top: 0.28rem;
+    line-height: 1.46;
   }
   .namthan-click-hint {
     margin-top: 0.85rem;
@@ -2672,7 +2696,7 @@
 <section id="act-guides" class="guides-act" data-sc-act="flow">
   <div class="sc-wrap">
     <div class="section-head">
-      <h1>Xin mời quý khách lựa chọn 1 nam hoặc nữ tiếp viên 🤪🕺💃</h1>
+      <h1><span class="h1-grad">Xin mời quý khách lựa chọn 1 nam hoặc nữ tiếp viên</span> <span class="emoji-vivid">🤪🕺💃</span></h1>
       <div class="sam-subline">🃏 hoặc quý khách có thể chơi sâm nếu mún 🌿😏🔥</div>
       <p>Rê chuột vào từng ảnh để đánh thức tiếp viên, bấm chọn để bung pháo hoa mở phòng riêng!</p>
     </div>
@@ -2754,7 +2778,7 @@
             </div>
             <div class="guide-body">
               <span class="guide-tag">Thần Số Học · Hệ Cầu Vồng 🏳️‍🌈</span>
-              <h2 class="guide-title">Bà Hoàng Thần Số 💅</h2>
+              <h2 class="guide-title"><span class="rainbow-grad-txt">Bà Hoàng Thần Số</span> <span class="emoji-vivid">💅</span></h2>
               <span class="guide-theme-chip">🎨 Phòng Cầu Vồng Mộng Mơ</span>
               <p class="guide-desc">
                 Đang bấm máy check var số mệnh cưng đó nha! "Mình yêu nhau nhé", để chị soi Ngày sinh &amp; Nickname xem độ slay 🌈
@@ -4032,7 +4056,14 @@ function selectGuide(vibeKey, fromTopCard) {
   preloadChibiSet(vibeKey);
   const defaultMood = Object.keys(CHIBI_EXPRESSIONS[vibeKey] || {})[0] || "cool";
   applyMascotVisual(vibeKey, defaultMood);
-  document.getElementById("active-guide-title").textContent = g.title;
+  const titleEl = document.getElementById("active-guide-title");
+  if (titleEl) {
+    if (vibeKey === "tinh-duyen") {
+      titleEl.innerHTML = `<span class="rainbow-grad-txt">Bà Hoàng Thần Số</span> <span class="emoji-vivid">💅</span>`;
+    } else {
+      titleEl.textContent = g.title;
+    }
+  }
   document.getElementById("active-guide-say").textContent = g.say;
   document.getElementById("main-submit-btn").textContent = g.submitLbl;
   document.getElementById("main-demo-btn").textContent = g.demoLbl;
