@@ -1,8 +1,9 @@
-# ☯️ KB-TUVI Web Studio + Gemini AI (Free Tier)
+# ☯️ × 🔢 KB-TUVI Web Studio v3.0 + Gemini AI (Free Tier)
 
-Ứng dụng web tương tác **Tử Vi Đẩu Số × Bát Tự Tứ Trụ × Kinh Dịch Lục Hào × Kỳ Môn Độn Giáp** chuẩn **Zero-Hallucination** (*Code tính toán thiên văn UTC+7 chính xác 100%, AI Gemini luận giải theo cổ pháp*).
+Ứng dụng web tương tác **Hội Tụ Đông – Tây (Tử Vi Đẩu Số × Bát Tự Tứ Trụ × Thần Số Học Đa Phái × Kinh Dịch Lục Hào × Kỳ Môn Độn Giáp)** chuẩn **Zero-Hallucination** (*Code tính toán thiên văn UTC+7 & Thần số học chính xác 100%, AI Gemini luận giải chuyên sâu*).
 
-- **Zero-Dependency Python 3:** Không cần cài đặt bất kỳ thư viện ngoài nào (`requirements.txt` trống).
+- **Zero-Dependency Python 3 + Web JS SDK:** Không cần cài đặt bất kỳ thư viện ngoài nào (`requirements.txt` trống), tích hợp sẵn `scripts/web_numerology_sdk.js` cho Frontend/Edge.
+- **Thần Số Học Đa Phái & Chấm Điểm Đặt Tên:** Hỗ trợ song song **Nhân số học Việt Nam (giữ Số 10, 11, 22/4)** & **Pythagoras Quốc tế**, phân loại động chữ `Y` tiếng Việt, **Chaldean Babylon cổ đại (`1..8` & Số Kép `10..52`)**, **Ma trận Định mệnh 22 Arcana**, biểu đồ sóng SVG 9 năm và công cụ chấm điểm Tên con / Nghệ danh / Thương hiệu (`/api/name_check`).
 - **Bảo mật API Key:** `GEMINI_API_KEY` chỉ đặt trong Environment Variables của máy chủ (Vercel/Render), không bao giờ lộ ra trình duyệt.
 - **Bảo vệ Quota Free khi chia sẻ cho bạn bè:** Hỗ trợ **Mã mời (`ACCESS_CODE`)**, giới hạn lượt/IP/ngày (`DAILY_LIMIT_PER_IP`), tự động fallback qua các model Free Tier (`gemini-3.8-flash` → `gemini-3.6-flash` → `gemini-3.5-flash-lite`), và chế độ **BYOK** (bạn bè tự dán Gemini API Key miễn phí của riêng họ ngay trên web).
 

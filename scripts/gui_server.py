@@ -211,6 +211,21 @@ def dispatch_get(path: str) -> Tuple[int, str, bytes]:
     if clean_path in ("/assets/gemini_ai_addon.js", "/api/addon", "/api/addon.py"):
         with open(AI_ADDON_JS_PATH, "rb") as f:
             return 200, "application/javascript; charset=utf-8", f.read()
+    if clean_path.startswith("/assets/images/"):
+        img_name = os.path.basename(clean_path)
+        img_path = os.path.join(SKILL_ROOT, "assets", "images", img_name)
+        if os.path.isfile(img_path):
+            ext = os.path.splitext(img_name)[1].lower()
+            mime = {
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".jpeg": "image/jpeg",
+                ".webp": "image/webp",
+                ".gif": "image/gif",
+                ".svg": "image/svg+xml",
+            }.get(ext, "application/octet-stream")
+            with open(img_path, "rb") as f:
+                return 200, mime, f.read()
     if clean_path in ("/sdk/numerology.js", "/api/sdk-numerology", "/api/sdk-numerology.py"):
         with open(JS_SDK_PATH, "rb") as f:
             return 200, "application/javascript; charset=utf-8", f.read()
@@ -268,7 +283,7 @@ def dispatch_post(
             raw = json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=False).encode("utf-8")
             return 400, "application/json; charset=utf-8", raw
 
-    if clean_path == "/api/name-check":
+    if clean_path in ("/api/name-check", "/api/name_check"):
         try:
             ranked = evaluate_candidate_names(req_data)
             raw = json.dumps({"ok": True, "data": ranked}, ensure_ascii=False, default=str).encode("utf-8")
@@ -315,6 +330,8 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(raw)))
+        if content_type.startswith("text/html"):
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Gemini-Api-Key")

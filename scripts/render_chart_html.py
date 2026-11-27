@@ -549,8 +549,8 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
 </head>
 <body>
   <h1>{_esc(title)}</h1>
-  <div class="subtitle">Hệ thống tính toán định danh Đông – Tây Zero-Hallucination (kb-tuvi v3.0) — Lịch Thiên Văn UTC+7 × Cổ Thư × Pythagoras/Chaldean</div>
+  <div class="subtitle">Hệ thống xem Tử Vi, Bát Tự, Thần Số Học &amp; Kinh Dịch chuẩn Lịch Vạn Niên Việt Nam</div>
   {"".join(sections)}
-  <div class="disclaimer">Lưu ý văn hóa: Mệnh lý phương Đông & Thần số học phương Tây là bộ công cụ tham chiếu nhận thức bản thân, tâm lý và quản trị chiến lược; không thay thế chẩn đoán y khoa, tư vấn pháp lý hay cam kết đầu tư tài chính tuyệt đối.</div>
+  <div class="disclaimer">Lưu ý văn hóa: Mệnh lý phương Đông &amp; Thần số học phương Tây là bộ công cụ tham chiếu nhận thức bản thân, tâm lý và quản trị chiến lược; không thay thế chẩn đoán y khoa, tư vấn pháp lý hay cam kết đầu tư tài chính tuyệt đối.<br><strong style="color:#8b1e1e;font-size:13.5px;display:inline-block;margin-top:8px;">❤️ From K.B - Hội BĐS Đồ Sơn ❤️</strong></div>
 </body>
 </html>"""

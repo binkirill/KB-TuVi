@@ -18,6 +18,10 @@
     {
       "source": "/sdk/numerology.js",
       "destination": "/api/sdk-numerology.py"
+    },
+    {
+      "source": "/api/name-check",
+      "destination": "/api/name_check.py"
     }
   ]
 }

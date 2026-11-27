@@ -509,6 +509,12 @@
 
   window.__kbSaveAiPrefs = saveAiPrefs;
   window.__kbRunGemini = runGeminiInterpret;
+  window.__kbRunGeminiMode = function (mode) {
+    AI_STATE.mode = mode || "full";
+    openAiTab();
+    mountGeminiCard();
+    runGeminiInterpret();
+  };
   window.__kbCopyAiReport = function () {
     if (!AI_STATE.markdown) return;
     navigator.clipboard.writeText(AI_STATE.markdown);

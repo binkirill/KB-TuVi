@@ -29,7 +29,7 @@ SKILL_MIRROR = r"D:\AI\Skills\kb-tuvi"
 WEB_REPO = r"G:\My Drive\Antigravity\kb-tuvi-web"
 
 SYNC_FOLDERS = ("assets", "references", "scripts")
-SYNC_FILES = ("SKILL.md",)
+SYNC_FILES = ("SKILL.md", "AI_HANDOFF_README.md")
 ADDON_TAG = '<script src="/api/addon"></script>'
 
 
@@ -71,29 +71,48 @@ def sync_tree(src_root: str, dst_root: str, mirror_deletes: bool = False) -> int
         d_dir = os.path.join(dst_root, sub)
         if not os.path.isdir(s_dir):
             continue
-        os.makedirs(d_dir, exist_ok=True)
-        src_names = set()
-        for fname in sorted(os.listdir(s_dir)):
-            if fname == "__pycache__" or fname.endswith(".pyc"):
-                continue
-            sp = os.path.join(s_dir, fname)
-            dp = os.path.join(d_dir, fname)
-            if not os.path.isfile(sp):
-                continue
-            src_names.add(fname)
-            if not os.path.isfile(dp) or open(sp, "rb").read() != open(dp, "rb").read():
-                shutil.copy2(sp, dp)
-                print(f"  [SYNC] {sub}/{fname} -> {dst_root}")
-                changed += 1
-        if mirror_deletes:
-            for fname in os.listdir(d_dir):
-                if fname == "__pycache__" or fname.endswith(".pyc"):
+        src_rel_files = set()
+        for walk_root, dirs, files in os.walk(s_dir):
+            dirs[:] = [d for d in dirs if d != "__pycache__" and not d.startswith(".")]
+            rel_sub = os.path.relpath(walk_root, s_dir)
+            target_dir = d_dir if rel_sub == "." else os.path.join(d_dir, rel_sub)
+            os.makedirs(target_dir, exist_ok=True)
+            for fname in sorted(files):
+                if fname.endswith(".pyc") or fname == ".DS_Store":
                     continue
-                dp = os.path.join(d_dir, fname)
-                if os.path.isfile(dp) and fname not in src_names:
-                    os.remove(dp)
-                    print(f"  [DEL]  {sub}/{fname} (đã xóa ở bản gốc)")
+                sp = os.path.join(walk_root, fname)
+                dp = os.path.join(target_dir, fname)
+                rel_key = fname if rel_sub == "." else os.path.join(rel_sub, fname)
+                src_rel_files.add(rel_key)
+                if not os.path.isfile(dp) or open(sp, "rb").read() != open(dp, "rb").read():
+                    shutil.copy2(sp, dp)
+                    print(f"  [SYNC] {sub}/{rel_key} -> {dst_root}")
                     changed += 1
+        if mirror_deletes and os.path.isdir(d_dir):
+            for walk_root, dirs, files in os.walk(d_dir):
+                dirs[:] = [d for d in dirs if d != "__pycache__" and not d.startswith(".")]
+                rel_sub = os.path.relpath(walk_root, d_dir)
+                for fname in files:
+                    if fname.endswith(".pyc"):
+                        continue
+                    rel_key = fname if rel_sub == "." else os.path.join(rel_sub, fname)
+                    if rel_key not in src_rel_files:
+                        os.remove(os.path.join(walk_root, fname))
+                        print(f"  [DEL]  {sub}/{rel_key} (đã xóa ở bản gốc)")
+                        changed += 1
+
+    # Nếu đích là WEB_REPO (có vercel.json), đồng bộ thêm assets/images -> public/assets/images để Vercel CDN phục vụ trực tiếp
+    src_img_dir = os.path.join(src_root, "assets", "images")
+    if os.path.isfile(os.path.join(dst_root, "vercel.json")) and os.path.isdir(src_img_dir):
+        pub_img_dir = os.path.join(dst_root, "public", "assets", "images")
+        os.makedirs(pub_img_dir, exist_ok=True)
+        for fn in sorted(os.listdir(src_img_dir)):
+            sp = os.path.join(src_img_dir, fn)
+            dp = os.path.join(pub_img_dir, fn)
+            if os.path.isfile(sp) and (not os.path.isfile(dp) or open(sp, "rb").read() != open(dp, "rb").read()):
+                shutil.copy2(sp, dp)
+                print(f"  [SYNC] public/assets/images/{fn} -> {dst_root}")
+                changed += 1
     return changed
 
 
@@ -119,7 +138,28 @@ def quick_verify_web_repo() -> None:
     status, _, raw_sdk = gs.dispatch_get("/sdk/numerology.js")
     assert status == 200 and len(raw_sdk) > 1000
 
+    status, _, raw_img = gs.dispatch_get("/assets/images/hero_celestial.jpg")
+    assert status == 200 and len(raw_img) > 1000
+
     payload = json.dumps({
+        "name": "Nguyễn Minh Quân",
+        "nickname": "K.B Đồ Sơn",
+        "gender": "nam",
+        "date_type": "solar",
+        "date": "1992-08-16",
+        "time": "09:30",
+        "place": "Hà Nội",
+        "target_year": 2026,
+        "iching_method": "numbers",
+        "numbers": "18,25",
+    }).encode("utf-8")
+    status, _, raw_a = gs.dispatch_post("/api/analyze", payload)
+    assert status == 200
+    j_a = json.loads(raw_a.decode("utf-8"))
+    assert j_a["ok"] is True and "numerology" in j_a["data"] and "tuvi" in j_a["data"]
+    assert "Mai Hoa Khởi Số" in j_a["data"]["iching"]["cast_method"]
+
+    payload_m = json.dumps({
         "name": "Nguyễn Minh Quân",
         "gender": "nam",
         "date_type": "solar",
@@ -127,11 +167,13 @@ def quick_verify_web_repo() -> None:
         "time": "09:30",
         "place": "Hà Nội",
         "target_year": 2026,
+        "iching_method": "manual_lines",
+        "lines": "7,8,9,7,6,8",
     }).encode("utf-8")
-    status, _, raw_a = gs.dispatch_post("/api/analyze", payload)
+    status, _, raw_m = gs.dispatch_post("/api/analyze", payload_m)
     assert status == 200
-    j_a = json.loads(raw_a.decode("utf-8"))
-    assert j_a["ok"] is True and "numerology" in j_a["data"] and "tuvi" in j_a["data"]
+    j_m = json.loads(raw_m.decode("utf-8"))
+    assert j_m["ok"] is True and "Nhập trực tiếp 6 hào" in j_m["data"]["iching"]["cast_method"]
 
     nc_payload = json.dumps({"date": "2026-05-15", "candidates": ["Nguyễn Minh Khôi", "Nguyễn Đăng Khoa"]}).encode("utf-8")
     status, _, raw_nc = gs.dispatch_post("/api/name-check", nc_payload)

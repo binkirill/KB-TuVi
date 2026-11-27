@@ -3,113 +3,339 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>☯️ Xem Tử Vi, Bát Tự, Thần Số Học & Kinh Dịch — KB-TUVI v3.0</title>
+<title>☯️ Thiên Cơ Mệnh Lý • Tử Vi, Bát Tự, Thần Số Học & Kinh Dịch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4efe6;
+    --obsidian: #110e0c;
+    --obsidian-2: #1b1613;
+    --bg: #f5efe4;
+    --bg-deep: #ece2d0;
     --panel: #fffdf9;
-    --ink: #1e1a17;
-    --muted: #6c6257;
-    --border: #dcd1bf;
+    --ink: #1e1915;
+    --muted: #685d51;
+    --border: #d9ccb7;
     --crimson: #8f1d1d;
     --crimson-soft: #fdf2f0;
-    --gold: #a87928;
+    --gold: #b88933;
+    --gold-bright: #f2cf83;
     --gold-soft: #fcf6e8;
     --jade: #16694f;
     --jade-soft: #e8f6f0;
     --navy: #1d4675;
     --navy-soft: #edf3fc;
     --purple: #5b3b82;
+    --font-display: "Cormorant Garamond", Georgia, serif;
+    --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+    --scroll-progress: 0;
+    --hero-scroll: 0;
   }
+
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    display: grid; grid-template-columns: 335px 1fr; min-height: 100vh;
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.55;
   }
-  @media (max-width: 960px) {
-    body { grid-template-columns: 1fr; }
-    .sidebar { max-height: none !important; position: static !important; }
+
+  /* SCROLL-CRAFT TOP PROGRESS HAIRLINE & FLOATING PILL NAV */
+  #scroll-progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 1000;
+    width: calc(var(--scroll-progress) * 100%);
+    background: linear-gradient(90deg, #8f1d1d, #f2cf83, #b88933);
+    box-shadow: 0 0 10px rgba(242, 207, 131, 0.7);
   }
-  /* SIDEBAR GỌN 1 KHUNG DUY NHẤT */
+
+  .floating-nav {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    z-index: 950; display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 999px;
+    background: rgba(18, 14, 12, 0.82);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(242, 207, 131, 0.28);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    max-width: calc(100vw - 24px); overflow-x: auto; white-space: nowrap;
+  }
+  .nav-brand {
+    color: var(--gold-bright); font-family: var(--font-display);
+    font-weight: 700; font-size: 18px; letter-spacing: 0.5px;
+    padding-right: 10px; border-right: 1px solid rgba(242, 207, 131, 0.22);
+    margin-right: 4px; text-decoration: none;
+  }
+  .nav-link {
+    color: #e6dccf; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 5px 11px; border-radius: 999px; transition: all 0.2s ease;
+  }
+  .nav-link:hover { background: rgba(242, 207, 131, 0.16); color: var(--gold-bright); }
+  .nav-cta {
+    background: linear-gradient(135deg, #b52b2b, #821717); color: #fff !important;
+    font-weight: 700; box-shadow: 0 2px 10px rgba(181, 43, 43, 0.4);
+  }
+
+  /* SCROLL-CRAFT REVEAL SYSTEM */
+  [data-reveal] {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ACT I: DIMENSIONAL HERO WITH 3 INDEPENDENT DEPTH PLANES */
+  .hero-act {
+    position: relative; min-height: 86vh; display: flex; align-items: center; justify-content: center;
+    background: var(--obsidian); color: #f9f3e8; overflow: hidden; padding: 96px 24px 72px;
+  }
+  .hero-plane-bg {
+    position: absolute; inset: -8% 0; z-index: 1;
+    background: url("/assets/images/hero_celestial.jpg") center center / cover no-repeat;
+    transform: translate3d(0, calc(var(--hero-scroll) * 0.26px), 0) scale(1.06);
+    filter: brightness(0.68) contrast(1.06);
+    will-change: transform;
+  }
+  .hero-plane-vignette {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(17,14,12,0.22) 0%, rgba(17,14,12,0.78) 72%, #110e0c 100%),
+      linear-gradient(180deg, rgba(17,14,12,0.45) 0%, rgba(17,14,12,0.15) 45%, #110e0c 100%);
+  }
+  .hero-plane-wheel {
+    position: absolute; width: min(680px, 88vw); height: min(680px, 88vw);
+    z-index: 3; opacity: 0.24; pointer-events: none;
+    transform: rotate(calc(var(--hero-scroll) * 0.08deg));
+    will-change: transform;
+  }
+  .hero-plane-fg {
+    position: relative; z-index: 4; max-width: 820px; text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 999px;
+    background: rgba(242, 207, 131, 0.12); border: 1px solid rgba(242, 207, 131, 0.38);
+    color: var(--gold-bright); font-size: 11.5px; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6.4vw, 76px);
+    font-weight: 700; line-height: 1.04; margin: 0 0 18px;
+    background: linear-gradient(180deg, #fffdf9 15%, #f2cf83 68%, #c59237 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  }
+  .hero-sub {
+    max-width: 60ch; margin: 0 auto 28px;
+    font-size: clamp(14.5px, 1.6vw, 17px); color: #dfd4c3; font-weight: 400;
+  }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-btn-main {
+    padding: 13px 26px; border-radius: 999px; text-decoration: none;
+    background: linear-gradient(135deg, #c62f2f, #851616); color: #fff;
+    font-weight: 800; font-size: 14px; letter-spacing: 0.4px;
+    border: 1px solid rgba(242, 207, 131, 0.45);
+    box-shadow: 0 8px 26px rgba(181, 43, 43, 0.48); transition: transform 0.2s ease;
+  }
+  .hero-btn-main:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .hero-btn-ghost {
+    padding: 13px 22px; border-radius: 999px; text-decoration: none;
+    background: rgba(255, 255, 255, 0.07); color: var(--gold-bright);
+    border: 1px solid rgba(242, 207, 131, 0.35); font-weight: 700; font-size: 13.5px;
+    transition: all 0.2s ease;
+  }
+  .hero-btn-ghost:hover { background: rgba(242, 207, 131, 0.16); }
+
+  /* ACT II: TAM ĐẠI CAO NHÂN ĐỒ SƠN (3 DOWNLOADS TRANSPARENT PNG SHOWCASE) */
+  .masters-act {
+    background: linear-gradient(180deg, #110e0c 0%, #1c1612 88%, var(--bg) 100%);
+    padding: 36px 24px 76px; position: relative;
+  }
+  .masters-wrap { max-width: 1180px; margin: 0 auto; }
+  .act-heading { text-align: center; margin-bottom: 34px; color: #f7efe2; }
+  .act-heading .kicker {
+    color: var(--gold-bright); font-size: 11.5px; font-weight: 700;
+    letter-spacing: 1.8px; text-transform: uppercase; display: block; margin-bottom: 6px;
+  }
+  .act-heading h2 {
+    font-family: var(--font-display); font-size: clamp(30px, 4vw, 44px);
+    margin: 0 0 8px; color: #fff8eb;
+  }
+  .act-heading p { max-width: 58ch; margin: 0 auto; font-size: 14px; color: #bfb29f; }
+
+  .masters-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+  }
+  @media (max-width: 900px) { .masters-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+
+  .master-card {
+    position: relative; border-radius: 18px; overflow: hidden;
+    background: linear-gradient(165deg, #261e19 0%, #16120f 100%);
+    border: 1px solid rgba(242, 207, 131, 0.32);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+  }
+  .master-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-bright);
+  }
+  .master-stage {
+    position: relative; height: 285px; display: flex; align-items: flex-end; justify-content: center;
+    background:
+      radial-gradient(circle at 50% 54%, rgba(242, 207, 131, 0.28) 0%, rgba(184, 137, 51, 0.08) 44%, transparent 72%);
+    padding-top: 18px; overflow: hidden;
+  }
+  .master-halo {
+    position: absolute; width: 210px; height: 210px; top: 34px; border-radius: 50%;
+    border: 1px dashed rgba(242, 207, 131, 0.38);
+    box-shadow: inset 0 0 32px rgba(242, 207, 131, 0.14);
+    pointer-events: none;
+  }
+  .master-stage img {
+    position: relative; z-index: 2; max-height: 265px; width: auto; max-width: 92%;
+    object-fit: contain; object-position: bottom center;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.65));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .master-card:hover .master-stage img { transform: scale(1.045) translateY(-3px); }
+  .master-info {
+    padding: 16px 18px 20px; background: rgba(17, 14, 12, 0.78);
+    border-top: 1px solid rgba(242, 207, 131, 0.18); text-align: center;
+  }
+  .master-role {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--gold-bright); margin-bottom: 5px;
+  }
+  .master-title {
+    font-family: var(--font-display); font-size: 23px; font-weight: 700;
+    color: #fff9ef; margin: 0 0 6px;
+  }
+  .master-quote { font-size: 12.5px; color: #cbbfb0; margin: 0; line-height: 1.5; }
+
+  /* ACT III: STUDIO SANCTUARY (SIDEBAR + INTERACTIVE MULTI-SYSTEM WORKSPACE) */
+  .studio-act {
+    max-width: 1540px; margin: 0 auto; padding: 12px 20px 56px;
+    display: grid; grid-template-columns: 350px 1fr; gap: 22px; align-items: start;
+  }
+  @media (max-width: 1024px) {
+    .studio-act { grid-template-columns: 1fr; padding: 12px 14px 44px; }
+    .sidebar { position: static !important; max-height: none !important; }
+  }
+
+  /* SIDEBAR GỌN ĐÚNG 1 KHUNG DUY NHẤT */
   .sidebar {
-    background: #1e1916; color: #f5efe6; padding: 20px 16px;
-    border-right: 2px solid #3a312a; overflow-y: auto; max-height: 100vh; position: sticky; top: 0;
+    background: linear-gradient(180deg, #1f1915 0%, #16120f 100%);
+    color: #f5efe6; padding: 20px 16px; border-radius: 16px;
+    border: 1.5px solid #3f342a; box-shadow: 0 16px 38px rgba(30, 22, 16, 0.16);
+    position: sticky; top: 68px;
   }
-  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #382f27; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #382f27; }
   .brand-logo { font-size: 28px; }
-  .brand-title { font-weight: 800; font-size: 16.5px; color: #f3ce85; letter-spacing: 0.4px; }
-  .brand-sub { font-size: 11.5px; color: #bfb3a2; }
+  .brand-title { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--gold-bright); letter-spacing: 0.4px; line-height: 1.1; }
+  .brand-sub { font-size: 11px; color: #bfb3a2; margin-top: 2px; }
 
   .form-card {
-    background: #28221e; border: 1px solid #3e352e; border-radius: 10px;
+    background: rgba(42, 35, 30, 0.85); border: 1px solid #453a30; border-radius: 12px;
     padding: 14px; margin-bottom: 14px;
   }
   .sec-label {
-    font-size: 13px; color: #f3ce85; font-weight: 800; margin: 0 0 12px;
+    font-size: 13px; color: var(--gold-bright); font-weight: 800; margin: 0 0 12px;
     display: flex; align-items: center; gap: 6px;
   }
-  .field { margin-bottom: 11px; }
+  .field { margin-bottom: 10px; }
   .field:last-child { margin-bottom: 0; }
-  .field label { display: block; font-size: 12px; color: #e5ddd0; margin-bottom: 4px; font-weight: 600; }
+  .field label { display: block; font-size: 11.8px; color: #e5ddd0; margin-bottom: 4px; font-weight: 600; }
   .field input, .field select, .field textarea {
-    width: 100%; padding: 8.5px 10px; border-radius: 6px; border: 1px solid #4a3f35;
-    background: #1b1714; color: #fff; font-size: 13px; font-family: inherit;
+    width: 100%; padding: 8.5px 10px; border-radius: 7px; border: 1px solid #4e4237;
+    background: #171310; color: #fff; font-size: 12.8px; font-family: inherit;
   }
-  .field textarea { resize: vertical; min-height: 54px; }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #d8a84e; }
+  .field textarea { resize: vertical; min-height: 52px; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold-bright); }
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .chk-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #dfd6c8; margin: -3px 0 9px; cursor: pointer; }
+  .chk-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #dfd6c8; margin: -2px 0 9px; cursor: pointer; }
   .chk-row input { width: auto; }
-
-  .divider-line { border-top: 1px dashed #433930; margin: 12px 0; }
+  .divider-line { border-top: 1px dashed #463b31; margin: 12px 0; }
 
   .btn-primary {
-    width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer;
-    background: linear-gradient(135deg, #b52b2b, #821717); color: #fff;
+    width: 100%; padding: 12.5px; border: 1px solid rgba(242,207,131,0.4); border-radius: 9px; cursor: pointer;
+    background: linear-gradient(135deg, #be2d2d, #821717); color: #fff;
     font-weight: 800; font-size: 14px; letter-spacing: 0.3px;
-    box-shadow: 0 4px 12px rgba(181,43,43,0.35); transition: transform 0.1s;
+    box-shadow: 0 6px 16px rgba(181,43,43,0.38); transition: transform 0.15s;
   }
   .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
   .btn-demo {
-    width: 100%; padding: 7px; border: 1px dashed #574a3e; border-radius: 6px;
-    background: transparent; color: #cbbba6; font-size: 11.5px; cursor: pointer; margin-top: 8px;
+    width: 100%; padding: 8px; border: 1px dashed #5c4e41; border-radius: 7px;
+    background: transparent; color: #d2c3ae; font-size: 11.5px; cursor: pointer; margin-top: 8px;
   }
   .btn-demo:hover { background: #2c2520; color: #fff; }
 
-  .coin-toggle {
-    display: inline-block; font-size: 11.5px; color: #e8c47c; cursor: pointer;
-    margin-top: 5px; text-decoration: underline;
-  }
-  .coin-box {
-    background: #1b1714; border: 1px dashed #5d4f42; border-radius: 7px; padding: 9px; margin-top: 7px;
-  }
+  .coin-box { background: #171310; border: 1px dashed #5d4f42; border-radius: 8px; padding: 10px; margin-top: 8px; }
   .btn-sec {
     padding: 6px 10px; border: 1px solid #5a4d41; border-radius: 6px;
     background: #352d27; color: #f5e5cb; font-size: 11.5px; cursor: pointer; font-weight: 700;
   }
   .btn-sec:hover { background: #463c34; }
-  .coin-lines-preview { font-size: 11.5px; color: #f3ce85; margin-top: 6px; line-height: 1.45; }
+  .coin-pick-label { font-size: 11px; color: #bfb3a2; margin: 8px 0 5px; line-height: 1.35; }
+  .coin-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 7px; }
+  .coin-pick-btn {
+    padding: 5.5px 6px; border: 1px solid #52463b; border-radius: 6px;
+    background: #241e19; color: #f2e4ce; font-size: 11px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s ease; text-align: center;
+  }
+  .coin-pick-btn:hover { background: #3a3027; border-color: var(--gold-bright); color: var(--gold-bright); }
+  .coin-lines-preview { font-size: 11.5px; color: var(--gold-bright); margin-top: 6px; line-height: 1.45; }
+  .field-hint { font-size: 11px; color: #a79a8a; margin-top: 4px; line-height: 1.35; }
 
-  /* MAIN WORKSPACE */
-  .main { padding: 18px 22px 40px; overflow-x: auto; }
+  /* MAIN CANVAS & EDITORIAL ART SHOWCASE */
+  .main { min-width: 0; }
+
+  .editorial-showcase { display: flex; flex-direction: column; gap: 18px; }
+  .art-banner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 780px) { .art-banner-grid { grid-template-columns: 1fr; } }
+
+  .art-story-card {
+    position: relative; border-radius: 14px; overflow: hidden; min-height: 250px;
+    display: flex; align-items: flex-end; border: 1px solid var(--border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08); background: var(--obsidian);
+  }
+  .art-story-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); filter: brightness(0.78);
+  }
+  .art-story-card:hover img { transform: scale(1.05); }
+  .art-story-overlay {
+    position: relative; z-index: 2; width: 100%; padding: 20px 18px 18px;
+    background: linear-gradient(180deg, transparent 0%, rgba(17,14,12,0.88) 52%, rgba(17,14,12,0.96) 100%);
+    color: #f8f1e5;
+  }
+  .art-story-overlay h3 {
+    font-family: var(--font-display); font-size: 24px; color: var(--gold-bright); margin: 0 0 4px;
+  }
+  .art-story-overlay p { margin: 0; font-size: 12.8px; color: #ddd1c0; max-width: 52ch; }
 
   .welcome-card {
-    max-width: 800px; margin: 42px auto; background: var(--panel);
-    border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px;
-    text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px 26px; box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  }
+  .welcome-card h2 {
+    font-family: var(--font-display); font-size: 32px; margin: 0 0 8px; color: var(--crimson);
   }
   .welcome-steps {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0 8px; text-align: left;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px;
   }
-  .w-step { background: #faf6ee; border: 1px solid var(--border); border-radius: 10px; padding: 14px; font-size: 13px; }
-  .w-step strong { display: block; color: var(--crimson); margin-bottom: 4px; font-size: 13.5px; }
+  @media (max-width: 780px) { .welcome-steps { grid-template-columns: 1fr; } }
+  .w-step { background: #faf6ee; border: 1px solid var(--border); border-radius: 11px; padding: 14px; font-size: 13px; }
+  .w-step strong { display: block; color: var(--crimson); margin-bottom: 4px; font-size: 13.8px; }
 
+  /* RESULT VIEW */
   .profile-bar {
     background: var(--panel); border: 1px solid var(--border); border-left: 5px solid var(--crimson);
-    border-radius: 9px; padding: 12px 16px; margin-bottom: 14px;
-    display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center;
-    font-size: 13.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    border-radius: 11px; padding: 13px 16px; margin-bottom: 14px;
+    display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
+    font-size: 13.2px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);
   }
   .warn-banner {
     width: 100%; background: #fff6df; border: 1px solid #efd28d; color: #7a5200;
@@ -118,41 +344,44 @@
 
   .tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
   .tab-btn {
-    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border);
-    background: #ebe4d7; color: #4f463d; font-weight: 700; font-size: 13px; cursor: pointer;
+    padding: 8.5px 14px; border-radius: 9px; border: 1px solid var(--border);
+    background: #ebe3d3; color: #4a4036; font-weight: 700; font-size: 12.8px; cursor: pointer;
+    transition: all 0.15s ease; font-family: inherit;
   }
-  .tab-btn.active { background: var(--crimson); color: #fff; border-color: var(--crimson); }
-  .toolbar-right { margin-left: auto; display: flex; gap: 8px; }
+  .tab-btn:hover { background: #e2d7c3; }
+  .tab-btn.active { background: var(--crimson); color: #fff; border-color: var(--crimson); box-shadow: 0 3px 10px rgba(143,29,29,0.28); }
+  .toolbar-right { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
   .action-btn {
-    padding: 7px 12px; border-radius: 7px; border: 1px solid var(--border);
-    background: var(--panel); color: var(--ink); font-weight: 700; font-size: 12px; cursor: pointer;
+    padding: 7.5px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--ink); font-weight: 700; font-size: 12px; cursor: pointer; font-family: inherit;
   }
   .action-btn:hover { background: var(--gold-soft); border-color: var(--gold); }
 
   .tab-pane { display: none; }
-  .tab-pane.active { display: block; }
+  .tab-pane.active { display: block; animation: fadeTab 0.28s ease; }
+  @keyframes fadeTab { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  .tuvi-hint {
-    max-width: 1240px; margin: 0 auto 8px; font-size: 12.5px; color: var(--muted);
-  }
-  .tuvi-wrapper { position: relative; max-width: 1240px; margin: 0 auto; }
+  /* TỬ VI 12 CUNG INTERACTIVE */
+  .tuvi-hint { margin: 0 0 8px; font-size: 12.5px; color: var(--muted); }
+  .tuvi-wrapper { position: relative; width: 100%; overflow-x: auto; }
   .tuvi-board {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, minmax(205px, auto)); gap: 7px; position: relative;
+    display: grid; grid-template-columns: repeat(4, minmax(185px, 1fr));
+    grid-template-rows: repeat(4, minmax(205px, auto)); gap: 7px; position: relative; min-width: 780px;
   }
   .thien-ban {
-    grid-column: 2 / 4; grid-row: 2 / 4; background: #fffbf2;
-    border: 2px double var(--gold); border-radius: 9px; padding: 14px 16px;
+    grid-column: 2 / 4; grid-row: 2 / 4;
+    background: radial-gradient(circle at 50% 35%, #fffef9 0%, #fbf3e2 100%);
+    border: 2px double var(--gold); border-radius: 10px; padding: 14px 16px;
     position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between;
   }
   #tptc-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
   .palace-cell {
-    background: var(--panel); border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--panel); border: 1.5px solid var(--border); border-radius: 9px;
     padding: 7px 8px; display: flex; flex-direction: column; justify-content: space-between;
     font-size: 11.5px; cursor: pointer; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
     position: relative; z-index: 3;
   }
-  .palace-cell:hover { border-color: var(--gold); box-shadow: 0 3px 10px rgba(168,121,40,0.15); }
+  .palace-cell:hover { border-color: var(--gold); box-shadow: 0 4px 12px rgba(168,121,40,0.16); }
   .palace-cell.selected-palace { border: 2.5px solid var(--crimson) !important; background: #fff7f5; box-shadow: 0 0 0 3px rgba(143,29,29,0.14); }
   .palace-cell.tptc-peer { border: 2px dashed var(--gold); background: #fffdf5; }
   .palace-cell.tptc-opp { border: 2px solid var(--navy); background: #f6f9fe; }
@@ -187,37 +416,48 @@
   .st-phu { color: #433d37; margin-right: 4px; display: inline-block; }
   .p-foot { display: flex; justify-content: space-between; border-top: 1px dashed #e5dccb; padding-top: 3px; font-size: 10.5px; color: var(--muted); font-weight: 600; }
 
-  .tb-header { text-align: center; font-weight: 800; color: var(--crimson); font-size: 15.5px; margin-bottom: 6px; }
+  .tb-header { font-family: var(--font-display); text-align: center; font-weight: 700; color: var(--crimson); font-size: 20px; margin-bottom: 6px; }
   .tb-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 12px; font-size: 12px; }
   .fly-inspector { margin-top: 8px; padding: 8px 10px; background: #fff; border: 1px solid #e6dbc8; border-radius: 6px; font-size: 11.8px; }
   .yr-stepper { display: inline-flex; align-items: center; gap: 5px; }
-  .yr-stepper button { padding: 1px 7px; cursor: pointer; border: 1px solid var(--border); background: #fff; border-radius: 4px; font-weight: 700; }
+  .yr-stepper button { padding: 2px 8px; cursor: pointer; border: 1px solid var(--border); background: #fff; border-radius: 4px; font-weight: 700; }
 
+  /* CARDS, PANE ART HEADERS & TABLES */
   .card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-    padding: 16px 18px; margin-bottom: 16px; max-width: 1240px; margin-left: auto; margin-right: auto;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 13px;
+    padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.03);
   }
-  .card h3 { margin: 0 0 10px; color: var(--crimson); font-size: 16px; border-bottom: 2px solid #efe6d6; padding-bottom: 6px; }
+  .card h3 { font-family: var(--font-display); margin: 0 0 10px; color: var(--crimson); font-size: 23px; border-bottom: 2px solid #efe6d6; padding-bottom: 6px; }
+  .pane-art-strip {
+    position: relative; height: 135px; border-radius: 10px; overflow: hidden; margin-bottom: 14px;
+    display: flex; align-items: center; padding: 0 22px; border: 1px solid rgba(242,207,131,0.35);
+  }
+  .pane-art-strip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55); }
+  .pane-art-strip .strip-txt { position: relative; z-index: 2; color: #fff8ec; max-width: 560px; }
+  .pane-art-strip .strip-txt h4 { font-family: var(--font-display); font-size: 25px; color: var(--gold-bright); margin: 0 0 3px; }
+  .pane-art-strip .strip-txt p { margin: 0; font-size: 12.5px; color: #e5dac9; }
+
   table.std-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   table.std-table th, table.std-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
   table.std-table th { background: #f2eadc; }
   .elem-bars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
-  .eb-item { background: #faf6ee; border: 1px solid var(--border); border-radius: 7px; padding: 8px 10px; }
+  .eb-item { background: #faf6ee; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
   .eb-track { height: 8px; background: #e5ddd0; border-radius: 99px; overflow: hidden; margin-top: 5px; }
   .eb-fill { height: 100%; border-radius: 99px; }
   .dayun-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; margin-top: 12px; }
   .dy-card { border: 1px solid var(--border); border-radius: 7px; padding: 7px 5px; text-align: center; font-size: 11.5px; background: #fff; }
   .dy-card.active { border: 2px solid var(--crimson); background: var(--crimson-soft); }
   .qm-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .qm-box { border: 1.5px solid var(--border); border-radius: 8px; padding: 12px; background: #fff; min-height: 125px; display: flex; flex-direction: column; justify-content: space-between; }
+  .qm-box { border: 1.5px solid var(--border); border-radius: 9px; padding: 12px; background: #fff; min-height: 125px; display: flex; flex-direction: column; justify-content: space-between; }
   .qm-box.cat-door { border-color: var(--jade); background: #f7fcfa; }
-  .prompt-area { width: 100%; min-height: 210px; font-family: Consolas, monospace; font-size: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: #fbf9f5; }
-  /* TAB THẦN SỐ HỌC */
-  .num-hero { display: grid; grid-template-columns: 185px 1fr; gap: 16px; align-items: center; background: linear-gradient(135deg, #fffdf8, #f9f1e1); border: 1.5px solid var(--gold); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .prompt-area { width: 100%; min-height: 200px; font-family: Consolas, monospace; font-size: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: #fbf9f5; }
+
+  /* THẦN SỐ HỌC */
+  .num-hero { display: grid; grid-template-columns: 180px 1fr; gap: 16px; align-items: center; background: linear-gradient(135deg, #fffdf8, #f9f1e1); border: 1.5px solid var(--gold); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
   @media (max-width: 720px) { .num-hero { grid-template-columns: 1fr; } }
-  .num-orb { width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #c83737, #781212); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(143,29,29,0.28); border: 3px solid #f3ce85; }
+  .num-orb { width: 146px; height: 146px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #c83737, #781212); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(143,29,29,0.28); border: 3px solid var(--gold-bright); }
   .num-orb-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #f8dfb0; font-weight: 700; }
-  .num-orb-val { font-size: 46px; font-weight: 900; line-height: 1.05; }
+  .num-orb-val { font-size: 44px; font-weight: 900; line-height: 1.05; }
   .num-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
   .num-kpi { background: #faf6ee; border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center; }
   .num-kpi-val { font-size: 24px; font-weight: 900; color: var(--crimson); margin: 2px 0; }
@@ -229,169 +469,411 @@
   .grid3-row { display: grid; grid-template-columns: repeat(3, 66px); gap: 5px; margin-top: 5px; }
   .grid3-cell { height: 52px; border: 1px solid var(--border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; background: #fbfaf7; }
   .grid3-cell.has-num { background: var(--gold-soft); border-color: var(--gold); color: var(--crimson); }
+
+  /* COMPANION CHEER BANNER INSIDE RESULTS */
+  .cheer-strip {
+    display: flex; align-items: center; gap: 14px; background: linear-gradient(135deg, #221b16, #32261e);
+    border: 1px solid rgba(242,207,131,0.38); border-radius: 12px; padding: 10px 16px;
+    color: #f6ede0; margin-bottom: 14px;
+  }
+  .cheer-strip img { width: 58px; height: 58px; object-fit: contain; border-radius: 50%; background: rgba(242,207,131,0.14); border: 1px solid rgba(242,207,131,0.4); }
+
+  /* ACT IV: LUXURY SIGNATURE FOOTER */
+  .site-footer {
+    background: var(--obsidian); color: #d8cbb8; text-align: center;
+    padding: 42px 20px 48px; border-top: 2px solid rgba(242, 207, 131, 0.28);
+    position: relative;
+  }
+  .footer-ornament {
+    color: var(--gold-bright); font-size: 18px; letter-spacing: 8px; margin-bottom: 10px;
+  }
+  .footer-note {
+    max-width: 64ch; margin: 0 auto 16px; font-size: 12.2px; color: #9c8f7e;
+  }
+  .footer-copyright {
+    display: inline-block; padding: 8px 22px; border-radius: 999px;
+    background: rgba(242, 207, 131, 0.1); border: 1px solid rgba(242, 207, 131, 0.35);
+    font-family: var(--font-sans); font-size: 15px; font-weight: 800;
+    color: var(--gold-bright); letter-spacing: 0.5px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .hero-plane-bg, .hero-plane-wheel { transform: none !important; }
+  }
+  @media print {
+    .floating-nav, .hero-act, .masters-act, .sidebar, .tabs { display: none !important; }
+    .studio-act { display: block !important; padding: 0 !important; }
+  }
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
-  <div class="brand">
-    <div class="brand-logo">☯️</div>
-    <div>
-      <div class="brand-title">TỬ VI • BÁT TỰ • THẦN SỐ HỌC</div>
-      <div class="brand-sub">Hội Tụ Đông Tây • Chuẩn Lịch VN • Web-Ready</div>
-    </div>
-  </div>
+<div id="scroll-progress-bar"></div>
 
-  <!-- DUY NHẤT 1 KHUNG THÔNG TIN ĐƯƠNG SỐ GỌN GÀNG -->
-  <div class="form-card">
-    <div class="sec-label">👤 Thông Tin Đương Số</div>
+<!-- FLOATING NAVIGATION PILL -->
+<nav class="floating-nav" aria-label="Điều hướng chính">
+  <a href="#act-hero" class="nav-brand">☯️ Thiên Cơ</a>
+  <a href="#act-masters" class="nav-link">Hội Cao Nhân</a>
+  <a href="#act-studio" class="nav-link">Nhập Thông Tin</a>
+  <a href="#act-studio" onclick="loadSampleProfile()" class="nav-link">Xem Mẫu Thử</a>
+  <a href="#act-studio" class="nav-link nav-cta">🔮 Lập Lá Số</a>
+</nav>
 
-    <div class="field">
-      <label>Họ và tên khai sinh đầy đủ (có dấu)</label>
-      <input id="inp-name" placeholder="Ví dụ: Nguyễn Minh Quân">
-    </div>
+<!-- ACT I: DIMENSIONAL HERO -->
+<header id="act-hero" class="hero-act">
+  <div class="hero-plane-bg" aria-hidden="true"></div>
+  <div class="hero-plane-vignette" aria-hidden="true"></div>
 
-    <div class="row-2">
-      <div class="field">
-        <label>Tên gọi / Thương hiệu <span style="font-weight:400;color:#9d9080;">(Tùy chọn)</span></label>
-        <input id="inp-nickname" placeholder="VD: Leo Quân...">
-      </div>
-      <div class="field">
-        <label>Hệ Thần số học</label>
-        <select id="inp-numschool">
-          <option value="vn">Nhân số học VN (Số 10)</option>
-          <option value="intl">Pythagoras Quốc tế</option>
-        </select>
-      </div>
-    </div>
+  <!-- Rotating Celestial Astrolabe Wheel -->
+  <svg class="hero-plane-wheel" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+    <circle cx="250" cy="250" r="236" stroke="#f2cf83" stroke-width="1.2" stroke-dasharray="4 6"/>
+    <circle cx="250" cy="250" r="205" stroke="#f2cf83" stroke-width="1"/>
+    <circle cx="250" cy="250" r="152" stroke="#f2cf83" stroke-width="0.9" stroke-dasharray="10 6"/>
+    <circle cx="250" cy="250" r="95" stroke="#f2cf83" stroke-width="1.2"/>
+    <polygon points="250,45 427,352 73,352" stroke="#f2cf83" stroke-width="0.8" opacity="0.6"/>
+    <polygon points="250,455 427,148 73,148" stroke="#f2cf83" stroke-width="0.8" opacity="0.6"/>
+    <line x1="250" y1="14" x2="250" y2="486" stroke="#f2cf83" stroke-width="0.6" opacity="0.5"/>
+    <line x1="14" y1="250" x2="486" y2="250" stroke="#f2cf83" stroke-width="0.6" opacity="0.5"/>
+  </svg>
 
-    <div class="row-2">
-      <div class="field">
-        <label>Giới tính</label>
-        <select id="inp-gender">
-          <option value="nam">Nam</option>
-          <option value="nu">Nữ</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Loại lịch</label>
-        <select id="inp-datetype" onchange="onDateTypeChange()">
-          <option value="solar">Dương lịch</option>
-          <option value="lunar">Âm lịch</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row-2">
-      <div class="field">
-        <label>Ngày sinh</label>
-        <input type="date" id="inp-date">
-      </div>
-      <div class="field">
-        <label>Giờ sinh</label>
-        <input type="time" id="inp-time" value="09:30">
-      </div>
-    </div>
-
-    <label id="row-leap" class="chk-row" style="display:none;">
-      <input type="checkbox" id="inp-leap"> Sinh vào tháng Nhuận Âm lịch
-    </label>
-
-    <div class="row-2">
-      <div class="field">
-        <label>Nơi sinh</label>
-        <select id="inp-place"></select>
-      </div>
-      <div class="field">
-        <label>Năm muốn xem hạn</label>
-        <input type="number" id="inp-target-year" min="1940" max="2080">
-      </div>
-    </div>
-
-    <div class="divider-line"></div>
-
-    <div class="field">
-      <label>Việc cần hỏi thêm <span style="font-weight:400;color:#9d9080;">(Không bắt buộc)</span></label>
-      <textarea id="inp-question" placeholder="Điền nếu muốn gieo thêm quẻ Kinh Dịch cho 1 việc cụ thể (VD: Đổi việc, đầu tư, tình cảm...)"></textarea>
-      <span class="coin-toggle" onclick="toggleManualCoinBox()">🪙 Muốn tự tay bấm tung 3 đồng xu?</span>
-    </div>
-
-    <div id="box-manual-coins" class="coin-box" style="display:none;">
-      <div style="display:flex; gap:6px;">
-        <button type="button" class="btn-sec" id="btn-toss" onclick="tossOneLine()">🪙 Tung đồng xu (Lần 1/6)</button>
-        <button type="button" class="btn-sec" onclick="resetToss()">Làm lại</button>
-      </div>
-      <input type="hidden" id="inp-lines" value="">
-      <div id="coin-log" class="coin-lines-preview"></div>
-    </div>
-  </div>
-
-  <button type="button" class="btn-primary" onclick="runAnalyze()">🔮 XEM LÁ SỐ NGAY</button>
-  <button type="button" class="btn-demo" onclick="loadSampleProfile()">✨ Xem thử 1 lá số mẫu</button>
-</aside>
-
-<main class="main">
-  <!-- MÀN HÌNH CHÀO MỪNG SẠCH THOÁNG -->
-  <div id="welcome-view" class="welcome-card">
-    <div style="font-size:44px;margin-bottom:8px;">☯️</div>
-    <h2 style="margin:0 0 8px;color:var(--crimson);">Hệ Thống Xem Tử Vi, Bát Tự & Kinh Dịch</h2>
-    <p style="color:var(--muted);font-size:14.5px;max-width:580px;margin:0 auto;">
-      Điền thông tin ngày sinh ở khung bên trái rồi bấm <strong>Xem Lá Số Ngay</strong> để lập lá số 12 cung, xem Ngũ hành bản mệnh và gieo quẻ hỏi việc.
+  <div class="hero-plane-fg" data-reveal>
+    <div class="hero-eyebrow">✦ Long Mạch Đồ Sơn • Tinh Hoa Huyền Học Đông Tây ✦</div>
+    <h1 class="hero-title">Thiên Cơ Tinh Tú<br>Khai Mở Vận Trình</h1>
+    <p class="hero-sub">
+      Kết tinh Tử Vi Đẩu Số 12 Cung, Ngũ Hành Bát Tự, Thần Số Học Đa Phái và Cổ Pháp Kinh Dịch trên một cuộn thư tương tác chuẩn xác từng khung giờ Việt Nam.
     </p>
-    <div class="welcome-steps">
-      <div class="w-step">
-        <strong>1. Tử Vi 12 Cung</strong>
-        Xem toàn cảnh Mệnh, Tài Bạch, Quan Lộc, Phu Thê, Điền Trạch và hạn từng năm.
-      </div>
-      <div class="w-step">
-        <strong>2. Ngũ Hành Bản Mệnh</strong>
-        Biết mình vượng hay khuyết hành nào (Kim, Mộc, Thủy, Hỏa, Thổ) để bổ sung hợp mệnh.
-      </div>
-      <div class="w-step">
-        <strong>3. Quẻ Kinh Dịch & AI</strong>
-        Gieo quẻ cho câu hỏi cụ thể và xuất dữ liệu chuẩn sang ChatGPT / Gemini luận giải chi tiết.
-      </div>
+    <div class="hero-actions">
+      <a href="#act-studio" class="hero-btn-main" onclick="setTimeout(()=>document.getElementById('inp-name').focus(), 450)">🔮 Khai Mở Lá Số Của Bạn ↓</a>
+      <a href="#act-masters" class="hero-btn-ghost">👑 Diện Kiến Tam Đại Cao Nhân</a>
     </div>
   </div>
+</header>
 
-  <!-- KẾT QUẢ -->
-  <div id="result-view" style="display:none;">
-    <div id="sync-banner" class="profile-bar"></div>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('tuvi', this)">🌌 Lá Số Tử Vi</button>
-      <button class="tab-btn" onclick="switchTab('bazi', this)">📜 Ngũ Hành Bát Tự</button>
-      <button class="tab-btn" onclick="switchTab('numerology', this)">🔢 Thần Số Học & Đặt Tên</button>
-      <button class="tab-btn" onclick="switchTab('iching', this)">☯️ Quẻ Kinh Dịch</button>
-      <button class="tab-btn" onclick="switchTab('qimen', this)">🧭 Hướng & Giờ Tốt</button>
-      <button class="tab-btn" onclick="switchTab('ai', this)">🤖 Đông-Tây & AI Giải</button>
-      <div class="toolbar-right">
-        <button class="action-btn" onclick="downloadHtmlReport()">💾 Tải Hồ Sơ Về Máy</button>
-        <button class="action-btn" onclick="window.print()">🖨️ In / Lưu PDF</button>
-      </div>
+<!-- ACT II: TAM ĐẠI CAO NHÂN HỘI BĐS ĐỒ SƠN (3 DOWNLOADS PHOTOS) -->
+<section id="act-masters" class="masters-act">
+  <div class="masters-wrap">
+    <div class="act-heading" data-reveal>
+      <span class="kicker">✦ Bảo Chứng Tinh Thần & Phong Thủy ✦</span>
+      <h2>Tam Đại Cao Nhân Trấn Sơn</h2>
+      <p>Bộ ba cố vấn truyền cảm hứng đồng hành soi sáng Điền Trạch, Bản Lĩnh Vượt Hạn và Nhân Duyên Gia Đạo.</p>
     </div>
 
-    <div id="pane-tuvi" class="tab-pane active">
-      <div class="tuvi-hint">
-        👆 <strong>Mẹo xem nhanh:</strong> Bấm chuột vào bất kỳ ô cung nào (Mệnh, Tài Bạch, Quan Lộc, Phu Thê...) để xem các cung chiếu về nó.
-      </div>
-      <div class="tuvi-wrapper" id="tuvi-wrap">
-        <svg id="tptc-svg"></svg>
-        <div class="tuvi-board" id="tuvi-board"></div>
-      </div>
-    </div>
+    <div class="masters-grid">
+      <article class="master-card" data-reveal style="transition-delay: 0ms;">
+        <div class="master-stage">
+          <div class="master-halo"></div>
+          <img src="/assets/images/user_photo_1.png" alt="Chưởng Môn Điền Trạch & Long Mạch" loading="lazy">
+        </div>
+        <div class="master-info">
+          <div class="master-role">✦ Chưởng Môn Điền Trạch & Tài Bạch</div>
+          <h3 class="master-title">Bậc Thầy Soi Sóng Đất Vàng</h3>
+          <p class="master-quote">Nhìn thấu cát hung cung Điền Trạch, bắt chuẩn long mạch và thời cơ vượng khí trước mọi quyết định lớn.</p>
+        </div>
+      </article>
 
-    <div id="pane-bazi" class="tab-pane"></div>
-    <div id="pane-numerology" class="tab-pane"></div>
-    <div id="pane-iching" class="tab-pane"></div>
-    <div id="pane-qimen" class="tab-pane"></div>
-    <div id="pane-ai" class="tab-pane"></div>
+      <article class="master-card" data-reveal style="transition-delay: 110ms;">
+        <div class="master-stage">
+          <div class="master-halo"></div>
+          <img src="/assets/images/user_photo_2.png" alt="Hộ Pháp Vượt Hạn - Mạnh mẽ lên nào" loading="lazy">
+        </div>
+        <div class="master-info">
+          <div class="master-role">✦ Hộ Pháp Bản Lĩnh & Hóa Giải</div>
+          <h3 class="master-title">Điểm Tựa Vượt Sóng Lưu Niên</h3>
+          <p class="master-quote">"Mạnh mẽ lên nào!" — Gặp Tuần Triệt hay thử thách Đại Vận vẫn vững vàng xoay chuyển nguy thành cơ.</p>
+        </div>
+      </article>
+
+      <article class="master-card" data-reveal style="transition-delay: 220ms;">
+        <div class="master-stage">
+          <div class="master-halo"></div>
+          <img src="/assets/images/user_photo_3.png" alt="Thánh Nhân Hồng Loan & Nghĩa Tình" loading="lazy">
+        </div>
+        <div class="master-info">
+          <div class="master-role">✦ Sứ Giả Hồng Loan & Nghĩa Tình</div>
+          <h3 class="master-title">Gắn Kết Nhân Duyên Trọn Vẹn</h3>
+          <p class="master-quote">Chuyên soi cung Phu Thê, Đào Hoa – Thiên Hỷ và vun đắp tình cảm gia đạo, bằng hữu bền chặt mãi mãi.</p>
+        </div>
+      </article>
+    </div>
   </div>
-</main>
+</section>
+
+<!-- ACT III: ĐIỆN KHAI MỆNH (1 KHUNG THÔNG TIN ĐƯƠNG SỐ DUY NHẤT + BÀN KẾT QUẢ ĐA HỆ) -->
+<section id="act-studio" class="studio-act">
+  <aside class="sidebar" data-reveal>
+    <div class="brand">
+      <div class="brand-logo">☯️</div>
+      <div>
+        <div class="brand-title">ĐIỆN KHAI MỆNH</div>
+        <div class="brand-sub">Tử Vi • Bát Tự • Thần Số Học • Kinh Dịch</div>
+      </div>
+    </div>
+
+    <!-- DUY NHẤT 1 KHUNG THÔNG TIN ĐƯƠNG SỐ GỌN GÀNG -->
+    <div class="form-card">
+      <div class="sec-label">👤 Thông Tin Đương Số</div>
+
+      <div class="field">
+        <label>Họ và tên khai sinh đầy đủ (có dấu)</label>
+        <input id="inp-name" placeholder="Ví dụ: Nguyễn Minh Quân">
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Nickname <span style="font-weight:400;color:#9d9080;">(Tùy chọn)</span></label>
+          <input id="inp-nickname" placeholder="VD: K.B Đồ Sơn...">
+        </div>
+        <div class="field">
+          <label>Hệ Thần số học</label>
+          <select id="inp-numschool">
+            <option value="vn">Nhân số học VN (Số 10)</option>
+            <option value="intl">Pythagoras Quốc tế</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Giới tính</label>
+          <select id="inp-gender">
+            <option value="nam">Nam</option>
+            <option value="nu">Nữ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Loại lịch</label>
+          <select id="inp-datetype" onchange="onDateTypeChange()">
+            <option value="solar">Dương lịch</option>
+            <option value="lunar">Âm lịch</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Ngày sinh</label>
+          <input type="date" id="inp-date">
+        </div>
+        <div class="field">
+          <label>Giờ sinh</label>
+          <input type="time" id="inp-time" value="09:30">
+        </div>
+      </div>
+
+      <label id="row-leap" class="chk-row" style="display:none;">
+        <input type="checkbox" id="inp-leap"> Sinh vào tháng Nhuận Âm lịch
+      </label>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Nơi sinh</label>
+          <select id="inp-place"></select>
+        </div>
+        <div class="field">
+          <label>Năm muốn xem hạn</label>
+          <input type="number" id="inp-target-year" min="1940" max="2080">
+        </div>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <div class="field">
+        <label>Việc cần hỏi thêm <span style="font-weight:400;color:#f2cf83;">(Xem quẻ Kinh Dịch — không bắt buộc)</span></label>
+        <textarea id="inp-question" placeholder="Nhập câu hỏi sự việc muốn gieo quẻ Kinh Dịch (VD: Mua đất, đầu tư, đổi việc, tình cảm...)"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Cách gieo quẻ Kinh Dịch</label>
+        <select id="inp-ic-method" onchange="onIchingMethodChange()">
+          <option value="coins_random">🎲 Hệ thống gieo hộ (3 đồng xu tự động)</option>
+          <option value="manual_lines">🪙 Tự gieo 3 đồng xu (6 lần) / Nhập kết quả</option>
+          <option value="numbers">🔢 Chọn 2 số yêu thích (Mai Hoa Dịch Số)</option>
+          <option value="time">🕒 Gieo theo ngày giờ hiện tại (Mai Hoa)</option>
+        </select>
+      </div>
+
+      <div id="box-manual-coins" class="coin-box" style="display:none;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn-sec" id="btn-toss" onclick="tossOneLine()" style="flex:1;">🪙 Tung 3 xu trên web (Lần 1/6)</button>
+          <button type="button" class="btn-sec" onclick="resetToss()">↺ Xóa</button>
+        </div>
+        <div class="coin-pick-label">Hoặc tự gieo 3 xu thật ngoài đời rồi bấm chọn kết quả từng lần (từ Hào 1 → Hào 6):</div>
+        <div class="coin-pick-grid">
+          <button type="button" class="coin-pick-btn" onclick="pickRealCoin(6)">3 Sấp (6 • Âm động)</button>
+          <button type="button" class="coin-pick-btn" onclick="pickRealCoin(7)">2 Sấp 1 Ngửa (7 • Dương)</button>
+          <button type="button" class="coin-pick-btn" onclick="pickRealCoin(8)">1 Sấp 2 Ngửa (8 • Âm)</button>
+          <button type="button" class="coin-pick-btn" onclick="pickRealCoin(9)">3 Ngửa (9 • Dương động)</button>
+        </div>
+        <div class="field" style="margin-bottom:4px;">
+          <label style="font-size:11px;color:#bfb3a2;">Kết quả 6 hào (Hào 1 → Hào 6, có thể gõ tay):</label>
+          <input id="inp-lines" value="" placeholder="VD: 7,8,9,7,6,8" oninput="onManualLinesInput()">
+        </div>
+        <div id="coin-log" class="coin-lines-preview">Chưa có hào nào — bấm tung xu hoặc chọn kết quả đủ 6 lần.</div>
+      </div>
+
+      <div id="box-numbers" class="coin-box" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:11.5px; color:var(--gold-bright); font-weight:700;">🔢 Mai Hoa theo 2 số yêu thích</span>
+          <button type="button" class="btn-sec" style="padding:3px 8px; font-size:11px;" onclick="fillRandomFavNumbers()">🎲 Chọn ngẫu nhiên</button>
+        </div>
+        <div class="row-2">
+          <div class="field" style="margin-bottom:6px;">
+            <label>Số yêu thích 1</label>
+            <input type="number" id="inp-num-1" min="1" max="9999" placeholder="VD: 18">
+          </div>
+          <div class="field" style="margin-bottom:6px;">
+            <label>Số yêu thích 2</label>
+            <input type="number" id="inp-num-2" min="1" max="9999" placeholder="VD: 25">
+          </div>
+        </div>
+        <div class="field">
+          <label>Số thứ 3 <span style="font-weight:400;color:#9d9080;">(Tùy chọn — trống sẽ tính theo giờ)</span></label>
+          <input type="number" id="inp-num-3" min="1" max="9999" placeholder="Để trống nếu chỉ dùng 2 số">
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-primary" onclick="runAnalyze()">🔮 XEM LÁ SỐ NGAY</button>
+    <button type="button" class="btn-demo" onclick="loadSampleProfile()">✨ Xem thử 1 lá số mẫu</button>
+  </aside>
+
+  <main class="main">
+    <!-- MÀN HÌNH NGHỆ THUẬT TRƯỚC KHI LẬP LÁ SỐ -->
+    <div id="welcome-view" class="editorial-showcase" data-reveal>
+      <div class="welcome-card">
+        <h2>Khởi Lập Hồ Sơ Mệnh Lý Đông – Tây</h2>
+        <p style="color:var(--muted);font-size:14.5px;max-width:62ch;margin:0;">
+          Chỉ cần điền thông tin ở khung <strong>Thông Tin Đương Số</strong> bên trái rồi bấm <strong>Xem Lá Số Ngay</strong>. Hệ thống tự động an hơn 105 sao Tử Vi, cân đong Ngũ Hành, giải mã Thần Số Học và gieo quẻ Kinh Dịch.
+        </p>
+        <div class="welcome-steps">
+          <div class="w-step">
+            <strong>1. Lá Số Tử Vi 12 Cung</strong>
+            Bấm trực tiếp vào từng cung Mệnh, Điền Trạch, Tài Bạch, Quan Lộc, Phu Thê để xem tia chiếu Tam Phương Tứ Chính.
+          </div>
+          <div class="w-step">
+            <strong>2. Ngũ Hành & Thần Số Học</strong>
+            Đối chiếu chéo hành vượng/khuyết phương Đông với Số Chủ Đạo, Kim Tự Tháp 4 Đỉnh Cao và chấm điểm Tên đẹp.
+          </div>
+          <div class="w-step">
+            <strong>3. Gieo Quẻ & AI Luận Sâu</strong>
+            Gieo quẻ Lục Hào cho thương vụ cụ thể, chọn hướng xuất hành đẹp và nhờ AI Gemini luận giải trực tiếp.
+          </div>
+        </div>
+      </div>
+
+      <div class="art-banner-grid">
+        <div class="art-story-card">
+          <img src="/assets/images/five_elements.jpg" alt="Ngũ Hành Sơn Thủy Đông Phương" loading="lazy">
+          <div class="art-story-overlay">
+            <h3>Ngũ Hành Bản Mệnh & Điền Trạch</h3>
+            <p>Cân bằng Kim – Mộc – Thủy – Hỏa – Thổ theo mùa sinh để chọn đúng thời điểm tấn công, tích lũy tài sản và an cư bền vững.</p>
+          </div>
+        </div>
+        <div class="art-story-card">
+          <img src="/assets/images/iching_oracle.jpg" alt="Cổ Pháp Gieo Quẻ Kinh Dịch Lục Hào" loading="lazy">
+          <div class="art-story-overlay">
+            <h3>Cổ Pháp Lục Hào & Bát Môn Kỳ Môn</h3>
+            <p>Ba đồng xu cổ kết hợp la bàn Bát Quái giúp soi tỏ cát hung từng sự việc và chọn đúng hướng Khai – Hưu – Sinh khi xuất hành.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VÙNG KẾT QUẢ TƯƠNG TÁC -->
+    <div id="result-view" style="display:none;">
+      <div class="cheer-strip">
+        <img src="/assets/images/user_photo_1.png" alt="Cao nhân đồng hành">
+        <div style="flex:1;font-size:13px;">
+          <strong style="color:var(--gold-bright);">✦ Lời nhắn từ Hội Đồng Cao Nhân Đồ Sơn:</strong>
+          Mệnh tốt không bằng Vận tốt, Vận tốt không bằng Tâm sáng & Chọn đúng sóng! Hãy bấm từng thẻ bên dưới để khám phá trọn vẹn hồ sơ của bạn.
+        </div>
+        <img src="/assets/images/user_photo_2.png" alt="Mạnh mẽ lên nào">
+      </div>
+
+      <div id="sync-banner" class="profile-bar"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('tuvi', this)">🌌 Lá Số Tử Vi</button>
+        <button class="tab-btn" onclick="switchTab('bazi', this)">📜 Ngũ Hành Bát Tự</button>
+        <button class="tab-btn" onclick="switchTab('numerology', this)">🔢 Thần Số Học & Đặt Tên</button>
+        <button class="tab-btn" onclick="switchTab('iching', this)">☯️ Quẻ Kinh Dịch</button>
+        <button class="tab-btn" onclick="switchTab('qimen', this)">🧭 Hướng & Giờ Tốt</button>
+        <button class="tab-btn" onclick="switchTab('ai', this)">🤖 Đông-Tây & AI Giải</button>
+        <div class="toolbar-right">
+          <button class="action-btn" onclick="downloadHtmlReport()">💾 Tải Hồ Sơ Về Máy</button>
+          <button class="action-btn" onclick="window.print()">🖨️ In / Lưu PDF</button>
+        </div>
+      </div>
+
+      <div id="pane-tuvi" class="tab-pane active">
+        <div class="tuvi-hint">
+          👆 <strong>Mẹo xem nhanh:</strong> Bấm chuột vào bất kỳ ô cung nào (Mệnh, Điền Trạch, Tài Bạch, Quan Lộc, Phu Thê...) để vẽ tia chiếu <em>Tam Phương Tứ Chính</em>.
+        </div>
+        <div class="tuvi-wrapper" id="tuvi-wrap">
+          <svg id="tptc-svg"></svg>
+          <div class="tuvi-board" id="tuvi-board"></div>
+        </div>
+      </div>
+
+      <div id="pane-bazi" class="tab-pane"></div>
+      <div id="pane-numerology" class="tab-pane"></div>
+      <div id="pane-iching" class="tab-pane"></div>
+      <div id="pane-qimen" class="tab-pane"></div>
+      <div id="pane-ai" class="tab-pane"></div>
+    </div>
+  </main>
+</section>
+
+<!-- ACT IV: SIGNATURE FOOTER CLOSE -->
+<footer class="site-footer">
+  <div class="footer-ornament">✦ ☯ ✦</div>
+  <p class="footer-note">
+    Hệ thống chiêm nghiệm Tử Vi, Bát Tự, Thần Số Học &amp; Kinh Dịch giúp thấu hiểu bản thân, nắm bắt thời vận và định hướng chiến lược cuộc sống.
+  </p>
+  <div class="footer-copyright">❤️ From K.B - Hội BĐS Đồ Sơn ❤️</div>
+</footer>
 
 <script>
+// SCROLL-CRAFT TIMELINE & REVEAL ENGINE
+(function initScrollCraftEngine() {
+  let ticking = false;
+  function updateScrollVars() {
+    const sy = window.scrollY || window.pageYOffset || 0;
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const prog = Math.min(1, Math.max(0, sy / maxScroll));
+    document.documentElement.style.setProperty("--scroll-progress", prog.toFixed(4));
+    if (sy < 1100) {
+      document.documentElement.style.setProperty("--hero-scroll", sy.toFixed(1));
+    }
+    ticking = false;
+  }
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateScrollVars);
+      ticking = true;
+    }
+  }, { passive: true });
+  updateScrollVars();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("is-visible");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+  });
+})();
+
 const PROVINCES_63 = [
-  "Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ",
+  "Hải Phòng", "Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Quảng Ninh", "Cần Thơ",
   "An Giang", "Bà Rịa - Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu",
   "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước",
   "Bình Thuận", "Cà Mau", "Cao Bằng", "Đắk Lắk", "Đắk Nông",
@@ -400,7 +882,7 @@ const PROVINCES_63 = [
   "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu",
   "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định",
   "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên",
-  "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị",
+  "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Trị",
   "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên",
   "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Trà Vinh", "Tuyên Quang",
   "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
@@ -408,13 +890,13 @@ const PROVINCES_63 = [
 
 let STATE = null;
 let SELECTED_BRANCH = null;
-let manualCoinMode = false;
 let tossedLines = [];
 
 function initDefaults() {
   const selPlace = document.getElementById("inp-place");
   selPlace.innerHTML = PROVINCES_63.map(p => `<option value="${p}">${p}</option>`).join("");
   document.getElementById("inp-target-year").value = new Date().getFullYear();
+  onIchingMethodChange();
 }
 
 function esc(s) {
@@ -427,45 +909,82 @@ function onDateTypeChange() {
   document.getElementById("row-leap").style.display = isLunar ? "flex" : "none";
 }
 
-function toggleManualCoinBox() {
-  manualCoinMode = !manualCoinMode;
-  document.getElementById("box-manual-coins").style.display = manualCoinMode ? "block" : "none";
-  if (!manualCoinMode) resetToss();
+function onIchingMethodChange() {
+  const m = document.getElementById("inp-ic-method").value;
+  document.getElementById("box-manual-coins").style.display = (m === "manual_lines") ? "block" : "none";
+  document.getElementById("box-numbers").style.display = (m === "numbers") ? "block" : "none";
+}
+
+function renderCoinLog() {
+  const step = tossedLines.length;
+  const btn = document.getElementById("btn-toss");
+  if (btn) {
+    btn.textContent = step < 6
+      ? `🪙 Tung 3 xu trên web (Lần ${step + 1}/6)`
+      : `✅ Đã đủ 6 lần (Bấm để tung lại)`;
+  }
+  const descMap = {6:"6 • Lão Âm động (---x---)", 7:"7 • Thiếu Dương (-------)", 8:"8 • Thiếu Âm (--- ---)", 9:"9 • Lão Dương động (---o---)"};
+  const logEl = document.getElementById("coin-log");
+  if (!tossedLines.length) {
+    logEl.innerHTML = "Chưa có hào nào — bấm tung xu hoặc chọn kết quả đủ 6 lần.";
+    return;
+  }
+  logEl.innerHTML = tossedLines.map((item, i) =>
+    `Hào ${i+1}: ${item.faces ? '[' + esc(item.faces) + '] ➔ ' : ''}<strong>${descMap[item.sum] || item.sum}</strong>`
+  ).join("<br>");
+}
+
+function addManualLine(sum, faces) {
+  if (tossedLines.length >= 6) tossedLines = [];
+  tossedLines.push({sum, faces});
+  document.getElementById("inp-lines").value = tossedLines.map(x => x.sum).join(",");
+  renderCoinLog();
 }
 
 function tossOneLine() {
-  if (tossedLines.length >= 6) tossedLines = [];
   const coins = [0,1,2].map(() => Math.random() < 0.5 ? {v:2, lbl:"Sấp"} : {v:3, lbl:"Ngửa"});
   const sum = coins[0].v + coins[1].v + coins[2].v;
-  tossedLines.push({sum, faces: coins.map(c => c.lbl).join(" - ")});
-  document.getElementById("inp-lines").value = tossedLines.map(x => x.sum).join(",");
+  addManualLine(sum, coins.map(c => c.lbl).join(" - "));
+}
 
-  const step = tossedLines.length;
-  document.getElementById("btn-toss").textContent = step < 6
-    ? `🪙 Tung đồng xu (Lần ${step + 1}/6)`
-    : `✅ Đã đủ 6 lần (Bấm để tung lại)`;
+function pickRealCoin(val) {
+  const faceMap = {6: "3 Sấp", 7: "2 Sấp - 1 Ngửa", 8: "1 Sấp - 2 Ngửa", 9: "3 Ngửa"};
+  addManualLine(val, faceMap[val] || "");
+}
 
-  const descMap = {6:"Hào Âm động", 7:"Hào Dương", 8:"Hào Âm", 9:"Hào Dương động"};
-  document.getElementById("coin-log").innerHTML = tossedLines.map((item, i) =>
-    `Lần ${i+1}: [${item.faces}] ➔ <strong>${descMap[item.sum]}</strong>`
-  ).join("<br>");
+function onManualLinesInput() {
+  const raw = document.getElementById("inp-lines").value.trim();
+  if (!raw) {
+    tossedLines = [];
+    renderCoinLog();
+    return;
+  }
+  const parts = raw.split(/[\s,;]+/).filter(Boolean).map(x => parseInt(x, 10)).filter(n => [6,7,8,9].includes(n)).slice(0, 6);
+  const faceMap = {6: "3 Sấp", 7: "2 Sấp - 1 Ngửa", 8: "1 Sấp - 2 Ngửa", 9: "3 Ngửa"};
+  tossedLines = parts.map(v => ({sum: v, faces: faceMap[v]}));
+  renderCoinLog();
 }
 
 function resetToss() {
   tossedLines = [];
   document.getElementById("inp-lines").value = "";
-  document.getElementById("btn-toss").textContent = "🪙 Tung đồng xu (Lần 1/6)";
-  document.getElementById("coin-log").innerHTML = "";
+  renderCoinLog();
+}
+
+function fillRandomFavNumbers() {
+  document.getElementById("inp-num-1").value = Math.floor(Math.random() * 99) + 1;
+  document.getElementById("inp-num-2").value = Math.floor(Math.random() * 99) + 1;
+  document.getElementById("inp-num-3").value = "";
 }
 
 function loadSampleProfile() {
   document.getElementById("inp-name").value = "Nguyễn Minh Quân";
-  document.getElementById("inp-nickname").value = "Leo Quân";
+  document.getElementById("inp-nickname").value = "K.B Đồ Sơn";
   document.getElementById("inp-gender").value = "nam";
   document.getElementById("inp-datetype").value = "solar";
   document.getElementById("inp-date").value = "1992-08-16";
   document.getElementById("inp-time").value = "09:30";
-  document.getElementById("inp-place").value = "Hà Nội";
+  document.getElementById("inp-place").value = "Hải Phòng";
   SELECTED_BRANCH = null;
   runAnalyze();
 }
@@ -491,12 +1010,33 @@ async function runAnalyze() {
     document.getElementById("inp-date").focus();
     return;
   }
-  if (manualCoinMode && tossedLines.length > 0 && tossedLines.length < 6) {
-    alert("Bạn đang tung xu dở — hãy bấm nút Tung đồng xu cho đủ 6 lần nhé!");
-    return;
+
+  const icMethod = document.getElementById("inp-ic-method").value;
+  let linesStr = "";
+  let numbersStr = "";
+
+  if (icMethod === "manual_lines") {
+    const rawLines = document.getElementById("inp-lines").value.trim();
+    const parsed = rawLines ? rawLines.split(/[\s,;]+/).filter(Boolean).map(x => parseInt(x, 10)) : [];
+    if (parsed.length !== 6 || parsed.some(v => ![6, 7, 8, 9].includes(v))) {
+      alert("Bạn đang chọn Tự gieo quẻ Kinh Dịch — hãy bấm tung/chọn hoặc nhập đủ 6 hào (chỉ gồm số 6, 7, 8, 9 từ Hào 1 đến Hào 6) nhé!");
+      document.getElementById("inp-lines").focus();
+      return;
+    }
+    linesStr = parsed.join(",");
+  } else if (icMethod === "numbers") {
+    const n1 = parseInt(document.getElementById("inp-num-1").value, 10);
+    const n2 = parseInt(document.getElementById("inp-num-2").value, 10);
+    const n3Raw = document.getElementById("inp-num-3").value.trim();
+    const n3 = n3Raw ? parseInt(n3Raw, 10) : NaN;
+    if (!Number.isFinite(n1) || n1 <= 0 || !Number.isFinite(n2) || n2 <= 0) {
+      alert("Bạn đang chọn Gieo quẻ theo 2 số yêu thích — vui lòng nhập đủ Số yêu thích 1 và Số yêu thích 2 (số nguyên dương) nhé!");
+      document.getElementById("inp-num-1").focus();
+      return;
+    }
+    numbersStr = (Number.isFinite(n3) && n3 > 0) ? `${n1},${n2},${n3}` : `${n1},${n2}`;
   }
 
-  const useManual = manualCoinMode && tossedLines.length === 6;
   const payload = {
     name: document.getElementById("inp-name").value || "Đương Số",
     nickname: document.getElementById("inp-nickname").value || "",
@@ -513,9 +1053,9 @@ async function runAnalyze() {
     zi_sect: 2,
     target_year: parseInt(document.getElementById("inp-target-year").value, 10),
     question: document.getElementById("inp-question").value,
-    iching_method: useManual ? "manual_lines" : "coins_random",
-    lines: useManual ? document.getElementById("inp-lines").value : "",
-    numbers: ""
+    iching_method: icMethod,
+    lines: linesStr,
+    numbers: numbersStr
   };
 
   const res = await fetch("/api/analyze", {
@@ -529,12 +1069,14 @@ async function runAnalyze() {
     return;
   }
   STATE = json.data;
+  window.STATE = STATE;
   document.getElementById("welcome-view").style.display = "none";
   document.getElementById("result-view").style.display = "block";
 
   const menhPalace = STATE.tuvi.palaces_by_branch.find(p => p.is_menh);
   if (SELECTED_BRANCH === null && menhPalace) SELECTED_BRANCH = menhPalace.branch_idx;
   renderAll();
+  document.getElementById("result-view").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function renderAll() {
@@ -570,6 +1112,7 @@ function renderFriendlyProfileBar() {
     <span>👤 <strong>${esc(m.name)}</strong> (${genderLabel})</span>
     <span>📅 <strong>Dương lịch:</strong> ${esc(formatDateVN(m.clock_time))}</span>
     <span>🌙 <strong>Âm lịch:</strong> ${esc(prof.lunar_date)} (${esc(prof.birth_hour)})</span>
+    <span>📍 <strong>Nơi sinh:</strong> ${esc(m.place)}</span>
     <span>🔢 <strong>Số Chủ Đạo:</strong> <strong style="color:var(--crimson)">${esc(lpCode)}</strong> (Năm cá nhân ${esc(pyNum)})</span>
     <span>🎯 <strong>Xem hạn năm:</strong> ${tf.target_solar_year} (${tf.nominal_age} tuổi âm)</span>
     ${warnHtml}
@@ -691,7 +1234,7 @@ function renderTuviBoard() {
   const centerHtml = `
     <div class="thien-ban">
       <div>
-        <div class="tb-header">LÁ SỐ TỬ VI — ${esc(STATE.meta.name.toUpperCase())}</div>
+        <div class="tb-header">THIÊN BÀN TỬ VI — ${esc(STATE.meta.name.toUpperCase())}</div>
         <div class="tb-meta">
           <div><strong>Bản Mệnh:</strong> ${esc(prof.ban_menh_nayin)}</div>
           <div><strong>Cục:</strong> ${esc(prof.cuc)}</div>
@@ -742,15 +1285,19 @@ function drawTptcLines() {
   const svg = document.getElementById("tptc-svg");
   const wrap = document.getElementById("tuvi-wrap");
   if (!svg || !wrap || SELECTED_BRANCH === null) return;
-  const wRect = wrap.getBoundingClientRect();
-  if (wRect.width === 0) return;
-  svg.setAttribute("viewBox", `0 0 ${wRect.width} ${wRect.height}`);
+  const board = document.getElementById("tuvi-board");
+  if (!board) return;
+  const bRect = board.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  svg.setAttribute("viewBox", `0 0 ${bRect.width} ${bRect.height}`);
+  svg.style.width = bRect.width + "px";
+  svg.style.height = bRect.height + "px";
 
   function centerOf(b) {
     const el = document.getElementById("palace-b-" + b);
     if (!el) return null;
     const r = el.getBoundingClientRect();
-    return { x: r.left - wRect.left + r.width / 2, y: r.top - wRect.top + r.height / 2 };
+    return { x: r.left - bRect.left + r.width / 2, y: r.top - bRect.top + r.height / 2 };
   }
 
   const p0 = centerOf(SELECTED_BRANCH);
@@ -761,10 +1308,10 @@ function drawTptcLines() {
 
   svg.innerHTML = `
     <polygon points="${p0.x},${p0.y} ${pT1.x},${pT1.y} ${pT2.x},${pT2.y}"
-      fill="rgba(168,121,40,0.06)" stroke="rgba(168,121,40,0.65)" stroke-width="2" stroke-dasharray="6,4"/>
+      fill="rgba(184,137,51,0.07)" stroke="rgba(184,137,51,0.72)" stroke-width="2" stroke-dasharray="6,4"/>
     <line x1="${p0.x}" y1="${p0.y}" x2="${pOpp.x}" y2="${pOpp.y}"
-      stroke="rgba(143,29,29,0.72)" stroke-width="2.4" stroke-dasharray="4,4"/>
-    <circle cx="${p0.x}" cy="${p0.y}" r="5" fill="#8f1d1d"/>
+      stroke="rgba(143,29,29,0.75)" stroke-width="2.4" stroke-dasharray="4,4"/>
+    <circle cx="${p0.x}" cy="${p0.y}" r="5.5" fill="#8f1d1d"/>
   `;
 }
 window.addEventListener("resize", drawTptcLines);
@@ -795,6 +1342,13 @@ function renderBaziPane() {
 
   document.getElementById("pane-bazi").innerHTML = `
     <div class="card">
+      <div class="pane-art-strip">
+        <img src="/assets/images/five_elements.jpg" alt="Ngũ Hành Bản Mệnh">
+        <div class="strip-txt">
+          <h4>Bản Đồ Khí Chất Ngũ Hành & Đại Vận 10 Năm</h4>
+          <p>Nhận diện hành vượng – hành khuyết để chọn màu sắc, hướng nhà đất, đối tác và chu kỳ đầu tư thuận mệnh.</p>
+        </div>
+      </div>
       <h3>📜 Tỷ Lệ Ngũ Hành Bản Mệnh (Kim – Mộc – Thủy – Hỏa – Thổ)</h3>
       <div class="elem-bars">${bars}</div>
 
@@ -873,7 +1427,7 @@ function renderNumerologyPane() {
         <div style="background:var(--gold-soft);border-left:4px solid var(--gold);padding:10px 14px;border-radius:6px;font-size:13px;">
           <div>• <strong>Số Khuyết cần rèn luyện:</strong> ${num.name_breakdown.karmic_lessons_missing.join(", ") || "Đủ trọn vẹn 1–9"} | <strong>Đam mê ẩn giấu:</strong> ${num.name_breakdown.hidden_passions.join(", ") || "Cân bằng"} | <strong>Số Họ tên lấp chỗ trống Ngày sinh:</strong> <strong style="color:var(--jade)">${num.name_breakdown.filled_birth_chart_gaps.join(", ") || "—"}</strong></div>
           ${chal ? `<div>• <strong>Rung động Tên Chaldean (Babylon cổ đại):</strong> Số kép <strong>${chal.compound_number}/${chal.single_digit} — ${esc(chal.compound_title)} [${esc(chal.compound_rank)}]</strong>: ${esc(chal.compound_meaning)}</div>` : ""}
-          ${nick ? `<div style="margin-top:4px;color:var(--navy);">• <strong>Tên thường gọi / Thương hiệu (${esc(nick.nickname)}):</strong> Sứ mệnh ${nick.expression_code} • Linh hồn ${nick.soul_urge_code} • Chaldean <strong>${nick.chaldean.compound_number}/${nick.chaldean.single_digit} (${esc(nick.chaldean.compound_title)} - ${esc(nick.chaldean.compound_rank)})</strong> • Bù thêm số: ${nick.fills_birth_chart_missing_digits.join(", ") || "—"}</div>` : ""}
+          ${nick ? `<div style="margin-top:4px;color:var(--navy);">• <strong>Nickname (${esc(nick.nickname)}):</strong> Sứ mệnh ${nick.expression_code} • Linh hồn ${nick.soul_urge_code} • Chaldean <strong>${nick.chaldean.compound_number}/${nick.chaldean.single_digit} (${esc(nick.chaldean.compound_title)} - ${esc(nick.chaldean.compound_rank)})</strong> • Bù thêm số: ${nick.fills_birth_chart_missing_digits.join(", ") || "—"}</div>` : ""}
         </div>
       </div>
     `;
@@ -987,12 +1541,12 @@ function renderNumerologyPane() {
     </div>
 
     <div class="card">
-      <h3>💎 Công Cụ Chấm Điểm Đặt Tên Con / Nghệ Danh / Thương Hiệu (Pythagoras × Chaldean)</h3>
+      <h3>💎 Công Cụ Chấm Điểm Đặt Tên Con / Nghệ Danh / Thương Hiệu Dự Án</h3>
       <p style="font-size:13px;color:var(--muted);margin-top:0;">
-        Nhập nhiều phương án tên (cách nhau bằng dấu phẩy) để hệ thống chấm điểm độ Cát tường theo <strong>Số Kép Chaldean Babylon</strong>, kiểm tra <strong>Nợ nghiệp</strong> và xem tên nào <strong>lấp đầy nhiều ô trống nhất</strong> cho ngày sinh hiện tại:
+        Nhập nhiều phương án tên (cách nhau bằng dấu phẩy) để chấm điểm độ Cát tường theo <strong>Số Kép Chaldean Babylon</strong>, kiểm tra <strong>Nợ nghiệp</strong> và xem tên nào <strong>bù khuyết tốt nhất</strong> cho ngày sinh hiện tại:
       </p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-        <input id="inp-cand-names" style="flex:1;min-width:260px;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13.5px;" placeholder="VD: Nguyễn Minh Khôi, Nguyễn Đăng Khoa, Nguyễn Hoàng Bách">
+        <input id="inp-cand-names" style="flex:1;min-width:260px;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13.5px;" placeholder="VD: Hải Phát Đồ Sơn, Hoàng Gia Land, Minh Khôi">
         <button type="button" class="btn-primary" style="width:auto;margin:0;padding:9px 18px;" onclick="runNameCheckUI()">⚖️ Chấm Điểm & So Sánh</button>
       </div>
       <div id="name-check-results"></div>
@@ -1065,7 +1619,17 @@ function renderIchingPane() {
 
   document.getElementById("pane-iching").innerHTML = `
     <div class="card">
+      <div class="pane-art-strip">
+        <img src="/assets/images/iching_oracle.jpg" alt="Cổ Pháp Gieo Quẻ Kinh Dịch">
+        <div class="strip-txt">
+          <h4>Lục Hào Nạp Giáp & 64 Quẻ Chu Dịch</h4>
+          <p>Soi tỏ thời cơ, nhân quả và điểm ứng nghiệm của từng thương vụ, hợp đồng hay quyết định trọng đại.</p>
+        </div>
+      </div>
       <h3>☯️ Kết Quả Gieo Quẻ Kinh Dịch ${ic.question ? '— "' + esc(ic.question) + '"' : ''}</h3>
+      <div style="font-size:12.5px;color:var(--muted);margin:-4px 0 12px;">
+        <strong>Phương pháp gieo:</strong> ${esc(ic.cast_method)} &nbsp;•&nbsp; <strong>Thời điểm lập quẻ:</strong> ${esc(ic.cast_time)}
+      </div>
       ${mhHtml}
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px; font-size:13.5px;">
         <div style="padding:12px 14px; background:#faf6ed; border:1px solid var(--border); border-radius:8px;">
@@ -1133,7 +1697,7 @@ function renderQimenPane() {
     <div class="card">
       <h3>🧭 Bảng Phương Hướng Xuất Hành & Gặp Gỡ Tốt Nhất Giờ Hiện Tại</h3>
       <p style="font-size:13px;color:var(--muted);margin-top:0;">
-        Các ô viền xanh lá cây (<strong>★ Hướng Tốt</strong>) là hướng thuận lợi nhất nếu bạn cần đi gặp khách hàng, ký hợp đồng hoặc xuất hành ngay lúc này.
+        Các ô viền xanh lá cây (<strong>★ Hướng Tốt</strong>) là hướng thuận lợi nhất nếu bạn cần đi xem đất, gặp khách hàng, ký hợp đồng hoặc xuất hành ngay lúc này.
       </p>
       <div class="qm-board">${cells}</div>
     </div>
@@ -1142,6 +1706,7 @@ function renderQimenPane() {
 
 function buildMasterPrompt() {
   const q = document.getElementById("inp-question").value;
+  const icMethod = document.getElementById("inp-ic-method").value;
   const compact = {
     thong_tin_duong_so: {
       ho_ten: STATE.meta.name,
@@ -1171,21 +1736,21 @@ function buildMasterPrompt() {
       chaldean_ten: STATE.numerology.chaldean_name,
       ma_tran_dinh_menh_22: STATE.numerology.destiny_matrix_22
     } : undefined,
-    que_kinh_dich: q ? STATE.iching : undefined
+    que_kinh_dich: (q || icMethod !== "coins_random") ? STATE.iching : undefined
   };
-  return `Hãy đóng vai chuyên gia Mệnh lý Đông – Tây (Tử Vi, Bát Tự, Thần Số Học Pythagoras/Chaldean và Kinh Dịch) giàu kinh nghiệm, giải thích bằng tiếng Việt thật gần gũi, dễ hiểu và thực tế cho người bình thường. Dưới đây là hồ sơ đã được tính toán bằng code chính xác 100% — bạn KHÔNG ĐƯỢC tự tính lại sao, đổi lịch nhẩm hay cộng nhẩm con số, hãy dựa đúng vào dữ liệu này để luận giải chi tiết (kèm kiểm chứng chéo Đông × Tây) về Tính cách, Sự nghiệp - Tài chính, Tình cảm - Gia đạo, Bài học chuyển hóa và Vận hạn năm ${STATE.tuvi.target_year_fortune.target_solar_year}${q ? ' (đồng thời giải đáp kỹ câu hỏi: "' + q + '")' : ''}:\n\n` + JSON.stringify(compact, null, 2);
+  return `Hãy đóng vai chuyên gia Mệnh lý Đông – Tây (Tử Vi, Bát Tự, Thần Số Học Pythagoras/Chaldean và Kinh Dịch) giàu kinh nghiệm, giải thích bằng tiếng Việt thật gần gũi, dễ hiểu và thực tế cho người bình thường. Dưới đây là hồ sơ đã được tính toán bằng code chính xác 100% — bạn KHÔNG ĐƯỢC tự tính lại sao, đổi lịch nhẩm hay cộng nhẩm con số, hãy dựa đúng vào dữ liệu này để luận giải chi tiết (kèm kiểm chứng chéo Đông × Tây) về Tính cách, Sự nghiệp - Tài chính - Điền sản, Tình cảm - Gia đạo, Bài học chuyển hóa và Vận hạn năm ${STATE.tuvi.target_year_fortune.target_solar_year}${q ? ' (đồng thời giải đáp kỹ câu hỏi: "' + q + '")' : ''}:\n\n` + JSON.stringify(compact, null, 2);
 }
 
 function renderAiPane() {
   const promptTxt = buildMasterPrompt();
   document.getElementById("pane-ai").innerHTML = `
     <div class="card">
-      <h3>🤖 Nhờ AI Luận Giải Chi Tiết Như Thầy Xem Trực Tiếp</h3>
+      <h3>📋 Xuất Dữ Liệu Chuẩn Sang ChatGPT / Google Gemini Web</h3>
       <p style="font-size:13.5px;color:var(--ink);">
-        Lá số của bạn đã được tính chuẩn xác 100% ở khung dưới. Bạn chỉ cần bấm nút <strong>Copy Toàn Bộ Lá Số</strong> rồi dán vào <strong>Google Gemini</strong> hoặc <strong>ChatGPT</strong> là sẽ nhận ngay bài luận giải sâu bằng tiếng Việt dễ hiểu!
+        Ngoài tính năng luận giải trực tiếp ở khung trên, bạn cũng có thể bấm <strong>Copy Toàn Bộ Hồ Sơ</strong> bên dưới để dán sang ứng dụng ChatGPT hoặc Gemini cá nhân bất cứ lúc nào:
       </p>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
-        <button class="btn-primary" style="width:auto;padding:10px 18px;margin:0;" onclick="copyMasterPrompt()">📋 Copy Toàn Bộ Lá Số Để Hỏi AI</button>
+        <button class="btn-primary" style="width:auto;padding:10px 18px;margin:0;" onclick="copyMasterPrompt()">📋 Copy Toàn Bộ Hồ Sơ Để Hỏi AI</button>
         <a href="https://gemini.google.com/app" target="_blank" style="text-decoration:none;"><button type="button" class="action-btn" style="padding:10px 14px;">↗ Mở Google Gemini</button></a>
         <a href="https://chatgpt.com/" target="_blank" style="text-decoration:none;"><button type="button" class="action-btn" style="padding:10px 14px;">↗ Mở ChatGPT</button></a>
       </div>
