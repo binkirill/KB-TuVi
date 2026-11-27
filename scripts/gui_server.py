@@ -211,6 +211,14 @@ def dispatch_get(path: str) -> Tuple[int, str, bytes]:
     if clean_path in ("/assets/gemini_ai_addon.js", "/api/addon", "/api/addon.py"):
         with open(AI_ADDON_JS_PATH, "rb") as f:
             return 200, "application/javascript; charset=utf-8", f.read()
+    if clean_path.startswith("/assets/scrollcraft/"):
+        sc_name = os.path.basename(clean_path)
+        sc_path = os.path.join(SKILL_ROOT, "assets", "scrollcraft", sc_name)
+        if os.path.isfile(sc_path):
+            ext = os.path.splitext(sc_name)[1].lower()
+            mime = {".js": "application/javascript; charset=utf-8", ".css": "text/css; charset=utf-8"}.get(ext, "text/plain; charset=utf-8")
+            with open(sc_path, "rb") as f:
+                return 200, mime, f.read()
     if clean_path.startswith("/assets/images/"):
         img_name = os.path.basename(clean_path)
         img_path = os.path.join(SKILL_ROOT, "assets", "images", img_name)

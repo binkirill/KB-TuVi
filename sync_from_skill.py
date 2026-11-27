@@ -101,18 +101,21 @@ def sync_tree(src_root: str, dst_root: str, mirror_deletes: bool = False) -> int
                         print(f"  [DEL]  {sub}/{rel_key} (đã xóa ở bản gốc)")
                         changed += 1
 
-    # Nếu đích là WEB_REPO (có vercel.json), đồng bộ thêm assets/images -> public/assets/images để Vercel CDN phục vụ trực tiếp
-    src_img_dir = os.path.join(src_root, "assets", "images")
-    if os.path.isfile(os.path.join(dst_root, "vercel.json")) and os.path.isdir(src_img_dir):
-        pub_img_dir = os.path.join(dst_root, "public", "assets", "images")
-        os.makedirs(pub_img_dir, exist_ok=True)
-        for fn in sorted(os.listdir(src_img_dir)):
-            sp = os.path.join(src_img_dir, fn)
-            dp = os.path.join(pub_img_dir, fn)
-            if os.path.isfile(sp) and (not os.path.isfile(dp) or open(sp, "rb").read() != open(dp, "rb").read()):
-                shutil.copy2(sp, dp)
-                print(f"  [SYNC] public/assets/images/{fn} -> {dst_root}")
-                changed += 1
+    # Nếu đích là WEB_REPO (có vercel.json), đồng bộ thêm assets/images và assets/scrollcraft -> public/assets/... để Vercel CDN phục vụ trực tiếp
+    if os.path.isfile(os.path.join(dst_root, "vercel.json")):
+        for sub_pub in ("images", "scrollcraft"):
+            src_sub_dir = os.path.join(src_root, "assets", sub_pub)
+            if not os.path.isdir(src_sub_dir):
+                continue
+            pub_sub_dir = os.path.join(dst_root, "public", "assets", sub_pub)
+            os.makedirs(pub_sub_dir, exist_ok=True)
+            for fn in sorted(os.listdir(src_sub_dir)):
+                sp = os.path.join(src_sub_dir, fn)
+                dp = os.path.join(pub_sub_dir, fn)
+                if os.path.isfile(sp) and (not os.path.isfile(dp) or open(sp, "rb").read() != open(dp, "rb").read()):
+                    shutil.copy2(sp, dp)
+                    print(f"  [SYNC] public/assets/{sub_pub}/{fn} -> {dst_root}")
+                    changed += 1
     return changed
 
 
