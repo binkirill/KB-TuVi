@@ -2967,13 +2967,14 @@
           </div>
 
           <div class="field">
-            <label for="tv-focus">Cung / Chủ đề muốn soi sâu nhất <span class="sub">(AI sẽ phân tích kỹ phần này)</span></label>
+            <label for="tv-focus">Chủ đề muốn thầy xem chuyên sâu nhất <span class="sub">(Soi kỹ từng tháng, vận hạn &amp; điều cần chú ý)</span></label>
             <select id="tv-focus" onchange="syncFocusQuestionFromTuvi()">
-              <option value="Luận tổng quát 12 cung Tử Vi, trọng tâm Mệnh - Tài Bạch - Quan Lộc - Điền Trạch và vận hạn năm xem">🌟 Tổng quát Mệnh · Tài Bạch · Quan Lộc · Điền Trạch</option>
-              <option value="Soi thật kỹ cung Tài Bạch, dòng tiền, cơ hội kiếm tiền, đầu tư và giữ lộc năm nay">💰 Chuyên sâu Cung Tài Bạch (Tiền bạc &amp; Đầu tư)</option>
-              <option value="Soi thật kỹ cung Điền Trạch, duyên mua bán đất đai, nhà cửa, bất động sản và tích sản">🏡 Chuyên sâu Cung Điền Trạch (Nhà cửa &amp; Đất đai)</option>
-              <option value="Soi thật kỹ cung Quan Lộc, công danh sự nghiệp, thăng tiến, chuyển việc và quý nhân">🚀 Chuyên sâu Cung Quan Lộc (Sự nghiệp &amp; Công danh)</option>
-              <option value="Soi thật kỹ cung Phu Thê, nhân duyên, hôn nhân gia đạo và đối tác làm ăn">❤️ Chuyên sâu Cung Phu Thê &amp; Gia Đạo</option>
+              <option data-topic="overview" value="Luận tổng quan toàn diện tính cách, công việc, tiền bạc, tình cảm, lộ trình chi tiết 12 tháng và vận hạn cần chú ý năm xem">🌟 Tổng quan toàn diện &amp; Lộ trình 12 tháng</option>
+              <option data-topic="money" value="Xem chuyên sâu Tiền bạc, Dòng tiền, cơ hội kiếm tiền, đầu tư, lộ trình 12 tháng tài lộc và các rủi ro hao tài cần tránh">💰 Chuyên sâu Tiền bạc, Dòng tiền &amp; Đầu tư (12 tháng)</option>
+              <option data-topic="realestate" value="Xem chuyên sâu Nhà cửa, Đất đai, duyên bất động sản, thời điểm đẹp từng tháng trong năm để mua bán/tích sản và lưu ý pháp lý">🏡 Chuyên sâu Nhà cửa, Đất đai &amp; Bất động sản (12 tháng)</option>
+              <option data-topic="career" value="Xem chuyên sâu Công việc, Sự nghiệp, thăng tiến, chuyển hướng, quý nhân, diễn biến từng tháng trong năm và lưu ý nơi công sở">🚀 Chuyên sâu Công việc, Sự nghiệp &amp; Thăng tiến (12 tháng)</option>
+              <option data-topic="love" value="Xem chuyên sâu Tình cảm, Hôn nhân, Gia đạo, nhân duyên từng tháng trong năm và điều cần giữ gìn để gia đình êm ấm">❤️ Chuyên sâu Tình cảm, Hôn nhân &amp; Gia đạo (12 tháng)</option>
+              <option data-topic="fortune12" value="Xem chuyên sâu Vận hạn, Sức khỏe, đi lại, giấy tờ thị phi, lộ trình chi tiết đủ 12 tháng trong năm và cách phòng tránh hóa giải">📅 Chuyên sâu Vận hạn, Sức khỏe &amp; Lưu ý 12 tháng</option>
             </select>
           </div>
         </div>
@@ -4113,7 +4114,8 @@ function selectGuide(vibeKey, fromTopCard) {
     const focusQ = vibeKey === "thuc-chien"
       ? (document.getElementById("tv-focus")?.value || "")
       : (vibeKey === "gieo-que" ? (document.getElementById("inp-question")?.value || "") : "");
-    window.__kbSetPreferredMode(g.aiMode, focusQ);
+    const topicId = vibeKey === "thuc-chien" ? getSelectedTuviTopic() : "overview";
+    window.__kbSetPreferredMode(g.aiMode, focusQ, topicId);
   }
 
   if (fromTopCard) {
@@ -4128,9 +4130,16 @@ function selectGuide(vibeKey, fromTopCard) {
   }
 }
 
+function getSelectedTuviTopic() {
+  const sel = document.getElementById("tv-focus");
+  if (!sel) return "overview";
+  const opt = sel.options[sel.selectedIndex];
+  return (opt && opt.dataset && opt.dataset.topic) ? opt.dataset.topic : "overview";
+}
+
 function syncFocusQuestionFromTuvi() {
   if (ACTIVE_VIBE === "thuc-chien" && typeof window.__kbSetPreferredMode === "function") {
-    window.__kbSetPreferredMode("tuvi", document.getElementById("tv-focus").value);
+    window.__kbSetPreferredMode("tuvi", document.getElementById("tv-focus").value, getSelectedTuviTopic());
   }
 }
 
@@ -4686,7 +4695,8 @@ async function runAnalyze() {
 
   const g = GUIDES[RESULT_MODE] || GUIDES["thuc-chien"];
   if (typeof window.__kbSetPreferredMode === "function") {
-    window.__kbSetPreferredMode(g.aiMode, payload.question || "");
+    const topicId = RESULT_MODE === "thuc-chien" ? getSelectedTuviTopic() : "overview";
+    window.__kbSetPreferredMode(g.aiMode, payload.question || "", topicId);
   }
 
   document.getElementById("result-guide-img").src = g.img;
@@ -5427,9 +5437,10 @@ function buildMasterPrompt() {
     bazi_tu_tru: STATE.bazi.pillars,
     bazi_ngu_hanh: STATE.bazi.day_master,
     bazi_dung_than: STATE.bazi.yongshen_guidance,
-    bazi_dai_van_hien_tai: STATE.bazi.dayun.find(d => d.is_current)
+    bazi_dai_van_hien_tai: STATE.bazi.dayun.find(d => d.is_current),
+    bazi_van_nam: STATE.bazi.target_liunian
   };
-  return `${voiceRule} Hãy phân tích tính cách, công việc, tiền bạc, tình cảm, gia đạo, trọng tâm "${focusTxt}" và bức tranh vận trình năm ${STATE.tuvi.target_year_fortune.target_solar_year}:\n\n` + JSON.stringify(compact, null, 2);
+  return `${voiceRule} Hãy luận thật kỹ, sâu sắc và chi tiết theo trọng tâm "${focusTxt}", phân tích đủ lộ trình 12 tháng (từ Tháng 1 đến Tháng 12) dựa vào dữ liệu 12 tháng trong JSON, chỉ rõ các vận hạn & điều cần chú ý trong năm ${STATE.tuvi.target_year_fortune.target_solar_year} cùng lời khuyên thực tế:\n\n` + JSON.stringify(compact, null, 2);
 }
 
 function renderAiPane() {

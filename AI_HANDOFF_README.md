@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.9 Kuang Bin Studio · Natural Teacher Voice & Gemini 4 Hydrogen Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v4.0 Kuang Bin Studio · True Deep-Dive 12 Months & Gemini 4 Hydrogen Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 14:30 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.9: CHUYỂN TOÀN BỘ VĂN PHONG LUẬN GIẢI AI SANG GIỌNG THẦY XEM TRÒ CHUYỆN TỰ NHIÊN, LIỀN MẠCH, DỄ HIỂU CHO NGƯỜI BÌNH THƯỜNG (VĂN XUÔI CHIA ĐOẠN, GIẢM TỐI ĐA GẠCH ĐẦU DÒNG, BỚT TÊN CÁC CUNG & THUẬT NGỮ HÁN–VIỆT NẶNG NỀ) + NÂNG CẤP MODEL GEMINI FREE MẶC ĐỊNH SANG `gemini-4-hydrogen` (FALLBACK `gemini-3.8-flash` -> `gemini-3.6-flash` -> `gemini-3.5-flash-lite`, `thinkingLevel: LOW`, `maxOutputTokens: 12000`) + TỐI ƯU TYPOGRAPHY ĐỌC VĂN XUÔI `.ai-report-body` + GIỮ TRỌN BỘ CẢI TIẾN v3.8.1 & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 14:53 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v4.0: BỔ SUNG THUẬT TOÁN TÍNH VẬN 12 THÁNG CHÍNH XÁC 100% (ZERO-HALLUCINATION) VÀO CẢ 3 ENGINE (`engine_tuvi.py` Lưu Nguyệt Đẩu Quân 12 tháng, `engine_bazi.py` 12 Lưu Nguyệt Tiết Khí + tương tác Xung/Hợp/Hình, `engine_numerology.py` 12 Tháng Cá Nhân) + CHẾ ĐỘ XEM CHUYÊN SÂU THỰC SỰ CHO TỪNG MỤC (6 CHỦ ĐỀ: TỔNG QUAN, TIỀN BẠC & ĐẦU TƯ, NHÀ CỬA & ĐẤT ĐAI, SỰ NGHIỆP, TÌNH CẢM & GIA ĐẠO, VẬN HẠN & SỨC KHỎE 12 THÁNG) VỚI LỘ TRÌNH TỪNG THÁNG 1→12, VẬN HẠN, RỦI RO & CHÚ Ý CỤ THỂ + 6 CHIP CHỌN NHANH TRONG TAB AI + TĂNG `maxOutputTokens: 16384` + GIỮ VĂN PHONG THẦY XEM TỰ NHIÊN LIỀN MẠCH & MODEL `gemini-4-hydrogen` & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`

@@ -182,72 +182,274 @@ def _compact_payload(payload: Dict[str, Any], mode: str) -> Dict[str, Any]:
     return out
 
 
-def _build_user_prompt(compact_data: Dict[str, Any], mode: str, focus_question: str) -> str:
+def _detect_deep_topic(deep_topic: str, focus_question: str) -> str:
+    """Xác định chủ đề xem chuyên sâu từ nút chọn hoặc câu hỏi của người dùng."""
+    t = (deep_topic or "").strip().lower()
+    if t in ("money", "realestate", "career", "love", "fortune12", "overview"):
+        return t
+    q = (focus_question or "").strip().lower()
+    if not q:
+        return "overview"
+    if any(k in q for k in ("điền trạch", "đất đai", "nhà cửa", "bất động sản", "mua đất", "bán đất", "tích sản")):
+        return "realestate"
+    if any(k in q for k in ("tài bạch", "tiền bạc", "dòng tiền", "đầu tư", "tài chính", "giữ lộc", "kiếm tiền")):
+        return "money"
+    if any(k in q for k in ("quan lộc", "sự nghiệp", "công danh", "công việc", "thăng tiến", "đổi việc", "chuyển việc")):
+        return "career"
+    if any(k in q for k in ("phu thê", "tình cảm", "tình duyên", "hôn nhân", "gia đạo", "vợ chồng", "người yêu")):
+        return "love"
+    if any(k in q for k in ("vận hạn", "12 tháng", "từng tháng", "sức khỏe", "tật ách", "hóa giải", "chú ý", "lưu ý")):
+        return "fortune12"
+    return "overview"
+
+
+def _build_deep_topic_prompt(
+    topic: str,
+    mode: str,
+    target_year: Any,
+    style_reminder: str,
+) -> Optional[str]:
+    """Tạo dàn ý LUẬN CHUYÊN SÂU THỰC SỰ cho từng mảng (phân tích gốc rễ + vận lớn + đủ 12 tháng + vận hạn & lưu ý)."""
+    scope_note = {
+        "tuvi": "chỉ sử dụng dữ liệu Tử Vi (bao gồm `target_year_fortune.monthly_fortunes_12`), không trộn thuật ngữ Bát Tự hay Thần Số Học",
+        "bazi": "chỉ sử dụng dữ liệu Bát Tự Ngũ Hành (bao gồm `target_liunian.monthly_liuyue_12`), không trộn thuật ngữ Tử Vi hay Thần Số Học",
+        "numerology": "chỉ sử dụng dữ liệu Thần Số Học (bao gồm `personal_cycles.personal_months_12`), không trộn sang Tử Vi hay Bát Tự",
+        "full": "hòa quyện tự nhiên góc nhìn Tử Vi, Bát Tự Ngũ Hành và Thần Số Học (kết hợp dữ liệu 12 tháng của các hệ trong JSON)",
+        "all": "hòa quyện tự nhiên góc nhìn bản mệnh (Tử Vi, Bát Tự, Thần Số Học) cùng dữ liệu 12 tháng và quẻ dịch/hướng đẹp hiện tại",
+    }.get(mode, "dựa 100% trên dữ liệu JSON được cung cấp")
+
+    topic_specs = {
+        "money": {
+            "title": f"CHUYÊN SÂU TIỀN BẠC, DÒNG TIỀN & ĐẦU TƯ NĂM {target_year}",
+            "root": (
+                "Phân tích thật sâu và cặn kẽ về bản chất tài lộc của bạn: bạn có duyên kiếm tiền từ nguồn nào "
+                "(làm chuyên môn, kinh doanh tự do, thương mại, đầu tư hay hợp tác), tiền vào mạnh hay đều đặn, "
+                "đâu là thói quen hoặc kẽ hở khiến tiền dễ thất thoát, và cách bạn nên quản lý dòng tiền, tích lũy, phân bổ vốn cho chắc tay."
+            ),
+            "year_big": (
+                f"Phân tích kỹ bức tranh tài chính của chặng vận lớn hiện tại và cả năm {target_year}: "
+                "năm nay là năm nên mở rộng kiếm tiền, đầu tư mới hay ưu tiên thu hồi vốn và giữ tiền mặt? Có cơ hội bất ngờ hay áp lực chi tiêu lớn nào đang chờ?"
+            ),
+            "monthly_focus": (
+                "dòng tiền, cơ hội kiếm lộc, ký kết hợp đồng, đầu tư/góp vốn và những tháng dễ hao tiền tốn của hoặc nên giữ chặt ví"
+            ),
+            "risks": (
+                "Chỉ thật rõ các vận hạn & rủi ro tiền bạc cần đề phòng trong năm (ví dụ: bẫy cho vay mượn khó đòi, hùn hạp thiếu rõ ràng, "
+                "đầu tư theo cảm xúc/tất tay, chi tiêu phát sinh vì gia đình hay giấy tờ), nêu dấu hiệu nhận biết sớm và cách giữ lộc an toàn."
+            ),
+        },
+        "realestate": {
+            "title": f"CHUYÊN SÂU NHÀ CỬA, ĐẤT ĐAI & TÍCH SẢN NĂM {target_year}",
+            "root": (
+                "Phân tích thật sâu duyên nhà cửa, đất đai và khả năng tích lũy tài sản lâu dài của bạn: "
+                "bạn hợp mua ở an cư, tích sản dài hạn hay xoay vòng mua bán/đầu tư bất động sản; "
+                "tài sản thường tự tay gây dựng hay có lộc gia đình/đối tác; điểm mạnh và điểm dễ vướng khi đi xem đất, thương lượng, giữ sổ."
+            ),
+            "year_big": (
+                f"Đánh giá kỹ vận nhà đất trong giai đoạn hiện tại và riêng năm {target_year}: "
+                "năm nay có tín hiệu thay đổi chỗ ở, sửa sang nhà cửa, mua vào hay chốt lời bán ra không? Mức độ thuận lợi về vốn và đòn bẩy ra sao?"
+            ),
+            "monthly_focus": (
+                "việc đi xem nhà đất, đặt cọc, mua bán, sang tên giấy tờ, sửa chữa/xây dựng và những tháng dễ gặp trục trặc pháp lý, tranh chấp giá hoặc chôn vốn"
+            ),
+            "risks": (
+                "Nêu rõ các vận hạn & điều cần đặc biệt lưu ý về nhà cửa, đất đai trong năm (pháp lý sổ sách, ranh giới, hợp đồng đặt cọc, "
+                "vay mượn mua nhà quá sức, tranh cãi với người cùng góp vốn hay hàng xóm) và cách kiểm tra phòng ngừa chắc chắn."
+            ),
+        },
+        "career": {
+            "title": f"CHUYÊN SÂU CÔNG VIỆC, SỰ NGHIỆP & THĂNG TIẾN NĂM {target_year}",
+            "root": (
+                "Phân tích thật kỹ con đường sự nghiệp và vai trò giúp bạn tỏa sáng nhất: "
+                "bạn hợp làm lãnh đạo/tự mở riêng, làm chuyên gia nòng cốt hay phát triển trong tổ chức lớn; "
+                "phong cách làm việc, cách ứng xử với cấp trên – đồng nghiệp – đối tác, và những bước ngoặt nghề nghiệp đặc trưng của bạn."
+            ),
+            "year_big": (
+                f"Phân tích sâu thế vận công việc giai đoạn hiện tại và riêng năm {target_year}: "
+                "năm nay có nên đổi việc, nhảy sang mảng mới, mở rộng kinh doanh hay tập trung củng cố vị thế hiện tại? Quý nhân hỗ trợ đến từ đâu và áp lực KPI/cạnh tranh nằm ở chỗ nào?"
+            ),
+            "monthly_focus": (
+                "tiến độ công việc, cơ hội thăng tiến/nhận dự án mới, thời điểm đẹp để đàm phán lương/chuyển hướng và những tháng dễ gặp áp lực, tiểu nhân, hiểu lầm nơi công sở"
+            ),
+            "risks": (
+                "Chỉ rõ các vận hạn & điều cần lưu ý trong sự nghiệp năm nay (thị phi lời ăn tiếng nói, ký kết văn bản/hợp đồng, "
+                "nóng vội bỏ việc khi chưa đủ nền, cạnh tranh ngầm hoặc quá tải kiệt sức) cùng cách xử lý khôn khéo."
+            ),
+        },
+        "love": {
+            "title": f"CHUYÊN SÂU TÌNH CẢM, HÔN NHÂN & GIA ĐẠO NĂM {target_year}",
+            "root": (
+                "Phân tích thật thấm thía về cách bạn yêu thương, gắn bó và xây dựng gia đình: "
+                "mẫu người bạn dễ bị thu hút, điều bạn thực sự cần ở một mối quan hệ bền lâu, "
+                "những điểm dễ tạo khoảng cách hoặc hiểu lầm giữa hai người (cái tôi, cách giao tiếp, áp lực tài chính hay sự can thiệp từ bên ngoài)."
+            ),
+            "year_big": (
+                f"Phân tích sâu vận tình cảm và không khí gia đạo trong giai đoạn này và năm {target_year} cho cả hai tình huống: "
+                "nếu đang độc thân thì cơ duyên gặp gỡ người phù hợp đến từ môi trường nào; nếu đã có đôi/có gia đình thì năm nay tình cảm ấm lên hay cần cùng nhau vượt qua thử thách gì?"
+            ),
+            "monthly_focus": (
+                "nhân duyên gặp gỡ, sự gắn kết vợ chồng/người yêu, chuyện hỷ sự/con cái/người thân trong nhà và những tháng dễ nóng nảy, hiểu lầm hoặc có người thứ ba/áp lực bên ngoài xen vào"
+            ),
+            "risks": (
+                "Nêu rõ các vận hạn & điều cần đặc biệt giữ gìn trong chuyện tình cảm, gia đạo năm nay "
+                "(lời nói lúc nóng giận, ghen tuông suy diễn, lạnh nhạt vì mải lo công việc, chuyện sức khỏe/hòa khí người thân trong nhà) kèm cách hóa giải nhẹ nhàng, tinh tế."
+            ),
+        },
+        "fortune12": {
+            "title": f"CHUYÊN SÂU VẬN HẠN, SỨC KHỎE & LỘ TRÌNH CHI TIẾT 12 THÁNG NĂM {target_year}",
+            "root": (
+                "Phân tích tổng thể sức đề kháng của bản mệnh và nhịp vận lớn 10 năm bạn đang đi qua: "
+                "giai đoạn này nhìn chung đang đi lên, đi ngang tích lũy hay đang ở khúc cua chuyển đổi? "
+                "Điểm mạnh giúp bạn vượt sóng và điểm yếu về thể chất, tinh thần hay thói quen sinh hoạt cần đặc biệt chăm sóc."
+            ),
+            "year_big": (
+                f"Mổ xẻ thật kỹ toàn bộ vận hạn năm {target_year}: "
+                "đâu là 2–3 điểm sáng may mắn lớn nhất trong năm, đâu là 2–3 thử thách trọng tâm phải chuẩn bị tâm thế trước "
+                "(tiền bạc, công việc, sức khỏe, đi lại, gia đạo, giấy tờ pháp lý)."
+            ),
+            "monthly_focus": (
+                "đầy đủ vận khí tổng thể từng tháng: công việc, tài lộc, sức khỏe, đi lại, mối quan hệ và điều cần đặc biệt lưu ý tránh rủi ro"
+            ),
+            "risks": (
+                "Dành một phần thật rõ ràng, cụ thể cho **Các vận hạn & điều cần đặc biệt chú ý trong năm**: "
+                "sức khỏe (những bộ phận/thói quen dễ xuống sức, giấc ngủ, căng thẳng), đi lại/xe cộ, giấy tờ pháp lý, thị phi và chuyện người thân — "
+                "giải thích điềm tĩnh, thực tế, tuyệt đối không hù dọa, kèm cách phòng tránh và hóa giải đời thường."
+            ),
+        },
+    }
+
+    spec = topic_specs.get(topic)
+    if not spec:
+        return None
+
+    return (
+        f"Hãy viết một bài **LUẬN GIẢI CHUYÊN SÂU THỰC SỰ: {spec['title']}** ({scope_note}).\n"
+        f"{style_reminder}\n"
+        "YÊU CẦU CHIỀU SÂU BẮT BUỘC (TUYỆT ĐỐI KHÔNG VIẾT SƠ SÀI HAY LƯỚT CHUNG CHUNG):\n"
+        "- Vì người xem đã chủ động chọn mục chuyên sâu này, hãy dành toàn bộ tâm huyết và chiều sâu phân tích thật kỹ, thật thấm, sát đời thực cho đúng chủ đề này.\n"
+        "- Đọc kỹ dữ liệu 12 tháng đã tính sẵn trong JSON (`monthly_fortunes_12` / `monthly_liuyue_12` / `personal_months_12`) để luận chính xác từng tháng, tuyệt đối không bỏ sót tháng nào và không bịa dữ liệu.\n\n"
+        "Bố cục 5 phần đầy đặn, mạch lạc (dùng tiêu đề `##` tự nhiên):\n"
+        f"1. **Nền tảng gốc & câu chuyện dài hạn của bạn:** {spec['root']}\n"
+        f"2. **Bức tranh vận lớn hiện tại & tổng quan năm {target_year}:** {spec['year_big']}\n"
+        f"3. **Lộ trình diễn biến chi tiết đủ 12 tháng năm {target_year} (Tháng 1 đến Tháng 12):** "
+        f"Chia thành 4 tiểu mục theo 4 quý (`### Quý 1: Tháng 1 – Tháng 3`, `### Quý 2: Tháng 4 – Tháng 6`, `### Quý 3: Tháng 7 – Tháng 9`, `### Quý 4: Tháng 10 – Tháng 12`). "
+        f"Trong mỗi quý, hãy kể liền mạch bằng văn xuôi tự nhiên đi qua **từng tháng một** (ghi rõ Tháng 1, Tháng 2... kèm khoảng tháng Dương lịch nếu là lịch Âm để người xem dễ đối chiếu), phân tích kỹ về {spec['monthly_focus']}. "
+        "Chốt rõ tháng nào là điểm sáng đẹp nhất để hành động và tháng nào cần giảm tốc giữ an toàn.\n"
+        f"4. **Những vận hạn, rủi ro & điều cần đặc biệt lưu ý trong năm {target_year}:** {spec['risks']}\n"
+        "5. **Lời khuyên thực tế & kế hoạch hành động để giữ lộc, hóa giải rủi ro:** Chốt lại 4–5 việc cụ thể, dễ làm ngay từ hôm nay."
+    )
+
+
+def _build_user_prompt(
+    compact_data: Dict[str, Any],
+    mode: str,
+    focus_question: str,
+    deep_topic: str = "",
+) -> str:
     style_reminder = (
         "Hãy viết bằng giọng điệu ấm áp, tự nhiên, liền mạch như thầy xem ngồi đối diện trò chuyện và giải thích cho người bình thường dễ hiểu. "
-        "Chia thành các đoạn văn xuôi trôi chảy có câu nối mượt mà, hạn chế tối đa gạch đầu dòng (chỉ dùng 3–4 ý ngắn ở phần lời khuyên cuối cùng nếu cần), "
+        "Chia thành các đoạn văn xuôi trôi chảy có câu nối mượt mà, hạn chế tối đa gạch đầu dòng (chỉ dùng 3–5 ý ngắn ở phần lời khuyên cuối cùng nếu cần), "
         "không kẻ bảng rườm rà, không liệt kê hàng loạt tên cung hay thuật ngữ Hán–Việt nặng nề mà hãy chuyển hóa thẳng sang ngôn ngữ đời sống thực tế."
     )
+
+    target_year = (
+        (compact_data.get("tuvi") or {}).get("target_year_fortune", {}).get("target_solar_year")
+        or (compact_data.get("bazi") or {}).get("target_liunian", {}).get("year")
+        or (compact_data.get("numerology") or {}).get("personal_cycles", {}).get("target_year")
+        or datetime.now().year
+    )
+
+    resolved_topic = _detect_deep_topic(deep_topic, focus_question)
+    if mode in ("full", "tuvi", "bazi", "numerology", "all") and resolved_topic != "overview":
+        deep_guide = _build_deep_topic_prompt(resolved_topic, mode, target_year, style_reminder)
+        if deep_guide:
+            focus_block = ""
+            if focus_question.strip():
+                focus_block = (
+                    f"\n\n### TRỌNG TÂM / CÂU HỎI CỤ THỂ NGƯỜI XEM GỬI KÈM:\n"
+                    f"> {focus_question.strip()}\n"
+                    f"(Hãy lồng ghép và giải đáp trực diện, sâu sát từng khía cạnh câu hỏi này trong bài luận!)\n"
+                )
+            return (
+                f"{deep_guide}{focus_block}\n\n"
+                f"### DỮ LIỆU TÍNH TOÁN CHÍNH XÁC (JSON — CHỈ DÙNG ĐỂ ĐỌC HIỂU, KHÔNG LẶP LẠI THÔ):\n"
+                f"```json\n{json.dumps(compact_data, ensure_ascii=False)}\n```"
+            )
+
     mode_prompts = {
         "full": (
-            f"Hãy viết một bài luận giải tổng hợp dễ hiểu (kết hợp ngầm tinh hoa của cả Tử Vi, Bát Tự Ngũ Hành và Thần Số Học thành một mạch kể chuyện thống nhất). {style_reminder}\n\n"
-            "Bố cục gọn gàng gồm 5 phần liền mạch (dùng tiêu đề `##` tự nhiên, thân thiện):\n"
-            "1. **Con người, khí chất và điểm sáng tự nhiên của bạn:** Nói rõ nét tính cách cốt lõi, điểm mạnh trời phú và những trăn trở nội tâm mà bạn hay gặp.\n"
-            "2. **Công việc, tiền bạc và hướng đi phù hợp:** Phân tích cách bạn làm việc, kiếm tiền, tích lũy tài sản/nhà cửa và kiểu môi trường giúp bạn phát huy tốt nhất.\n"
-            "3. **Tình cảm, gia đình và nhịp sức khỏe:** Chia sẻ nhẹ nhàng về cách bạn yêu thương, xây dựng tổ ấm, các mối quan hệ xung quanh và điểm sức khỏe nên chăm chút.\n"
-            "4. **Nhịp vận giai đoạn này và bức tranh năm nay:** Giải thích rõ năm nay vận khí đang nghiêng về thuận lợi ở mảng nào, chỗ nào cần đi chậm lại để giữ chắc thành quả, và đâu là điểm trùng khớp nổi bật nhất khi soi chiếu nhiều góc nhìn lại với nhau (có thể điểm nhẹ `🟢 ĐỒNG THUẬN CAO` hoặc `🟡 BÁN ĐỒNG THUẬN` ngay trong đoạn văn).\n"
-            "5. **Vài lời nhắn gửi thiết thực cho chặng đường sắp tới:** Chốt lại 3–4 lời khuyên thật đời thường, dễ áp dụng ngay."
+            f"Hãy viết một bài luận giải tổng hợp **thật kỹ, sâu sắc và dễ hiểu** cho năm {target_year} "
+            f"(hòa quyện ngầm tinh hoa Tử Vi, Bát Tự Ngũ Hành và Thần Số Học thành một mạch kể chuyện thống nhất). {style_reminder}\n\n"
+            "Bố cục gồm 6 phần đầy đặn, liền mạch (dùng tiêu đề `##` tự nhiên, thân thiện):\n"
+            "1. **Con người, khí chất và điểm sáng tự nhiên của bạn:** Phân tích sâu nét tính cách cốt lõi, điểm mạnh trời phú và những trăn trở nội tâm bạn hay gặp.\n"
+            "2. **Công việc, tiền bạc và nhà cửa/tài sản:** Phân tích kỹ cách bạn làm việc, kiếm tiền, giữ tiền, duyên đất đai tích sản và kiểu môi trường giúp bạn phát huy tốt nhất.\n"
+            "3. **Tình cảm, gia đình và nhịp sức khỏe:** Chia sẻ sâu về cách bạn yêu thương, xây dựng tổ ấm, các mối quan hệ quý nhân và điểm sức khỏe nên chăm chút.\n"
+            f"4. **Nhịp vận năm {target_year} & Lộ trình chi tiết 12 tháng (Tháng 1 đến Tháng 12):** "
+            "Dựa vào dữ liệu 12 tháng đã tính sẵn trong JSON, chia thành 4 tiểu mục (`### Quý 1: Tháng 1 – Tháng 3`, `### Quý 2: Tháng 4 – Tháng 6`, `### Quý 3: Tháng 7 – Tháng 9`, `### Quý 4: Tháng 10 – Tháng 12`), kể liền mạch từng tháng một xem tháng nào thuận để đẩy mạnh, tháng nào nên đi chậm giữ chắc, kèm điểm trùng khớp nổi bật giữa các góc nhìn (có thể điểm nhẹ `🟢 ĐỒNG THUẬN CAO` hoặc `🟡 BÁN ĐỒNG THUẬN` ngay trong câu).\n"
+            f"5. **Những vận hạn & điều cần đặc biệt lưu ý trong năm {target_year}:** Chỉ rõ các rủi ro dễ gặp về tiền bạc, giấy tờ, thị phi, đi lại và sức khỏe cùng cách phòng tránh nhẹ nhàng.\n"
+            "6. **Vài lời nhắn gửi thiết thực cho chặng đường sắp tới:** Chốt lại 4–5 lời khuyên thật đời thường, dễ áp dụng ngay."
         ),
         "tuvi": (
-            f"Hãy luận giải lá số Tử Vi thật gần gũi và dễ hiểu (chỉ dùng dữ liệu Tử Vi, không trộn sang Bát Tự hay Thần Số Học). {style_reminder}\n"
-            "Đặc biệt lưu ý: bớt tối đa việc nhắc tên 12 cung (Mệnh, Tài Bạch, Quan Lộc, Điền Trạch, Phu Thê...) và sao phụ rườm rà; hãy nói thẳng vào từng khía cạnh đời sống để người nghe thấy mình trong đó.\n\n"
-            "Bố cục gọn gàng gồm 5 phần liền mạch:\n"
-            "1. **Nét tính cách và cốt cách con người bạn:** Bạn là người như thế nào trong mắt người khác và sâu bên trong nội tâm, điểm mạnh tự nhiên và nét tính cách dễ làm mình vất vả.\n"
-            "2. **Đường công việc, sự nghiệp và tiền bạc:** Cách bạn tạo ra giá trị, kiếm tiền, giữ tiền, duyên với đất đai/tài sản và những bước ngoặt thường gặp trong sự nghiệp.\n"
-            "3. **Chuyện tình cảm, gia đạo và quý nhân xung quanh:** Cách bạn đối đãi với người thương, không khí gia đình và cách chọn bạn, chọn đối tác đồng hành.\n"
-            "4. **Vận trình chặng đường hiện tại và năm nay:** Giai đoạn này nên tập trung vào việc gì, năm nay có cơ hội nào sáng và cần giữ mình ở điểm nào.\n"
-            "5. **Lời khuyên nhẹ nhàng để mọi việc hanh thông hơn:** Chốt 3–4 gợi ý thực tế, dễ làm."
+            f"Hãy luận giải lá số Tử Vi **thật kỹ, sâu sắc và dễ hiểu** cho năm {target_year} (chỉ dùng dữ liệu Tử Vi, không trộn sang Bát Tự hay Thần Số Học). {style_reminder}\n"
+            "Đặc biệt lưu ý: bớt tối đa việc nhắc tên 12 cung (Mệnh, Tài Bạch, Quan Lộc, Điền Trạch, Phu Thê...) và sao phụ rườm rà; hãy nói thẳng vào từng khía cạnh đời sống để người nghe thấy rõ chính mình.\n\n"
+            "Bố cục gồm 6 phần đầy đặn, liền mạch:\n"
+            "1. **Nét tính cách và cốt cách con người bạn:** Phân tích sâu tính cách bên ngoài, nội tâm bên trong, điểm mạnh nổi trội và điểm dễ tự làm mình mệt mỏi.\n"
+            "2. **Đường công việc, sự nghiệp, tiền bạc và tài sản:** Cách bạn kiếm tiền, giữ tiền, duyên nhà cửa đất đai và những bước ngoặt thường gặp trong sự nghiệp.\n"
+            "3. **Chuyện tình cảm, gia đạo và các mối quan hệ xung quanh:** Cách bạn đối đãi với người thương, không khí gia đình và cách nhận diện quý nhân, đối tác hợp vía.\n"
+            f"4. **Vận trình giai đoạn hiện tại & Lộ trình 12 tháng năm {target_year}:** "
+            "Phân tích kỹ đại vận 10 năm đang đi qua và bức tranh năm nay; dựa vào `monthly_fortunes_12` trong JSON, chia 4 tiểu mục (`### Quý 1: Tháng 1 – Tháng 3` đến `### Quý 4: Tháng 10 – Tháng 12`) kể liền mạch từng tháng Âm lịch (kèm khoảng tháng Dương tương ứng) xem tháng nào sáng lộc, tháng nào nên thận trọng.\n"
+            f"5. **Những vận hạn & điều cần đặc biệt chú ý trong năm {target_year}:** Chỉ rõ các lưu ý về sức khỏe, tiền bạc, giấy tờ, lời ăn tiếng nói và cách ứng xử êm đẹp.\n"
+            "6. **Lời khuyên thực tế để mọi việc hanh thông hơn:** Chốt 4–5 gợi ý dễ làm ngay."
         ),
         "bazi": (
-            f"Hãy luận giải Bát Tự Ngũ Hành theo cách nói mộc mạc, dễ hiểu cho người bình thường (chỉ dùng dữ liệu Bát Tự). {style_reminder}\n"
+            f"Hãy luận giải Bát Tự Ngũ Hành **thật kỹ, sâu sắc và dễ hiểu** cho năm {target_year} (chỉ dùng dữ liệu Bát Tự). {style_reminder}\n"
             "Không dùng các cụm chuyên môn nặng nề kiểu 'Đắc Lệnh Thất Địa', 'Điều Hầu Cùng Thông Bảo Giám'; hãy diễn giải thành câu chuyện về khí chất, sự cân bằng năng lượng và cách sống thuận tự nhiên.\n\n"
-            "Bố cục gọn gàng gồm 5 phần liền mạch:\n"
+            "Bố cục gồm 6 phần đầy đặn, liền mạch:\n"
             "1. **Khí chất bẩm sinh và nguồn năng lượng cốt lõi của bạn.**\n"
             "2. **Công việc, tài lộc và môi trường giúp bạn phát triển thuận nhất.**\n"
             "3. **Chuyện tình cảm, các mối quan hệ và sức khỏe cần lưu ý.**\n"
-            "4. **Nhịp vận 10 năm hiện tại và diễn biến đáng chú ý trong năm nay.**\n"
-            "5. **Cách nuôi dưỡng năng lượng thuận lợi trong đời sống hàng ngày** (ngành nghề, môi trường, thói quen, màu sắc/hướng dễ ứng dụng)."
+            f"4. **Nhịp vận 10 năm hiện tại & Diễn biến 12 tháng năm {target_year}:** "
+            "Dựa vào `monthly_liuyue_12` trong JSON, chia 4 quý (`### Quý 1` đến `### Quý 4`) kể liền mạch từng tháng (chỉ rõ tháng nào hợp năng lượng để bứt phá, tháng nào xung động cần điềm tĩnh giữ nhịp).\n"
+            f"5. **Những vận hạn & điều cần đặc biệt lưu ý trong năm {target_year}:** Nêu rõ điểm dễ mất cân bằng về sức khỏe, tài chính, quan hệ và cách cân bằng lại.\n"
+            "6. **Cách nuôi dưỡng năng lượng thuận lợi trong đời sống hàng ngày** (ngành nghề, môi trường, thói quen, màu sắc/hướng dễ ứng dụng)."
         ),
         "numerology": (
-            f"Hãy luận giải hồ sơ Thần Số Học thật truyền cảm, ấm áp và dễ hiểu (chỉ dùng dữ liệu Thần Số Học). {style_reminder}\n\n"
-            "Bố cục gọn gàng gồm 4 phần liền mạch:\n"
-            "1. **Bản sắc cốt lõi và tiếng nói bên trong bạn:** Kể liền mạch về con người bạn qua Con số Chủ đạo, khát khao nội tâm và cách bạn tỏa sáng ra bên ngoài.\n"
-            "2. **Dấu ấn từ tên gọi (và Nickname nếu có):** Giải thích nhẹ nhàng xem tên gọi hàng ngày đang bổ trợ thêm nét tính cách hay năng lượng nào cho ngày sinh của bạn.\n"
-            "3. **Chặng đường trưởng thành hiện tại và nhịp năm cá nhân năm nay:** Bạn đang ở khúc cua nào của cuộc đời, năm nay nên gieo hạt, bứt phá hay củng cố nền tảng.\n"
-            "4. **Gợi ý công việc và vài điều nên ưu tiên sắp tới:** Chốt 3–4 gợi ý gọn gàng, thực tế."
+            f"Hãy luận giải hồ sơ Thần Số Học **thật sâu sắc, truyền cảm và chi tiết** cho năm {target_year} (chỉ dùng dữ liệu Thần Số Học). {style_reminder}\n\n"
+            "Bố cục gồm 5 phần đầy đặn, liền mạch:\n"
+            "1. **Bản sắc cốt lõi và tiếng nói bên trong bạn:** Kể liền mạch về con người bạn qua Con số Chủ đạo, khát khao nội tâm, cách bạn tỏa sáng ra bên ngoài và bài học trưởng thành quan trọng.\n"
+            "2. **Dấu ấn từ tên gọi (và Nickname nếu có):** Giải thích kỹ xem tên khai sinh và tên gọi hàng ngày đang cộng hưởng, bù đắp điểm nào cho ngày sinh của bạn.\n"
+            f"3. **Chặng đỉnh cao hiện tại & Lộ trình 12 tháng cá nhân năm {target_year}:** "
+            "Dựa vào `personal_months_12` trong JSON, chia 4 quý (`### Quý 1: Tháng 1 – Tháng 3` đến `### Quý 4: Tháng 10 – Tháng 12`), kể liền mạch từng tháng Dương lịch xem tháng nào nên khởi động, tháng nào nên kết nối, tháng nào nên thu hoạch và tháng nào nên chậm lại nghỉ ngơi.\n"
+            f"4. **Những điểm dễ vấp & điều cần lưu ý trong năm {target_year}:** Chỉ rõ những cái bẫy cảm xúc, tài chính hoặc quyết định vội vàng cần tránh trong nhịp năm cá nhân này.\n"
+            "5. **Gợi ý nghề nghiệp và vài điều nên ưu tiên sắp tới:** Chốt 4–5 gợi ý gọn gàng, thực tế."
         ),
         "iching": (
-            f"Hãy giải quẻ Kinh Dịch như một người thầy điềm đạm ngồi giải đáp thẳng thắn, rõ ràng cho người đang băn khoăn. {style_reminder}\n"
-            "Không liệt kê khô cứng các thuật ngữ Lục Thân, Can Chi, Nhật Thần, Nguyệt Kiến, Phục Thần; chỉ dịch thẳng sang diễn biến thực tế để người hỏi đọc xong biết ngay nên làm gì.\n\n"
-            "Bố cục gọn gàng gồm 3 phần liền mạch:\n"
-            "1. **Trả lời thẳng vào điều bạn đang hỏi:** Chốt rõ ngay từ đầu xu hướng hiện tại đang thuận, cần chờ thêm hay nên thận trọng.\n"
-            "2. **Bối cảnh hiện tại và chiều hướng chuyển biến sắp tới:** Kể rõ vì sao sự việc đang ở trạng thái này, nút thắt nằm ở đâu và sắp tới sẽ xoay chuyển theo hướng nào.\n"
-            "3. **Thời điểm dễ có kết quả và lời khuyên xử lý thực tế:** Gợi ý khoảng thời gian thuận lợi và 3–4 bước hành động cụ thể."
+            f"Hãy giải quẻ Kinh Dịch **thật kỹ, sâu sắc và thực tế** như một người thầy điềm đạm ngồi phân tích cặn kẽ từng lớp nghĩa cho người đang băn khoăn. {style_reminder}\n"
+            "Không liệt kê khô cứng các thuật ngữ Lục Thân, Can Chi, Nhật Thần, Nguyệt Kiến, Phục Thần; hãy dịch thẳng sang diễn biến thực tế để người hỏi đọc xong hiểu rõ đường đi nước bước.\n\n"
+            "Bố cục gồm 4 phần đầy đặn, liền mạch:\n"
+            "1. **Trả lời thẳng vào điều bạn đang hỏi:** Chốt rõ ngay từ đầu xu hướng hiện tại đang thuận, cần chờ thêm hay nên thận trọng, và phần trăm thuận lợi nghiêng về phía nào.\n"
+            "2. **Bối cảnh hiện tại, diễn biến ngầm & chiều hướng sắp tới:** Kể sâu vì sao sự việc đang ở trạng thái này, tâm thế của bạn và đối phương ra sao, nút thắt thật sự nằm ở đâu và giai đoạn tới sẽ xoay chuyển thế nào.\n"
+            "3. **Thời điểm chuyển biến (Ứng kỳ) & Những rủi ro cần đặc biệt chú ý:** Chỉ rõ mốc thời gian (theo ngày/tuần/tháng) dễ thấy kết quả hoặc bước ngoặt, đồng thời cảnh báo những sơ suất, hiểu lầm hay rủi ro ngầm cần phòng trước.\n"
+            "4. **Lời khuyên xử lý từng bước thực tế:** Chốt 4–5 việc cụ thể nên làm ngay để xoay chuyển cục diện theo hướng có lợi nhất."
         ),
         "qimen": (
-            f"Hãy đọc bàn Kỳ Môn Độn Giáp bằng ngôn ngữ đời thường, rõ ràng để người bình thường áp dụng ngay được. {style_reminder}\n\n"
-            "Bố cục gọn gàng gồm 3 phần liền mạch:\n"
-            "1. **Đánh giá nhanh thế cục sự việc lúc này:** Tình thế đang nghiêng về phía bạn hay phía đối tác, có thuận lợi ngầm nào không.\n"
-            "2. **Phương hướng và khung thời gian đẹp nhất:** Chỉ rõ nên ưu tiên hướng nào, thời điểm nào để đi gặp gỡ, xem đất, đàm phán hay chốt việc.\n"
-            "3. **Cách ứng xử khéo léo để việc được êm xuôi:** Đưa ra 3–4 lời khuyên thực tế."
+            f"Hãy đọc bàn Kỳ Môn Độn Giáp **thật kỹ và thực tế** bằng ngôn ngữ đời thường để người bình thường áp dụng ngay được. {style_reminder}\n\n"
+            "Bố cục gồm 4 phần đầy đặn, liền mạch:\n"
+            "1. **Đánh giá sâu thế cục sự việc lúc này:** Tình thế đang nghiêng về phía bạn hay phía đối tác, có quý nhân hay trở lực ngầm nào không.\n"
+            "2. **Phương hướng & khung thời gian đẹp nhất để hành động:** Chỉ rõ nên ưu tiên xuất hành, gặp gỡ, xem đất hay đàm phán theo hướng nào, tránh hướng nào.\n"
+            "3. **Những rủi ro & điều cần đặc biệt lưu ý khi giao dịch/gặp gỡ:** Điểm nào dễ bị ép giá, chậm trễ hay hiểu sai ý.\n"
+            "4. **Chiến lược ứng xử, đàm phán khéo léo:** Chốt 3–4 bước hành động cụ thể."
         ),
         "all": (
-            f"Hãy viết một bài luận tổng hợp trọn vẹn, tự nhiên và dễ hiểu (hòa quyện bức tranh bản mệnh dài hạn cùng câu trả lời trực diện từ quẻ dịch và phương hướng thuận lợi hiện tại). {style_reminder}\n\n"
-            "Bố cục gọn gàng gồm 4 phần liền mạch:\n"
-            "1. **Bức tranh con người và thế mạnh nổi bật của bạn** (kèm 1 đoạn ngắn điểm những nét trùng khớp rõ nhất giữa các góc nhìn).\n"
-            "2. **Vận trình giai đoạn này và năm nay** (công việc, tiền bạc, tình cảm, sức khỏe).\n"
-            "3. **Giải đáp thẳng vào việc bạn đang băn khoăn lúc này** (xu hướng thuận hay chưa thuận, thời điểm chuyển biến và phương hướng tốt để hành động).\n"
-            "4. **Lời khuyên hành động thực tế** (3–4 ý ngắn gọn, dễ áp dụng ngay)."
+            f"Hãy viết một bài luận tổng hợp **thật sâu sắc, trọn vẹn và dễ hiểu** cho năm {target_year} "
+            "(hòa quyện bức tranh bản mệnh dài hạn, lộ trình 12 tháng, vận hạn cần chú ý cùng câu trả lời trực diện từ quẻ dịch và phương hướng thuận lợi hiện tại). "
+            f"{style_reminder}\n\n"
+            "Bố cục gồm 5 phần đầy đặn, liền mạch:\n"
+            "1. **Bức tranh con người, công việc, tiền bạc và tình cảm của bạn** (kèm đoạn đúc kết những điểm trùng khớp rõ nhất giữa các góc nhìn).\n"
+            f"2. **Lộ trình 12 tháng năm {target_year} (chia 4 quý từ Tháng 1 đến Tháng 12):** Dựa vào dữ liệu 12 tháng trong JSON, điểm rõ từng tháng thuận lợi và từng tháng cần đi chậm lại.\n"
+            f"3. **Những vận hạn & điều cần đặc biệt chú ý trong năm {target_year}** (sức khỏe, tiền bạc, giấy tờ, thị phi, gia đạo).\n"
+            "4. **Giải đáp thẳng vào việc bạn đang băn khoăn lúc này** (xu hướng thuận hay chưa thuận, thời điểm chuyển biến và phương hướng đẹp để hành động).\n"
+            "5. **Lời khuyên hành động thực tế** (4–5 ý ngắn gọn, dễ áp dụng ngay)."
         ),
     }
 
@@ -279,7 +481,7 @@ def _call_gemini_rest(
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model_id}:generateContent?key={api_key}"
     )
-    gen_cfg: Dict[str, Any] = {"maxOutputTokens": 12000}
+    gen_cfg: Dict[str, Any] = {"maxOutputTokens": 16384}
     if model_id.startswith(("gemini-4", "gemini-3")):
         gen_cfg["thinkingConfig"] = {"thinkingLevel": "LOW"}
     elif model_id.startswith("gemini-2.5"):
@@ -355,6 +557,7 @@ def interpret_with_gemini(
         mode = "full"
 
     focus_question = str(req_data.get("focus_question", "")).strip()
+    deep_topic = str(req_data.get("deep_topic", "")).strip().lower()
     requested_model = str(req_data.get("model", "")).strip()
     provided_code = str(req_data.get("access_code", "")).strip()
 
@@ -383,7 +586,7 @@ def interpret_with_gemini(
 
     system_instruction = _build_system_instruction(mode)
     compact_data = _compact_payload(payload, mode)
-    user_prompt = _build_user_prompt(compact_data, mode, focus_question)
+    user_prompt = _build_user_prompt(compact_data, mode, focus_question, deep_topic=deep_topic)
 
     # Chế độ "prepare": Trả siêu tốc (< 80ms) gói prompt đã ký HMAC để Vercel Edge Function stream SSE không bao giờ timeout!
     if str(req_data.get("action", "")).strip().lower() == "prepare":

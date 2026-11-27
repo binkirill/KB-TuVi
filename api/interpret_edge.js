@@ -42,7 +42,7 @@ async function hmacSha256Hex(secret, message) {
 }
 
 function buildGenerationConfig(modelId) {
-  const cfg = { maxOutputTokens: 12000 };
+  const cfg = { maxOutputTokens: 16384 };
   const id = String(modelId || "");
   if (id.startsWith("gemini-4") || id.startsWith("gemini-3")) {
     cfg.thinkingConfig = { thinkingLevel: "LOW" };

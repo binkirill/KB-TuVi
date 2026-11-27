@@ -14,12 +14,46 @@
     default_model: "gemini-4-hydrogen"
   };
 
+  const DEEP_TOPICS = [
+    {
+      id: "overview",
+      label: "🌟 Tổng quan + 12 tháng",
+      prompt: "Luận tổng quan toàn diện tính cách, công việc, tiền bạc, tình cảm, lộ trình chi tiết 12 tháng và vận hạn cần chú ý năm xem"
+    },
+    {
+      id: "money",
+      label: "💰 Tiền bạc & Đầu tư",
+      prompt: "Xem chuyên sâu Tiền bạc, Dòng tiền, cơ hội kiếm tiền, đầu tư, lộ trình 12 tháng tài lộc và các rủi ro hao tài cần tránh"
+    },
+    {
+      id: "realestate",
+      label: "🏡 Nhà cửa & Đất đai",
+      prompt: "Xem chuyên sâu Nhà cửa, Đất đai, duyên bất động sản, thời điểm đẹp từng tháng trong năm để mua bán/tích sản và lưu ý pháp lý"
+    },
+    {
+      id: "career",
+      label: "🚀 Sự nghiệp & Công việc",
+      prompt: "Xem chuyên sâu Công việc, Sự nghiệp, thăng tiến, chuyển hướng, quý nhân, diễn biến từng tháng trong năm và lưu ý nơi công sở"
+    },
+    {
+      id: "love",
+      label: "❤️ Tình cảm & Gia đạo",
+      prompt: "Xem chuyên sâu Tình cảm, Hôn nhân, Gia đạo, nhân duyên từng tháng trong năm và điều cần giữ gìn để gia đình êm ấm"
+    },
+    {
+      id: "fortune12",
+      label: "📅 Vận hạn & Chú ý 12 tháng",
+      prompt: "Xem chuyên sâu Vận hạn, Sức khỏe, đi lại, giấy tờ thị phi, lộ trình chi tiết đủ 12 tháng trong năm và cách phòng tránh hóa giải"
+    }
+  ];
+
   const AI_STATE = {
     loading: false,
     error: "",
     markdown: "",
     metaInfo: null,
     mode: "full",
+    deepTopic: "overview",
     focusQuestion: "",
     model: "gemini-4-hydrogen",
     elapsed: 0
@@ -61,6 +95,21 @@
       .ai-field input, .ai-field select {
         width: 100%; padding: 8.5px 10px; border: 1px solid #cfc2ae; border-radius: 6px;
         background: #fff; color: var(--ink, #1e1a17); font-size: 13px; font-family: inherit;
+      }
+      .ai-topic-pills {
+        display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 11px;
+      }
+      .ai-topic-pill {
+        padding: 6px 11px; border-radius: 999px; border: 1.5px solid #d7c7ad;
+        background: #fff; color: #4a3d2f; font-size: 12.2px; font-weight: 700;
+        cursor: pointer; transition: all 0.14s ease; font-family: inherit;
+      }
+      .ai-topic-pill:hover {
+        border-color: #b67d1e; background: #fff9eb; color: #7a4e0b; transform: translateY(-1px);
+      }
+      .ai-topic-pill.is-active {
+        background: linear-gradient(135deg, #c6912d, #985e10); color: #fff;
+        border-color: #985e10; box-shadow: 0 2px 8px rgba(152,94,16,0.28);
       }
       .ai-status-pill {
         display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px;
@@ -306,6 +355,7 @@
           action: "prepare",
           payload: cleanPayload,
           mode: AI_STATE.mode,
+          deep_topic: AI_STATE.deepTopic,
           focus_question: focusQuestion,
           model: AI_STATE.model,
           access_code: accessCode
@@ -398,6 +448,7 @@
           body: JSON.stringify({
             payload: cleanPayload,
             mode: AI_STATE.mode,
+            deep_topic: AI_STATE.deepTopic,
             focus_question: focusQuestion,
             model: AI_STATE.model,
             access_code: accessCode
@@ -467,26 +518,39 @@
         </div>`;
     }
 
+    const showTopicPills = !["iching", "qimen"].includes(AI_STATE.mode);
+    const topicPillsHtml = showTopicPills ? `
+        <div class="ai-field" style="margin-bottom:4px;">
+          <label>Chọn mục muốn thầy xem chuyên sâu (đủ 12 tháng, vận hạn &amp; điều cần chú ý)</label>
+          <div class="ai-topic-pills">
+            ${DEEP_TOPICS.map(tp => `
+              <button type="button" class="ai-topic-pill ${AI_STATE.deepTopic === tp.id ? "is-active" : ""}" onclick="window.__kbPickDeepTopic('${tp.id}')">${tp.label}</button>
+            `).join("")}
+          </div>
+        </div>` : "";
+
     return `
-      <h3>✨ Thầy AI Luận Giải Dễ Hiểu (Ngôn Ngữ Tự Nhiên · Trò Chuyện Trực Tiếp)</h3>
+      <h3>✨ Thầy AI Luận Giải Dễ Hiểu (Chuyên Sâu 12 Tháng · Ngôn Ngữ Tự Nhiên)</h3>
       ${statusHtml}
       <div class="ai-controls">
         <div class="ai-field" style="margin-bottom:10px;">
           <label>Chọn góc nhìn muốn thầy giải thích</label>
-          <select id="inp-ai-mode" onchange="window.__kbSaveAiPrefs()">
+          <select id="inp-ai-mode" onchange="window.__kbSaveAiPrefs(); window.__kbRefreshAiCard()">
             <option value="full" ${AI_STATE.mode === "full" ? "selected" : ""}>⚖️ Tổng Hợp Dễ Hiểu (Tử Vi × Ngũ Hành × Thần Số Học — Khuyên dùng)</option>
-            <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Luận Lá Số Tử Vi (Tính cách, Sự nghiệp, Tiền bạc, Tình cảm &amp; Vận năm)</option>
-            <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Luận Bát Tự Ngũ Hành (Khí chất, Năng lượng hợp &amp; Nhịp vận)</option>
-            <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Luận Thần Số Học (Số Chủ Đạo, Tên gọi, Nickname &amp; Năm cá nhân)</option>
+            <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Luận Lá Số Tử Vi (Tính cách, Sự nghiệp, Tiền bạc, Tình cảm &amp; 12 Tháng)</option>
+            <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Luận Bát Tự Ngũ Hành (Khí chất, Năng lượng hợp &amp; 12 Tháng)</option>
+            <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Luận Thần Số Học (Số Chủ Đạo, Tên gọi, Nickname &amp; 12 Tháng)</option>
             <option value="iching" ${AI_STATE.mode === "iching" ? "selected" : ""}>☯️ Giải Quẻ Kinh Dịch (Chốt Cát/Hung, Diễn biến &amp; Lời khuyên)</option>
             <option value="qimen" ${AI_STATE.mode === "qimen" ? "selected" : ""}>🧭 Xem Hướng &amp; Giờ Đẹp (Kỳ Môn Độn Giáp)</option>
-            <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Luận Trọn Gói Toàn Diện (Bản mệnh + Quẻ Dịch + Hướng Đẹp)</option>
+            <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Luận Trọn Gói Toàn Diện (Bản mệnh 12 Tháng + Quẻ Dịch + Hướng Đẹp)</option>
           </select>
         </div>
 
+        ${topicPillsHtml}
+
         <div class="ai-field" style="margin-bottom:10px;">
-          <label>Câu hỏi cụ thể / Chủ đề muốn AI phân tích kỹ (Tùy chọn)</label>
-          <input id="inp-ai-focus" value="${escHtml(AI_STATE.focusQuestion)}" onchange="window.__kbSaveAiPrefs()" placeholder="VD: Năm nay có nên đổi việc/đầu tư không? Đường tình duyên và tài lộc thế nào?">
+          <label>Câu hỏi cụ thể / Chủ đề muốn thầy soi thêm (Tùy chọn)</label>
+          <input id="inp-ai-focus" value="${escHtml(AI_STATE.focusQuestion)}" onchange="window.__kbSaveAiPrefs()" placeholder="VD: Năm nay tháng mấy nên mua đất/đổi việc? Có hạn gì cần tránh không?">
         </div>
 
         ${codeHtml}
@@ -658,13 +722,22 @@
 
   window.__kbSaveAiPrefs = saveAiPrefs;
   window.__kbRunGemini = runGeminiInterpret;
-  window.__kbSetPreferredMode = function (mode, focusQuestion) {
+  window.__kbRefreshAiCard = mountGeminiCard;
+  window.__kbPickDeepTopic = function (topicId) {
+    const found = DEEP_TOPICS.find(t => t.id === topicId) || DEEP_TOPICS[0];
+    AI_STATE.deepTopic = found.id;
+    AI_STATE.focusQuestion = found.prompt;
+    mountGeminiCard();
+  };
+  window.__kbSetPreferredMode = function (mode, focusQuestion, deepTopic) {
     if (mode) AI_STATE.mode = mode;
+    if (deepTopic) AI_STATE.deepTopic = deepTopic;
     if (typeof focusQuestion === "string") AI_STATE.focusQuestion = focusQuestion;
     const modeEl = document.getElementById("inp-ai-mode");
     if (modeEl && mode) modeEl.value = mode;
     const focusEl = document.getElementById("inp-ai-focus");
     if (focusEl && typeof focusQuestion === "string") focusEl.value = focusQuestion;
+    mountGeminiCard();
   };
   window.__kbRunGeminiMode = function (mode) {
     AI_STATE.mode = mode || "full";

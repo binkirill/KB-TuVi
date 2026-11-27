@@ -806,10 +806,20 @@ def compute_numerology_profile(
             "theme": NUMBER_ARCHETYPES.get(p_code, NUMBER_ARCHETYPES[str(p_b)])["title"],
         })
 
-    # 7. Chu Kỳ Vận Niên 9 Năm (Personal Year / Month / Day) & Dải Sóng 9 Năm
+    # 7. Chu Kỳ Vận Niên 9 Năm (Personal Year / Month / Day), 12 Tháng Cá Nhân trong năm xem & Dải Sóng 9 Năm
     _, py_base, _, _ = reduce_number(d_base + m_base + sum_digits(t_year), keep_masters=())
     _, pm_base, _, _ = reduce_number(py_base + t_month, keep_masters=())
     _, pd_base, _, _ = reduce_number(pm_base + t_day, keep_masters=())
+
+    personal_months_12 = []
+    for m_num in range(1, 13):
+        _, m_pm, _, _ = reduce_number(py_base + m_num, keep_masters=())
+        personal_months_12.append({
+            "solar_month": m_num,
+            "personal_month": m_pm,
+            "phase": PERSONAL_YEAR_MEANINGS[m_pm]["phase"],
+            "advice": PERSONAL_YEAR_MEANINGS[m_pm]["advice"],
+        })
 
     nine_year_wave = []
     for yr in range(t_year - 2, t_year + 7):
@@ -914,6 +924,7 @@ def compute_numerology_profile(
             "personal_year_theme": PERSONAL_YEAR_MEANINGS[py_base],
             "personal_month": pm_base,
             "personal_day": pd_base,
+            "personal_months_12": personal_months_12,
             "nine_year_wave": nine_year_wave,
         },
         "chaldean_name": name_data.get("chaldean"),
