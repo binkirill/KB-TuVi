@@ -1458,18 +1458,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.4rem;
-    padding: 0.48rem 0.72rem;
+    gap: 0.3rem;
+    padding: 0.48rem 0.62rem;
     border-radius: 10px;
     background: var(--card-bg);
     border: 1px solid color-mix(in oklab, var(--card-tone) 24%, transparent);
     font-family: var(--sc-font-text);
-    font-size: 0.81rem;
+    font-size: 0.77rem;
     font-weight: 700;
     letter-spacing: 0;
     line-height: 1.3;
+    white-space: nowrap;
     color: var(--card-tone);
     transition: background 220ms var(--sc-ease-out), color 220ms var(--sc-ease-out), border-color 220ms var(--sc-ease-out);
+  }
+  @media (max-width: 920px) {
+    .guide-pick-row {
+      white-space: normal;
+      font-size: 0.73rem;
+      padding: 0.44rem 0.5rem;
+    }
   }
   .guide-cta-arrow {
     display: inline-block;
@@ -2694,8 +2702,8 @@
                 Lập lá số 12 cung theo ngày giờ sinh, soi nét cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc &amp; Bát Tự.
               </p>
               <div class="guide-pick-row">
-                <span>Click mở khung Tử Vi</span>
-                <span class="guide-cta-arrow" aria-hidden="true">🎆 →</span>
+                <span>Chọn em tiếp viên này 😎💸</span>
+                <span class="guide-cta-arrow" aria-hidden="true">→</span>
               </div>
             </div>
           </button>
@@ -2723,8 +2731,8 @@
                 "Mạnh mẽ lên nào!" Khỏi cần ngày sinh: tự tung xu, nhờ gieo hộ, chọn số, gõ 2 chữ hoặc khởi theo giờ!
               </p>
               <div class="guide-pick-row">
-                <span>Click mở khung Gieo Quẻ</span>
-                <span class="guide-cta-arrow" aria-hidden="true">🎆 →</span>
+                <span>Chọn em tiếp viên này 🤪🎲</span>
+                <span class="guide-cta-arrow" aria-hidden="true">→</span>
               </div>
             </div>
           </button>
@@ -2752,8 +2760,8 @@
                 Đang bấm máy check var số mệnh cưng đó nha! "Mình yêu nhau nhé", để chị soi Ngày sinh &amp; Nickname xem độ slay 🌈
               </p>
               <div class="guide-pick-row">
-                <span>Click mở Thần Số Học</span>
-                <span class="guide-cta-arrow" aria-hidden="true">🏳️‍🌈 →</span>
+                <span>Chọn em tiếp viên này 😘💅</span>
+                <span class="guide-cta-arrow" aria-hidden="true">→</span>
               </div>
             </div>
           </button>
@@ -3695,6 +3703,7 @@ function applyVisibleTabsForMode(modeKey) {
    ============================================================================ */
 const CHIBI_EXPRESSIONS = {
   "thuc-chien": {
+    orig:  { icon: "📸", lbl: "📸 Ảnh gốc cực bén",      img: "/assets/images/guide_1_cool.jpg",   bubblePref: "bubble-classic" },
     cool:  { icon: "😎", lbl: "😎 Chủ tịch ngầu lòi",    img: "/assets/images/chibi_c1_cool.jpg",  bubblePref: "bubble-classic" },
     rich:  { icon: "🤩", lbl: "🤩 Ôm vàng & Sổ Đỏ",      img: "/assets/images/chibi_c1_rich.jpg",  bubblePref: "bubble-burst" },
     laugh: { icon: "🤣", lbl: "🤣 Cười xỉu trà sữa",     img: "/assets/images/chibi_c1_laugh.jpg", bubblePref: "bubble-halftone" },
@@ -3703,6 +3712,7 @@ const CHIBI_EXPRESSIONS = {
     wink:  { icon: "😉", lbl: "😉 Bắn tim chúc lộc",     img: "/assets/images/chibi_c1_wink.jpg",  bubblePref: "bubble-shoujo" }
   },
   "gieo-que": {
+    orig:   { icon: "📸", lbl: "📸 Ảnh gốc cực tươi",     img: "/assets/images/guide_2_cheer.jpg",  bubblePref: "bubble-classic" },
     cheer:  { icon: "💪", lbl: "💪 Mạnh mẽ lên nào!",    img: "/assets/images/chibi_c2_cheer.jpg",  bubblePref: "bubble-burst" },
     toss:   { icon: "🪙", lbl: "🪙 Tung 3 đồng xu cổ",   img: "/assets/images/chibi_c2_toss.jpg",   bubblePref: "bubble-classic" },
     laugh:  { icon: "😄", lbl: "😄 Bưng tô bún cười tươi", img: "/assets/images/chibi_c2_laugh.jpg", bubblePref: "bubble-halftone" },
@@ -3711,6 +3721,7 @@ const CHIBI_EXPRESSIONS = {
     eureka: { icon: "🧭", lbl: "🧭 Bắt trúng hướng đẹp!", img: "/assets/images/chibi_c2_eureka.jpg", bubblePref: "bubble-pixel" }
   },
   "tinh-duyen": {
+    orig:   { icon: "📸", lbl: "📸 Ảnh gốc cực slay",      img: "/assets/images/guide_3_lgbt.jpg",   bubblePref: "bubble-shoujo" },
     slay:   { icon: "💅", lbl: "💅 Hôn gió Slay đỉnh nóc", img: "/assets/images/chibi_c3_slay.jpg",   bubblePref: "bubble-shoujo" },
     gossip: { icon: "🤭", lbl: "🤭 Thầm thì chuyện Xì Gòn", img: "/assets/images/chibi_c3_gossip.jpg", bubblePref: "bubble-whisper" },
     laugh:  { icon: "🤣", lbl: "🤣 Cười xỉu bạc xỉu đá",   img: "/assets/images/chibi_c3_laugh.jpg",  bubblePref: "bubble-halftone" },
@@ -3864,7 +3875,6 @@ function renderChibiMoodBar(vibeKey, activeMood) {
 }
 
 function applyMascotVisual(vibeKey, moodKey) {
-  const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
   const moods = CHIBI_EXPRESSIONS[vibeKey] || CHIBI_EXPRESSIONS["thuc-chien"];
   const fallbackMood = Object.keys(moods)[0];
   const mInfo = moods[moodKey] || moods[fallbackMood];
@@ -3872,31 +3882,22 @@ function applyMascotVisual(vibeKey, moodKey) {
 
   const imgEl = document.getElementById("active-guide-img");
   const pillEl = document.getElementById("mascot-mood-pill");
-  const toggleBtn = document.getElementById("btn-toggle-chibi");
 
-  if (imgEl) {
-    imgEl.src = USE_CHIBI_AVATAR ? mInfo.img : g.img;
-  }
-  if (pillEl) {
-    pillEl.textContent = USE_CHIBI_AVATAR ? mInfo.lbl : "📷 Ảnh chân dung gốc";
-  }
-  if (toggleBtn) {
-    toggleBtn.textContent = USE_CHIBI_AVATAR ? "📷 Ảnh thật" : "🎭 Bật Chibi";
-  }
+  if (imgEl) imgEl.src = mInfo.img;
+  if (pillEl) pillEl.textContent = mInfo.lbl;
   renderChibiMoodBar(vibeKey, CURRENT_MOOD_KEY);
 }
 
-function toggleChibiPhotoMode() {
-  USE_CHIBI_AVATAR = !USE_CHIBI_AVATAR;
-  applyMascotVisual(ACTIVE_VIBE, CURRENT_MOOD_KEY);
-}
-
 function pickChibiMood(moodKey) {
-  USE_CHIBI_AVATAR = true;
+  if (moodKey === "orig") {
+    const entry = pullNextQuoteForVibe(ACTIVE_VIBE);
+    showMascotLineEntry(entry, "orig");
+    return;
+  }
   const bank = (MASCOT_LINES[ACTIVE_VIBE] || []).filter(item => item.mood === moodKey);
   if (bank.length > 0) {
     const chosen = bank[Math.floor(Math.random() * bank.length)];
-    showMascotLineEntry(chosen);
+    showMascotLineEntry(chosen, moodKey);
   } else {
     applyMascotVisual(ACTIVE_VIBE, moodKey);
   }
@@ -3965,14 +3966,15 @@ function scheduleNextMascotLine() {
   }, delayMs);
 }
 
-function showMascotLineEntry(entry) {
+function showMascotLineEntry(entry, explicitMood) {
   const bubbleEl = document.getElementById("comic-bubble");
   const badgeEl = document.getElementById("comic-badge");
   const textEl = document.getElementById("comic-text");
   const portraitCard = document.getElementById("mascot-portrait-card");
   if (!bubbleEl || !textEl || !badgeEl || !entry) return;
 
-  const moodKey = entry.mood || "cool";
+  // Trộn ngẫu nhiên: ~28% xuất hiện Ảnh gốc thật xen kẽ cùng các sắc thái Chibi khớp lời thoại!
+  const moodKey = explicitMood || (Math.random() < 0.28 ? "orig" : (entry.mood || "cool"));
   const styleObj = pickNextBubbleStyle(ACTIVE_VIBE, moodKey);
 
   applyMascotVisual(ACTIVE_VIBE, moodKey);
@@ -4814,16 +4816,17 @@ function renderBaziPane() {
   document.getElementById("pane-bazi").innerHTML = `
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>🌿 Tỷ Lệ Ngũ Hành Bản Mệnh (Kim · Mộc · Thủy · Hỏa · Thổ)</h3>
+      <h3 class="sec-tone-1"><span class="sec-num-pill">PHẦN 01</span> 🌿 Tỷ Lệ Ngũ Hành Bản Mệnh (Kim · Mộc · Thủy · Hỏa · Thổ)</h3>
       <div class="elem-bars">${bars}</div>
 
-      <div style="background:#FCF9F2; border:1px solid var(--border); padding:12px 14px; border-radius:12px; font-size:13.5px; margin-bottom:14px;">
+      <div style="background:#FCF9F2; border:1px solid var(--border); padding:12px 14px; border-radius:12px; font-size:13.5px; margin-bottom:18px;">
         <div><strong>· Bản mệnh cốt lõi:</strong> Hành <strong>${esc(bz.day_master.element)} (${esc(bz.day_master.stem)})</strong> (${esc(bz.day_master.strength_assessment)})</div>
         <div><strong>· Ngũ hành trợ lực (Dụng thần, nên ưu tiên):</strong> <strong style="color:var(--jade)">${esc(bz.yongshen_guidance.fuyi_favorable_elements.join(", "))}</strong></div>
         <div><strong>· Ngũ hành nên tiết chế:</strong> <strong style="color:var(--crimson)">${esc(bz.yongshen_guidance.fuyi_unfavorable_elements.join(", "))}</strong></div>
         <div><strong>· Gợi ý điều hòa theo mùa sinh:</strong> ${esc(bz.yongshen_guidance.qiong_tong_tiaohou)}</div>
       </div>
 
+      <h3 class="sec-tone-2" style="margin-top:20px;"><span class="sec-num-pill">PHẦN 02</span> 🏛️ Bảng Bát Tự Tứ Trụ (Năm · Tháng · Ngày · Giờ)</h3>
       <div style="overflow-x:auto;">
         <table class="std-table">
           <thead><tr><th>Thành phần</th><th>Trụ Năm (Gia đình)</th><th>Trụ Tháng (Sự nghiệp)</th><th>Trụ Ngày (Bản thân &amp; Hôn nhân)</th><th>Trụ Giờ (Điền sản &amp; Hậu vận)</th></tr></thead>
@@ -4837,7 +4840,7 @@ function renderBaziPane() {
         </table>
       </div>
 
-      <h3 style="margin-top:18px;">🌊 Từng Đại Vận 10 Năm Cuộc Đời (Ô nổi màu là chặng hiện tại)</h3>
+      <h3 class="sec-tone-4" style="margin-top:22px;"><span class="sec-num-pill">PHẦN 03</span> 🌊 Từng Đại Vận 10 Năm Cuộc Đời</h3>
       <div class="dayun-grid">${dyCards}</div>
     </div>
   `;
@@ -4957,7 +4960,7 @@ function renderNumerologyPane() {
   document.getElementById("pane-numerology").innerHTML = `
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>🏳️‍🌈 Hồ Sơ Thần Số Học: Ngày Sinh × Tên Thật × Nickname</h3>
+      <h3 class="sec-tone-6"><span class="sec-num-pill">PHẦN 01</span> 🏳️‍🌈 Số Chủ Đạo &amp; Chỉ Số Năng Lượng Cốt Lõi</h3>
       <div class="num-hero">
         <div class="num-orb">
           <div class="num-orb-lbl">Số Chủ Đạo</div>
@@ -4977,9 +4980,11 @@ function renderNumerologyPane() {
         ${kpis.map(k => `<div class="num-kpi"><div style="font-size:11.5px;color:var(--sc-ink-soft);font-weight:800;">${esc(k.lbl)}</div><div class="num-kpi-val">${esc(k.val)}</div><div style="font-size:11px;color:var(--navy);font-weight:700;">${esc(k.sub)}</div></div>`).join("")}
       </div>
 
+      <h3 class="sec-tone-3" style="margin-top:22px;"><span class="sec-num-pill">PHẦN 02</span> 📝 Giải Phẫu Tên Khai Sinh &amp; Cộng Hưởng Nickname</h3>
       ${nameBreakHtml}
       ${karmicBox}
 
+      <h3 class="sec-tone-2" style="margin-top:22px;"><span class="sec-num-pill">PHẦN 03</span> 🎯 Biểu Đồ Ngày Sinh 3×3 &amp; Các Mũi Tên Cá Tính</h3>
       <div class="grid3-wrap">
         ${renderGrid3Box(bGrid, "Biểu Đồ Ngày Sinh (3×3)")}
         ${renderGrid3Box(cGrid, "Biểu Đồ Tổ Hợp (Ngày Sinh + Tên Thật)")}
@@ -4989,7 +4994,7 @@ function renderNumerologyPane() {
         </div>
       </div>
 
-      <h3 style="margin-top:18px;">⛰️ Kim Tự Tháp 4 Đỉnh Cao &amp; 4 Thử Thách</h3>
+      <h3 class="sec-tone-5" style="margin-top:22px;"><span class="sec-num-pill">PHẦN 04</span> ⛰️ Kim Tự Tháp 4 Đỉnh Cao &amp; 4 Thử Thách</h3>
       <div style="overflow-x:auto;">
         <table class="std-table">
           <thead><tr><th>Chặng đời</th><th>Số Đỉnh Cao</th><th>Thử Thách</th><th>Độ tuổi</th><th>Năm Dương lịch</th><th>Chủ đề phát triển</th></tr></thead>
@@ -4997,8 +5002,8 @@ function renderNumerologyPane() {
         </table>
       </div>
 
-      <h3 style="margin-top:18px;">🌊 Sóng Chu Kỳ 9 Năm Cá Nhân (${pc.target_year}: ${esc(pc.personal_year_theme.phase)})</h3>
-      <p style="font-size:13px;color:var(--sc-ink-soft);margin:0 0 8px;">Gợi ý năm ${pc.target_year} (Năm cá nhân số ${pc.personal_year}): <strong>${esc(pc.personal_year_theme.advice)}</strong></p>
+      <h3 class="sec-tone-4" style="margin-top:22px;"><span class="sec-num-pill">PHẦN 05</span> 🌊 Sóng 9 Năm Cá Nhân &amp; Ma Trận 22 Arcana</h3>
+      <p style="font-size:13px;color:var(--sc-ink-soft);margin:0 0 8px;">Gợi ý năm ${pc.target_year} (Năm cá nhân số ${pc.personal_year} — ${esc(pc.personal_year_theme.phase)}): <strong>${esc(pc.personal_year_theme.advice)}</strong></p>
       <div style="overflow-x:auto;background:#FCF9F2;border:1px solid var(--border);border-radius:12px;padding:10px;">
         <svg viewBox="0 0 ${svgW} ${svgH}" style="width:100%;max-width:780px;height:auto;display:block;margin:0 auto;">
           <polyline fill="none" stroke="#C8337B" stroke-width="3" points="${polyPoints}"/>
@@ -5018,7 +5023,7 @@ function renderNumerologyPane() {
 
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>💎 Thử Đặt &amp; Chấm Điểm Độ Slay Cho Nickname / Nghệ Danh Mới 💅</h3>
+      <h3 class="sec-tone-1"><span class="sec-num-pill">PHẦN 06</span> 💎 Chấm Điểm Độ Slay Cho Nickname / Nghệ Danh Mới 💅</h3>
       <p style="font-size:13px;color:var(--sc-ink-soft);margin-top:0;">
         Nhập nhiều phương án Nickname hoặc tên gọi (cách nhau bằng dấu phẩy) để chấm điểm thang 100 xem tên nào hợp nhất với ngày sinh của cưng:
       </p>
@@ -5121,12 +5126,12 @@ function renderIchingPane() {
   document.getElementById("pane-iching").innerHTML = `
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>☯ Kết Quả Gieo Quẻ Kinh Dịch ${ic.question ? '("' + esc(ic.question) + '")' : ''}</h3>
+      <h3 class="sec-tone-2"><span class="sec-num-pill">PHẦN 01</span> ☯ Quẻ Gốc &amp; Quẻ Biến ${ic.question ? '("' + esc(ic.question) + '")' : ''}</h3>
       <div style="font-size:12.5px;color:var(--sc-ink-soft);margin:-4px 0 12px;">
         <strong>Cách khởi quẻ:</strong> ${esc(ic.cast_method)} &nbsp;·&nbsp; <strong>Thuộc:</strong> ${esc(ph.palace)} ${mh ? `· <strong>Hổ Quái (Diễn biến ngầm):</strong> Quẻ #${mh.number} ${esc(mh.name)}` : ""}
       </div>
       ${mhHtml}
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:12px; margin-bottom:14px; font-size:13.5px;">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:12px; margin-bottom:18px; font-size:13.5px;">
         <div style="padding:13px 15px; background:#FCF9F2; border:1.5px solid var(--border); border-radius:12px;">
           <strong style="color:var(--sc-accent);font-size:15.5px;">Quẻ Gốc (Hiện Tại): Quẻ #${ph.number} · ${esc(ph.name)}</strong>
           <div style="font-size:12px;color:var(--sc-ink-soft);margin-top:2px;">Thượng ${esc(ph.upper_trigram)} · Hạ ${esc(ph.lower_trigram)}</div>
@@ -5142,6 +5147,7 @@ function renderIchingPane() {
           }
         </div>
       </div>
+      <h3 class="sec-tone-5" style="margin-top:20px;"><span class="sec-num-pill">PHẦN 02</span> 📜 Bảng Lục Hào Nạp Giáp Chi Tiết (Hào 6 → Hào 1)</h3>
       <div style="overflow-x:auto;">
         <table class="std-table">
           <thead><tr><th>Hào (Trên xuống)</th><th>Lục Thần</th><th>Lục Thân &amp; Can Chi</th><th>Hình hào</th><th>Thế / Ứng</th><th>Vượng / Suy</th><th>Hào Động Biến</th></tr></thead>
@@ -5195,7 +5201,7 @@ function renderQimenPane() {
   document.getElementById("pane-qimen").innerHTML = `
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>🧭 Bảng Hướng Xuất Hành &amp; Gặp Gỡ Đẹp Nhất Theo Giờ</h3>
+      <h3 class="sec-tone-2"><span class="sec-num-pill">PHẦN 01</span> 🧭 Bảng 8 Phương Hướng Xuất Hành &amp; Gặp Gỡ Đẹp Nhất</h3>
       <p style="font-size:13px;color:var(--sc-ink-soft);margin-top:0;">
         Các ô màu xanh ngọc (<strong>★ Hướng Đẹp</strong>: Khai Môn, Hưu Môn, Sinh Môn) là phương hướng cát lợi nhất để đi xem đất, ký hợp đồng, đi thi hoặc gặp gỡ đối tác.
       </p>
@@ -5237,7 +5243,7 @@ function renderAiPane() {
   document.getElementById("pane-ai").innerHTML = `
     <div class="card orn-box">
       ${ORN_CORNERS_HTML}
-      <h3>📋 Xuất Dữ Liệu Chuẩn Sang ChatGPT / Google Gemini Web</h3>
+      <h3 class="sec-tone-3"><span class="sec-num-pill">TIỆN ÍCH MỞ RỘNG</span> 📋 Xuất Dữ Liệu Chuẩn Sang ChatGPT / Google Gemini Web</h3>
       <p style="font-size:13.5px;color:var(--sc-ink-soft);">
         Ngoài tính năng luận giải trực tiếp ở khung trên, bạn có thể bấm <strong>Copy Hồ Sơ</strong> bên dưới để dán sang ứng dụng ChatGPT hoặc Gemini cá nhân bất cứ lúc nào:
       </p>
