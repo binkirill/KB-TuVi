@@ -639,6 +639,43 @@ def compute_tuvi_chart(
         palaces[b_pos]["tieu_han_branch_year"] = ", ".join(str(a) for a in sample_ages[:5])
     tieu_han_target_b = (th_start + (nominal_age_target - 1) * th_dir) % 12
 
+    # 11b. Lưu Nguyệt 12 Tháng Âm Lịch của năm xem hạn (Đẩu Quân Lưu Nguyệt: từ Lưu Niên Thái Tuế nghịch tới tháng sinh, thuận tới giờ sinh)
+    month1_b = (ln_b - (eff_month - 1) + hour_b) % 12
+    ln_dan_stem = ((ln_s % 5) * 2 + 2) % 10
+    solar_approx_map = {
+        1: "khoảng tháng 2–3 DL", 2: "khoảng tháng 3–4 DL", 3: "khoảng tháng 4–5 DL",
+        4: "khoảng tháng 5–6 DL", 5: "khoảng tháng 6–7 DL", 6: "khoảng tháng 7–8 DL",
+        7: "khoảng tháng 8–9 DL", 8: "khoảng tháng 9–10 DL", 9: "khoảng tháng 10–11 DL",
+        10: "khoảng tháng 11–12 DL", 11: "khoảng tháng 12 DL – 1 năm sau", 12: "khoảng tháng 1–2 năm sau DL",
+    }
+    monthly_fortunes_12: List[Dict[str, object]] = []
+    for m_idx in range(1, 13):
+        mb = (month1_b + (m_idx - 1)) % 12
+        opp_mb = (mb + 6) % 12
+        m_stem = (ln_dan_stem + (m_idx - 1)) % 10
+        m_branch = (2 + (m_idx - 1)) % 12  # Tháng Giêng = Dần (2)
+        p_m = palaces[mb]
+        p_opp = palaces[opp_mb]
+        maj_here = [f"{s['name']}({s['brightness_code']})" for s in p_m["major_stars"]]  # type: ignore
+        maj_borrowed = [f"{s['name']}({s['brightness_code']})" for s in p_opp["major_stars"]] if not maj_here else []  # type: ignore
+        m_sihua = SIHUA_BY_STEM[m_stem]
+        m_loc_role = str(palaces[star_to_branch[m_sihua[0]]]["palace_name"])
+        m_ky_role = str(palaces[star_to_branch[m_sihua[3]]]["palace_name"])
+        sihua_here = list(p_m["natal_sihua"]) + list(p_m["liunian_sihua"])  # type: ignore
+        monthly_fortunes_12.append({
+            "lunar_month": m_idx,
+            "approx_solar": solar_approx_map[m_idx],
+            "month_can_chi": can_chi_name(m_stem, m_branch),
+            "palace_branch": BRANCHES_VI[mb],
+            "natal_palace_role": p_m["palace_name"],
+            "major_stars": maj_here if maj_here else [f"Mượn xung chiếu: {', '.join(maj_borrowed)}"],
+            "auspicious_stars": [s["name"] for s in p_m["auspicious_stars"]],  # type: ignore
+            "sha_stars": [s["name"] for s in p_m["sha_stars"]],  # type: ignore
+            "sihua_at_palace": sihua_here,
+            "tuan_triet": [x for x, flag in (("Tuần", p_m["has_tuan"]), ("Triệt", p_m["has_triet"])) if flag],
+            "month_loc_ky": f"Lưu Nguyệt Lộc tại {m_sihua[0]} ({m_loc_role}); Kỵ tại {m_sihua[3]} ({m_ky_role})",
+        })
+
     # 12. Nhận diện Cách Cục
     classic_patterns = detect_classic_patterns(
         palaces, menh_b, year_s, year_b, hour_b, tuan_pair, triet_pair
@@ -673,6 +710,7 @@ def compute_tuvi_chart(
             "tieu_han_palace": f"Cung {BRANCHES_VI[tieu_han_target_b]} (trùng cung gốc: {palaces[tieu_han_target_b]['palace_name']})",
             "active_dai_han": active_dai_han,
             "liunian_sihua": liunian_sihua_summary,
+            "monthly_fortunes_12": monthly_fortunes_12,
         },
         "palaces_by_branch": [palaces[b] for b in range(12)],
     }

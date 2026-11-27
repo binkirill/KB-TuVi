@@ -456,10 +456,57 @@ def compute_bazi_chart(
             "is_current": sy <= target_year <= ey,
         })
 
-    # Lưu Niên năm mục tiêu (target_year)
+    # Lưu Niên năm mục tiêu (target_year) & 12 Lưu Nguyệt (Tháng Tiết Khí Dần..Sửu)
     ln_s = (target_year + 6) % 10
     ln_b = (target_year + 8) % 12
     ln_nayin, _ = nayin_for_stem_branch(ln_s, ln_b)
+
+    ln_dan_stem = ((ln_s % 5) * 2 + 2) % 10
+    bazi_month_solar = [
+        "Tháng 1 ÂL (Dần · ~2/DL)", "Tháng 2 ÂL (Mão · ~3/DL)", "Tháng 3 ÂL (Thìn · ~4/DL)",
+        "Tháng 4 ÂL (Tỵ · ~5/DL)", "Tháng 5 ÂL (Ngọ · ~6/DL)", "Tháng 6 ÂL (Mùi · ~7/DL)",
+        "Tháng 7 ÂL (Thân · ~8/DL)", "Tháng 8 ÂL (Dậu · ~9/DL)", "Tháng 9 ÂL (Tuất · ~10/DL)",
+        "Tháng 10 ÂL (Hợi · ~11/DL)", "Tháng 11 ÂL (Tý · ~12/DL)", "Tháng 12 ÂL (Sửu · ~1/DL năm sau)",
+    ]
+    luc_hop_pairs = {(0, 1), (2, 11), (3, 10), (4, 9), (5, 8), (6, 7)}
+    luc_hai_pairs = {(0, 7), (1, 6), (2, 5), (3, 4), (8, 11), (9, 10)}
+    pillar_b_labels = [("Năm/Gia đình", year_b), ("Tháng/Sự nghiệp", month_b), ("Ngày/Bản thân-Hôn nhân", day_b), ("Giờ/Tài sản-Hậu vận", hour_b)]
+
+    monthly_liuyue_12 = []
+    for m_i in range(12):
+        ms = (ln_dan_stem + m_i) % 10
+        mb = (2 + m_i) % 12
+        ms_el = STEM_ELEMENTS[ms]
+        mb_el = BRANCH_ELEMENTS[mb]
+        fav_hits = (1 if ms_el in fuyi_favorable else 0) + (1 if mb_el in fuyi_favorable else 0)
+        unfav_hits = (1 if ms_el in fuyi_unfavorable else 0) + (1 if mb_el in fuyi_unfavorable else 0)
+        if fav_hits > unfav_hits:
+            m_trend = "Thuận lợi (Hợp năng lượng trợ lực)"
+        elif unfav_hits > fav_hits:
+            m_trend = "Cần thận trọng (Áp lực tăng)"
+        else:
+            m_trend = "Cân bằng (Ổn định, giữ nhịp)"
+
+        m_inter = []
+        for p_lbl, pb in pillar_b_labels:
+            pair = tuple(sorted((mb, pb)))
+            if abs(mb - pb) == 6:
+                m_inter.append(f"Xung trụ {p_lbl}")
+            elif pair in luc_hop_pairs:
+                m_inter.append(f"Hợp trụ {p_lbl}")
+            elif pair in luc_hai_pairs:
+                m_inter.append(f"Hại nhẹ trụ {p_lbl}")
+
+        monthly_liuyue_12.append({
+            "month_num": m_i + 1,
+            "period_label": bazi_month_solar[m_i],
+            "can_chi": can_chi_name(ms, mb),
+            "elements": f"{ms_el}/{mb_el}",
+            "stem_ten_god": ten_god_name(day_s, ms),
+            "branch_ten_god": ten_god_name(day_s, HIDDEN_STEMS[mb][0][0]),
+            "trend": m_trend,
+            "natal_triggers": m_inter,
+        })
 
     return {
         "gender": "Nam (Càn Tạo)" if is_male else "Nữ (Khôn Tạo)",
@@ -507,5 +554,6 @@ def compute_bazi_chart(
             "stem_ten_god": ten_god_name(day_s, ln_s),
             "branch_main_ten_god": ten_god_name(day_s, HIDDEN_STEMS[ln_b][0][0]),
             "nayin": ln_nayin,
+            "monthly_liuyue_12": monthly_liuyue_12,
         },
     }
