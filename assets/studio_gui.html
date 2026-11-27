@@ -4078,11 +4078,13 @@ function syncFocusQuestionFromTuvi() {
 function onTuviDateTypeChange() {
   const isLunar = document.getElementById("tv-datetype").value === "lunar";
   document.getElementById("tv-row-leap").style.display = isLunar ? "flex" : "none";
+  syncVnDateHidden("tv");
 }
 
 function onNumDateTypeChange() {
   const isLunar = document.getElementById("num-datetype").value === "lunar";
   document.getElementById("num-row-leap").style.display = isLunar ? "flex" : "none";
+  syncVnDateHidden("num");
 }
 
 function onShichenPick() {
@@ -4295,6 +4297,132 @@ function esc(s) {
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
+/* ============================================================================
+   SMART VIETNAMESE DATE INPUT (DD / MM / YYYY — AUTO-ADVANCE & PASTE SUPPORT)
+   Eliminates browser locale MM/DD swap bug (e.g. typing 25 never turns into 02/05!)
+   ============================================================================ */
+function maxDaysInMonth(m, y, isLunar) {
+  if (isLunar) return 30;
+  if ([4, 6, 9, 11].includes(m)) return 30;
+  if (m === 2) {
+    const leap = (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+    return leap ? 29 : 28;
+  }
+  return 31;
+}
+
+function syncVnDateHidden(prefix) {
+  const dEl = document.getElementById(prefix + "-date-d");
+  const mEl = document.getElementById(prefix + "-date-m");
+  const yEl = document.getElementById(prefix + "-date-y");
+  const hidEl = document.getElementById(prefix + "-date");
+  if (!dEl || !mEl || !yEl || !hidEl) return "";
+
+  const dRaw = dEl.value.trim();
+  const mRaw = mEl.value.trim();
+  const yRaw = yEl.value.trim();
+  if (!dRaw || !mRaw || yRaw.length < 4) {
+    hidEl.value = "";
+    hidEl.dataset.err = (!dRaw && !mRaw && !yRaw) ? "empty" : "incomplete";
+    return "";
+  }
+  const d = parseInt(dRaw, 10);
+  const m = parseInt(mRaw, 10);
+  const y = parseInt(yRaw, 10);
+  const dtSel = document.getElementById(prefix + "-datetype");
+  const isLunar = dtSel && dtSel.value === "lunar";
+
+  if (!Number.isFinite(y) || y < 1900 || y > 2100) {
+    hidEl.value = "";
+    hidEl.dataset.err = "Năm sinh cần nằm trong khoảng 1900 – 2100!";
+    return "";
+  }
+  if (!Number.isFinite(m) || m < 1 || m > 12) {
+    hidEl.value = "";
+    hidEl.dataset.err = "Tháng sinh cần từ 01 đến 12!";
+    return "";
+  }
+  const maxD = maxDaysInMonth(m, y, isLunar);
+  if (!Number.isFinite(d) || d < 1 || d > maxD) {
+    hidEl.value = "";
+    hidEl.dataset.err = `Ngày sinh tháng ${m}/${y} cần từ 01 đến ${maxD}!`;
+    return "";
+  }
+  const iso = `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  hidEl.value = iso;
+  hidEl.dataset.err = "";
+  return iso;
+}
+
+function onVnDatePartInput(prefix, part, ev) {
+  const el = document.getElementById(`${prefix}-date-${part}`);
+  if (!el) return;
+  const raw = el.value;
+  const hasSep = /[\/\-\.\s]/.test(raw);
+  const digits = raw.replace(/\D/g, "");
+  el.value = digits;
+
+  if (part === "d") {
+    if (hasSep && digits.length === 1 && digits !== "0") {
+      el.value = "0" + digits;
+      const nextEl = document.getElementById(`${prefix}-date-m`);
+      if (nextEl) { nextEl.focus(); nextEl.select(); }
+    } else if (digits.length >= 2) {
+      const nextEl = document.getElementById(`${prefix}-date-m`);
+      if (nextEl) { nextEl.focus(); nextEl.select(); }
+    }
+  } else if (part === "m") {
+    if (hasSep && digits.length === 1 && digits !== "0") {
+      el.value = "0" + digits;
+      const nextEl = document.getElementById(`${prefix}-date-y`);
+      if (nextEl) { nextEl.focus(); nextEl.select(); }
+    } else if (digits.length >= 2) {
+      const nextEl = document.getElementById(`${prefix}-date-y`);
+      if (nextEl) { nextEl.focus(); nextEl.select(); }
+    }
+  }
+  syncVnDateHidden(prefix);
+}
+
+function onVnDateKeyDown(prefix, part, ev) {
+  if (ev.key === "Backspace" && ev.target.value === "") {
+    const prevPart = part === "y" ? "m" : (part === "m" ? "d" : null);
+    if (prevPart) {
+      const prevEl = document.getElementById(`${prefix}-date-${prevPart}`);
+      if (prevEl) prevEl.focus();
+    }
+  }
+}
+
+function onVnDatePaste(prefix, ev) {
+  const txt = (ev.clipboardData || window.clipboardData)?.getData("text") || "";
+  const clean = txt.trim();
+  if (!clean) return;
+  let d = "", m = "", y = "";
+  const mIso = clean.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+  const mVn  = clean.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+  const m8   = clean.match(/^(\d{2})(\d{2})(\d{4})$/);
+  if (mIso) { y = mIso[1]; m = mIso[2]; d = mIso[3]; }
+  else if (mVn) { d = mVn[1]; m = mVn[2]; y = mVn[3]; }
+  else if (m8)  { d = m8[1]; m = m8[2]; y = m8[3]; }
+  else return;
+
+  ev.preventDefault();
+  document.getElementById(`${prefix}-date-d`).value = d.padStart(2, "0");
+  document.getElementById(`${prefix}-date-m`).value = m.padStart(2, "0");
+  document.getElementById(`${prefix}-date-y`).value = y;
+  syncVnDateHidden(prefix);
+}
+
+function setVnDateValue(prefix, isoDate) {
+  const parts = (isoDate || "").split("-");
+  if (parts.length !== 3) return;
+  document.getElementById(`${prefix}-date-y`).value = parts[0];
+  document.getElementById(`${prefix}-date-m`).value = parts[1];
+  document.getElementById(`${prefix}-date-d`).value = parts[2];
+  syncVnDateHidden(prefix);
+}
+
 function loadSampleProfile() {
   dismissNamThanPop();
   document.documentElement.setAttribute("data-stage", "workspace");
@@ -4303,14 +4431,14 @@ function loadSampleProfile() {
     document.getElementById("tv-gender").value = "nam";
     document.getElementById("tv-datetype").value = "solar";
     onTuviDateTypeChange();
-    document.getElementById("tv-date").value = "1996-08-16";
+    setVnDateValue("tv", "1996-08-16");
     document.getElementById("tv-time").value = "09:30";
     document.getElementById("tv-place").value = "Hải Phòng";
   } else if (ACTIVE_VIBE === "gieo-que") {
     document.getElementById("inp-question").value = "Tháng này chốt kèo đầu tư đất Đồ Sơn có sinh lời tốt không?";
     selectIcOption("coins_random");
   } else {
-    document.getElementById("num-date").value = "1998-08-16";
+    setVnDateValue("num", "1998-08-16");
     document.getElementById("num-datetype").value = "solar";
     onNumDateTypeChange();
     document.getElementById("num-fullname").value = "Nguyễn Minh Quân";
@@ -4340,7 +4468,8 @@ async function runAnalyze() {
 
   if (ACTIVE_VIBE === "thuc-chien") {
     const nameVal = document.getElementById("tv-name").value.trim();
-    const dateVal = document.getElementById("tv-date").value;
+    const dateVal = syncVnDateHidden("tv");
+    const dateErr = document.getElementById("tv-date").dataset.err || "";
     const timeVal = document.getElementById("tv-time").value;
     if (!nameVal) {
       alert("Ở chế độ Tử Vi, bạn vui lòng nhập Họ và tên đương số nhé!");
@@ -4348,8 +4477,10 @@ async function runAnalyze() {
       return;
     }
     if (!dateVal) {
-      alert("Vui lòng chọn Ngày tháng năm sinh để lập Lá Số Tử Vi nhé!");
-      document.getElementById("tv-date").focus();
+      alert(dateErr && dateErr !== "empty" && dateErr !== "incomplete"
+        ? dateErr
+        : "Vui lòng điền đầy đủ Ngày / Tháng / Năm sinh (VD: 25 / 08 / 1996) để lập Lá Số Tử Vi nhé!");
+      document.getElementById("tv-date-d").focus();
       return;
     }
     if (!timeVal) {
@@ -4445,10 +4576,13 @@ async function runAnalyze() {
       cast_datetime: castDtStr
     };
   } else {
-    const dateVal = document.getElementById("num-date").value;
+    const dateVal = syncVnDateHidden("num");
+    const dateErr = document.getElementById("num-date").dataset.err || "";
     if (!dateVal) {
-      alert("Cưng ơi nhớ chọn Ngày tháng năm sinh để chị đẹp tính Số Chủ Đạo nhé!");
-      document.getElementById("num-date").focus();
+      alert(dateErr && dateErr !== "empty" && dateErr !== "incomplete"
+        ? dateErr
+        : "Cưng ơi nhớ điền đủ Ngày / Tháng / Năm sinh (VD: 25 / 08 / 1998) để chị đẹp tính Số Chủ Đạo nhé!");
+      document.getElementById("num-date-d").focus();
       return;
     }
     const fullName = document.getElementById("num-fullname").value.trim();
