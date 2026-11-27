@@ -283,28 +283,28 @@
     transform: rotate(36deg) skewX(-14deg);
   }
 
-  /* 4. Retro 8-Bit RPG Dialog Box */
+  /* 4. Crisp Teal Comic Speech Balloon */
   .comic-bubble.bubble-pixel {
-    background: #F8FAFC;
-    border: 3px solid #0F172A;
-    border-radius: 6px 12px 6px 10px;
-    box-shadow: inset 0 0 0 3px #CBD5E1, 5px 6px 0 #0F172A;
+    background: #F4FFFD;
+    border: 2.5px solid #0F172A;
+    border-radius: 24px 18px 22px 20px;
+    box-shadow: 5px 6px 0 #0F766E;
   }
   .comic-bubble.bubble-pixel .comic-badge {
     background: #0F766E;
-    border-radius: 3px;
+    border-radius: 999px;
   }
   .comic-bubble.bubble-pixel::after {
     content: "";
     position: absolute;
     bottom: -11px;
     left: var(--tail-left, 46%);
-    width: 16px;
-    height: 16px;
-    background: #F8FAFC;
-    border-right: 3px solid #0F172A;
-    border-bottom: 3px solid #0F172A;
-    transform: rotate(42deg) skewX(-8deg);
+    width: 17px;
+    height: 17px;
+    background: #F4FFFD;
+    border-right: 2.5px solid #0F172A;
+    border-bottom: 2.5px solid #0F172A;
+    transform: rotate(38deg) skewX(-10deg);
   }
 
   /* 5. Secret Whisper Dashed Note */
@@ -3774,14 +3774,44 @@ const CHIBI_EXPRESSIONS = {
 };
 
 const COMIC_BUBBLE_STYLES = [
-  { cls: "bubble-classic",  badges: ["💬 TIẾP VIÊN BẬT MÍ", "🗨️ TÂM SỰ MỎNG", "😎 PHÁN CHUẨN ĐÉT"] },
-  { cls: "bubble-cloud",    badges: ["💭 ĐANG NGHĨ BỤNG...", "☁️ GÓC SUY TƯ", "🔮 VŨ TRỤ THÌ THẦM"] },
-  { cls: "bubble-burst",    badges: ["💥 CHẤN ĐỘNG!!", "⚡ BÍ KÍP NÓNG!", "🔥 NGHE KỸ NÈ!"] },
-  { cls: "bubble-pixel",    badges: ["▶ NPC FUNNY TIP", "🎮 +99 LỘC LÁ", "👾 HỆ THỐNG BÁO"] },
-  { cls: "bubble-whisper",  badges: ["🤫 NÓI NHỎ NGHE NÈ", "🕵️ MẬT THƯ ĐỒ SƠN", "👀 ĐỪNG KỂ AI NHA"] },
-  { cls: "bubble-halftone", badges: ["📢 LOA PHƯỜNG PHÁT", "🗞️ TIN NÓNG HỔI", "🎯 MẸO ĐẮT GIÁ"] },
-  { cls: "bubble-shoujo",   badges: ["💖 VŨ TRỤ NHẮN NHỦ", "✨ BÙA MAY MẮN", "🌈 NĂNG LƯỢNG CAO"] }
+  { cls: "bubble-classic" },
+  { cls: "bubble-cloud" },
+  { cls: "bubble-burst" },
+  { cls: "bubble-pixel" },
+  { cls: "bubble-whisper" },
+  { cls: "bubble-halftone" },
+  { cls: "bubble-shoujo" }
 ];
+
+const PERSONA_SPEECH_HEADERS = {
+  "thuc-chien": {
+    default: ["😎 NAM THẦN NHẮN NHỦ", "💬 TIẾP VIÊN TÂM SỰ"],
+    cool:    ["😎 NAM THẦN NHẮN NHỦ", "🕶️ PHÁN NÉT CĂNG"],
+    rich:    ["💰 VÍA TÀI LỘC VỀ", "🏡 GÓC ĐẤT CÁT ĐỒ SƠN"],
+    laugh:   ["🤣 CHUYỆN VUI HÔM NAY", "😜 TRÊU BẠN XÍU NÈ"],
+    wise:    ["📜 LỜI BÀN CỔ PHÁP", "🔮 SOI CUNG MỆNH"],
+    shock:   ["😱 ỐI DỒI ÔI NGHE NÈ!", "⚡ NHẮC NHẸ LIỀN TAY!"],
+    wink:    ["😉 BẬT MÍ NHỎ NÈ", "🤫 NÓI NHỎ ANH EM NGHE"]
+  },
+  "gieo-que": {
+    default: ["🎲 THÁNH QUẺ NHẮN NHỦ", "☯️ LỜI BÀN DỊCH LÝ"],
+    cheer:   ["💪 MẠNH MẼ LÊN NÀO!", "🔥 TIẾP LỬA CHO BẠN"],
+    toss:    ["🎲 LẮC XU BẬT MÍ", "☯️ CƠ DUYÊN TRONG QUẺ"],
+    laugh:   ["😄 TÁM VUI QUẺ DỊCH", "🍜 GÓC VUI HẢI PHÒNG"],
+    zen:     ["🧘 TĨNH TÂM NGHE NÈ", "🍀 LỜI KHUYÊN LÀNH"],
+    warn:    ["🤫 DẶN NHỎ XÍU NHA", "😅 KHOAN VỘI ANH EM ƠI!"],
+    eureka:  ["🧭 BẮT TRÚNG HƯỚNG ĐẸP", "✨ CÁT TINH ĐANG CHIẾU"]
+  },
+  "tinh-duyen": {
+    default: ["💅 BÀ HOÀNG TÂM SỰ", "💄 CHỊ ĐẸP DẶN CƯNG"],
+    slay:    ["💅 BÀ HOÀNG PHÁN NÈ", "💄 CHỊ ĐẸP DẶN CƯNG"],
+    gossip:  ["🤭 THẦM THÌ XÌ GÒN", "🤫 KỂ NHỎ CƯNG NGHE"],
+    laugh:   ["🤣 CƯỜI XỈU VỚI CHỊ", "😜 TRÊU CƯNG XÍU NHA"],
+    judge:   ["😏 KÉO KÍNH SOI LIỀN", "👀 BẮT BÀI CƯNG NHA"],
+    love:    ["💖 THƯƠNG CƯNG LẮM Á", "🏳️‍🌈 TẦN SỐ CẦU VỒNG"],
+    drama:   ["😱 TRỜI ĐẤT ƠI NGHE CHỊ!", "🔥 TỈNH TÁO LẠI CƯNG ƠI!"]
+  }
+};
 
 const MASCOT_LINES = {
   "thuc-chien": [
@@ -3794,7 +3824,7 @@ const MASCOT_LINES = {
     { mood: "shock", text: "Sao Hóa Lộc là tiền vô cửa trước, còn Hóa Kỵ mà không cẩn thận là... chốt đơn Shopee cửa sau! 🛒💸" },
     { mood: "laugh", text: "Ngũ hành thiếu Thủy thì nhớ uống đủ 2 lít nước mỗi ngày trước khi bàn chuyện phong thủy cao siêu nha! 💧😂" },
     { mood: "shock", text: "Ở Đồ Sơn gió biển thổi mát rượi mà sao nhìn ví cuối tháng vẫn hơi lạnh sống lưng anh em nhỉ? 🌬️💸" },
-    { mood: "rich",  text: "Tip Tử Vi: Thân cư Tài Bạch là mẫu người nửa đêm nằm ngủ vẫn mơ thấy vàng miếng với nến xanh! 📈😴" },
+    { mood: "rich",  text: "Bật mí Tử Vi: Thân cư Tài Bạch là mẫu người nửa đêm nằm ngủ vẫn mơ thấy vàng miếng với nến xanh! 📈😴" },
     { mood: "shock", text: "Thiên Cơ chủ về trí tuệ mưu lược, nhưng nghĩ nhiều quá coi chừng rụng tóc trước khi phát tài nha! 🧠🧴" },
     { mood: "cool",  text: "Ai mệnh Thất Sát, Phá Quân, Tham Lang là hội không thích ngồi yên một chỗ, càng xông pha càng ra lộc! 🚀🔥" },
     { mood: "wise",  text: "Bát Tự khuyết Mộc thì trồng thêm chậu cây trên bàn làm việc, vừa hợp mệnh vừa đỡ mỏi mắt nhìn màn hình! 🌿💻" },
@@ -3877,7 +3907,7 @@ const MASCOT_LINES = {
     { mood: "drama",  text: "Số Chủ Đạo 3 với Số 5 mà ngồi chung một bàn là cái quán cà phê thành cái chợ nổi Cái Răng liền luôn á! 🗣️🎉" },
     { mood: "love",   text: "Đừng thấy chữ 'Nợ Nghiệp 13/4, 14/5, 16/7, 19/1' mà sợ nha má, chỉ là bài tập nâng cao giúp mình trưởng thành x2 thôi! 📚💪" },
     { mood: "gossip", text: "Chaldean Babylon cổ đại tính rung động âm thanh của tên gọi cực chuẩn, nhớ kéo xuống cuối trang chấm thử Nickname nha! 🎶⚖️" },
-    { mood: "love",   text: "Mấy cưng Số 6 thương người vừa vừa thôi nghen, lo chuyện bao đồng riết quên luôn chăm sóc bản thân là chị mắng á! 💖🫂" },
+    { mood: "love",   text: "Mấy cưng Số 6 thương người vừa vừa thôi nghen, lo chuyện bao đồng riết quên luôn chăm sóc bản thân là chị mắng á! 💖🤗" },
     { mood: "love",   text: "Tâm Vùng Thoải Mái trong 22 Arcana cho biết lúc nào linh hồn mình thấy chill nhất — đọc thử coi chuẩn hông nha! 🧘‍♀️✨" },
     { mood: "laugh",  text: "Hải Ly với Hoàng Mười nghe tên như phim kiếm hiệp TVB dzị mà chấm điểm hợp ngày sinh có khi lên tới 95/100 đó! 🎬🏆" },
     { mood: "drama",  text: "Năm Cá Nhân số 4 hoặc số 7 là năm trau dồi nội lực, tém tém cái nết tiêu xài bốc đồng lại giùm chị đẹp nha! 🐷🔒" },
@@ -3973,7 +4003,7 @@ function pickNextBubbleStyle(vibeKey, moodKey) {
   const moods = CHIBI_EXPRESSIONS[vibeKey] || {};
   const prefCls = moods[moodKey]?.bubblePref;
   let chosenIdx = -1;
-  // 55% ưu tiên khung truyện tranh hợp đúng cảm xúc (VD: shock/drama -> khung nổ gai burst, gossip -> khung whisper), 45% biến hóa ngẫu nhiên!
+  // 55% ưu tiên khung truyện tranh hợp đúng cảm xúc, 45% biến hóa ngẫu nhiên!
   if (prefCls && Math.random() < 0.55) {
     const pIdx = COMIC_BUBBLE_STYLES.findIndex(s => s.cls === prefCls);
     if (pIdx >= 0 && pIdx !== lastBubbleStyleIdx) chosenIdx = pIdx;
@@ -3984,11 +4014,9 @@ function pickNextBubbleStyle(vibeKey, moodKey) {
   }
   lastBubbleStyleIdx = chosenIdx;
   const st = COMIC_BUBBLE_STYLES[chosenIdx];
-  let badge = st.badges[Math.floor(Math.random() * st.badges.length)];
-  if (vibeKey === "tinh-duyen" && Math.random() < 0.6) {
-    const lgbtBadges = ["💅 BÀ HOÀNG TÂM SỰ", "🏳️‍🌈 GÓC XÌ GÒN", "🤪 SLAY TIP ✨", "🌈 CHECK VAR LIỀN", "💄 CHỊ ĐẸP DẶN"];
-    badge = lgbtBadges[Math.floor(Math.random() * lgbtBadges.length)];
-  }
+  const pMap = PERSONA_SPEECH_HEADERS[vibeKey] || PERSONA_SPEECH_HEADERS["thuc-chien"];
+  const headerPool = pMap[moodKey] || pMap.default;
+  const badge = headerPool[Math.floor(Math.random() * headerPool.length)];
   return { cls: st.cls, badge };
 }
 
