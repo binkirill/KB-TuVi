@@ -6,12 +6,14 @@
 <title>☯ Thiên Cơ Gen-Z · Tử Vi, Bát Tự, Thần Số Học &amp; Kinh Dịch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/scrollcraft/scrollcraft.css">
 <style>
+  *, *::before, *::after { box-sizing: border-box; }
+
   /* ==========================================================================
      KB-TUVI GEN-Z PLAYFUL MYSTIC · SCROLL-CRAFT TOKEN LAYER
-     Two families max: Bricolage Grotesque (display) + Be Vietnam Pro (prose)
+     Two families max (100% native Vietnamese): Baloo 2 (display) + Nunito (prose)
      Six colour roles + Signature Move whole-page vibe regrade
      ========================================================================== */
   :root {
@@ -24,8 +26,8 @@
     --sc-accent-soft: #FFF0F2;
     --sc-accent-ink:  #FFFFFF;
 
-    --sc-font-display: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
-    --sc-font-text:    "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+    --sc-font-display: "Baloo 2", "Nunito", "Segoe UI", system-ui, sans-serif;
+    --sc-font-text:    "Nunito", "Segoe UI", system-ui, sans-serif;
     --sc-font-mono:    ui-monospace, SFMono-Regular, Consolas, monospace;
 
     --sc-r-sm: 10px;
@@ -83,6 +85,7 @@
     color: var(--sc-ink);
     font-family: var(--sc-font-text);
     line-height: 1.6;
+    font-synthesis-weight: auto;
   }
 
   /* Subtle tactile grain over paper ground */
@@ -457,13 +460,16 @@
     background: var(--sc-surface);
     border: 1px solid var(--border);
     border-radius: var(--sc-r-lg);
-    padding: 1.5rem;
+    padding: 1.75rem;
     box-shadow: var(--sc-e2);
   }
   .studio-grid.has-results .sidebar {
     position: sticky;
     top: 76px;
     padding: 1.25rem;
+  }
+  .studio-grid.has-results .row-2 {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* Active Guide Header inside Form */
@@ -504,17 +510,17 @@
   /* Quick switcher inside form */
   .vibe-pills {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.45rem;
-    margin-bottom: 1.2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1.35rem;
   }
   .vibe-pill {
-    padding: 0.5rem 0.4rem;
+    padding: 0.58rem 0.5rem;
     border-radius: var(--sc-r-sm);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     background: var(--sc-canvas);
     color: var(--sc-ink-soft);
-    font-size: 0.78rem;
+    font-size: 0.84rem;
     font-weight: 700;
     cursor: pointer;
     text-align: center;
@@ -527,32 +533,45 @@
     border-color: var(--sc-accent);
   }
 
-  .form-block { margin-bottom: 1rem; }
-  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  @media (max-width: 540px) { .row-2 { grid-template-columns: 1fr; } }
+  .form-block { margin-bottom: 1.25rem; }
+  .row-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 1rem;
+    row-gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .row-2:last-child { margin-bottom: 0; }
+  @media (max-width: 580px) { .row-2 { grid-template-columns: minmax(0, 1fr); } }
 
-  .field { margin-bottom: 0.8rem; }
+  .field { min-width: 0; margin-bottom: 0.9rem; }
+  .row-2 > .field { margin-bottom: 0; }
   .field:last-child { margin-bottom: 0; }
   .field label {
     display: block;
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     font-weight: 700;
     color: var(--sc-ink);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
   }
-  .field label span { font-weight: 500; color: var(--sc-ink-soft); }
+  .field label span { font-weight: 600; color: var(--sc-ink-soft); }
   .field input, .field select, .field textarea {
+    box-sizing: border-box;
+    display: block;
     width: 100%;
-    padding: 0.65rem 0.8rem;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0.72rem 0.9rem;
     border-radius: var(--sc-r-sm);
     border: 1.5px solid var(--border);
     background: var(--sc-canvas);
     color: var(--sc-ink);
-    font-size: 0.92rem;
-    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--sc-font-text);
     transition: border-color 150ms var(--sc-ease-out), background-color 150ms var(--sc-ease-out);
   }
-  .field textarea { resize: vertical; min-height: 62px; }
+  .field textarea { resize: vertical; min-height: 68px; }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none;
     border-color: var(--sc-accent);
@@ -563,25 +582,25 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.84rem;
-    font-weight: 600;
+    font-size: 0.86rem;
+    font-weight: 700;
     color: var(--sc-ink-soft);
-    margin: -0.25rem 0 0.75rem;
+    margin: 0.5rem 0 0.75rem;
     cursor: pointer;
   }
   .chk-row input { width: auto; }
 
   /* Clean progressive disclosure drawers so the form stays super simple */
   .extra-drawer {
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     border-radius: var(--sc-r-md);
     background: var(--sc-canvas);
-    padding: 0.7rem 0.9rem;
-    margin-bottom: 0.85rem;
+    padding: 0.82rem 1rem;
+    margin-bottom: 0.95rem;
   }
   .extra-drawer summary {
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-weight: 700;
     color: var(--sc-ink);
     list-style: none;
@@ -593,13 +612,13 @@
   .extra-drawer summary::-webkit-details-marker { display: none; }
   .extra-drawer summary::after {
     content: "+";
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 800;
     color: var(--sc-accent);
   }
   .extra-drawer[open] summary::after { content: "−"; }
-  .extra-drawer__body { margin-top: 0.85rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); }
-  .drawer-summary-sub { font-size: 0.76rem; font-weight: 500; color: var(--sc-ink-soft); }
+  .extra-drawer__body { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px dashed var(--border); }
+  .drawer-summary-sub { font-size: 0.8rem; font-weight: 600; color: var(--sc-ink-soft); }
 
   .coin-box {
     background: #fff;
@@ -672,11 +691,14 @@
   /* Harmony tweak for injected Gemini AI button */
   #kb-sidebar-ai-btn {
     border-radius: var(--sc-r-md) !important;
-    padding: 0.82rem 1rem !important;
+    padding: 0.85rem 1rem !important;
+    margin-top: 0.75rem !important;
     background: #1C1635 !important;
     border: 1px solid #1C1635 !important;
     box-shadow: var(--sc-e1) !important;
     color: #FAF8F4 !important;
+    font-family: var(--sc-font-text) !important;
+    font-weight: 800 !important;
   }
 
   /* Quiet Five-Elements decorative preview under form before results */

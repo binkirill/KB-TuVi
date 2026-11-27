@@ -29,7 +29,7 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   - `assets/images/guide_3_love.jpg`: Make-up từ `user_photo_3.png` (giữ nguyên cặp đôi ngọt ngào, xóa sạch chữ cũ, thêm viền sticker, bướm phát sáng, trái tim bokeh & chòm sao nền hồng phấn – tím oải hương).
   - *(Giữ nguyên 6 ảnh cũ `hero_celestial.jpg`, `five_elements.jpg`, `iching_oracle.jpg`, `user_photo_1..3.png` để bảo toàn tương thích ngược 100%).*
 - `[x]` **Thiết kế lại giao diện Gen-Z Playful Mystic chuẩn `scroll-craft` (`assets/studio_gui.html` + `assets/scrollcraft/scrollcraft.css` & `scrollcraft.js`):**
-  - Nhúng engine thật `scrollcraft.js` + `scrollcraft.css` (không sửa core engine; theme hoàn toàn qua design tokens nền sáng `#FAF8F4`, mực tím than `#1C1635`, 2 font `Bricolage Grotesque` + `Be Vietnam Pro`, zero gradient text, zero em-dash, zero neon nặng nề).
+  - Nhúng engine thật `scrollcraft.js` + `scrollcraft.css` (không sửa core engine; theme hoàn toàn qua design tokens nền sáng `#FAF8F4`, mực tím than `#1C1635`, 2 font chuẩn tiếng Việt `Baloo 2` + `Nunito`, `box-sizing: border-box` nội tuyến chống dính ô input, zero gradient text, zero em-dash, zero neon nặng nề).
   - **Kịch bản Peak + Signature Move ("3 Sư Huynh · 3 Phong Cách Xem"):**
     1. **Hệ Thực Chiến (`guide_1_cool.jpg`)** — Tông đỏ san hô `#D93848`, ưu tiên Tử Vi 12 cung & Bát Tự.
     2. **Hệ Hỏi Vũ Trụ (`guide_2_cheer.jpg`)** — Tông xanh ngọc `#0D8A74`, tự mở sẵn ngăn Gieo Quẻ Kinh Dịch (đủ 4 cách gieo) & ưu tiên Tab Quẻ Kinh Dịch / Hướng Tốt.
