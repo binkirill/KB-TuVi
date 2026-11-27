@@ -96,3 +96,14 @@ Dùng `read_file` mở đúng cẩm nang trong `references/` theo Bảng Mục 2
 4. **Kiểm Chứng Chéo Đông × Tây & Bản Đồ Thời Vận Năm Xem** (kèm nhãn `🟢 / 🟡 / 🔴`).
 5. **Chiến Lược Hành Động Thực Tiễn (Xu Cát Tỳ Hung)** (Nghề nghiệp tối ưu, phương hướng/ngũ hành bổ khuyết, thói quen rèn Mũi tên trống & gợi ý Tên gọi/Thương hiệu nếu có).
 6. *Lưu ý văn hóa cuối bài: Mệnh lý phương Đông & Thần số học phương Tây là công cụ tham chiếu nhận thức bản thân và chiến lược nhân sinh, không thay thế quyết định y tế, pháp lý chuyên ngành.*
+
+---
+
+## 5. ĐỒNG BỘ TỰ ĐỘNG SANG BẢN WEB (GITHUB & VERCEL)
+- **Nguồn sự thật duy nhất (Single Source of Truth):** Mọi chỉnh sửa code, engine, tài liệu hoặc giao diện `assets/studio_gui.html` đều thực hiện trực tiếp tại `G:\My Drive\Antigravity\Skills\kb-tuvi\`.
+- **Plugin Gemini AI rời:** Toàn bộ nút bấm và Trạm Luận Giải AI được tách độc lập tại `assets/gemini_ai_addon.js` và `scripts/gemini_interpreter.py` để không bị xung đột khi sửa giao diện gốc.
+- **Lệnh đồng bộ & xuất bản lên web (`https://kb-tu-vi.vercel.app`) ngay sau khi sửa code:**
+  ```
+  python -X utf8 "G:/My Drive/Antigravity/kb-tuvi-web/sync_from_skill.py" --push
+  ```
+  *(Hoặc nhấp đúp file `Dong_Bo_Va_Day_Len_Web.bat` ngay trong thư mục gốc).*

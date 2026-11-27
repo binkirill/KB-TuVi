@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+r"""
 sync_from_skill.py — Công cụ đồng bộ 1-Click cho KB-TUVI (Single Source of Truth)
 Luồng đồng bộ chuẩn:
   1. Nguồn gốc duy nhất: G:\My Drive\Antigravity\Skills\kb-tuvi
