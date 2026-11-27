@@ -383,7 +383,7 @@
   }
   .mascot-img-wrap {
     position: relative;
-    aspect-ratio: 1 / 1.02;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: var(--sc-accent-soft);
   }
@@ -391,12 +391,85 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center center;
     display: block;
     transition: transform 320ms var(--sc-ease-out);
   }
   .mascot-portrait-card:hover .mascot-img-wrap img {
-    transform: scale(1.04);
+    transform: scale(1.035);
+  }
+  .mascot-mood-pill {
+    position: absolute;
+    bottom: 9px;
+    left: 10px;
+    z-index: 4;
+    padding: 0.24rem 0.68rem;
+    border-radius: 999px;
+    background: rgba(28, 22, 53, 0.84);
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    font-weight: 800;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+    pointer-events: none;
+  }
+  .mascot-style-toggle {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    z-index: 6;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1C1635;
+    font-size: 0.69rem;
+    font-weight: 800;
+    border: 1.5px solid var(--gold-line);
+    cursor: pointer;
+    box-shadow: var(--sc-e1);
+    transition: transform 140ms ease, background-color 150ms ease;
+  }
+  .mascot-style-toggle:hover {
+    transform: scale(1.05);
+    background: #FFFFFF;
+  }
+  .chibi-mood-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0.32rem;
+    margin-top: 0.48rem;
+    flex-wrap: wrap;
+  }
+  .chibi-mood-btn {
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--sc-canvas);
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
+  }
+  .chibi-mood-btn:hover {
+    transform: translateY(-2px) scale(1.1);
+    border-color: var(--sc-accent);
+  }
+  .chibi-mood-btn.is-active {
+    background: var(--sc-accent-soft);
+    border: 2px solid var(--sc-accent);
+    transform: scale(1.12);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .chibi-mood-btn {
+    background: #071D22;
+    border-color: #1F5B67;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .chibi-mood-btn.is-active {
+    background: rgba(20, 184, 166, 0.28);
+    border-color: #2DD4BF;
   }
   .mascot-meta {
     padding: 0.78rem 0.95rem 0.85rem;
@@ -2516,17 +2589,20 @@
           </div>
         </div>
 
-        <div id="mascot-portrait-card" class="mascot-portrait-card orn-box" onclick="nextMascotLine(true)" title="Chạm vào tiếp viên để nghe câu nói khác!">
+        <div id="mascot-portrait-card" class="mascot-portrait-card orn-box" onclick="nextMascotLine(true)" title="Chạm vào Chibi để nghe câu nói khác!">
           <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
           <div class="mascot-img-wrap">
-            <img id="active-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Nhân vật đại diện" width="340" height="340">
+            <button type="button" id="btn-toggle-chibi" class="mascot-style-toggle" onclick="event.stopPropagation(); toggleChibiPhotoMode();" title="Đổi giữa Chibi biểu cảm và Ảnh thật">📷 Ảnh thật</button>
+            <img id="active-guide-img" src="/assets/images/chibi_c1_cool.jpg" alt="Chibi tiếp viên đại diện" width="340" height="340">
+            <span id="mascot-mood-pill" class="mascot-mood-pill">😎 Chủ tịch ngầu lòi</span>
           </div>
           <div class="mascot-meta">
             <div id="active-guide-title" class="mascot-name">Nam Thần Tử Vi, Tài Bạch &amp; Điền Trạch</div>
-            <div class="mascot-tap-hint">💬 Chạm để nghe câu khác · Tự nói mỗi 3–10s</div>
+            <div id="chibi-mood-bar" class="chibi-mood-bar" onclick="event.stopPropagation();" aria-label="Chọn biểu cảm Chibi"></div>
+            <div class="mascot-tap-hint">💬 Biểu cảm Chibi tự đổi khớp lời thoại (3–10s)</div>
           </div>
         </div>
       </aside>
@@ -3397,9 +3473,36 @@ function applyVisibleTabsForMode(modeKey) {
 }
 
 /* ============================================================================
-   COMIC SPEECH BUBBLE ENGINE (7 BUBBLE STYLES × 32 FUNNY LINES PER CHARACTER)
-   Auto-cycles every 3-10 seconds in workspace + click to advance immediately!
+   CHIBI MULTI-EXPRESSION + COMIC SPEECH ENGINE (18 CHIBI SPRITES × 96 LINES)
+   Each comic line switches the Chibi to its matching facial expression & prop!
    ============================================================================ */
+const CHIBI_EXPRESSIONS = {
+  "thuc-chien": {
+    cool:  { icon: "😎", lbl: "😎 Chủ tịch ngầu lòi",    img: "/assets/images/chibi_c1_cool.jpg",  bubblePref: "bubble-classic" },
+    rich:  { icon: "🤩", lbl: "🤩 Ôm vàng & Sổ Đỏ",      img: "/assets/images/chibi_c1_rich.jpg",  bubblePref: "bubble-burst" },
+    laugh: { icon: "🤣", lbl: "🤣 Cười xỉu trà sữa",     img: "/assets/images/chibi_c1_laugh.jpg", bubblePref: "bubble-halftone" },
+    wise:  { icon: "🧐", lbl: "🧐 Soi cuốn thiên thư",   img: "/assets/images/chibi_c1_wise.jpg",  bubblePref: "bubble-cloud" },
+    shock: { icon: "😱", lbl: "😱 Giật mình tụt kính",   img: "/assets/images/chibi_c1_shock.jpg", bubblePref: "bubble-burst" },
+    wink:  { icon: "😉", lbl: "😉 Bắn tim chúc lộc",     img: "/assets/images/chibi_c1_wink.jpg",  bubblePref: "bubble-shoujo" }
+  },
+  "gieo-que": {
+    cheer:  { icon: "💪", lbl: "💪 Mạnh mẽ lên nào!",    img: "/assets/images/chibi_c2_cheer.jpg",  bubblePref: "bubble-burst" },
+    toss:   { icon: "🪙", lbl: "🪙 Tung 3 đồng xu cổ",   img: "/assets/images/chibi_c2_toss.jpg",   bubblePref: "bubble-classic" },
+    laugh:  { icon: "😄", lbl: "😄 Bưng tô bún cười tươi", img: "/assets/images/chibi_c2_laugh.jpg", bubblePref: "bubble-halftone" },
+    zen:    { icon: "🧘", lbl: "🧘 Tĩnh tâm định khí",   img: "/assets/images/chibi_c2_zen.jpg",    bubblePref: "bubble-cloud" },
+    warn:   { icon: "😅", lbl: "😅 Khoan đã coi chừng!", img: "/assets/images/chibi_c2_warn.jpg",   bubblePref: "bubble-whisper" },
+    eureka: { icon: "🧭", lbl: "🧭 Bắt trúng hướng đẹp!", img: "/assets/images/chibi_c2_eureka.jpg", bubblePref: "bubble-pixel" }
+  },
+  "tinh-duyen": {
+    slay:   { icon: "💅", lbl: "💅 Hôn gió Slay đỉnh nóc", img: "/assets/images/chibi_c3_slay.jpg",   bubblePref: "bubble-shoujo" },
+    gossip: { icon: "🤭", lbl: "🤭 Thầm thì chuyện Xì Gòn", img: "/assets/images/chibi_c3_gossip.jpg", bubblePref: "bubble-whisper" },
+    laugh:  { icon: "🤣", lbl: "🤣 Cười xỉu bạc xỉu đá",   img: "/assets/images/chibi_c3_laugh.jpg",  bubblePref: "bubble-halftone" },
+    judge:  { icon: "😏", lbl: "😏 Kéo kính Check Var!",   img: "/assets/images/chibi_c3_judge.jpg",  bubblePref: "bubble-pixel" },
+    love:   { icon: "😍", lbl: "😍 Ôm tim cầu vồng",       img: "/assets/images/chibi_c3_love.jpg",   bubblePref: "bubble-shoujo" },
+    drama:  { icon: "😱", lbl: "😱 Hốt hoảng chấn động!",  img: "/assets/images/chibi_c3_drama.jpg",  bubblePref: "bubble-burst" }
+  }
+};
+
 const COMIC_BUBBLE_STYLES = [
   { cls: "bubble-classic",  badges: ["💬 TIẾP VIÊN BẬT MÍ", "🗨️ TÂM SỰ MỎNG", "😎 PHÁN CHUẨN ĐÉT"] },
   { cls: "bubble-cloud",    badges: ["💭 ĐANG NGHĨ BỤNG...", "☁️ GÓC SUY TƯ", "🔮 VŨ TRỤ THÌ THẦM"] },
@@ -3412,106 +3515,106 @@ const COMIC_BUBBLE_STYLES = [
 
 const MASCOT_LINES = {
   "thuc-chien": [
-    "Đeo kính râm không phải cho ngầu đâu, tại cung Tài Bạch của bạn sáng chói quá đó! 😎💰",
-    "Mẹo nhỏ nè: Cung Vô Chính Diệu không xấu đâu nha, giống lô đất trống mặt biển dễ quy hoạch cực kỳ! 🏗️🌊",
-    "Nhớ nhập chuẩn giờ sinh nha anh em, lệch 15 phút qua canh giờ khác là từ Chủ tịch sang... Chủ nợ liền đó! ⏰🤣",
-    "Điền Trạch mà có Vũ Khúc, Thiên Phủ chiếu về thì sớm muộn két sắt cũng chật ních sổ đỏ! 📕🏡",
-    "Gặp Tuần hay Triệt đóng ở Mệnh đừng hoảng! Tuần Triệt đầu đời rèn bản lĩnh, hậu vận cực kỳ lì đòn! 🛡️🔥",
-    "Muốn biết nửa kia tương lai hiền hay dữ thì bấm thử vô ô Cung Phu Thê trên bàn cờ nha, cấm khóc! 💍😜",
-    "Sao Hóa Lộc là tiền vô cửa trước, còn Hóa Kỵ mà không cẩn thận là... chốt đơn Shopee cửa sau! 🛒💸",
-    "Ngũ hành thiếu Thủy thì nhớ uống đủ 2 lít nước mỗi ngày trước khi bàn chuyện phong thủy cao siêu nha! 💧😂",
-    "Ở Đồ Sơn gió biển thổi mát rượi mà sao nhìn ví cuối tháng vẫn hơi lạnh sống lưng anh em nhỉ? 🌬️💸",
-    "Tip Tử Vi: Thân cư Tài Bạch là mẫu người nửa đêm nằm ngủ vẫn mơ thấy biểu đồ nến xanh đỏ! 📈😴",
-    "Thiên Cơ chủ về trí tuệ mưu lược, nhưng nghĩ nhiều quá coi chừng rụng tóc trước khi phát tài nha! 🧠🧴",
-    "Ai mệnh Thất Sát, Phá Quân, Tham Lang là hội không thích ngồi yên một chỗ, càng xông pha càng ra lộc! 🚀🔥",
-    "Bát Tự khuyết Mộc thì trồng thêm chậu cây trên bàn làm việc, vừa hợp mệnh vừa đỡ mỏi mắt nhìn màn hình! 🌿💻",
-    "Đừng thấy sao Đào Hoa mà mừng vội, có khi đào hoa nở rộ ở... nhân viên gọi tư vấn thẻ tín dụng đó! 📞🌸",
-    "Cung Quan Lộc có Hóa Quyền là tố chất làm sếp, còn làm sếp ở công ty hay sếp... ở nhà thì phải xem Phu Thê! 👑🤭",
-    "Mẹo nghiệm lý: Người sinh đúng giao thời 2 canh giờ nhớ xem thử cả 2 lá số coi tính nết giống bên nào hơn nhé! ⚖️🧐",
-    "Thiên Mã gặp Lộc Tồn gọi là Lộc Mã Giao Trì — càng đi xa, càng chạy dự án ngoài đường càng hốt bạc! 🐎💎",
-    "Ngồi xem lá số nhớ thẳng lưng lên bạn ơi, cung Tật Ách đang nhắc cột sống kêu cứu kìa! 🦴🤣",
-    "Cung Nô Bộc đẹp nghĩa là ra đường toàn gặp quý nhân, đi ăn nhậu toàn gặp người... giành trả tiền! 🍻🥳",
-    "Tử Vi có câu: Mệnh tốt không bằng Vận tốt, Vận tốt không bằng chọn đúng lô đất đẹp Đồ Sơn! 🏖️💰",
-    "Sao Thiên Lương là ngôi sao phúc thọ che chở, gặp chuyện khó thường có người tự dưng xuất hiện cứu bồ! 🍀🙏",
-    "Đừng sợ sao Địa Không – Địa Kiếp, thời đại AI dân công nghệ có Không Kiếp đắc địa hay nảy ý tưởng triệu đô lắm! 💡⚡",
-    "Hôm nay nhìn thần sắc bạn tươi lắm, khả năng cao sắp có tin vui tiền bạc hoặc được bao trà sữa! 🧋😎",
-    "Đại vận 10 năm giống như thời tiết vậy: biết sắp mưa thì thủ sẵn áo mưa, nắng đẹp lên là bung lụa chốt lời! ☀️📈",
-    "Cung Phúc Đức là gốc rễ của cả 12 cung — sống hiền lành vui vẻ là cách kích phong thủy mạnh nhất trần đời! 🪷✨",
-    "Sao Thái Âm sáng sủa cực hợp tích lũy bất động sản và tài sản dài hạn, cứ âm thầm mà giàu thôi! 🌙🏦",
-    "Chấm lá số xong nhớ bấm vô từng ô cung để tia chiếu Tam Phương Tứ Chính bắn ra nhìn mê lắm nha! 🎯🌌",
-    "Người có Văn Xương, Văn Khúc nói chuyện ngọt như mía lùi, đi đàm phán chốt hợp đồng khách mê tít! 🎤🍯",
-    "Bát Tự vượng Hỏa quá thì bớt nóng tính lại xíu nha, nổi nóng mất khôn lại tốn tiền mua trà đào hạ nhiệt! 🍹🔥",
-    "Lộc Tồn đóng đâu là của để dành nằm đó, nhưng đi kèm Cô Thần Quả Tú thì giữ tiền kỹ tới mức... quên tiêu! 🔒😂",
-    "Cứ điền thông tin thật chuẩn vào khung bên phải đi, việc đau đầu tính toán thiên văn để anh lo hết! 🕶️🧭",
-    "Chạm nhẹ vô người anh là đổi bí kíp mới liền nha, kho tàng 105 sao Tử Vi nói cả ngày không hết chuyện! 💬✨"
+    { mood: "cool",  text: "Đeo kính râm không phải cho ngầu đâu, tại cung Tài Bạch của bạn sáng chói quá đó! 😎💰" },
+    { mood: "wise",  text: "Mẹo nhỏ nè: Cung Vô Chính Diệu không xấu đâu nha, giống lô đất trống mặt biển dễ quy hoạch cực kỳ! 🏗️🌊" },
+    { mood: "shock", text: "Nhớ nhập chuẩn giờ sinh nha anh em, lệch 15 phút qua canh giờ khác là từ Chủ tịch sang... Chủ nợ liền đó! ⏰🤣" },
+    { mood: "rich",  text: "Điền Trạch mà có Vũ Khúc, Thiên Phủ chiếu về thì sớm muộn két sắt cũng chật ních sổ đỏ! 📕🏡" },
+    { mood: "cool",  text: "Gặp Tuần hay Triệt đóng ở Mệnh đừng hoảng! Tuần Triệt đầu đời rèn bản lĩnh, hậu vận cực kỳ lì đòn! 🛡️🔥" },
+    { mood: "wink",  text: "Muốn biết nửa kia tương lai hiền hay dữ thì bấm thử vô ô Cung Phu Thê trên bàn cờ nha, cấm khóc! 💍😜" },
+    { mood: "shock", text: "Sao Hóa Lộc là tiền vô cửa trước, còn Hóa Kỵ mà không cẩn thận là... chốt đơn Shopee cửa sau! 🛒💸" },
+    { mood: "laugh", text: "Ngũ hành thiếu Thủy thì nhớ uống đủ 2 lít nước mỗi ngày trước khi bàn chuyện phong thủy cao siêu nha! 💧😂" },
+    { mood: "shock", text: "Ở Đồ Sơn gió biển thổi mát rượi mà sao nhìn ví cuối tháng vẫn hơi lạnh sống lưng anh em nhỉ? 🌬️💸" },
+    { mood: "rich",  text: "Tip Tử Vi: Thân cư Tài Bạch là mẫu người nửa đêm nằm ngủ vẫn mơ thấy vàng miếng với nến xanh! 📈😴" },
+    { mood: "shock", text: "Thiên Cơ chủ về trí tuệ mưu lược, nhưng nghĩ nhiều quá coi chừng rụng tóc trước khi phát tài nha! 🧠🧴" },
+    { mood: "cool",  text: "Ai mệnh Thất Sát, Phá Quân, Tham Lang là hội không thích ngồi yên một chỗ, càng xông pha càng ra lộc! 🚀🔥" },
+    { mood: "wise",  text: "Bát Tự khuyết Mộc thì trồng thêm chậu cây trên bàn làm việc, vừa hợp mệnh vừa đỡ mỏi mắt nhìn màn hình! 🌿💻" },
+    { mood: "laugh", text: "Đừng thấy sao Đào Hoa mà mừng vội, có khi đào hoa nở rộ ở... nhân viên gọi tư vấn thẻ tín dụng đó! 📞🌸" },
+    { mood: "wink",  text: "Cung Quan Lộc có Hóa Quyền là tố chất làm sếp, còn làm sếp ở công ty hay sếp... ở nhà thì phải xem Phu Thê! 👑🤭" },
+    { mood: "wise",  text: "Mẹo nghiệm lý: Người sinh đúng giao thời 2 canh giờ nhớ xem thử cả 2 lá số coi tính nết giống bên nào hơn nhé! ⚖️🧐" },
+    { mood: "rich",  text: "Thiên Mã gặp Lộc Tồn gọi là Lộc Mã Giao Trì — càng đi xa, càng chạy dự án ngoài đường càng hốt bạc! 🐎💎" },
+    { mood: "laugh", text: "Ngồi xem lá số nhớ thẳng lưng lên bạn ơi, cung Tật Ách đang nhắc cột sống kêu cứu kìa! 🦴🤣" },
+    { mood: "laugh", text: "Cung Nô Bộc đẹp nghĩa là ra đường toàn gặp quý nhân, đi ăn nhậu toàn gặp người... giành trả tiền! 🍻🥳" },
+    { mood: "rich",  text: "Tử Vi có câu: Mệnh tốt không bằng Vận tốt, Vận tốt không bằng chọn đúng lô đất đẹp Đồ Sơn! 🏖️💰" },
+    { mood: "wink",  text: "Sao Thiên Lương là ngôi sao phúc thọ che chở, gặp chuyện khó thường có người tự dưng xuất hiện cứu bồ! 🍀🙏" },
+    { mood: "wise",  text: "Đừng sợ sao Địa Không – Địa Kiếp, thời đại AI dân công nghệ có Không Kiếp đắc địa hay nảy ý tưởng triệu đô lắm! 💡⚡" },
+    { mood: "laugh", text: "Hôm nay nhìn thần sắc bạn tươi lắm, khả năng cao sắp có tin vui tiền bạc hoặc được bao trà sữa trân châu! 🧋😎" },
+    { mood: "wise",  text: "Đại vận 10 năm giống như thời tiết vậy: biết sắp mưa thì thủ sẵn áo mưa, nắng đẹp lên là bung lụa chốt lời! ☀️📈" },
+    { mood: "wink",  text: "Cung Phúc Đức là gốc rễ của cả 12 cung — sống hiền lành vui vẻ là cách kích phong thủy mạnh nhất trần đời! 🪷✨" },
+    { mood: "rich",  text: "Sao Thái Âm sáng sủa cực hợp tích lũy bất động sản và sổ đỏ dài hạn, cứ âm thầm mà giàu thôi! 🌙🏦" },
+    { mood: "cool",  text: "Chấm lá số xong nhớ bấm vô từng ô cung để tia chiếu Tam Phương Tứ Chính bắn ra nhìn mê lắm nha! 🎯🌌" },
+    { mood: "wink",  text: "Người có Văn Xương, Văn Khúc nói chuyện ngọt như mía lùi, đi đàm phán chốt hợp đồng khách mê tít! 🎤🍯" },
+    { mood: "laugh", text: "Bát Tự vượng Hỏa quá thì bớt nóng tính lại xíu nha, nổi nóng mất khôn lại tốn tiền mua trà sữa hạ nhiệt! 🧋🔥" },
+    { mood: "shock", text: "Lộc Tồn đóng đâu là của để dành nằm đó, nhưng đi kèm Cô Thần Quả Tú thì giữ tiền kỹ tới mức... quên tiêu! 🔒😂" },
+    { mood: "cool",  text: "Cứ điền thông tin thật chuẩn vào khung bên phải đi, việc đau đầu tính toán thiên văn để anh lo hết! 🕶️🧭" },
+    { mood: "wink",  text: "Bấm vô mấy nút biểu cảm dưới chân anh kìa, anh đổi mặt Chibi diễn tiểu phẩm liền cho coi! 💬✨" }
   ],
   "gieo-que": [
-    "Mạnh mẽ lên nào!! Quẻ có động có biến, chưa tới phút 90 chưa biết ai thắng ai đâu nha! 💪🎲",
-    "Mẹo cổ nhân: Bất thành bất chiếm — trước khi bấm tung xu nhớ hít sâu 1 hơi, nghĩ đúng 1 việc thôi nghen! 🧘‍♂️🪙",
-    "Đừng gieo đi gieo lại 1 câu hỏi 5 lần liên tiếp nha, Thần Quẻ cũng biết quạo như sếp dí deadline đó! 😅⚡",
-    "Hào Thế đại diện cho bạn, Hào Ứng là đối phương — Thế sinh Ứng nghĩa là bạn đang chiều người ta hơi quá rồi! 🤭💘",
-    "Gặp Quẻ Địa Sơn Khiêm là đại cát nha: 6 hào đều tốt, càng khiêm tốn thực chất càng thắng lớn bền lâu! ⛰️🍀",
-    "Đi ký hợp đồng hay đi xem đất nhớ ngó qua tab Hướng & Giờ Đẹp chọn cửa Sinh Môn, Khai Môn mà xuất phát! 🧭💰",
-    "Mạnh mẽ lên nào! Gặp quẻ Thủy Lôi Truân chỉ là vạn sự khởi đầu nan thôi, kiên trì ắt thông suốt! 🌱🔥",
-    "Mẹo Lục Hào: Hào động giống như nút thắt câu chuyện vậy, chuyện chuyển biến tốt hay xấu nằm hết ở đó! 🎯☯️",
-    " Hôm nay phân vân trưa ăn bún cá cay Hải Phòng hay cơm tấm? Gieo nhẹ 1 quẻ Mai Hoa là khỏi cãi nhau! 🍜🤣",
-    "Tuần Không nghĩa là việc đang rỗng hoặc chưa tới lúc, cứ bình tĩnh chờ xuất Không là đâu vào đó! ⏳✨",
-    "Gieo bằng 2 con số bất kỳ nảy ra trong đầu gọi là Mai Hoa Dịch Số — càng tự nhiên không gượng ép càng linh! 🔢⚡",
-    "Thấy chữ Nguyệt Phá trong bảng quẻ thì khoan tất tay vội nha, giữ chặt ví đợi qua tháng sau tính tiếp! 🛡️💼",
-    "Cửa Hưu Môn cực hợp đi gặp quý nhân, bàn bạc hòa giải hay rủ crush đi cà phê chữa lành đó nha! ☕🌿",
-    "Nếu bạn có sẵn 3 đồng xu thật ngoài đời, cứ tự lắc 6 lần rồi nhập mặt Sấp/Ngửa vào mục Nhập Xu Thật nhé! 🤲🪙",
-    "Quẻ Thuần Càn 6 rồng bay lên trời: khí thế cực thịnh nhưng lên đỉnh nhớ đừng tự mãn kẻo 'kháng long hữu hối'! 🐉🔥",
-    "Hồi Đầu Sinh là tín hiệu cực đẹp trong Lục Hào: việc tưởng khó mà càng về sau lại càng có lực nâng đỡ! 🌟🙌",
-    "Cửa Cảnh Môn chủ về giấy tờ, truyền thông, thi cử — hôm nào cần thuyết trình nhớ chọn hướng Cảnh Môn! 📜🎤",
-    "Mạnh mẽ lên nào! Đầm cạn hết nước (Trạch Thủy Khốn) chỉ thử thách bản lĩnh tạm thời của bậc trượng phu thôi! 💎💪",
-    "Mai Hoa Tự Số cực thú vị: gõ đại 2 chữ đầu tiên lướt qua tâm trí, chữ nghĩa cũng mang tần số dịch lý đó! ✍️🔮",
-    "Cửa Tử Môn nghe tên hơi rén vậy thôi chứ đi săn đất giá ngộp hoặc dứt điểm chuyện cũ lại có lý riêng! 🧐🏡",
-    "Hào Thê Tài vượng tướng không chỉ báo tin vui tiền bạc, mà mấy anh độc thân hỏi duyên cũng dễ có tin mừng! 💸❤️",
-    "Thanh Long lâm hào Tài động: tiền về chính đáng, vui vẻ, dễ có lộc ăn uống tiệc tùng linh đình! 🐉🥂",
-    "Chu Tước mà động ở hào Quan Quỷ hay Huynh Đệ thì nhớ giữ mồm giữ miệng, tránh tranh luận trên mạng nha! 🦜📵",
-    "Quẻ Địa Thiên Thái là trời đất giao hòa, trong ấm ngoài êm, hợp tác chốt kèo giai đoạn này cực kỳ mát tay! 🤝🌈",
-    "Đằng Xà chủ về lo âu vẩn vơ hoặc nằm mơ linh tinh — bình tâm ngủ sớm lúc 11h đêm là hóa giải được 50% rồi! 🐍😴",
-    "Quẻ Tĩnh (không có hào nào động) nghĩa là tình hình ít biến động, cứ giữ nguyên chiến thuật hiện tại mà đi! ⚓😌",
-    "Mẹo hỏi quẻ chuẩn: Thay vì hỏi chung chung 'Tôi có giàu không?', hãy hỏi rõ 'Thương vụ X quý này có lợi không?' 🎯💡",
-    "Kỳ Môn Độn Giáp ngày xưa Gia Cát Lượng dùng mượn gió Đông, ngày nay anh em dùng chọn giờ đi chốt cọc! 🪭🏡",
-    "Bạch Hổ nghe dữ dằn nhưng nếu đi cùng hào tốt thì lại tượng trưng cho sự quyết đoán, tốc chiến tốc thắng! 🐯⚡",
-    "Huyền Vũ động thì nhớ kiểm tra kỹ điều khoản nhỏ xíu trong hợp đồng trước khi đặt bút ký nha! 🔍📝",
-    "Tâm sáng thì quẻ sáng! Hít một hơi thật sâu, mỉm cười một cái rồi bấm nút khởi quẻ bên phải nào! 😄🎲",
-    "Bấm vào người tui bất cứ lúc nào để nạp thêm vitamin 'Mạnh mẽ lên nào!' nha người anh em thiện lành! 💪✨"
+    { mood: "cheer",  text: "Mạnh mẽ lên nào!! Quẻ có động có biến, chưa tới phút 90 chưa biết ai thắng ai đâu nha! 💪🎲" },
+    { mood: "zen",    text: "Mẹo cổ nhân: Bất thành bất chiếm — trước khi bấm tung xu nhớ hít sâu 1 hơi, nghĩ đúng 1 việc thôi nghen! 🧘‍♂️🪙" },
+    { mood: "warn",   text: "Đừng gieo đi gieo lại 1 câu hỏi 5 lần liên tiếp nha, Thần Quẻ cũng biết quạo như sếp dí deadline đó! 😅⚡" },
+    { mood: "laugh",  text: "Hào Thế đại diện cho bạn, Hào Ứng là đối phương — Thế sinh Ứng nghĩa là bạn đang chiều người ta hơi quá rồi! 🤭💘" },
+    { mood: "zen",    text: "Gặp Quẻ Địa Sơn Khiêm là đại cát nha: 6 hào đều tốt, càng khiêm tốn thực chất càng thắng lớn bền lâu! ⛰️🍀" },
+    { mood: "eureka", text: "Đi ký hợp đồng hay đi xem đất nhớ ngó qua tab Hướng & Giờ Đẹp chọn cửa Sinh Môn, Khai Môn mà xuất phát! 🧭💰" },
+    { mood: "cheer",  text: "Mạnh mẽ lên nào! Gặp quẻ Thủy Lôi Truân chỉ là vạn sự khởi đầu nan thôi, kiên trì ắt thông suốt! 🌱🔥" },
+    { mood: "toss",   text: "Mẹo Lục Hào: Hào động giống như nút thắt câu chuyện vậy, chuyện chuyển biến tốt hay xấu nằm hết ở đó! 🎯☯️" },
+    { mood: "laugh",  text: "Hôm nay phân vân trưa ăn bún cá cay Hải Phòng hay mì bò? Gieo nhẹ 1 quẻ Mai Hoa là khỏi cãi nhau! 🍜🤣" },
+    { mood: "zen",    text: "Tuần Không nghĩa là việc đang rỗng hoặc chưa tới lúc, cứ bình tĩnh chờ xuất Không là đâu vào đó! ⏳✨" },
+    { mood: "eureka", text: "Gieo bằng 2 con số bất kỳ nảy ra trong đầu gọi là Mai Hoa Dịch Số — càng tự nhiên không gượng ép càng linh! 🔢⚡" },
+    { mood: "warn",   text: "Thấy chữ Nguyệt Phá trong bảng quẻ thì khoan tất tay vội nha, giữ chặt ví đợi qua tháng sau tính tiếp! 🛡️💼" },
+    { mood: "zen",    text: "Cửa Hưu Môn cực hợp đi gặp quý nhân, bàn bạc hòa giải hay rủ crush đi cà phê chữa lành đó nha! ☕🌿" },
+    { mood: "toss",   text: "Nếu bạn có sẵn 3 đồng xu thật ngoài đời, cứ tự lắc 6 lần rồi nhập mặt Sấp/Ngửa vào mục Nhập Xu Thật nhé! 🤲🪙" },
+    { mood: "warn",   text: "Quẻ Thuần Càn 6 rồng bay lên trời: khí thế cực thịnh nhưng lên đỉnh nhớ đừng tự mãn kẻo 'kháng long hữu hối'! 🐉🔥" },
+    { mood: "cheer",  text: "Hồi Đầu Sinh là tín hiệu cực đẹp trong Lục Hào: việc tưởng khó mà càng về sau lại càng có lực nâng đỡ! 🌟🙌" },
+    { mood: "eureka", text: "Cửa Cảnh Môn chủ về giấy tờ, truyền thông, thi cử — hôm nào cần thuyết trình nhớ chọn hướng Cảnh Môn! 📜🎤" },
+    { mood: "cheer",  text: "Mạnh mẽ lên nào! Đầm cạn hết nước (Trạch Thủy Khốn) chỉ thử thách bản lĩnh tạm thời của bậc trượng phu thôi! 💎💪" },
+    { mood: "toss",   text: "Mai Hoa Tự Số cực thú vị: gõ đại 2 chữ đầu tiên lướt qua tâm trí, chữ nghĩa cũng mang tần số dịch lý đó! ✍️🔮" },
+    { mood: "warn",   text: "Cửa Tử Môn nghe tên hơi rén vậy thôi chứ đi săn đất giá ngộp hoặc dứt điểm chuyện cũ lại có lý riêng! 🧐🏡" },
+    { mood: "laugh",  text: "Hào Thê Tài vượng tướng không chỉ báo tin vui tiền bạc, mà mấy anh độc thân hỏi duyên cũng dễ có tin mừng! 💸❤️" },
+    { mood: "laugh",  text: "Thanh Long lâm hào Tài động: tiền về chính đáng, vui vẻ, dễ có lộc ăn uống no nê linh đình! 🍜🥂" },
+    { mood: "warn",   text: "Chu Tước mà động ở hào Quan Quỷ hay Huynh Đệ thì nhớ giữ mồm giữ miệng, tránh tranh luận trên mạng nha! 🦜📵" },
+    { mood: "cheer",  text: "Quẻ Địa Thiên Thái là trời đất giao hòa, trong ấm ngoài êm, hợp tác chốt kèo giai đoạn này cực kỳ mát tay! 🤝🌈" },
+    { mood: "zen",    text: "Đằng Xà chủ về lo âu vẩn vơ hoặc nằm mơ linh tinh — bình tâm ngủ sớm lúc 11h đêm là hóa giải được 50% rồi! 🐍😴" },
+    { mood: "zen",    text: "Quẻ Tĩnh (không có hào nào động) nghĩa là tình hình ít biến động, cứ giữ nguyên chiến thuật hiện tại mà đi! ⚓😌" },
+    { mood: "eureka", text: "Mẹo hỏi quẻ chuẩn: Thay vì hỏi chung chung 'Tôi có giàu không?', hãy hỏi rõ 'Thương vụ X quý này có lợi không?' 🎯💡" },
+    { mood: "eureka", text: "Kỳ Môn Độn Giáp ngày xưa Gia Cát Lượng dùng mượn gió Đông, ngày nay anh em dùng cầm la bàn đi chốt cọc! 🧭🏡" },
+    { mood: "toss",   text: "Bạch Hổ nghe dữ dằn nhưng nếu đi cùng hào tốt thì lại tượng trưng cho sự quyết đoán, tốc chiến tốc thắng! 🐯⚡" },
+    { mood: "warn",   text: "Huyền Vũ động thì nhớ kiểm tra kỹ điều khoản nhỏ xíu trong hợp đồng trước khi đặt bút ký nha! 🔍📝" },
+    { mood: "toss",   text: "Tâm sáng thì quẻ sáng! Hít một hơi thật sâu, mỉm cười một cái rồi bấm nút khởi quẻ bên phải nào! 😄🎲" },
+    { mood: "cheer",  text: "Bấm thử mấy nút mặt Chibi dưới chân tui kìa, muốn tui thiền, tung xu hay hốt hoảng có đủ hết nha! 💪✨" }
   ],
   "tinh-duyen": [
-    "Mấy bà có biết quê tui ở Xì Gòn hông dzị? 🤪💅🌴",
-    "Ê khoan lướt Tóp Tóp nữa mấy ní ơi, quăng cái ngày sinh vô bên phải tui check var liền coi! 📱👀✨",
-    "Biểu đồ ngày sinh mà thiếu số 8 là hay chốt đơn lúc nửa đêm bằng cảm xúc lắm nghen, trúng tim đen chưa?! 💸🤭",
-    "Nhìn giao diện lạnh lùng boy phố dzị thôi chớ Số Linh Hồn số 2 toàn đòi ôm gấu bông nghe nhạc suy hà! 🧸😭🌈",
-    "Đặt Nickname là Dủng Dỉnh hay Sâm Héo nghe vô tri dzị chớ bù khuyết biểu đồ ngày sinh hơi bị đỉnh đó nha! 😜🌿",
-    "Trời đất ơi Năm Cá Nhân số 9 là năm tổng vệ sinh tâm hồn, ai toxic tệ bạc thì tiễn vong lẹ giùm chị cái! 🧹🚪💅",
-    "Mấy bà cứ chê tui tô son đỏ đậm chớ màu này kích năng lượng tự tin slay banh nóc nhà đó nghen! 💄🔥",
-    "Ngồi thẳng cái lưng lên coi cưng, vừa soi Thần Số Học vừa cong lưng như con tôm tích Đồ Sơn dzị trời! 🦐🤣",
-    "Ai trống trơn trục 4-5-6 (Mũi tên Uất Hận) thì làm ơn bớt tự biên tự diễn buồn vu vơ lúc 2 giờ sáng lại! 🌙🤡",
-    "Chị tuy hệ cầu vồng 7 sắc lung linh nhưng cộng số Pythagoras là nét căng không lệch nửa nhịp nha cưng! 🏳️‍🌈🧮",
-    "Tên thiệt trên giấy khai sinh là hệ điều hành gốc, còn Nickname gọi mỗi ngày là bản DLC nâng cấp độ slay đó! 💻✨",
-    "Ai mang Số Chủ Đạo 11/2 hay 22/4 là hệ Master đó nghen, hơi áp lực xíu thôi chớ bật lên là đỉnh của chóp! 👑💎",
-    "Khỏi giấu chị nha, nhìn mắt cưng sáng rực là biết đang tính lấy ngày sinh crush vô soi lén rồi đúng hông?! 😏💘",
-    "Ở Xì Gòn người ta uống bạc xỉu đá, ra Đồ Sơn hóng gió biển mà thần thái chị vẫn sang chấn tâm lý nè! ☕🏖️💃",
-    "Số Chủ Đạo 10 là đặc sản trường phái Nhân Số Học Việt Nam đó, quảng giao linh hoạt để đâu cũng sống khỏe! 🌟🇻🇳",
-    "Mấy cưng Số 7 bớt đa nghi lại xíu nha, người ta khen đẹp thiệt lòng mà cứ tưởng người ta gài hàng không hà! 🕵️‍♀️😂",
-    "Năm Cá Nhân số 1 là năm gieo hạt mở màn chu kỳ mới, mạnh dạn đổi kiểu tóc hay học kỹ năng mới liền đi bà! 💇‍♀️🚀",
-    "Chữ Y trong tên tiếng Việt như Quỳnh, Nguyễn, Yến với Ý, My, Kỳ tính nguyên âm phụ âm khác nhau đó, để máy chị lo! 🔤🤓",
-    "Số Thái Độ là cái mặt tiền lúc mới gặp đó cưng: có bà chưa quen tưởng chảnh mà thân rồi cười như địa chấn! 🤣🎭",
-    "Kim Tự Tháp 4 Đỉnh Cao chưa tới tuổi nổ lộc thì cứ bình tĩnh đắp mặt nạ uống trà đào đi, gấp gáp làm chi! 🧋😌",
-    "Ai có Mũi Tên Kế Hoạch 1-2-3 là chúa lập bảng Excel đi du lịch, mà tới ngày đi có dậy đúng giờ hông thì hên xui! 📊⏰",
-    "Số Chủ Đạo 3 với Số 5 mà ngồi chung một bàn là cái quán cà phê thành cái chợ nổi Cái Răng liền luôn á! 🗣️🎉",
-    "Đừng thấy chữ 'Nợ Nghiệp 13/4, 14/5, 16/7, 19/1' mà sợ nha má, chỉ là bài tập nâng cao giúp mình trưởng thành x2 thôi! 📚💪",
-    "Chaldean Babylon cổ đại tính rung động âm thanh của tên gọi cực chuẩn, nhớ kéo xuống cuối trang chấm thử Nickname nha! 🎶⚖️",
-    "Mấy cưng Số 6 thương người vừa vừa thôi nghen, lo chuyện bao đồng riết quên luôn chăm sóc bản thân là chị mắng á! 💖🫂",
-    "Tâm Vùng Thoải Mái trong 22 Arcana cho biết lúc nào linh hồn mình thấy chill nhất — đọc thử coi chuẩn hông nha! 🧘‍♀️✨",
-    "Hải Ly với Hoàng Mười nghe tên như phim kiếm hiệp TVB dzị mà chấm điểm hợp ngày sinh có khi lên tới 95/100 đó! 🎬🏆",
-    "Năm Cá Nhân số 4 hoặc số 7 là năm trau dồi nội lực, tém tém cái nết tiêu xài bốc đồng lại giùm chị đẹp nha! 🐷🔒",
-    "Bấm vô người chị cái nữa đi cưng, chị còn cả rổ chuyện thâm cung bí sử Xì Gòn – Hải Phòng chưa kể hết nè! 🤪💅",
-    "Số Trưởng Thành phát huy mạnh nhất từ ngoài 30–35 tuổi, nên tuổi đôi mươi có vấp xíu cũng là chuyện thường phố huyện! 🌱🌈",
-    "Ai nhiều số 1 quá trong ngày sinh nhớ tập lắng nghe thêm xíu, cái tôi cao quá đụng trần nhà rớt thạch cao đó bà! 🏗️🤭",
-    "Mình yêu nhau nhé cưng ơi!! Điền ngày sinh với Nickname lẹ lẹ để chị xuất chiêu cầu vồng 7 sắc nào! 🏳️‍🌈💖🦄"
+    { mood: "gossip", text: "Mấy bà có biết quê tui ở Xì Gòn hông dzị? 🤪💅🌴" },
+    { mood: "judge",  text: "Ê khoan lướt Tóp Tóp nữa mấy ní ơi, quăng cái ngày sinh vô bên phải tui kéo kính check var liền coi! 📱👀✨" },
+    { mood: "gossip", text: "Biểu đồ ngày sinh mà thiếu số 8 là hay chốt đơn lúc nửa đêm bằng cảm xúc lắm nghen, trúng tim đen chưa?! 💸🤭" },
+    { mood: "love",   text: "Nhìn giao diện lạnh lùng boy phố dzị thôi chớ Số Linh Hồn số 2 toàn đòi ôm tim hồng nghe nhạc suy hà! 🧸😭🌈" },
+    { mood: "slay",   text: "Đặt Nickname là Dủng Dỉnh hay Sâm Héo nghe vô tri dzị chớ bù khuyết biểu đồ ngày sinh hơi bị đỉnh đó nha! 😜🌿" },
+    { mood: "drama",  text: "Trời đất ơi Năm Cá Nhân số 9 là năm tổng vệ sinh tâm hồn, ai toxic tệ bạc thì tiễn vong lẹ giùm chị cái! 🧹🚪💅" },
+    { mood: "slay",   text: "Mấy bà cứ chê tui tô son đỏ đậm chớ màu này kích năng lượng tự tin slay banh nóc nhà đó nghen! 💄🔥" },
+    { mood: "laugh",  text: "Ngồi thẳng cái lưng lên coi cưng, vừa soi Thần Số Học vừa cong lưng như con tôm tích Đồ Sơn dzị trời! 🦐🤣" },
+    { mood: "drama",  text: "Ai trống trơn trục 4-5-6 (Mũi tên Uất Hận) thì làm ơn bớt tự biên tự diễn buồn vu vơ lúc 2 giờ sáng lại! 🌙🤡" },
+    { mood: "judge",  text: "Chị tuy hệ cầu vồng 7 sắc lung linh nhưng cộng số Pythagoras là nét căng không lệch nửa nhịp nha cưng! 🏳️‍🌈🧮" },
+    { mood: "slay",   text: "Tên thiệt trên giấy khai sinh là hệ điều hành gốc, còn Nickname gọi mỗi ngày là bản DLC nâng cấp độ slay đó! 💻✨" },
+    { mood: "slay",   text: "Ai mang Số Chủ Đạo 11/2 hay 22/4 là hệ Master đó nghen, hơi áp lực xíu thôi chớ bật lên là đỉnh của chóp! 👑💎" },
+    { mood: "judge",  text: "Khỏi giấu chị nha, nhìn mắt cưng sáng rực là biết đang tính lấy ngày sinh crush vô soi lén rồi đúng hông?! 😏💘" },
+    { mood: "laugh",  text: "Ở Xì Gòn người ta uống bạc xỉu đá, ra Đồ Sơn hóng gió biển mà thần thái chị vẫn sang chấn tâm lý nè! ☕🏖️💃" },
+    { mood: "love",   text: "Số Chủ Đạo 10 là đặc sản trường phái Nhân Số Học Việt Nam đó, quảng giao linh hoạt để đâu cũng sống khỏe! 🌟🇻🇳" },
+    { mood: "judge",  text: "Mấy cưng Số 7 bớt đa nghi lại xíu nha, người ta khen đẹp thiệt lòng mà cứ tưởng người ta gài hàng không hà! 🕵️‍♀️😂" },
+    { mood: "slay",   text: "Năm Cá Nhân số 1 là năm gieo hạt mở màn chu kỳ mới, mạnh dạn đổi kiểu tóc hay học kỹ năng mới liền đi bà! 💇‍♀️🚀" },
+    { mood: "gossip", text: "Chữ Y trong tên tiếng Việt như Quỳnh, Nguyễn, Yến với Ý, My, Kỳ tính nguyên âm phụ âm khác nhau đó, để máy chị lo! 🔤🤓" },
+    { mood: "laugh",  text: "Số Thái Độ là cái mặt tiền lúc mới gặp đó cưng: có bà chưa quen tưởng chảnh mà thân rồi cười như địa chấn! 🤣🎭" },
+    { mood: "laugh",  text: "Kim Tự Tháp 4 Đỉnh Cao chưa tới tuổi nổ lộc thì cứ bình tĩnh hút rột rột ly cà phê sữa đá đi, gấp làm chi! ☕😌" },
+    { mood: "judge",  text: "Ai có Mũi Tên Kế Hoạch 1-2-3 là chúa lập bảng Excel đi du lịch, mà tới ngày đi có dậy đúng giờ hông thì hên xui! 📊⏰" },
+    { mood: "drama",  text: "Số Chủ Đạo 3 với Số 5 mà ngồi chung một bàn là cái quán cà phê thành cái chợ nổi Cái Răng liền luôn á! 🗣️🎉" },
+    { mood: "love",   text: "Đừng thấy chữ 'Nợ Nghiệp 13/4, 14/5, 16/7, 19/1' mà sợ nha má, chỉ là bài tập nâng cao giúp mình trưởng thành x2 thôi! 📚💪" },
+    { mood: "gossip", text: "Chaldean Babylon cổ đại tính rung động âm thanh của tên gọi cực chuẩn, nhớ kéo xuống cuối trang chấm thử Nickname nha! 🎶⚖️" },
+    { mood: "love",   text: "Mấy cưng Số 6 thương người vừa vừa thôi nghen, lo chuyện bao đồng riết quên luôn chăm sóc bản thân là chị mắng á! 💖🫂" },
+    { mood: "love",   text: "Tâm Vùng Thoải Mái trong 22 Arcana cho biết lúc nào linh hồn mình thấy chill nhất — đọc thử coi chuẩn hông nha! 🧘‍♀️✨" },
+    { mood: "laugh",  text: "Hải Ly với Hoàng Mười nghe tên như phim kiếm hiệp TVB dzị mà chấm điểm hợp ngày sinh có khi lên tới 95/100 đó! 🎬🏆" },
+    { mood: "drama",  text: "Năm Cá Nhân số 4 hoặc số 7 là năm trau dồi nội lực, tém tém cái nết tiêu xài bốc đồng lại giùm chị đẹp nha! 🐷🔒" },
+    { mood: "gossip", text: "Bấm vô mấy nút mặt Chibi của chị ở dưới đi cưng, chị còn cả rổ chuyện thâm cung bí sử Xì Gòn chưa kể hết nè! 🤪💅" },
+    { mood: "slay",   text: "Số Trưởng Thành phát huy mạnh nhất từ ngoài 30–35 tuổi, nên tuổi đôi mươi có vấp xíu cũng là chuyện thường phố huyện! 🌱🌈" },
+    { mood: "drama",  text: "Ai nhiều số 1 quá trong ngày sinh nhớ tập lắng nghe thêm xíu, cái tôi cao quá đụng trần nhà rớt thạch cao đó bà! 🏗️🤭" },
+    { mood: "love",   text: "Mình yêu nhau nhé cưng ơi!! Điền ngày sinh với Nickname lẹ lẹ để chị xuất chiêu cầu vồng 7 sắc nào! 🏳️‍🌈💖🦄" }
   ]
 };
 
@@ -3519,6 +3622,68 @@ let mascotTalkTimer = null;
 let mascotLineQueues = { "thuc-chien": [], "gieo-que": [], "tinh-duyen": [] };
 let lastBubbleStyleIdx = -1;
 let shownSgIntroOnce = false;
+let USE_CHIBI_AVATAR = true;
+let CURRENT_MOOD_KEY = "cool";
+const preloadedChibiCache = {};
+
+function preloadChibiSet(vibeKey) {
+  const moods = CHIBI_EXPRESSIONS[vibeKey];
+  if (!moods || preloadedChibiCache[vibeKey]) return;
+  preloadedChibiCache[vibeKey] = Object.values(moods).map(m => {
+    const im = new Image();
+    im.src = m.img;
+    return im;
+  });
+}
+
+function renderChibiMoodBar(vibeKey, activeMood) {
+  const bar = document.getElementById("chibi-mood-bar");
+  const moods = CHIBI_EXPRESSIONS[vibeKey];
+  if (!bar || !moods) return;
+  bar.innerHTML = Object.entries(moods).map(([mKey, mInfo]) => `
+    <button type="button" class="chibi-mood-btn ${mKey === activeMood ? 'is-active' : ''}"
+      title="${esc(mInfo.lbl)}" onclick="pickChibiMood('${mKey}')">${mInfo.icon}</button>
+  `).join("");
+}
+
+function applyMascotVisual(vibeKey, moodKey) {
+  const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
+  const moods = CHIBI_EXPRESSIONS[vibeKey] || CHIBI_EXPRESSIONS["thuc-chien"];
+  const fallbackMood = Object.keys(moods)[0];
+  const mInfo = moods[moodKey] || moods[fallbackMood];
+  CURRENT_MOOD_KEY = moodKey in moods ? moodKey : fallbackMood;
+
+  const imgEl = document.getElementById("active-guide-img");
+  const pillEl = document.getElementById("mascot-mood-pill");
+  const toggleBtn = document.getElementById("btn-toggle-chibi");
+
+  if (imgEl) {
+    imgEl.src = USE_CHIBI_AVATAR ? mInfo.img : g.img;
+  }
+  if (pillEl) {
+    pillEl.textContent = USE_CHIBI_AVATAR ? mInfo.lbl : "📷 Ảnh chân dung gốc";
+  }
+  if (toggleBtn) {
+    toggleBtn.textContent = USE_CHIBI_AVATAR ? "📷 Ảnh thật" : "🎭 Bật Chibi";
+  }
+  renderChibiMoodBar(vibeKey, CURRENT_MOOD_KEY);
+}
+
+function toggleChibiPhotoMode() {
+  USE_CHIBI_AVATAR = !USE_CHIBI_AVATAR;
+  applyMascotVisual(ACTIVE_VIBE, CURRENT_MOOD_KEY);
+}
+
+function pickChibiMood(moodKey) {
+  USE_CHIBI_AVATAR = true;
+  const bank = (MASCOT_LINES[ACTIVE_VIBE] || []).filter(item => item.mood === moodKey);
+  if (bank.length > 0) {
+    const chosen = bank[Math.floor(Math.random() * bank.length)];
+    showMascotLineEntry(chosen);
+  } else {
+    applyMascotVisual(ACTIVE_VIBE, moodKey);
+  }
+}
 
 function shuffleArrayCopy(arr) {
   const copy = arr.slice();
@@ -3544,13 +3709,23 @@ function pullNextQuoteForVibe(vibeKey) {
   return mascotLineQueues[vibeKey].pop();
 }
 
-function pickNextBubbleStyle(vibeKey) {
-  let candidates = COMIC_BUBBLE_STYLES.map((_, idx) => idx).filter(idx => idx !== lastBubbleStyleIdx);
-  const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
+function pickNextBubbleStyle(vibeKey, moodKey) {
+  const moods = CHIBI_EXPRESSIONS[vibeKey] || {};
+  const prefCls = moods[moodKey]?.bubblePref;
+  let chosenIdx = -1;
+  // 55% ưu tiên khung truyện tranh hợp đúng cảm xúc (VD: shock/drama -> khung nổ gai burst, gossip -> khung whisper), 45% biến hóa ngẫu nhiên!
+  if (prefCls && Math.random() < 0.55) {
+    const pIdx = COMIC_BUBBLE_STYLES.findIndex(s => s.cls === prefCls);
+    if (pIdx >= 0 && pIdx !== lastBubbleStyleIdx) chosenIdx = pIdx;
+  }
+  if (chosenIdx < 0) {
+    const candidates = COMIC_BUBBLE_STYLES.map((_, idx) => idx).filter(idx => idx !== lastBubbleStyleIdx);
+    chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
+  }
   lastBubbleStyleIdx = chosenIdx;
   const st = COMIC_BUBBLE_STYLES[chosenIdx];
   let badge = st.badges[Math.floor(Math.random() * st.badges.length)];
-  if (vibeKey === "tinh-duyen" && Math.random() < 0.55) {
+  if (vibeKey === "tinh-duyen" && Math.random() < 0.6) {
     const lgbtBadges = ["💅 BÀ HOÀNG TÂM SỰ", "🏳️‍🌈 GÓC XÌ GÒN", "🤪 SLAY TIP ✨", "🌈 CHECK VAR LIỀN", "💄 CHỊ ĐẸP DẶN"];
     badge = lgbtBadges[Math.floor(Math.random() * lgbtBadges.length)];
   }
@@ -3567,22 +3742,23 @@ function stopMascotTalkLoop() {
 function scheduleNextMascotLine() {
   stopMascotTalkLoop();
   if (document.documentElement.getAttribute("data-stage") !== "workspace") return;
-  // Khoảng thời gian ngẫu nhiên từ 3 đến 10 giây (3500ms -> 9500ms)
   const delayMs = 3500 + Math.floor(Math.random() * 6001);
   mascotTalkTimer = setTimeout(() => {
     nextMascotLine(false);
   }, delayMs);
 }
 
-function nextMascotLine(manualClick) {
+function showMascotLineEntry(entry) {
   const bubbleEl = document.getElementById("comic-bubble");
   const badgeEl = document.getElementById("comic-badge");
   const textEl = document.getElementById("comic-text");
   const portraitCard = document.getElementById("mascot-portrait-card");
-  if (!bubbleEl || !textEl || !badgeEl) return;
+  if (!bubbleEl || !textEl || !badgeEl || !entry) return;
 
-  const quote = pullNextQuoteForVibe(ACTIVE_VIBE);
-  const styleObj = pickNextBubbleStyle(ACTIVE_VIBE);
+  const moodKey = entry.mood || "cool";
+  const styleObj = pickNextBubbleStyle(ACTIVE_VIBE, moodKey);
+
+  applyMascotVisual(ACTIVE_VIBE, moodKey);
 
   COMIC_BUBBLE_STYLES.forEach(s => bubbleEl.classList.remove(s.cls));
   bubbleEl.classList.remove("is-popping");
@@ -3590,7 +3766,7 @@ function nextMascotLine(manualClick) {
   bubbleEl.classList.add(styleObj.cls, "is-popping");
 
   badgeEl.textContent = styleObj.badge;
-  textEl.textContent = quote;
+  textEl.textContent = entry.text;
 
   if (portraitCard) {
     portraitCard.classList.remove("is-talking");
@@ -3599,6 +3775,11 @@ function nextMascotLine(manualClick) {
   }
 
   scheduleNextMascotLine();
+}
+
+function nextMascotLine(manualClick) {
+  const entry = pullNextQuoteForVibe(ACTIVE_VIBE);
+  showMascotLineEntry(entry);
 }
 
 function backToGuideSelection() {
@@ -3629,7 +3810,9 @@ function selectGuide(vibeKey, fromTopCard) {
     p.classList.toggle("is-active", p.id === g.panelId);
   });
 
-  document.getElementById("active-guide-img").src = g.img;
+  preloadChibiSet(vibeKey);
+  const defaultMood = Object.keys(CHIBI_EXPRESSIONS[vibeKey] || {})[0] || "cool";
+  applyMascotVisual(vibeKey, defaultMood);
   document.getElementById("active-guide-title").textContent = g.title;
   document.getElementById("active-guide-say").textContent = g.say;
   document.getElementById("main-submit-btn").textContent = g.submitLbl;

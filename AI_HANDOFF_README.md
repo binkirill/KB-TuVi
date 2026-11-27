@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.6 Kuang Bin Studio · Comic Mascot Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.7 Kuang Bin Studio · Expressive Chibi Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 13:52 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.6: CHIA WORKSPACE THÀNH 2 ZONE (TRÁI: SÂN KHẤU NHÂN VẬT ĐẠI DIỆN + 7 KHUNG THOẠI TRUYỆN TRANH ĐỔI TỰ ĐỘNG MỖI 3–10 GIÂY VỚI 96 CÂU THOẠI HÀI HƯỚC / FUNNY TIPS, RIÊNG BÀ HOÀNG LGBT ĐẶC SẮC GIỌNG XÌ GÒN | PHẢI: ZONE LÀM VIỆC & KẾT QUẢ) & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 14:02 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.7: XÂY DỰNG TRỌN BỘ 18 ẢNH CHIBI ĐA SẮC THÁI (`chibi_c1_*.jpg`, `chibi_c2_*.jpg`, `chibi_c3_*.jpg` — 6 BIỂU CẢM/NHÂN VẬT) GẮN TRỰC TIẾP VÀO ZONE TRÁI, TỰ ĐỘNG ĐỔI BIỂU CẢM & ĐẠO CỤ KHỚP 100% VỚI TỪNG CÂU THOẠI TRUYỆN TRANH (KÈM THANH CHỌN NHANH 6 BIỂU CẢM & NÚT ĐỔI XEM ẢNH THẬT) & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -55,6 +55,11 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   - Dịch Zone làm việc sang phải (`.workspace-right`), dành Zone bên trái (`.mascot-zone`, sticky theo cuộn trang) cho **ảnh chân dung lớn của Tiếp viên đại diện** và **Khung bóng thoại truyện tranh (`COMIC_BUBBLE_STYLES`)**.
   - Gồm **7 kiểu khung thoại truyện tranh khác nhau** (`bubble-classic`, `bubble-cloud`, `bubble-burst`, `bubble-pixel`, `bubble-whisper`, `bubble-halftone`, `bubble-shoujo`) tự động đổi ngẫu nhiên sau mỗi **3–10 giây** (hoặc chạm vào nhân vật / bóng thoại để nghe câu mới ngay).
   - Kho **96 câu thoại không lặp (32 câu/nhân vật)** pha trộn mẹo Tử Vi / Kinh Dịch / Thần Số Học, cà khịa vui đời thường & BĐS Đồ Sơn; riêng nhân vật LGBT mở màn bằng câu *"Mấy bà có biết quê tui ở Xì Gòn hông dzị? 🤪💅🌴"* cùng 31 câu thoại cực hài hước.
+- `[x]` **Bộ 18 Ảnh Chibi Đa Sắc Thái Đồng Bộ Theo Lời Thoại (`assets/images/chibi_c*.jpg` — v3.7):**
+  - **Nam Thần Tử Vi (`c1`):** `cool` (chỉnh kính ngầu), `rich` (ôm vàng & sổ đỏ), `laugh` (cười trà sữa), `wise` (soi thiên thư), `shock` (tụt kính giật mình), `wink` (bắn tim chúc lộc).
+  - **Nam Thần Gieo Quẻ (`c2`):** `cheer` (nắm tay quyết tâm), `toss` (tung 3 xu Bát Quái), `laugh` (bưng tô bún cười tươi), `zen` (ngồi thiền tĩnh khí), `warn` (đổ mồ hôi nhắc khéo), `eureka` (cầm la bàn nảy sáng kiến).
+  - **Bà Hoàng Thần Số Học LGBT (`c3`):** `slay` (hôn gió cầm iPhone), `gossip` (che miệng thầm thì Xì Gòn), `laugh` (cười xỉu cầm bạc xỉu đá), `judge` (kéo kính hồng check var), `love` (mắt trái tim ôm tim cầu vồng), `drama` (ôm má hốt hoảng chấn động).
+  - Mỗi câu thoại trong 96 câu tự động kích hoạt đúng biểu cảm Chibi + ưu tiên kiểu khung truyện tranh tương ứng; tích hợp thêm 6 nút emoji chọn nhanh biểu cảm và nút `📷 Ảnh thật / 🎭 Bật Chibi`.
 
 ### Các hướng có thể triển khai tiếp theo yêu cầu anh (`[ ]`)
 - `[ ]` Bổ sung hiệu ứng âm thanh vui nhộn nhẹ (tiếng pháo nổ / tiếng lắc xu, có nút bật/tắt) nếu anh muốn.
