@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.8 Kuang Bin Studio · Polish & Smart VN Date Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.8.1 Kuang Bin Studio · Polish & Smart VN Date Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 14:14 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.8: TYPOGRAPHY ĐA FONT (`Paytone One`, `Playfair Display`, `Chakra Petch`, `Playpen Sans`) + LANDING HEADER 1 DÒNG KÈM CÂU "CHƠI SÂM" HÀI HƯỚC + TÊN NHÂN VẬT NGẮN GỌN MỖI NGƯỜI 1 FONT CHỮ LỚN + BỎ NGOẶC TÊN 3 PHÒNG + TRỘN NGẪU NHIÊN ẢNH GỐC CÙNG 6 SẮC THÁI CHIBI + NÚT "💋 Chạm vào em đi 😘🔥🫦" + BỘ NHẬP NGÀY SINH CHUẨN VIỆT NAM `Ngày / Tháng / Năm` TỰ NHẢY Ô (XÓA SỔ LỖI `25 -> 02/05`) + PHÂN MỤC `PHẦN 01..06` TO RÕ ĐA MÀU SẮC TRONG ZONE XEM & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 14:26 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.8.1: SỬA TƯƠNG PHẢN CHỮ ĐẬM RÕ NÉT CHO BÓNG THOẠI CHÀO MỪNG `.namthan-pop-bubble` TRONG DARK MODE (`gieo-que`) + THAY THÔNG BÁO CHỜ AI HÀI HƯỚC `"🔥💸 Đang đốt token AI của Kuang Bin để luận giải, hãy thương lấy Kuang nhiều hơn nhé 🥺👉👈🍜"` + GIỮ TRỌN BỘ CẢI TIẾN v3.8 (ĐA FONT, TRỘN NGẪU NHIÊN ẢNH GỐC & CHIBI, NHẬP NGÀY SINH CHUẨN VN, TIÊU ĐỀ `PHẦN 01..06` ĐA MÀU) & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
