@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>☯ Thiên Cơ Gen-Z · Tử Vi, Bát Tự, Thần Số Học &amp; Kinh Dịch</title>
+<title>☯ Thiên Cơ Studio · Tử Vi, Gieo Quẻ Kinh Dịch &amp; Thần Số Học</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/scrollcraft/scrollcraft.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
   /* ==========================================================================
-     KB-TUVI GEN-Z PLAYFUL MYSTIC · SCROLL-CRAFT TOKEN LAYER
-     Two families max (100% native Vietnamese): Baloo 2 (display) + Nunito (prose)
-     Six colour roles + Signature Move whole-page vibe regrade
+     KB-TUVI GEN-Z PLAYFUL MYSTIC · SCROLL-CRAFT v3.2
+     100% Native Vietnamese Fonts: Baloo 2 (Display) + Nunito (Prose & UI)
+     3 Distinct Personas -> Spring-Bounce + Funny Fireworks -> 3 Dedicated Forms
      ========================================================================== */
   :root {
     --sc-canvas:      #FAF8F4;
@@ -40,10 +40,9 @@
              0 1px 2px hsl(var(--sc-shadow-color) / 0.04);
     --sc-e2: 0 8px 24px -6px hsl(var(--sc-shadow-color) / 0.10),
              0 2px 6px hsl(var(--sc-shadow-color) / 0.05);
-    --sc-e3: 0 18px 44px -12px hsl(var(--sc-shadow-color) / 0.14),
+    --sc-e3: 0 18px 44px -12px hsl(var(--sc-shadow-color) / 0.15),
              0 4px 12px hsl(var(--sc-shadow-color) / 0.06);
 
-    /* Compatibility tokens for chart tables & gemini_ai_addon.js */
     --ink: #1C1635;
     --muted: #5B5273;
     --border: #E5DDD0;
@@ -59,21 +58,17 @@
     --purple: #6A3FA0;
   }
 
-  /* SIGNATURE MOVE: Whole-page vibe regrade driven by chosen Mystic Guide */
   html[data-vibe="thuc-chien"] {
     --sc-accent: #D93848;
     --sc-accent-soft: #FFF0F2;
-    --vibe-tint: rgba(217, 56, 72, 0.09);
   }
   html[data-vibe="gieo-que"] {
     --sc-accent: #0D8A74;
     --sc-accent-soft: #E8FBF5;
-    --vibe-tint: rgba(13, 138, 116, 0.09);
   }
   html[data-vibe="tinh-duyen"] {
     --sc-accent: #C8337B;
     --sc-accent-soft: #FDF0F7;
-    --vibe-tint: rgba(200, 51, 123, 0.09);
   }
 
   html, body {
@@ -88,7 +83,6 @@
     font-synthesis-weight: auto;
   }
 
-  /* Subtle tactile grain over paper ground */
   .sc-grain { opacity: 0.025; }
 
   /* ------------------------------------------------------------- TOP BAR -- */
@@ -104,7 +98,7 @@
   .top-bar__inner {
     max-width: 78rem;
     margin-inline: auto;
-    padding: 0.85rem var(--sc-gutter);
+    padding: 0.82rem var(--sc-gutter);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -116,8 +110,7 @@
     gap: 0.55rem;
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: 1.15rem;
-    letter-spacing: -0.02em;
+    font-size: 1.25rem;
     color: var(--sc-ink);
     text-decoration: none;
   }
@@ -136,27 +129,25 @@
   .top-nav__link {
     text-decoration: none;
     color: var(--sc-ink-soft);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.92rem;
+    font-weight: 700;
     padding: 0.45rem 0.85rem;
     border-radius: var(--sc-r-pill);
     transition: color 160ms var(--sc-ease-out), background-color 160ms var(--sc-ease-out);
   }
-  .top-nav__link:hover {
-    color: var(--sc-ink);
-    background: var(--sc-surface-2);
-  }
+  .top-nav__link:hover { color: var(--sc-ink); background: var(--sc-surface-2); }
+
   .btn-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.45rem;
-    padding: 0.65rem 1.25rem;
+    padding: 0.62rem 1.25rem;
     border-radius: var(--sc-r-pill);
     border: none;
     background: var(--sc-accent);
     color: var(--sc-accent-ink);
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.92rem;
     text-decoration: none;
     cursor: pointer;
@@ -164,22 +155,19 @@
     box-shadow: var(--sc-e1);
     transition: transform 150ms var(--sc-ease-out), background-color 220ms var(--sc-ease-out), opacity 150ms var(--sc-ease-out);
   }
-  .btn-pill:hover { opacity: 0.93; transform: translateY(-1px); }
+  .btn-pill:hover { opacity: 0.94; transform: translateY(-1px); }
   .btn-pill:active { transform: scale(0.97); }
   .btn-pill--ghost {
     background: var(--sc-surface);
     color: var(--sc-ink);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
   }
-  .btn-pill--ghost:hover {
-    background: var(--sc-surface-2);
-    opacity: 1;
-  }
+  .btn-pill--ghost:hover { background: var(--sc-surface-2); opacity: 1; }
 
   /* -------------------------------------------------------- ACT I: HERO -- */
   .hero-act {
     position: relative;
-    min-height: clamp(540px, 84svh, 760px);
+    min-height: clamp(500px, 80svh, 720px);
     display: flex;
     align-items: center;
     overflow: clip;
@@ -197,7 +185,6 @@
     object-fit: cover;
     object-position: right center;
   }
-  /* Soft left-only mask so dark indigo type reads effortlessly without dimming the sky */
   .hero-scrim {
     position: absolute;
     inset: 0;
@@ -205,8 +192,8 @@
     pointer-events: none;
     background: linear-gradient(
       90deg,
-      rgba(250, 248, 244, 0.92) 0%,
-      rgba(250, 248, 244, 0.72) 44%,
+      rgba(250, 248, 244, 0.93) 0%,
+      rgba(250, 248, 244, 0.75) 45%,
       rgba(250, 248, 244, 0.12) 78%,
       transparent 100%
     );
@@ -215,8 +202,8 @@
     position: absolute;
     right: max(-40px, 4vw);
     top: 12%;
-    width: clamp(260px, 34vw, 440px);
-    height: clamp(260px, 34vw, 440px);
+    width: clamp(250px, 33vw, 420px);
+    height: clamp(250px, 33vw, 420px);
     z-index: 1;
     pointer-events: none;
     opacity: 0.55;
@@ -227,35 +214,32 @@
     width: 100%;
     max-width: 78rem;
     margin-inline: auto;
-    padding: clamp(3rem, 7vh, 5.5rem) var(--sc-gutter);
+    padding: clamp(2.8rem, 6vh, 5rem) var(--sc-gutter);
   }
-  .hero-copy {
-    max-width: 44rem;
-  }
+  .hero-copy { max-width: 44rem; }
   .hero-kicker {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.35rem 0.9rem;
+    padding: 0.35rem 0.95rem;
     border-radius: var(--sc-r-pill);
     background: var(--sc-surface);
     border: 1px solid var(--border);
-    font-size: 0.82rem;
-    font-weight: 700;
+    font-size: 0.84rem;
+    font-weight: 800;
     color: var(--sc-accent);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.15rem;
     box-shadow: var(--sc-e1);
-    transition: color 220ms var(--sc-ease-out);
   }
   .hero-title {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: clamp(2.15rem, 4.7vw, 4.15rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.25rem, 4.9vw, 4.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     color: var(--sc-ink);
     text-wrap: balance;
-    margin: 0 0 1.15rem;
+    margin: 0 0 1rem;
   }
   .hero-title em {
     font-style: normal;
@@ -263,12 +247,13 @@
     transition: color 220ms var(--sc-ease-out);
   }
   .hero-sub {
-    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
     line-height: 1.62;
     color: var(--sc-ink-soft);
+    font-weight: 600;
     max-width: 48ch;
     text-wrap: pretty;
-    margin: 0 0 1.85rem;
+    margin: 0 0 1.75rem;
   }
   .hero-actions {
     display: flex;
@@ -276,36 +261,31 @@
     align-items: center;
     gap: 0.8rem;
   }
-  .hero-actions .btn-pill {
-    padding: 0.85rem 1.6rem;
-    font-size: 0.98rem;
-  }
+  .hero-actions .btn-pill { padding: 0.85rem 1.6rem; font-size: 0.98rem; }
 
-  /* -------------------------------------- ACT II: PEAK - 3 PERSONA GUIDES -- */
+  /* -------------------------------------- ACT II: PEAK - 3 NAM THẦN CARDS -- */
   .guides-act {
-    padding-block: clamp(3.5rem, 7vw, 6rem);
+    padding-block: clamp(3.2rem, 6vw, 5.2rem);
     background: var(--sc-canvas);
   }
   .section-head {
-    max-width: 44rem;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+    max-width: 48rem;
+    margin-bottom: clamp(1.8rem, 3.6vw, 2.8rem);
   }
   .section-head h2 {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: clamp(1.9rem, 3.6vw, 3rem);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
+    font-size: clamp(1.95rem, 3.6vw, 2.95rem);
+    line-height: 1.12;
     color: var(--sc-ink);
-    text-wrap: balance;
-    margin: 0 0 0.7rem;
+    margin: 0 0 0.55rem;
   }
   .section-head p {
     margin: 0;
     font-size: 1.02rem;
+    font-weight: 600;
     color: var(--sc-ink-soft);
-    max-width: 56ch;
-    text-wrap: pretty;
+    max-width: 58ch;
   }
 
   .guides-grid {
@@ -323,7 +303,7 @@
     display: flex;
     flex-direction: column;
     background: var(--sc-surface);
-    border: 2px solid var(--border);
+    border: 2.5px solid var(--border);
     border-radius: var(--sc-r-lg);
     overflow: hidden;
     cursor: pointer;
@@ -338,6 +318,7 @@
       border-color: var(--card-tone);
     }
   }
+  .guide-card:active { transform: scale(0.98); }
   .guide-card.is-selected {
     border-color: var(--card-tone);
     box-shadow: var(--sc-e3);
@@ -359,27 +340,24 @@
     transition: transform 320ms var(--sc-ease-out);
   }
   @media (hover: hover) and (pointer: fine) {
-    .guide-card:hover .guide-media img { transform: scale(1.04); }
+    .guide-card:hover .guide-media img { transform: scale(1.05); }
   }
   .guide-active-badge {
     position: absolute;
     top: 12px;
     right: 12px;
-    padding: 0.3rem 0.75rem;
+    padding: 0.32rem 0.8rem;
     border-radius: var(--sc-r-pill);
     background: var(--card-tone);
     color: #fff;
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 800;
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity 200ms var(--sc-ease-out), transform 200ms var(--sc-ease-out);
     box-shadow: var(--sc-e1);
   }
-  .guide-card.is-selected .guide-active-badge {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .guide-card.is-selected .guide-active-badge { opacity: 1; transform: translateY(0); }
 
   .guide-body {
     padding: 1.25rem 1.35rem 1.4rem;
@@ -392,27 +370,26 @@
     align-self: flex-start;
     font-size: 0.76rem;
     font-weight: 800;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--card-tone);
     background: var(--card-bg);
-    padding: 0.24rem 0.65rem;
+    padding: 0.25rem 0.7rem;
     border-radius: var(--sc-r-pill);
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.6rem;
   }
   .guide-title {
     font-family: var(--sc-font-display);
-    font-size: 1.45rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
     color: var(--sc-ink);
-    margin: 0 0 0.45rem;
+    margin: 0 0 0.4rem;
     line-height: 1.15;
   }
   .guide-desc {
-    font-size: 0.92rem;
+    font-size: 0.93rem;
+    font-weight: 600;
     color: var(--sc-ink-soft);
-    margin: 0 0 1.15rem;
+    margin: 0 0 1.1rem;
     line-height: 1.55;
     flex: 1;
   }
@@ -422,14 +399,136 @@
     justify-content: space-between;
     padding-top: 0.85rem;
     border-top: 1px solid var(--border);
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     font-weight: 800;
     color: var(--card-tone);
   }
 
+  /* ======================= SPRING BOUNCE + FUNNY FIREWORKS OVERLAY ======= */
+  #fx-fireworks {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 995;
+  }
+  .namthan-pop-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 985;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(28, 22, 53, 0.24);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    cursor: pointer;
+    padding: 1.25rem;
+  }
+  .namthan-pop-stage.is-open { display: flex; }
+  .namthan-pop-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 380px;
+    will-change: transform, opacity;
+  }
+  .namthan-pop-card.is-springing {
+    animation: namthanSpringPop 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes namthanSpringPop {
+    0%   { opacity: 0; transform: translate3d(0, 140px, 0) scale(0.14) rotate(-16deg); }
+    42%  { opacity: 1; transform: translate3d(0, -24px, 0) scale(1.18) rotate(6deg); }
+    64%  { opacity: 1; transform: translate3d(0, 11px, 0) scale(0.90) rotate(-3.5deg); }
+    82%  { opacity: 1; transform: translate3d(0, -6px, 0) scale(1.06) rotate(2deg); }
+    92%  { opacity: 1; transform: translate3d(0, 2px, 0) scale(0.98) rotate(-0.8deg); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  }
+
+  .namthan-pop-avatar-wrap {
+    position: relative;
+    width: clamp(190px, 46vw, 245px);
+    height: clamp(190px, 46vw, 245px);
+    border-radius: 50%;
+    padding: 7px;
+    background: #FFFFFF;
+    box-shadow: 0 22px 55px rgba(28, 22, 53, 0.32);
+    border: 4px solid var(--sc-accent);
+  }
+  .namthan-pop-avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .namthan-pop-sticker {
+    position: absolute;
+    top: -12px;
+    right: -8px;
+    background: #FFD43B;
+    color: #1C1635;
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 0.28rem 0.75rem;
+    border-radius: var(--sc-r-pill);
+    border: 2.5px solid #1C1635;
+    transform: rotate(10deg);
+    box-shadow: var(--sc-e2);
+  }
+  .namthan-pop-bubble {
+    margin-top: 1rem;
+    background: #FFFFFF;
+    color: var(--sc-ink);
+    border: 2.5px solid var(--sc-accent);
+    border-radius: 20px;
+    padding: 0.85rem 1.25rem;
+    box-shadow: 0 16px 36px rgba(28, 22, 53, 0.22);
+    position: relative;
+  }
+  .namthan-pop-bubble::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 16px;
+    height: 16px;
+    background: #FFFFFF;
+    border-left: 2.5px solid var(--sc-accent);
+    border-top: 2.5px solid var(--sc-accent);
+  }
+  .namthan-pop-bubble strong {
+    display: block;
+    font-family: var(--sc-font-display);
+    font-size: 1.2rem;
+    color: var(--sc-accent);
+    line-height: 1.2;
+  }
+  .namthan-pop-bubble span {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--sc-ink);
+    margin-top: 0.2rem;
+  }
+
+  @keyframes avatarDockPulse {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.26) rotate(6deg); }
+    75%  { transform: scale(0.93) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  .guide-mini-bar img.is-docked {
+    animation: avatarDockPulse 460ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   /* -------------------------------------- ACT III: CLEAN STUDIO WORKSPACE -- */
   .studio-act {
-    padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(4rem, 7vw, 6.5rem);
+    padding-block: clamp(2.5rem, 5vw, 4.2rem) clamp(4rem, 7vw, 6rem);
     background: var(--sc-surface-2);
     border-top: 1px solid var(--border);
   }
@@ -439,36 +538,38 @@
     padding-inline: var(--sc-gutter);
   }
 
-  /* Before results: centered clean single card. After results: airy split workspace */
   .studio-grid {
     display: grid;
-    grid-template-columns: minmax(0, 740px);
+    grid-template-columns: minmax(0, 760px);
     justify-content: center;
     gap: 1.5rem;
     align-items: start;
   }
   .studio-grid.has-results {
-    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-columns: 360px minmax(0, 1fr);
     justify-content: stretch;
   }
-  @media (max-width: 1080px) {
+  @media (max-width: 1100px) {
     .studio-grid.has-results { grid-template-columns: 1fr; }
     .sidebar { position: static !important; }
   }
 
   .sidebar {
     background: var(--sc-surface);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     border-radius: var(--sc-r-lg);
     padding: 1.75rem;
     box-shadow: var(--sc-e2);
   }
   .studio-grid.has-results .sidebar {
     position: sticky;
-    top: 76px;
-    padding: 1.25rem;
+    top: 74px;
+    padding: 1.3rem;
   }
   .studio-grid.has-results .row-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .studio-grid.has-results .ic-method-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -476,52 +577,56 @@
   .guide-mini-bar {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    padding: 0.85rem 1rem;
+    gap: 0.95rem;
+    padding: 0.9rem 1.05rem;
     border-radius: var(--sc-r-md);
     background: var(--sc-accent-soft);
-    border: 1px solid color-mix(in oklab, var(--sc-accent) 24%, transparent);
+    border: 1.5px solid color-mix(in oklab, var(--sc-accent) 26%, transparent);
     margin-bottom: 1.15rem;
     transition: background-color 220ms var(--sc-ease-out), border-color 220ms var(--sc-ease-out);
   }
   .guide-mini-bar img {
-    width: 56px;
-    height: 56px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #fff;
+    border: 2.5px solid #fff;
     box-shadow: var(--sc-e1);
     flex-shrink: 0;
   }
   .guide-mini-bar__title {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     color: var(--sc-ink);
     line-height: 1.2;
   }
   .guide-mini-bar__say {
-    font-size: 0.84rem;
+    font-size: 0.86rem;
+    font-weight: 600;
     color: var(--sc-ink-soft);
     margin-top: 0.2rem;
-    line-height: 1.4;
+    line-height: 1.42;
   }
 
-  /* Quick switcher inside form */
+  /* Mode switcher tabs inside form */
   .vibe-pills {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.6rem;
     margin-bottom: 1.35rem;
   }
+  @media (max-width: 520px) {
+    .vibe-pills { grid-template-columns: 1fr; }
+  }
   .vibe-pill {
-    padding: 0.58rem 0.5rem;
+    padding: 0.62rem 0.5rem;
     border-radius: var(--sc-r-sm);
     border: 1.5px solid var(--border);
     background: var(--sc-canvas);
     color: var(--sc-ink-soft);
-    font-size: 0.84rem;
-    font-weight: 700;
+    font-size: 0.85rem;
+    font-weight: 800;
     cursor: pointer;
     text-align: center;
     transition: background-color 160ms var(--sc-ease-out), color 160ms var(--sc-ease-out), border-color 160ms var(--sc-ease-out);
@@ -533,28 +638,31 @@
     border-color: var(--sc-accent);
   }
 
-  .form-block { margin-bottom: 1.25rem; }
+  /* Dedicated Mode Panels */
+  .mode-form-panel { display: none; animation: fadeTab 220ms var(--sc-ease-out); }
+  .mode-form-panel.is-active { display: block; }
+
   .row-2 {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 1rem;
-    row-gap: 0.85rem;
+    row-gap: 0.9rem;
     margin-bottom: 1rem;
   }
-  .row-2:last-child { margin-bottom: 0; }
   @media (max-width: 580px) { .row-2 { grid-template-columns: minmax(0, 1fr); } }
 
-  .field { min-width: 0; margin-bottom: 0.9rem; }
+  .field { min-width: 0; margin-bottom: 1rem; }
   .row-2 > .field { margin-bottom: 0; }
-  .field:last-child { margin-bottom: 0; }
   .field label {
     display: block;
-    font-size: 0.86rem;
-    font-weight: 700;
+    font-size: 0.87rem;
+    font-weight: 800;
     color: var(--sc-ink);
     margin-bottom: 0.4rem;
   }
-  .field label span { font-weight: 600; color: var(--sc-ink-soft); }
+  .field label .req { color: var(--sc-accent); margin-left: 2px; }
+  .field label .sub { font-weight: 600; color: var(--sc-ink-soft); font-size: 0.8rem; }
+
   .field input, .field select, .field textarea {
     box-sizing: border-box;
     display: block;
@@ -571,7 +679,7 @@
     font-family: var(--sc-font-text);
     transition: border-color 150ms var(--sc-ease-out), background-color 150ms var(--sc-ease-out);
   }
-  .field textarea { resize: vertical; min-height: 68px; }
+  .field textarea { resize: vertical; min-height: 74px; }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none;
     border-color: var(--sc-accent);
@@ -581,92 +689,171 @@
   .chk-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.86rem;
+    gap: 0.55rem;
+    font-size: 0.87rem;
     font-weight: 700;
-    color: var(--sc-ink-soft);
-    margin: 0.5rem 0 0.75rem;
-    cursor: pointer;
-  }
-  .chk-row input { width: auto; }
-
-  /* Clean progressive disclosure drawers so the form stays super simple */
-  .extra-drawer {
-    border: 1.5px solid var(--border);
-    border-radius: var(--sc-r-md);
-    background: var(--sc-canvas);
-    padding: 0.82rem 1rem;
-    margin-bottom: 0.95rem;
-  }
-  .extra-drawer summary {
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--sc-ink);
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-  .extra-drawer summary::-webkit-details-marker { display: none; }
-  .extra-drawer summary::after {
-    content: "+";
-    font-size: 1.1rem;
-    font-weight: 800;
     color: var(--sc-accent);
-  }
-  .extra-drawer[open] summary::after { content: "−"; }
-  .extra-drawer__body { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px dashed var(--border); }
-  .drawer-summary-sub { font-size: 0.8rem; font-weight: 600; color: var(--sc-ink-soft); }
-
-  .coin-box {
-    background: #fff;
-    border: 1.5px dashed color-mix(in oklab, var(--sc-accent) 45%, var(--border));
+    background: var(--sc-accent-soft);
+    padding: 0.55rem 0.85rem;
     border-radius: var(--sc-r-sm);
-    padding: 0.75rem;
-    margin-top: 0.65rem;
+    margin: -0.25rem 0 1rem;
+    cursor: pointer;
   }
-  .btn-sec {
-    padding: 0.48rem 0.75rem;
+  .chk-row input { width: auto; margin: 0; }
+
+  /* Quick topic chips */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.5rem;
+  }
+  .topic-chip {
+    padding: 0.38rem 0.72rem;
+    border-radius: var(--sc-r-pill);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--sc-surface-2);
-    color: var(--sc-ink);
-    font-size: 0.8rem;
+    background: var(--sc-canvas);
+    color: var(--sc-ink-soft);
+    font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 150ms var(--sc-ease-out);
+    transition: background-color 150ms var(--sc-ease-out), color 150ms var(--sc-ease-out), border-color 150ms var(--sc-ease-out);
   }
-  .btn-sec:hover { background: var(--sc-accent-soft); border-color: var(--sc-accent); }
-  .coin-pick-label { font-size: 0.78rem; color: var(--sc-ink-soft); margin: 0.55rem 0 0.4rem; line-height: 1.35; }
-  .coin-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.55rem; }
-  .coin-pick-btn {
-    padding: 0.45rem 0.4rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+  .topic-chip:hover, .topic-chip.is-picked {
+    background: var(--sc-accent-soft);
+    color: var(--sc-accent);
+    border-color: var(--sc-accent);
+  }
+
+  /* Numerology condition guide box */
+  .num-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1.1rem;
+  }
+  @media (max-width: 620px) { .num-rules-grid { grid-template-columns: 1fr; } }
+  .studio-grid.has-results .num-rules-grid { grid-template-columns: 1fr; }
+  .num-rule-tile {
     background: var(--sc-canvas);
+    border: 1px solid var(--border);
+    border-radius: var(--sc-r-sm);
+    padding: 0.65rem 0.75rem;
+    font-size: 0.79rem;
+    line-height: 1.42;
+  }
+  .num-rule-tile strong {
+    display: block;
+    color: var(--sc-accent);
+    font-size: 0.82rem;
+    margin-bottom: 0.15rem;
+  }
+
+  /* I-Ching 6 casting options grid */
+  .ic-method-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+  }
+  @media (max-width: 560px) { .ic-method-grid { grid-template-columns: 1fr; } }
+  .ic-method-card {
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    border-radius: var(--sc-r-sm);
+    border: 1.5px solid var(--border);
+    background: var(--sc-canvas);
+    cursor: pointer;
+    transition: border-color 150ms var(--sc-ease-out), background-color 150ms var(--sc-ease-out);
+  }
+  .ic-method-card:hover { border-color: var(--sc-accent); }
+  .ic-method-card.is-selected {
+    background: var(--sc-accent-soft);
+    border-color: var(--sc-accent);
+  }
+  .ic-method-card strong {
+    display: block;
+    font-size: 0.86rem;
     color: var(--sc-ink);
+    margin-bottom: 0.15rem;
+  }
+  .ic-method-card span {
+    display: block;
     font-size: 0.76rem;
     font-weight: 600;
+    color: var(--sc-ink-soft);
+    line-height: 1.35;
+  }
+
+  .coin-box {
+    background: var(--sc-canvas);
+    border: 1.5px dashed color-mix(in oklab, var(--sc-accent) 50%, var(--border));
+    border-radius: var(--sc-r-md);
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .coin-visual-stage {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    margin: 0.65rem 0;
+  }
+  .coin-disc {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 32%, #FFE680, #D4941A);
+    border: 2.5px solid #966208;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.76rem;
+    color: #4A2E00;
+    box-shadow: var(--sc-e1);
+    transition: transform 320ms var(--sc-ease-out);
+  }
+  .coin-disc.is-flipping { transform: rotateY(360deg) scale(1.12); }
+
+  .btn-sec {
+    padding: 0.52rem 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--sc-ink);
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 150ms var(--sc-ease-out), border-color 150ms var(--sc-ease-out);
+  }
+  .btn-sec:hover { background: var(--sc-accent-soft); border-color: var(--sc-accent); }
+  .coin-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; margin-bottom: 0.65rem; }
+  .coin-pick-btn {
+    padding: 0.52rem 0.45rem;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--sc-ink);
+    font-size: 0.79rem;
+    font-weight: 700;
     cursor: pointer;
     text-align: center;
   }
   .coin-pick-btn:hover { background: var(--sc-accent-soft); border-color: var(--sc-accent); color: var(--sc-accent); }
-  .coin-lines-preview { font-size: 0.8rem; color: var(--sc-ink); margin-top: 0.45rem; line-height: 1.5; }
+  .coin-lines-preview { font-size: 0.82rem; font-weight: 600; color: var(--sc-ink); margin-top: 0.5rem; line-height: 1.55; }
 
-  /* Primary submit CTA (keeps .sidebar .btn-primary hook for gemini_ai_addon.js!) */
+  /* Primary submit CTA (keeps .sidebar .btn-primary hook for gemini_ai_addon.js) */
   .btn-primary {
     width: 100%;
-    padding: 0.9rem 1.25rem;
+    padding: 0.92rem 1.25rem;
     border: none;
     border-radius: var(--sc-r-md);
     cursor: pointer;
     background: var(--sc-accent);
     color: #fff;
     font-weight: 800;
-    font-size: 0.98rem;
-    letter-spacing: 0.01em;
+    font-size: 1rem;
+    margin-top: 0.25rem;
     box-shadow: var(--sc-e2);
     transition: transform 150ms var(--sc-ease-out), background-color 220ms var(--sc-ease-out), opacity 150ms var(--sc-ease-out);
   }
@@ -675,24 +862,23 @@
 
   .btn-demo {
     width: 100%;
-    padding: 0.65rem 1rem;
+    padding: 0.68rem 1rem;
     border: 1.5px dashed var(--border);
     border-radius: var(--sc-r-md);
     background: transparent;
     color: var(--sc-ink-soft);
-    font-size: 0.86rem;
-    font-weight: 700;
+    font-size: 0.87rem;
+    font-weight: 800;
     cursor: pointer;
-    margin-top: 0.6rem;
+    margin-top: 0.65rem;
     transition: color 150ms var(--sc-ease-out), border-color 150ms var(--sc-ease-out), background-color 150ms var(--sc-ease-out);
   }
   .btn-demo:hover { background: var(--sc-canvas); color: var(--sc-ink); border-color: var(--sc-accent); }
 
-  /* Harmony tweak for injected Gemini AI button */
   #kb-sidebar-ai-btn {
     border-radius: var(--sc-r-md) !important;
     padding: 0.85rem 1rem !important;
-    margin-top: 0.75rem !important;
+    margin-top: 0.7rem !important;
     background: #1C1635 !important;
     border: 1px solid #1C1635 !important;
     box-shadow: var(--sc-e1) !important;
@@ -701,7 +887,6 @@
     font-weight: 800 !important;
   }
 
-  /* Quiet Five-Elements decorative preview under form before results */
   .welcome-strip {
     margin-top: 1.5rem;
     background: var(--sc-surface);
@@ -718,22 +903,21 @@
     width: 100%;
     height: 100%;
     min-height: 170px;
-    max-height: 220px;
+    max-height: 210px;
     object-fit: cover;
   }
-  .welcome-strip__txt {
-    padding: 1.35rem 1.5rem;
-  }
+  .welcome-strip__txt { padding: 1.35rem 1.5rem; }
   .welcome-strip__txt h3 {
     font-family: var(--sc-font-display);
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.35rem;
     color: var(--sc-ink);
   }
   .welcome-strip__txt p {
     margin: 0;
-    font-size: 0.88rem;
+    font-size: 0.89rem;
+    font-weight: 600;
     color: var(--sc-ink-soft);
     line-height: 1.55;
   }
@@ -753,21 +937,22 @@
     box-shadow: var(--sc-e1);
   }
   .cheer-strip img {
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--sc-accent);
+    border: 2.5px solid var(--sc-accent);
     flex-shrink: 0;
   }
   .cheer-strip__title {
     font-family: var(--sc-font-display);
     font-weight: 800;
     color: var(--sc-accent);
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
   .cheer-strip__msg {
-    font-size: 0.88rem;
+    font-size: 0.89rem;
+    font-weight: 600;
     color: var(--sc-ink);
     margin-top: 0.1rem;
   }
@@ -782,7 +967,8 @@
     flex-wrap: wrap;
     gap: 0.45rem 1.25rem;
     align-items: center;
-    font-size: 0.86rem;
+    font-size: 0.87rem;
+    font-weight: 600;
     box-shadow: var(--sc-e1);
   }
   .warn-banner {
@@ -793,7 +979,7 @@
     padding: 0.55rem 0.85rem;
     border-radius: 8px;
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-top: 0.35rem;
   }
 
@@ -805,13 +991,13 @@
     align-items: center;
   }
   .tab-btn {
-    padding: 0.58rem 0.95rem;
+    padding: 0.58rem 0.98rem;
     border-radius: var(--sc-r-pill);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     background: var(--sc-surface);
     color: var(--sc-ink-soft);
-    font-weight: 700;
-    font-size: 0.84rem;
+    font-weight: 800;
+    font-size: 0.85rem;
     cursor: pointer;
     font-family: inherit;
     transition: background-color 160ms var(--sc-ease-out), color 160ms var(--sc-ease-out), border-color 160ms var(--sc-ease-out);
@@ -825,12 +1011,12 @@
   }
   .toolbar-right { margin-left: auto; display: flex; gap: 0.45rem; flex-wrap: wrap; }
   .action-btn {
-    padding: 0.5rem 0.85rem;
+    padding: 0.5rem 0.88rem;
     border-radius: var(--sc-r-pill);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     background: var(--sc-surface);
     color: var(--sc-ink);
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.8rem;
     cursor: pointer;
     font-family: inherit;
@@ -842,7 +1028,7 @@
   @keyframes fadeTab { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
   /* TỬ VI 12 CUNG INTERACTIVE BOARD */
-  .tuvi-hint { margin: 0 0 0.6rem; font-size: 0.84rem; color: var(--sc-ink-soft); }
+  .tuvi-hint { margin: 0 0 0.6rem; font-size: 0.85rem; font-weight: 600; color: var(--sc-ink-soft); }
   .tuvi-wrapper { position: relative; width: 100%; overflow-x: auto; padding-bottom: 4px; }
   .tuvi-board {
     display: grid;
@@ -913,9 +1099,9 @@
   .st-cat { color: var(--jade); font-weight: 700; margin-right: 4px; display: inline-block; }
   .st-sat { color: var(--crimson); font-weight: 700; margin-right: 4px; display: inline-block; }
   .st-phu { color: #4A435C; margin-right: 4px; display: inline-block; }
-  .p-foot { display: flex; justify-content: space-between; border-top: 1px dashed var(--border); padding-top: 3px; font-size: 10.5px; color: var(--sc-ink-soft); font-weight: 600; }
+  .p-foot { display: flex; justify-content: space-between; border-top: 1px dashed var(--border); padding-top: 3px; font-size: 10.5px; color: var(--sc-ink-soft); font-weight: 700; }
 
-  .tb-header { font-family: var(--sc-font-display); text-align: center; font-weight: 800; color: var(--sc-accent); font-size: 18px; margin-bottom: 6px; }
+  .tb-header { font-family: var(--sc-font-display); text-align: center; font-weight: 800; color: var(--sc-accent); font-size: 19px; margin-bottom: 6px; }
   .tb-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 12px; font-size: 12px; }
   .fly-inspector { margin-top: 8px; padding: 8px 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; font-size: 11.8px; }
   .yr-stepper { display: inline-flex; align-items: center; gap: 5px; }
@@ -934,15 +1120,15 @@
     font-family: var(--sc-font-display);
     margin: 0 0 0.85rem;
     color: var(--sc-ink);
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 800;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 0.55rem;
+    padding-bottom: 0.5rem;
   }
 
   table.std-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
   table.std-table th, table.std-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
-  table.std-table th { background: var(--sc-canvas); color: var(--sc-ink); font-weight: 700; }
+  table.std-table th { background: var(--sc-canvas); color: var(--sc-ink); font-weight: 800; }
   .elem-bars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
   @media (max-width: 780px) { .elem-bars { grid-template-columns: repeat(2, 1fr); } }
   .eb-item { background: var(--sc-canvas); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
@@ -984,11 +1170,11 @@
     justify-content: center;
     box-shadow: var(--sc-e2);
   }
-  .num-orb-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.9; font-weight: 700; }
+  .num-orb-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.92; font-weight: 800; }
   .num-orb-val { font-family: var(--sc-font-display); font-size: 46px; font-weight: 800; line-height: 1.02; }
   .num-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-bottom: 14px; }
   .num-kpi { background: var(--sc-canvas); border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; }
-  .num-kpi-val { font-family: var(--sc-font-display); font-size: 25px; font-weight: 800; color: var(--sc-accent); margin: 2px 0; }
+  .num-kpi-val { font-family: var(--sc-font-display); font-size: 26px; font-weight: 800; color: var(--sc-accent); margin: 2px 0; }
   .let-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 3px 7px; margin: 2px; border-radius: 6px; font-weight: 800; font-size: 12px; }
   .let-v { background: var(--sc-accent-soft); color: var(--sc-accent); border: 1px solid color-mix(in oklab, var(--sc-accent) 30%, transparent); }
   .let-c { background: #F1EEF7; color: #352F4D; border: 1px solid #DCD6EA; }
@@ -1008,7 +1194,8 @@
   .footer-note {
     max-width: 56ch;
     margin: 0 auto 1.25rem;
-    font-size: 0.86rem;
+    font-size: 0.87rem;
+    font-weight: 600;
     color: var(--sc-ink-soft);
   }
   .footer-copyright {
@@ -1026,14 +1213,18 @@
   @media (max-width: 700px) {
     .hero-act { min-height: auto; padding-block: 1rem 2rem; }
     .hero-scrim {
-      background: linear-gradient(180deg, rgba(250, 248, 244, 0.92) 0%, rgba(250, 248, 244, 0.84) 65%, rgba(250, 248, 244, 0.45) 100%);
+      background: linear-gradient(180deg, rgba(250, 248, 244, 0.92) 0%, rgba(250, 248, 244, 0.85) 65%, rgba(250, 248, 244, 0.45) 100%);
     }
     .hero-orbit-plane { display: none; }
     .top-nav__link { display: none; }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .namthan-pop-card.is-springing { animation: none !important; }
+  }
+
   @media print {
-    .top-bar, .hero-act, .guides-act, .sidebar, .tabs, .cheer-strip, .site-footer { display: none !important; }
+    .top-bar, .hero-act, .guides-act, .sidebar, .tabs, .cheer-strip, .site-footer, #fx-fireworks, .namthan-pop-stage { display: none !important; }
     .studio-act { background: #fff !important; padding: 0 !important; border: none !important; }
     .studio-grid.has-results { grid-template-columns: 1fr !important; }
   }
@@ -1044,6 +1235,21 @@
 <div data-sc-progress aria-hidden="true"></div>
 <div class="sc-grain" aria-hidden="true"></div>
 
+<!-- CANVAS PHÁO BÔNG HÀI HƯỚC + SÂN KHẤU NAM THẦN BẬT LÒ XO -->
+<canvas id="fx-fireworks" aria-hidden="true"></canvas>
+<div id="namthan-pop-stage" class="namthan-pop-stage" onclick="dismissNamThanPopEarly()" aria-live="polite">
+  <div id="namthan-pop-card" class="namthan-pop-card">
+    <div class="namthan-pop-avatar-wrap">
+      <img id="pop-avatar-img" src="/assets/images/guide_1_cool.jpg" alt="Nam thần xuất hiện" width="240" height="240">
+      <span id="pop-sticker-tag" class="namthan-pop-sticker">BÙM!!</span>
+    </div>
+    <div class="namthan-pop-bubble">
+      <strong id="pop-bubble-title">Nam Thần Tử Vi &amp; Tài Bạch xuất chiêu!</strong>
+      <span id="pop-bubble-sub">Chuẩn bị mở khóa 12 cung tài lộc, đất đai nào anh em ơi!</span>
+    </div>
+  </div>
+</div>
+
 <!-- SIMPLE AIRY TOP BAR -->
 <header class="top-bar">
   <div class="top-bar__inner">
@@ -1052,9 +1258,9 @@
       <span>☯ Thiên Cơ Studio</span>
     </a>
     <nav class="top-nav" aria-label="Điều hướng chính">
-      <a href="#act-guides" class="top-nav__link">3 Phong Cách Xem</a>
+      <a href="#act-guides" class="top-nav__link">Chọn Nam Thần</a>
       <a href="#act-studio" class="top-nav__link" onclick="loadSampleProfile()">Xem Mẫu Thử</a>
-      <a href="#act-studio" class="btn-pill">Xem Lá Số</a>
+      <a href="#act-guides" class="btn-pill">Bắt Đầu Xem</a>
     </nav>
   </div>
 </header>
@@ -1077,82 +1283,82 @@
 
   <div class="hero-inner">
     <div class="hero-copy">
-      <div class="hero-kicker">✦ Huyền học Đông Tây cho thế hệ mới</div>
+      <div class="hero-kicker">✦ Huyền học Đông Tây vui tươi cho thế hệ mới</div>
       <h1 class="hero-title">Giải mã vũ trụ.<br>Bắt <em>vibe</em> vận mệnh.</h1>
       <p class="hero-sub">
-        Tử Vi 12 cung, Ngũ Hành Bát Tự, Thần Số Học và Gieo Quẻ Kinh Dịch gói gọn siêu dễ hiểu, vui tươi mà chuẩn xác từng giờ sinh Việt Nam.
+        Chạm vào 1 trong 3 Nam Thần bên dưới để mở đúng bộ công cụ chuyên biệt: Tử Vi Tài Bạch, Gieo Quẻ Kinh Dịch hoặc Thần Số Học.
       </p>
       <div class="hero-actions">
-        <a href="#act-guides" class="btn-pill">Chọn phong cách xem</a>
-        <a href="#act-studio" class="btn-pill btn-pill--ghost" onclick="loadSampleProfile()">✨ Xem thử 1 lá số mẫu</a>
+        <a href="#act-guides" class="btn-pill">Chọn Nam Thần xem ngay</a>
+        <a href="#act-studio" class="btn-pill btn-pill--ghost" onclick="loadSampleProfile()">✨ Xem thử mẫu</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ACT II (PEAK): 3 NGƯỜI ĐẠI DIỆN · 3 PHONG CÁCH XEM (SIGNATURE MOVE) -->
+<!-- ACT II (PEAK): 3 NAM THẦN ĐẠI DIỆN 3 CHẾ ĐỘ XEM RIÊNG BIỆT -->
 <section id="act-guides" class="guides-act" data-sc-act="flow">
   <div class="sc-wrap">
     <div class="section-head" data-sc-in data-sc-stagger="60">
-      <h2>Hôm nay bạn muốn xem kiểu nào?</h2>
+      <h2>Chọn Nam Thần dẫn lối cho bạn hôm nay!</h2>
       <p>
-        Bấm chọn 1 trong 3 "Sư Huynh" dưới đây. Toàn bộ giao diện, màu năng lượng và khung xem sẽ tự biến hóa đúng theo phong cách bạn thích.
+        Click vào ô Nam Thần bạn thích: trang sẽ cuộn xuống, Nam Thần bật ra tung pháo bông đón chào và mở đúng khung nhập riêng của hệ đó.
       </p>
     </div>
 
     <div class="guides-grid" data-sc-in data-sc-stagger="75">
-      <!-- PERSONA 1: HỆ THỰC CHIẾN (TỬ VI & BÁT TỰ) -->
+      <!-- Ô 1: TỬ VI, TÀI BẠCH, ĐIỀN TRẠCH & BÁT TỰ -->
       <button type="button" class="guide-card is-selected" data-card-vibe="thuc-chien" data-sc-tilt="5" onclick="selectGuide('thuc-chien', true)">
         <div class="guide-media">
-          <img src="/assets/images/guide_1_cool.jpg" alt="Hệ Thực Chiến: Soi Tử Vi và Bát Tự" width="800" height="800">
+          <img src="/assets/images/guide_1_cool.jpg" alt="Ô 1: Xem Tử Vi, Tài Bạch, Điền Trạch" width="800" height="800">
           <span class="guide-active-badge">✓ Đang chọn</span>
         </div>
         <div class="guide-body">
-          <span class="guide-tag">Tử Vi · Bát Tự</span>
-          <h3 class="guide-title">Hệ Thực Chiến</h3>
+          <span class="guide-tag">Ô 1 · Tử Vi · Tài Bạch · Điền Trạch</span>
+          <h3 class="guide-title">Soi Tử Vi &amp; Tài Lộc</h3>
           <p class="guide-desc">
-            Lập lá số 12 cung, soi đường học hành, sự nghiệp, tài lộc, đất đai và năm nay nên tăng tốc hay giữ nhịp.
+            Lập lá số 12 cung đầy đủ theo ngày giờ sinh, soi sâu cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc và Ngũ Hành Bát Tự.
           </p>
           <div class="guide-pick-row">
-            <span class="pick-lbl">Chọn hệ Thực Chiến</span>
+            <span>Click mở khung Tử Vi</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
       </button>
 
-      <!-- PERSONA 2: HỆ HỎI VŨ TRỤ (GIEO QUẺ KINH DỊCH & HƯỚNG TỐT) -->
+      <!-- Ô 2: GIEO QUẺ KINH DỊCH -->
       <button type="button" class="guide-card" data-card-vibe="gieo-que" data-sc-tilt="5" onclick="selectGuide('gieo-que', true)">
         <div class="guide-media">
-          <img src="/assets/images/guide_2_cheer.jpg" alt="Hệ Hỏi Vũ Trụ: Mạnh mẽ lên nào, tung xu gieo quẻ" width="800" height="800">
+          <img src="/assets/images/guide_2_cheer.jpg" alt="Ô 2: Gieo Quẻ Kinh Dịch đa dạng" width="800" height="800">
           <span class="guide-active-badge">✓ Đang chọn</span>
         </div>
         <div class="guide-body">
-          <span class="guide-tag">Gieo Quẻ · Hướng Đẹp</span>
-          <h3 class="guide-title">Hệ Hỏi Vũ Trụ</h3>
+          <span class="guide-tag">Ô 2 · Lục Hào · Mai Hoa · Kỳ Môn</span>
+          <h3 class="guide-title">Gieo Quẻ Hỏi Việc</h3>
           <p class="guide-desc">
-            "Mạnh mẽ lên nào!" Đang phân vân chốt kèo, đi thi hay gỡ rối drama? Tung 3 đồng xu là rõ hướng ngay.
+            "Mạnh mẽ lên nào!" Không cần tên hay ngày sinh: chọn tự tung xu, nhờ gieo hộ, chọn con số, gõ chữ bất kỳ hoặc khởi theo giờ.
           </p>
           <div class="guide-pick-row">
-            <span class="pick-lbl">Chọn hệ Gieo Quẻ</span>
+            <span>Click mở bàn Gieo Quẻ</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
       </button>
 
-      <!-- PERSONA 3: HỆ TÌNH DUYÊN & CHECK VIBE (THẦN SỐ HỌC & CHẤM TÊN) -->
+      <!-- Ô 3: THẦN SỐ HỌC (NGÀY SINH + TÊN THẬT + NICKNAME) -->
       <button type="button" class="guide-card" data-card-vibe="tinh-duyen" data-sc-tilt="5" onclick="selectGuide('tinh-duyen', true)">
         <div class="guide-media">
-          <img src="/assets/images/guide_3_love.jpg" alt="Hệ Tình Duyên và Thần Số Học: Mình yêu nhau nhé" width="800" height="800">
+          <img src="/assets/images/guide_3_love.jpg" alt="Ô 3: Xem Thần Số Học, Tên Thật và Nickname" width="800" height="800">
           <span class="guide-active-badge">✓ Đang chọn</span>
         </div>
         <div class="guide-body">
-          <span class="guide-tag">Thần Số Học · Check Tên</span>
-          <h3 class="guide-title">Hệ Tình Duyên &amp; Vibe</h3>
+          <span class="guide-tag">Ô 3 · Thần Số Học · Nickname</span>
+          <h3 class="guide-title">Xem Thần Số Học</h3>
           <p class="guide-desc">
-            "Mình yêu nhau nhé!" Khám phá Con Số Chủ Đạo, góc ẩn nội tâm và chấm điểm Nickname cực hợp vibe (không cần nhớ giờ sinh).
+            "Mình yêu nhau nhé!" Giải mã Số Chủ Đạo từ Ngày sinh, kết hợp Tên Khai Sinh và Tên Gọi / Nickname để tìm năng lượng bù khuyết.
           </p>
           <div class="guide-pick-row">
-            <span class="pick-lbl">Chọn hệ Thần Số Học</span>
+            <span>Click mở khung Thần Số Học</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
@@ -1161,7 +1367,7 @@
   </div>
 </section>
 
-<!-- ACT III: WORKING SURFACE (KHUNG NHẬP SIÊU GỌN + BÀN KẾT QUẢ 6 TAB) -->
+<!-- ACT III: WORKING SURFACE (3 FORM ĐẶC THÙ RIÊNG BIỆT + BÀN KẾT QUẢ) -->
 <section id="act-studio" class="studio-act" data-sc-act="flow">
   <div class="studio-shell">
     <div id="studio-grid" class="studio-grid">
@@ -1169,167 +1375,309 @@
       <!-- SIDEBAR / INPUT CARD (Giữ class .sidebar và .btn-primary cho plugin Gemini AI) -->
       <aside class="sidebar">
         <div class="guide-mini-bar">
-          <img id="active-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Sư huynh đồng hành" width="56" height="56">
+          <img id="active-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Nam thần đồng hành" width="62" height="62">
           <div>
-            <div id="active-guide-title" class="guide-mini-bar__title">Hệ Thực Chiến · Tử Vi &amp; Bát Tự</div>
-            <div id="active-guide-say" class="guide-mini-bar__say">Điền nhanh vài dòng dưới đây để mở trọn lá số 12 cung &amp; vận trình năm nay nhé!</div>
+            <div id="active-guide-title" class="guide-mini-bar__title">Soi Tử Vi, Tài Bạch &amp; Điền Trạch</div>
+            <div id="active-guide-say" class="guide-mini-bar__say">Điền đầy đủ các thông tin bắt buộc bên dưới để an chuẩn 12 cung Tử Vi và Tứ Trụ nhé!</div>
           </div>
         </div>
 
-        <!-- 3 nút đổi nhanh phong cách ngay trong form -->
-        <div class="vibe-pills" role="tablist" aria-label="Đổi nhanh phong cách xem">
-          <button type="button" class="vibe-pill active" data-pill-vibe="thuc-chien" onclick="selectGuide('thuc-chien', false)">★ Thực Chiến</button>
-          <button type="button" class="vibe-pill" data-pill-vibe="gieo-que" onclick="selectGuide('gieo-que', false)">🎲 Gieo Quẻ</button>
-          <button type="button" class="vibe-pill" data-pill-vibe="tinh-duyen" onclick="selectGuide('tinh-duyen', false)">💖 Tình Duyên</button>
+        <!-- 3 nút chuyển nhanh giữa 3 chế độ -->
+        <div class="vibe-pills" role="tablist" aria-label="Chọn chế độ xem">
+          <button type="button" class="vibe-pill active" data-pill-vibe="thuc-chien" onclick="selectGuide('thuc-chien', false)">★ 1. Tử Vi &amp; Tài Bạch</button>
+          <button type="button" class="vibe-pill" data-pill-vibe="gieo-que" onclick="selectGuide('gieo-que', false)">🎲 2. Gieo Quẻ</button>
+          <button type="button" class="vibe-pill" data-pill-vibe="tinh-duyen" onclick="selectGuide('tinh-duyen', false)">💖 3. Thần Số Học</button>
         </div>
 
-        <!-- 4 Ô CỐT LÕI SIÊU GỌN -->
-        <div class="form-block">
+        <!-- ==============================================================
+             FORM 1: TỬ VI, TÀI BẠCH, ĐIỀN TRẠCH (HIỆN TRỰC TIẾP 100%, KHÔNG THU GỌN)
+             ============================================================== -->
+        <div id="panel-form-tuvi" class="mode-form-panel is-active">
           <div class="row-2">
             <div class="field">
-              <label for="inp-name">Họ và tên đầy đủ <span>(có dấu)</span></label>
-              <input id="inp-name" placeholder="VD: Nguyễn Minh Quân">
+              <label for="tv-name">Họ và tên đương số <span class="req">*</span></label>
+              <input id="tv-name" placeholder="VD: Nguyễn Minh Quân">
             </div>
             <div class="field">
-              <label for="inp-nickname">Nickname <span>(Tùy chọn)</span></label>
-              <input id="inp-nickname" placeholder="VD: K.B Đồ Sơn...">
+              <label for="tv-gender">Giới tính <span class="req">*</span> <span class="sub">(Tính chiều Đại Hạn)</span></label>
+              <select id="tv-gender">
+                <option value="nam">Nam</option>
+                <option value="nu">Nữ</option>
+              </select>
             </div>
           </div>
 
           <div class="row-2">
             <div class="field">
-              <label for="inp-date">Ngày sinh</label>
-              <input type="date" id="inp-date">
+              <label for="tv-datetype">Loại lịch ngày sinh <span class="req">*</span></label>
+              <select id="tv-datetype" onchange="onTuviDateTypeChange()">
+                <option value="solar">Dương lịch</option>
+                <option value="lunar">Âm lịch</option>
+              </select>
             </div>
             <div class="field">
-              <label for="inp-time">Giờ sinh <span id="time-hint-lbl">(ước chừng cũng được)</span></label>
-              <input type="time" id="inp-time" value="09:30">
+              <label for="tv-date">Ngày tháng năm sinh <span class="req">*</span></label>
+              <input type="date" id="tv-date">
             </div>
           </div>
 
-          <label id="row-leap" class="chk-row" style="display:none;">
-            <input type="checkbox" id="inp-leap"> Sinh vào tháng Nhuận Âm lịch
+          <label id="tv-row-leap" class="chk-row" style="display:none;">
+            <input type="checkbox" id="tv-leap"> Sinh vào tháng Nhuận Âm lịch
           </label>
-        </div>
 
-        <!-- TÙY CHỈNH THÊM (GỌN GÀNG, MẶC ĐỊNH ĐÓNG) -->
-        <details id="drawer-extra" class="extra-drawer">
-          <summary>
-            <span>⚙️ Tùy chỉnh thêm <span id="extra-summary-txt" class="drawer-summary-sub">(Nam · Dương lịch · Hải Phòng)</span></span>
-          </summary>
-          <div class="extra-drawer__body">
-            <div class="row-2">
-              <div class="field">
-                <label for="inp-gender">Giới tính</label>
-                <select id="inp-gender" onchange="updateExtraSummary()">
-                  <option value="nam">Nam</option>
-                  <option value="nu">Nữ</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="inp-datetype">Loại lịch</label>
-                <select id="inp-datetype" onchange="onDateTypeChange(); updateExtraSummary()">
-                  <option value="solar">Dương lịch</option>
-                  <option value="lunar">Âm lịch</option>
-                </select>
-              </div>
-            </div>
-            <div class="row-2">
-              <div class="field">
-                <label for="inp-place">Nơi sinh</label>
-                <select id="inp-place" onchange="updateExtraSummary()"></select>
-              </div>
-              <div class="field">
-                <label for="inp-target-year">Năm muốn xem hạn</label>
-                <input type="number" id="inp-target-year" min="1940" max="2080">
-              </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="tv-time">Giờ phút sinh <span class="req">*</span> <span class="sub">(Định Mệnh &amp; Thân)</span></label>
+              <input type="time" id="tv-time" value="09:30">
             </div>
             <div class="field">
-              <label for="inp-numschool">Hệ Thần số học</label>
-              <select id="inp-numschool">
-                <option value="vn">Nhân số học VN (Giữ Số 10)</option>
-                <option value="intl">Pythagoras Quốc tế</option>
+              <label for="tv-shichen">Hoặc chọn nhanh theo Canh Giờ</label>
+              <select id="tv-shichen" onchange="onShichenPick()">
+                <option value="">-- Tự nhập giờ phút bên cạnh --</option>
+                <option value="00:00">Giờ Tý (23:00 - 00:59)</option>
+                <option value="02:00">Giờ Sửu (01:00 - 02:59)</option>
+                <option value="04:00">Giờ Dần (03:00 - 04:59)</option>
+                <option value="06:00">Giờ Mão (05:00 - 06:59)</option>
+                <option value="08:00">Giờ Thìn (07:00 - 08:59)</option>
+                <option value="10:00">Giờ Tỵ (09:00 - 10:59)</option>
+                <option value="12:00">Giờ Ngọ (11:00 - 12:59)</option>
+                <option value="14:00">Giờ Mùi (13:00 - 14:59)</option>
+                <option value="16:00">Giờ Thân (15:00 - 16:59)</option>
+                <option value="18:00">Giờ Dậu (17:00 - 18:59)</option>
+                <option value="20:00">Giờ Tuất (19:00 - 20:59)</option>
+                <option value="22:00">Giờ Hợi (21:00 - 22:59)</option>
               </select>
             </div>
           </div>
-        </details>
 
-        <!-- KHUNG GIEO QUẺ KINH DỊCH (TỰ MỞ KHI CHỌN HỆ HỎI VŨ TRỤ) -->
-        <details id="drawer-iching" class="extra-drawer">
-          <summary>
-            <span>🎲 Hỏi việc &amp; Gieo Quẻ Kinh Dịch <span class="drawer-summary-sub">(Không bắt buộc)</span></span>
-          </summary>
-          <div class="extra-drawer__body">
+          <div class="row-2">
             <div class="field">
-              <label for="inp-question">Việc cần hỏi thêm <span>(Xem quẻ Kinh Dịch)</span></label>
-              <textarea id="inp-question" placeholder="VD: Kỳ này thi có ổn không? Có nên đổi việc, mua đất hay nhắn tin cho crush không?"></textarea>
+              <label for="tv-place">Tỉnh / Thành nơi sinh <span class="req">*</span></label>
+              <select id="tv-place"></select>
             </div>
-
             <div class="field">
-              <label for="inp-ic-method">Cách gieo quẻ Kinh Dịch</label>
-              <select id="inp-ic-method" onchange="onIchingMethodChange()">
-                <option value="coins_random">🎲 Hệ thống gieo hộ (3 đồng xu tự động)</option>
-                <option value="manual_lines">⭕ Tự gieo 3 đồng xu (6 lần) / Nhập kết quả</option>
-                <option value="numbers">🔢 Chọn 2 số yêu thích (Mai Hoa Dịch Số)</option>
-                <option value="time">🕒 Gieo theo ngày giờ hiện tại (Mai Hoa)</option>
-              </select>
+              <label for="tv-target-year">Năm muốn xem hạn <span class="req">*</span></label>
+              <input type="number" id="tv-target-year" min="1940" max="2080">
             </div>
+          </div>
 
-            <div id="box-manual-coins" class="coin-box" style="display:none;">
-              <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="btn-sec" id="btn-toss" onclick="tossOneLine()" style="flex:1;">🎲 Tung 3 xu trên web (Lần 1/6)</button>
+          <div class="field">
+            <label for="tv-focus">Cung / Chủ đề muốn soi sâu nhất <span class="sub">(AI sẽ phân tích kỹ phần này)</span></label>
+            <select id="tv-focus" onchange="syncFocusQuestionFromTuvi()">
+              <option value="Luận tổng quát 12 cung Tử Vi, trọng tâm Mệnh - Tài Bạch - Quan Lộc - Điền Trạch và vận hạn năm xem">🌟 Tổng quát Mệnh · Tài Bạch · Quan Lộc · Điền Trạch</option>
+              <option value="Soi thật kỹ cung Tài Bạch, dòng tiền, cơ hội kiếm tiền, đầu tư và giữ lộc năm nay">💰 Chuyên sâu Cung Tài Bạch (Tiền bạc &amp; Đầu tư)</option>
+              <option value="Soi thật kỹ cung Điền Trạch, duyên mua bán đất đai, nhà cửa, bất động sản và tích sản">🏡 Chuyên sâu Cung Điền Trạch (Nhà cửa &amp; Đất đai)</option>
+              <option value="Soi thật kỹ cung Quan Lộc, công danh sự nghiệp, thăng tiến, chuyển việc và quý nhân">🚀 Chuyên sâu Cung Quan Lộc (Sự nghiệp &amp; Công danh)</option>
+              <option value="Soi thật kỹ cung Phu Thê, nhân duyên, hôn nhân gia đạo và đối tác làm ăn">❤️ Chuyên sâu Cung Phu Thê &amp; Gia Đạo</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ==============================================================
+             FORM 2: GIEO QUẺ KINH DỊCH (KHÔNG CẦN TÊN / NGÀY SINH — 6 CÁCH GIEO ĐA DẠNG)
+             ============================================================== -->
+        <div id="panel-form-gieoque" class="mode-form-panel">
+          <div class="field">
+            <label for="inp-question">1. Việc bạn đang muốn hỏi quẻ <span class="sub">(Tập trung nghĩ rõ 1 việc cụ thể)</span></label>
+            <textarea id="inp-question" placeholder="VD: Tháng này chốt mảnh đất / dự án này có sinh lời tốt không? Hoặc: Kỳ thi / công việc sắp tới thuận lợi không?"></textarea>
+            <div class="chip-row">
+              <button type="button" class="topic-chip" onclick="pickQuestionChip('Thương vụ đầu tư / tài chính sắp tới có thuận lợi và sinh lời tốt không?', this)">💰 Đầu tư &amp; Tài lộc</button>
+              <button type="button" class="topic-chip" onclick="pickQuestionChip('Giao dịch mua bán nhà đất / bất động sản đang xem xét có cát lợi không?', this)">🏡 Đất đai &amp; Nhà cửa</button>
+              <button type="button" class="topic-chip" onclick="pickQuestionChip('Công việc / kế hoạch chuyển hướng sắp tới nên tiến hay giữ nhịp?', this)">💼 Công việc &amp; Hợp đồng</button>
+              <button type="button" class="topic-chip" onclick="pickQuestionChip('Chuyện tình cảm với người đang thương sắp tới diễn biến thế nào?', this)">💘 Tình cảm &amp; Nhân duyên</button>
+              <button type="button" class="topic-chip" onclick="pickQuestionChip('Kỳ thi / kết quả học tập sắp tới có đạt như kỳ vọng không?', this)">📚 Thi cử &amp; Học hành</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>2. Chọn phương pháp khởi quẻ Kinh Dịch <span class="req">*</span></label>
+            <div class="ic-method-grid">
+              <button type="button" class="ic-method-card is-selected" data-ic-opt="coins_random" onclick="selectIcOption('coins_random')">
+                <strong>🎲 Vũ Trụ Gieo Hộ</strong>
+                <span>Hệ thống tung 3 đồng xu cổ 6 lần tự động chuẩn Lục Hào</span>
+              </button>
+              <button type="button" class="ic-method-card" data-ic-opt="web_toss" onclick="selectIcOption('web_toss')">
+                <strong>⭕ Tự Tung Xu Trên Web</strong>
+                <span>Chính tay bạn bấm tung 3 đồng xu từng hào từ 1 đến 6</span>
+              </button>
+              <button type="button" class="ic-method-card" data-ic-opt="real_coins" onclick="selectIcOption('real_coins')">
+                <strong>🤲 Nhập Xu Thật Ở Ngoài</strong>
+                <span>Tự gieo 3 xu thật ngoài đời rồi tích chọn kết quả từng lần</span>
+              </button>
+              <button type="button" class="ic-method-card" data-ic-opt="numbers" onclick="selectIcOption('numbers')">
+                <strong>🔢 Chọn Con Số Bất Kỳ</strong>
+                <span>Mai Hoa Dịch Số từ 2 hoặc 3 con số nảy ra trong đầu</span>
+              </button>
+              <button type="button" class="ic-method-card" data-ic-opt="words" onclick="selectIcOption('words')">
+                <strong>✍️ Gõ 2 Chữ Đầu Tiên</strong>
+                <span>Mai Hoa Tự Số: gõ 2 từ bất kỳ nghĩ tới để lập Thượng/Hạ quái</span>
+              </button>
+              <button type="button" class="ic-method-card" data-ic-opt="time" onclick="selectIcOption('time')">
+                <strong>🕒 Giờ Động Tâm Hiện Tại</strong>
+                <span>Khởi quẻ Mai Hoa theo đúng Năm Tháng Ngày Giờ Âm lịch</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bàn Tự tung xu trên web -->
+          <div id="ic-box-web-toss" class="coin-box" style="display:none;">
+            <div class="coin-visual-stage">
+              <div id="coin-vis-1" class="coin-disc">NGỬA</div>
+              <div id="coin-vis-2" class="coin-disc">SẤP</div>
+              <div id="coin-vis-3" class="coin-disc">NGỬA</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+              <button type="button" class="btn-sec" id="btn-toss" onclick="tossOneLine()" style="flex:1;">🎲 Tung 3 xu (Lần 1/6)</button>
+              <button type="button" class="btn-sec" onclick="tossAllSixAtOnce()">⚡ Tung nhanh 6 lần</button>
+              <button type="button" class="btn-sec" onclick="resetToss()">↺ Làm lại</button>
+            </div>
+            <div id="coin-log-web" class="coin-lines-preview">Chưa có hào nào. Hãy bấm tung đủ 6 lần (từ Hào 1 lên Hào 6).</div>
+          </div>
+
+          <!-- Bàn Nhập xu thật ngoài đời -->
+          <div id="ic-box-real-coins" class="coin-box" style="display:none;">
+            <div style="font-size:0.82rem; font-weight:700; color:var(--sc-ink-soft); margin-bottom:0.5rem;">
+              Gieo 3 đồng xu thật ngoài đời 6 lần, mỗi lần bấm nút tương ứng bên dưới (từ Hào 1 tới Hào 6):
+            </div>
+            <div class="coin-pick-grid">
+              <button type="button" class="coin-pick-btn" onclick="pickRealCoin(6)">3 Sấp (6 · Lão Âm động)</button>
+              <button type="button" class="coin-pick-btn" onclick="pickRealCoin(7)">2 Sấp 1 Ngửa (7 · Dương)</button>
+              <button type="button" class="coin-pick-btn" onclick="pickRealCoin(8)">1 Sấp 2 Ngửa (8 · Âm)</button>
+              <button type="button" class="coin-pick-btn" onclick="pickRealCoin(9)">3 Ngửa (9 · Lão Dương động)</button>
+            </div>
+            <div class="field" style="margin-bottom:4px;">
+              <label for="inp-lines">Mã 6 hào đã chọn <span class="sub">(Có thể gõ trực tiếp 6 số 6,7,8,9 cách nhau dấu phẩy)</span></label>
+              <div style="display:flex; gap:6px;">
+                <input id="inp-lines" value="" placeholder="VD: 7,8,9,7,6,8" oninput="onManualLinesInput()">
                 <button type="button" class="btn-sec" onclick="resetToss()">↺ Xóa</button>
               </div>
-              <div class="coin-pick-label">Hoặc tự gieo 3 xu thật ngoài đời rồi bấm chọn kết quả từng lần (từ Hào 1 tới Hào 6):</div>
-              <div class="coin-pick-grid">
-                <button type="button" class="coin-pick-btn" onclick="pickRealCoin(6)">3 Sấp (6 · Âm động)</button>
-                <button type="button" class="coin-pick-btn" onclick="pickRealCoin(7)">2 Sấp 1 Ngửa (7 · Dương)</button>
-                <button type="button" class="coin-pick-btn" onclick="pickRealCoin(8)">1 Sấp 2 Ngửa (8 · Âm)</button>
-                <button type="button" class="coin-pick-btn" onclick="pickRealCoin(9)">3 Ngửa (9 · Dương động)</button>
-              </div>
-              <div class="field" style="margin-bottom:4px;">
-                <label for="inp-lines" style="font-size:11.5px;color:var(--sc-ink-soft);">Kết quả 6 hào (Hào 1 tới Hào 6, có thể gõ tay):</label>
-                <input id="inp-lines" value="" placeholder="VD: 7,8,9,7,6,8" oninput="onManualLinesInput()">
-              </div>
-              <div id="coin-log" class="coin-lines-preview">Chưa có hào nào. Bấm tung xu hoặc chọn kết quả đủ 6 lần.</div>
             </div>
+            <div id="coin-log-real" class="coin-lines-preview">Chưa có hào nào.</div>
+          </div>
 
-            <div id="box-numbers" class="coin-box" style="display:none;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <span style="font-size:12px; color:var(--sc-accent); font-weight:800;">🔢 Mai Hoa theo 2 số yêu thích</span>
-                <button type="button" class="btn-sec" style="padding:3px 8px; font-size:11px;" onclick="fillRandomFavNumbers()">🎲 Ngẫu nhiên</button>
-              </div>
-              <div class="row-2">
-                <div class="field" style="margin-bottom:6px;">
-                  <label for="inp-num-1">Số yêu thích 1</label>
-                  <input type="number" id="inp-num-1" min="1" max="9999" placeholder="VD: 18">
-                </div>
-                <div class="field" style="margin-bottom:6px;">
-                  <label for="inp-num-2">Số yêu thích 2</label>
-                  <input type="number" id="inp-num-2" min="1" max="9999" placeholder="VD: 25">
-                </div>
+          <!-- Bàn Chọn con số Mai Hoa -->
+          <div id="ic-box-numbers" class="coin-box" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+              <span style="font-size:0.84rem; color:var(--sc-accent); font-weight:800;">🔢 Nhập con số bất kỳ nảy ra trong tâm</span>
+              <button type="button" class="btn-sec" style="padding:4px 10px; font-size:0.78rem;" onclick="fillRandomFavNumbers()">🎲 Bốc ngẫu nhiên</button>
+            </div>
+            <div class="row-2">
+              <div class="field">
+                <label for="inp-num-1">Số thứ 1 (Thượng Quái) <span class="req">*</span></label>
+                <input type="number" id="inp-num-1" min="1" max="99999" placeholder="VD: 18">
               </div>
               <div class="field">
-                <label for="inp-num-3">Số thứ 3 <span>(Tùy chọn, trống sẽ tính theo giờ)</span></label>
-                <input type="number" id="inp-num-3" min="1" max="9999" placeholder="Để trống nếu chỉ dùng 2 số">
+                <label for="inp-num-2">Số thứ 2 (Hạ Quái) <span class="req">*</span></label>
+                <input type="number" id="inp-num-2" min="1" max="99999" placeholder="VD: 68">
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="inp-num-3">Số thứ 3 tìm Hào Động <span class="sub">(Tùy chọn, để trống sẽ cộng theo giờ hiện tại)</span></label>
+              <input type="number" id="inp-num-3" min="1" max="99999" placeholder="Để trống nếu chỉ chọn 2 số">
+            </div>
+          </div>
+
+          <!-- Bàn Gõ 2 chữ bất kỳ (Mai Hoa Tự Số) -->
+          <div id="ic-box-words" class="coin-box" style="display:none;">
+            <div style="font-size:0.82rem; font-weight:700; color:var(--sc-ink-soft); margin-bottom:0.6rem;">
+              ✍️ Gõ <strong>2 chữ hoặc 2 cụm từ đầu tiên</strong> vừa lướt qua đầu bạn (hệ thống tự đếm âm tiết/chữ cái quy ra Thượng Quái, Hạ Quái &amp; Hào Động chuẩn Mai Hoa):
+            </div>
+            <div class="row-2" style="margin-bottom:0;">
+              <div class="field">
+                <label for="inp-word-1">Chữ / Từ thứ 1 <span class="req">*</span></label>
+                <input id="inp-word-1" placeholder="VD: Đại Cát">
+              </div>
+              <div class="field">
+                <label for="inp-word-2">Chữ / Từ thứ 2 <span class="req">*</span></label>
+                <input id="inp-word-2" placeholder="VD: Đồ Sơn">
               </div>
             </div>
           </div>
-        </details>
 
-        <button type="button" class="btn-primary" onclick="runAnalyze()">🔮 XEM LÁ SỐ NGAY</button>
-        <button type="button" class="btn-demo" onclick="loadSampleProfile()">✨ Xem thử 1 lá số mẫu</button>
+          <!-- Bàn Chọn thời điểm khởi quẻ Mai Hoa -->
+          <div id="ic-box-time" class="coin-box" style="display:none;">
+            <div class="field" style="margin-bottom:0;">
+              <label for="inp-cast-dt">Thời điểm động tâm khởi quẻ <span class="sub">(Để trống = Lấy đúng giây phút hiện tại)</span></label>
+              <input type="datetime-local" id="inp-cast-dt">
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================================
+             FORM 3: THẦN SỐ HỌC (RÕ RÀNG NGÀY SINH + TÊN THẬT + NICKNAME)
+             ============================================================== -->
+        <div id="panel-form-numerology" class="mode-form-panel">
+          <div class="num-rules-grid">
+            <div class="num-rule-tile">
+              <strong>🎂 1. Ngày sinh (Bắt buộc)</strong>
+              Tính Số Chủ Đạo, 4 Đỉnh Cao, Sóng 9 Năm &amp; 22 Arcana.
+            </div>
+            <div class="num-rule-tile">
+              <strong>📝 2. Tên thật (Rất nên điền)</strong>
+              Họ tên giấy khai sinh mở khóa Linh Hồn, Sứ Mệnh &amp; Nhân Cách gốc.
+            </div>
+            <div class="num-rule-tile">
+              <strong>✨ 3. Nickname (Tùy chọn)</strong>
+              Tên gọi ở nhà / nghệ danh giúp đo độ bù khuyết ô số còn trống!
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label for="num-date">Ngày tháng năm sinh <span class="req">*</span></label>
+              <input type="date" id="num-date">
+            </div>
+            <div class="field">
+              <label for="num-datetype">Loại lịch trên giấy tờ</label>
+              <select id="num-datetype" onchange="onNumDateTypeChange()">
+                <option value="solar">Dương lịch (Chuẩn quốc tế)</option>
+                <option value="lunar">Âm lịch (Tự đổi ra Dương lịch)</option>
+              </select>
+            </div>
+          </div>
+
+          <label id="num-row-leap" class="chk-row" style="display:none;">
+            <input type="checkbox" id="num-leap"> Sinh vào tháng Nhuận Âm lịch
+          </label>
+
+          <div class="field">
+            <label for="num-fullname">Họ và tên thật đầy đủ trên khai sinh <span class="sub">(Gõ có dấu để tách chuẩn Nguyên âm / Phụ âm)</span></label>
+            <input id="num-fullname" placeholder="VD: Nguyễn Minh Quân">
+          </div>
+
+          <div class="field">
+            <label for="num-nickname">Tên thường gọi / Nickname / Nghệ danh <span class="sub">(Nếu có, để xem bù khuyết với Tên thật)</span></label>
+            <input id="num-nickname" placeholder="VD: K.B Đồ Sơn, Bin, Leo Quân...">
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label for="num-school">Trường phái tính Số Chủ Đạo</label>
+              <select id="num-school">
+                <option value="vn">Nhân số học VN (Giữ Số 10, 11, 22/4)</option>
+                <option value="intl">Pythagoras Quốc tế (Rút gọn 3 trụ)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="num-target-year">Năm xem Sóng Cá Nhân</label>
+              <input type="number" id="num-target-year" min="1940" max="2080">
+            </div>
+          </div>
+        </div>
+
+        <button type="button" id="main-submit-btn" class="btn-primary" onclick="runAnalyze()">🔮 LẬP LÁ SỐ TỬ VI &amp; TÀI BẠCH</button>
+        <button type="button" id="main-demo-btn" class="btn-demo" onclick="loadSampleProfile()">✨ Điền thử 1 lá số Tử Vi mẫu</button>
       </aside>
 
-      <!-- MAIN AREA: WELCOME MINI STRIP OR FULL 6-TAB INTERACTIVE BOARD -->
+      <!-- MAIN AREA: WELCOME STRIP OR INTERACTIVE RESULT BOARD -->
       <main class="main">
         <div id="welcome-view">
           <div class="welcome-strip" data-sc-in>
             <img src="/assets/images/elements_genz_banner.jpg" alt="Ngũ hành Kim Mộc Thủy Hỏa Thổ hiện đại" width="960" height="540">
             <div class="welcome-strip__txt">
-              <h3>1 lần nhập, mở khóa đủ 5 hệ Đông Tây</h3>
-              <p>
-                Tự động an hơn 105 sao Tử Vi, vẽ tia Tam Phương Tứ Chính, cân Ngũ Hành Bát Tự, chấm điểm Nickname Thần Số Học và nhờ AI Gemini giải thích cực gần gũi.
+              <h3 id="welcome-strip-title">Chế độ 1: Tử Vi 12 Cung · Tài Bạch · Điền Trạch</h3>
+              <p id="welcome-strip-desc">
+                An chuẩn hơn 105 sao Tử Vi, vẽ tia chiếu Tam Phương Tứ Chính, tính tỷ lệ Ngũ Hành Bát Tự và luận sâu cung Tài Bạch, Điền Trạch, Quan Lộc.
               </p>
             </div>
           </div>
@@ -1337,10 +1685,10 @@
 
         <div id="result-view" style="display:none;">
           <div class="cheer-strip">
-            <img id="result-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Sư huynh đồng hành" width="54" height="54">
+            <img id="result-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Nam thần đồng hành" width="56" height="56">
             <div style="flex:1;">
-              <div id="result-guide-title" class="cheer-strip__title">✦ Lời nhắn từ Sư Huynh Thực Chiến:</div>
-              <div id="result-guide-msg" class="cheer-strip__msg">Lá số đã mở xong! Bấm trực tiếp từng cung trên bàn cờ hoặc chuyển thẻ bên dưới để soi chi tiết nhé.</div>
+              <div id="result-guide-title" class="cheer-strip__title">✦ Nam Thần Tử Vi &amp; Tài Bạch nhắn nhủ:</div>
+              <div id="result-guide-msg" class="cheer-strip__msg">Lá số đã mở xong! Bấm trực tiếp từng cung trên bàn cờ để xem tia chiếu Tam Phương Tứ Chính nhé.</div>
             </div>
           </div>
 
@@ -1351,7 +1699,7 @@
             <button type="button" class="tab-btn" data-tab-id="bazi" onclick="switchTab('bazi', this)">🌿 Ngũ Hành Bát Tự</button>
             <button type="button" class="tab-btn" data-tab-id="numerology" onclick="switchTab('numerology', this)">🔢 Thần Số Học</button>
             <button type="button" class="tab-btn" data-tab-id="iching" onclick="switchTab('iching', this)">☯ Quẻ Kinh Dịch</button>
-            <button type="button" class="tab-btn" data-tab-id="qimen" onclick="switchTab('qimen', this)">🧭 Hướng Tốt</button>
+            <button type="button" class="tab-btn" data-tab-id="qimen" onclick="switchTab('qimen', this)">🧭 Hướng &amp; Giờ Đẹp</button>
             <button type="button" class="tab-btn" data-tab-id="ai" onclick="switchTab('ai', this)">✨ AI Luận Giải</button>
             <div class="toolbar-right">
               <button type="button" class="action-btn" onclick="downloadHtmlReport()">💾 Tải Hồ Sơ</button>
@@ -1361,7 +1709,7 @@
 
           <div id="pane-tuvi" class="tab-pane active">
             <div class="tuvi-hint">
-              👆 <strong>Mẹo nhỏ:</strong> Bấm vào bất kỳ cung nào (Mệnh, Tài Bạch, Quan Lộc, Phu Thê, Điền Trạch...) để xem tia chiếu Tam Phương Tứ Chính.
+              👆 <strong>Mẹo xem nhanh:</strong> Bấm vào bất kỳ ô cung nào (Mệnh, Tài Bạch, Điền Trạch, Quan Lộc, Phu Thê...) để vẽ tia chiếu Tam Phương Tứ Chính.
             </div>
             <div class="tuvi-wrapper" id="tuvi-wrap">
               <svg id="tptc-svg"></svg>
@@ -1409,42 +1757,264 @@ const PROVINCES_63 = [
 const GUIDES = {
   "thuc-chien": {
     img: "/assets/images/guide_1_cool.jpg",
-    title: "Hệ Thực Chiến · Tử Vi & Bát Tự",
-    say: "Nhập nhanh ngày giờ sinh để soi trọn 12 cung Tử Vi, Tài Bạch, Điền Trạch và vận trình năm nay!",
-    resultTitle: "✦ Lời nhắn từ Sư Huynh Thực Chiến:",
-    resultMsg: "Lá số đã lên sóng! Nhấn vào cung Mệnh, Quan Lộc, Tài Bạch hoặc Điền Trạch để xem đường sao chiếu cực nét nhé.",
+    title: "Soi Tử Vi, Tài Bạch & Điền Trạch",
+    say: "Điền đầy đủ các mục bắt buộc bên dưới để an chuẩn 12 cung Tử Vi, Tài Bạch, Điền Trạch & Bát Tự nhé!",
+    popSticker: "CHỐT LỘC!! 💰",
+    popTitle: "Nam Thần Tử Vi & Tài Bạch lộ diện!",
+    popSub: "Bật kính soi Mệnh · Tài Bạch · Điền Trạch cực nét nào anh em ơi!",
+    emojis: ["💰", "💎", "🏡", "🚀", "⭐", "🔥", "👑"],
+    colors: ["#D93848", "#FFB703", "#FB8500", "#FF4D6D", "#FFD166"],
+    submitLbl: "🔮 LẬP LÁ SỐ TỬ VI & TÀI BẠCH",
+    demoLbl: "✨ Điền thử 1 lá số Tử Vi mẫu",
+    welcomeTitle: "Chế độ 1: Tử Vi 12 Cung · Tài Bạch · Điền Trạch",
+    welcomeDesc: "An chuẩn hơn 105 sao Tử Vi, vẽ tia chiếu Tam Phương Tứ Chính, tính tỷ lệ Ngũ Hành Bát Tự và soi sâu Tài Bạch, Điền Trạch.",
+    resultTitle: "✦ Nam Thần Tử Vi & Tài Bạch nhắn nhủ:",
+    resultMsg: "Lá số đã lên sóng! Bấm vào cung Mệnh, Tài Bạch, Điền Trạch hoặc Quan Lộc trên bàn cờ để xem tia sao chiếu nhé.",
+    visibleTabs: ["tuvi", "bazi", "qimen", "ai"],
     defaultTab: "tuvi",
-    timeHint: "(chuẩn nhất cho Tử Vi)",
-    openIching: false
+    aiMode: "tuvi",
+    panelId: "panel-form-tuvi",
+    firstInputId: "tv-name"
   },
   "gieo-que": {
     img: "/assets/images/guide_2_cheer.jpg",
-    title: "Hệ Hỏi Vũ Trụ · Gieo Quẻ Kinh Dịch",
-    say: "\"Mạnh mẽ lên nào!\" Gõ câu hỏi đang phân vân vào khung Gieo Quẻ bên dưới, tung 3 xu biết liền.",
-    resultTitle: "✦ Sư Huynh Hỏi Vũ Trụ cổ vũ:",
-    resultMsg: "\"Mạnh mẽ lên nào!\" Quẻ đã hiện rõ cát hung, xem xong nhớ check thêm tab Hướng Tốt để chọn giờ đẹp xuất hành nhé!",
+    title: "Gieo Quẻ Kinh Dịch & Hướng Đẹp",
+    say: "\"Mạnh mẽ lên nào!\" Không cần ngày sinh hay tên tuổi. Nhập việc cần hỏi rồi chọn 1 trong 6 kiểu gieo quẻ bên dưới!",
+    popSticker: "MẠNH MẼ LÊN!! 🎲",
+    popTitle: "Nam Thần Gieo Quẻ tung chiêu!",
+    popSub: "\"Mạnh mẽ lên nào!\" Đưa việc đang phân vân đây Vũ Trụ giải hết!",
+    emojis: ["🎲", "🍀", "🔥", "💪", "🧧", "✨", "⚡"],
+    colors: ["#0D8A74", "#2EC4B6", "#FFD166", "#06D6A0", "#FF9F1C"],
+    submitLbl: "🎲 KHỞI QUẺ KINH DỊCH NGAY",
+    demoLbl: "✨ Gieo thử 1 quẻ mẫu về đầu tư đất",
+    welcomeTitle: "Chế độ 2: Lục Hào Nạp Giáp · Mai Hoa · Kỳ Môn",
+    welcomeDesc: "Hỗ trợ đủ 6 cách khởi quẻ từ tung xu tự động, tự tung xu trên web, nhập xu thật ngoài đời đến chọn số, gõ chữ và giờ động tâm.",
+    resultTitle: "✦ Nam Thần Gieo Quẻ cổ vũ:",
+    resultMsg: "\"Mạnh mẽ lên nào!\" Quẻ đã hiện rõ Bản Quái, Biến Quái & Hào Động. Nhớ ghé thêm tab Hướng & Giờ Đẹp để xuất hành đại cát nhé!",
+    visibleTabs: ["iching", "qimen", "ai"],
     defaultTab: "iching",
-    timeHint: "(tùy chọn khi gieo quẻ)",
-    openIching: true
+    aiMode: "iching",
+    panelId: "panel-form-gieoque",
+    firstInputId: "inp-question"
   },
   "tinh-duyen": {
     img: "/assets/images/guide_3_love.jpg",
-    title: "Hệ Tình Duyên & Vibe · Thần Số Học",
-    say: "\"Mình yêu nhau nhé!\" Nhập Họ tên + Nickname + Ngày sinh để xem Số Chủ Đạo và độ hợp vibe (không nhớ giờ sinh cứ giữ mặc định).",
-    resultTitle: "✦ Góc Tình Duyên & Thần Số Học nhắn nhủ:",
-    resultMsg: "\"Mình yêu nhau nhé!\" Con Số Chủ Đạo, Biểu đồ 3×3 và bộ chấm điểm Nickname đã sẵn sàng bên dưới rồi nè!",
+    title: "Giải Mã Thần Số Học · Tên Thật & Nickname",
+    say: "\"Mình yêu nhau nhé!\" Nhập Ngày sinh + Tên khai sinh + Tên thường gọi (Nickname) để xem trọn bộ chỉ số và năng lượng bù khuyết!",
+    popSticker: "BẮT VIBE!! 💖",
+    popTitle: "Cặp Đôi Thần Số Học xuất hiện!",
+    popSub: "\"Mình yêu nhau nhé!\" Cùng soi Ngày sinh, Tên Thật và Nickname hợp mệnh nào!",
+    emojis: ["💖", "🦋", "✨", "🌸", "💌", "🔢", "💎"],
+    colors: ["#C8337B", "#FF70A6", "#B5179E", "#FFD166", "#7209B7"],
+    submitLbl: "🔢 GIẢI MÃ THẦN SỐ HỌC NGAY",
+    demoLbl: "✨ Xem thử 1 hồ sơ Thần Số Học + Nickname mẫu",
+    welcomeTitle: "Chế độ 3: Thần Số Học Đa Phái · Tên Thật × Nickname",
+    welcomeDesc: "Giải mã Số Chủ Đạo, Tam Giác Vàng (Linh Hồn · Sứ Mệnh · Nhân Cách), Sóng 9 Năm, 22 Arcana và đo độ bù khuyết của Nickname.",
+    resultTitle: "✦ Góc Thần Số Học & Tình Duyên nhắn nhủ:",
+    resultMsg: "\"Mình yêu nhau nhé!\" Kéo xuống cuối trang kết quả còn có thêm công cụ chấm điểm so sánh nhiều phương án Nickname mới nữa đó!",
+    visibleTabs: ["numerology", "ai"],
     defaultTab: "numerology",
-    timeHint: "(không nhớ cứ giữ nguyên)",
-    openIching: false
+    aiMode: "numerology",
+    panelId: "panel-form-numerology",
+    firstInputId: "num-date"
   }
 };
 
 let ACTIVE_VIBE = "thuc-chien";
+let ACTIVE_IC_OPT = "coins_random"; // coins_random | web_toss | real_coins | numbers | words | time
 let STATE = null;
+let RESULT_MODE = "thuc-chien";
 let SELECTED_BRANCH = null;
 let tossedLines = [];
 
-function selectGuide(vibeKey, shouldScroll) {
+/* ============================================================================
+   SPRING POP + FUNNY FIREWORKS / EMOJI CONFETTI ENGINE
+   ============================================================================ */
+let popTimer1 = null;
+let popTimer2 = null;
+let fwParticles = [];
+let fwRafId = 0;
+
+function spawnFireworkBurst(cx, cy, g) {
+  const count = 26;
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.35;
+    const speed = 4 + Math.random() * 9.5;
+    fwParticles.push({
+      kind: "confetti",
+      x: cx,
+      y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 2.2,
+      size: 6 + Math.random() * 7,
+      color: g.colors[Math.floor(Math.random() * g.colors.length)],
+      rot: Math.random() * Math.PI * 2,
+      vrot: (Math.random() - 0.5) * 0.28,
+      alpha: 1,
+      decay: 0.012 + Math.random() * 0.009
+    });
+  }
+  const emojiCount = 7;
+  for (let j = 0; j < emojiCount; j++) {
+    const angle = -Math.PI * 0.88 + (Math.PI * 0.76 * j) / (emojiCount - 1) + (Math.random() - 0.5) * 0.2;
+    const speed = 5.5 + Math.random() * 7;
+    fwParticles.push({
+      kind: "emoji",
+      text: g.emojis[j % g.emojis.length],
+      x: cx,
+      y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 3.2,
+      size: 26 + Math.random() * 14,
+      rot: (Math.random() - 0.5) * 0.5,
+      vrot: (Math.random() - 0.5) * 0.08,
+      alpha: 1,
+      decay: 0.011 + Math.random() * 0.006
+    });
+  }
+}
+
+function stepFireworks() {
+  const cv = document.getElementById("fx-fireworks");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  ctx.clearRect(0, 0, cv.width, cv.height);
+
+  for (let i = fwParticles.length - 1; i >= 0; i--) {
+    const p = fwParticles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.24; // gravity
+    p.vx *= 0.985;
+    p.rot += p.vrot;
+    p.alpha -= p.decay;
+    if (p.alpha <= 0) {
+      fwParticles.splice(i, 1);
+      continue;
+    }
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    if (p.kind === "emoji") {
+      ctx.font = `${Math.round(p.size)}px "Segoe UI Emoji", "Apple Color Emoji", sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(p.text, 0, 0);
+    } else {
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size * 0.35, p.size, p.size * 0.7);
+    }
+    ctx.restore();
+  }
+
+  if (fwParticles.length > 0) {
+    fwRafId = requestAnimationFrame(stepFireworks);
+  } else {
+    fwRafId = 0;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+  }
+}
+
+function launchFunnyFireworks(vibeKey) {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = document.getElementById("fx-fireworks");
+  if (!cv) return;
+  cv.width = window.innerWidth;
+  cv.height = window.innerHeight;
+  const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
+
+  const w = cv.width, h = cv.height;
+  spawnFireworkBurst(w * 0.5, h * 0.38, g);
+  setTimeout(() => spawnFireworkBurst(w * 0.27, h * 0.34, g), 110);
+  setTimeout(() => spawnFireworkBurst(w * 0.73, h * 0.34, g), 220);
+  setTimeout(() => spawnFireworkBurst(w * 0.36, h * 0.24, g), 340);
+  setTimeout(() => spawnFireworkBurst(w * 0.64, h * 0.24, g), 450);
+  if (!fwRafId) fwRafId = requestAnimationFrame(stepFireworks);
+}
+
+function shrinkNamThanIntoMiniBar() {
+  const stage = document.getElementById("namthan-pop-stage");
+  const card = document.getElementById("namthan-pop-card");
+  const targetImg = document.getElementById("active-guide-img");
+  if (!stage || !card || !stage.classList.contains("is-open")) return;
+
+  card.classList.remove("is-springing");
+  if (targetImg) {
+    const cRect = card.getBoundingClientRect();
+    const tRect = targetImg.getBoundingClientRect();
+    const dx = (tRect.left + tRect.width / 2) - (cRect.left + cRect.width / 2);
+    const dy = (tRect.top + tRect.height / 2) - (cRect.top + cRect.height / 2);
+    card.style.transition = "transform 460ms cubic-bezier(0.32, 0.72, 0, 1), opacity 420ms ease";
+    card.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) scale(0.22)`;
+    card.style.opacity = "0";
+  }
+
+  popTimer2 = setTimeout(() => {
+    stage.classList.remove("is-open");
+    card.style.transition = "";
+    card.style.transform = "";
+    card.style.opacity = "";
+    if (targetImg) {
+      targetImg.classList.remove("is-docked");
+      void targetImg.offsetWidth;
+      targetImg.classList.add("is-docked");
+    }
+    const g = GUIDES[ACTIVE_VIBE] || GUIDES["thuc-chien"];
+    const firstInp = document.getElementById(g.firstInputId);
+    if (firstInp) firstInp.focus({ preventScroll: true });
+  }, 450);
+}
+
+function dismissNamThanPopEarly() {
+  if (popTimer1) { clearTimeout(popTimer1); popTimer1 = null; }
+  shrinkNamThanIntoMiniBar();
+}
+
+function triggerNamThanSpringShow(vibeKey) {
+  const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
+  const stage = document.getElementById("namthan-pop-stage");
+  const card = document.getElementById("namthan-pop-card");
+  if (!stage || !card) return;
+
+  if (popTimer1) { clearTimeout(popTimer1); popTimer1 = null; }
+  if (popTimer2) { clearTimeout(popTimer2); popTimer2 = null; }
+
+  document.getElementById("pop-avatar-img").src = g.img;
+  document.getElementById("pop-sticker-tag").textContent = g.popSticker;
+  document.getElementById("pop-bubble-title").textContent = g.popTitle;
+  document.getElementById("pop-bubble-sub").textContent = g.popSub;
+
+  card.style.transition = "";
+  card.style.transform = "";
+  card.style.opacity = "";
+  stage.classList.add("is-open");
+  card.classList.remove("is-springing");
+  void card.offsetWidth;
+  card.classList.add("is-springing");
+
+  launchFunnyFireworks(vibeKey);
+
+  // Giữ 1.65s cho người dùng cười vui rồi tự thu nhỏ mượt vào thanh thông tin
+  popTimer1 = setTimeout(() => {
+    shrinkNamThanIntoMiniBar();
+  }, 1650);
+}
+
+/* ============================================================================
+   MODE & FORM SWITCHING LOGIC
+   ============================================================================ */
+function applyVisibleTabsForMode(modeKey) {
+  const g = GUIDES[modeKey] || GUIDES["thuc-chien"];
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    const tid = btn.getAttribute("data-tab-id");
+    btn.style.display = g.visibleTabs.includes(tid) ? "" : "none";
+  });
+  const defBtn = document.querySelector(`.tab-btn[data-tab-id="${g.defaultTab}"]`);
+  if (defBtn) switchTab(g.defaultTab, defBtn);
+}
+
+function selectGuide(vibeKey, fromTopCard) {
   const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
   ACTIVE_VIBE = vibeKey;
   document.documentElement.setAttribute("data-vibe", vibeKey);
@@ -1456,64 +2026,75 @@ function selectGuide(vibeKey, shouldScroll) {
     el.classList.toggle("active", el.getAttribute("data-pill-vibe") === vibeKey);
   });
 
+  // Switch dedicated form panel
+  document.querySelectorAll(".mode-form-panel").forEach(p => {
+    p.classList.toggle("is-active", p.id === g.panelId);
+  });
+
   document.getElementById("active-guide-img").src = g.img;
   document.getElementById("active-guide-title").textContent = g.title;
   document.getElementById("active-guide-say").textContent = g.say;
-  document.getElementById("time-hint-lbl").textContent = g.timeHint;
+  document.getElementById("main-submit-btn").textContent = g.submitLbl;
+  document.getElementById("main-demo-btn").textContent = g.demoLbl;
+  document.getElementById("welcome-strip-title").textContent = g.welcomeTitle;
+  document.getElementById("welcome-strip-desc").textContent = g.welcomeDesc;
 
-  document.getElementById("result-guide-img").src = g.img;
-  document.getElementById("result-guide-title").textContent = g.resultTitle;
-  document.getElementById("result-guide-msg").textContent = g.resultMsg;
-
-  const icDrawer = document.getElementById("drawer-iching");
-  if (icDrawer) {
-    icDrawer.open = !!g.openIching;
+  if (typeof window.__kbSetPreferredMode === "function") {
+    const focusQ = vibeKey === "thuc-chien"
+      ? (document.getElementById("tv-focus")?.value || "")
+      : (vibeKey === "gieo-que" ? (document.getElementById("inp-question")?.value || "") : "");
+    window.__kbSetPreferredMode(g.aiMode, focusQ);
   }
 
-  if (STATE) {
-    const tabBtn = document.querySelector(`.tab-btn[data-tab-id="${g.defaultTab}"]`);
-    if (tabBtn) switchTab(g.defaultTab, tabBtn);
-  }
-
-  if (shouldScroll) {
+  if (fromTopCard) {
     const studioEl = document.getElementById("act-studio");
     if (studioEl) studioEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => {
+      triggerNamThanSpringShow(vibeKey);
+    }, 360);
   }
 }
 
-function updateExtraSummary() {
-  const genderTxt = document.getElementById("inp-gender").value === "nam" ? "Nam" : "Nữ";
-  const calTxt = document.getElementById("inp-datetype").value === "solar" ? "Dương lịch" : "Âm lịch";
-  const placeTxt = document.getElementById("inp-place").value || "Hải Phòng";
-  const el = document.getElementById("extra-summary-txt");
-  if (el) el.textContent = `(${genderTxt} · ${calTxt} · ${placeTxt})`;
-}
-
-function initDefaults() {
-  const selPlace = document.getElementById("inp-place");
-  selPlace.innerHTML = PROVINCES_63.map(p => `<option value="${p}">${p}</option>`).join("");
-  document.getElementById("inp-target-year").value = new Date().getFullYear();
-  onIchingMethodChange();
-  updateExtraSummary();
-  if (window.ScrollCraft && typeof window.ScrollCraft.mount === "function") {
-    window.ScrollCraft.mount();
+function syncFocusQuestionFromTuvi() {
+  if (ACTIVE_VIBE === "thuc-chien" && typeof window.__kbSetPreferredMode === "function") {
+    window.__kbSetPreferredMode("tuvi", document.getElementById("tv-focus").value);
   }
 }
 
-function esc(s) {
-  if (s === null || s === undefined) return "";
-  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function onTuviDateTypeChange() {
+  const isLunar = document.getElementById("tv-datetype").value === "lunar";
+  document.getElementById("tv-row-leap").style.display = isLunar ? "flex" : "none";
 }
 
-function onDateTypeChange() {
-  const isLunar = document.getElementById("inp-datetype").value === "lunar";
-  document.getElementById("row-leap").style.display = isLunar ? "flex" : "none";
+function onNumDateTypeChange() {
+  const isLunar = document.getElementById("num-datetype").value === "lunar";
+  document.getElementById("num-row-leap").style.display = isLunar ? "flex" : "none";
 }
 
-function onIchingMethodChange() {
-  const m = document.getElementById("inp-ic-method").value;
-  document.getElementById("box-manual-coins").style.display = (m === "manual_lines") ? "block" : "none";
-  document.getElementById("box-numbers").style.display = (m === "numbers") ? "block" : "none";
+function onShichenPick() {
+  const val = document.getElementById("tv-shichen").value;
+  if (val) document.getElementById("tv-time").value = val;
+}
+
+/* ============================================================================
+   I-CHING 6 DIVERSE OPTIONS LOGIC
+   ============================================================================ */
+function pickQuestionChip(text, btn) {
+  document.getElementById("inp-question").value = text;
+  document.querySelectorAll(".topic-chip").forEach(c => c.classList.remove("is-picked"));
+  if (btn) btn.classList.add("is-picked");
+}
+
+function selectIcOption(opt) {
+  ACTIVE_IC_OPT = opt;
+  document.querySelectorAll(".ic-method-card").forEach(c => {
+    c.classList.toggle("is-selected", c.getAttribute("data-ic-opt") === opt);
+  });
+  document.getElementById("ic-box-web-toss").style.display   = (opt === "web_toss")   ? "block" : "none";
+  document.getElementById("ic-box-real-coins").style.display = (opt === "real_coins") ? "block" : "none";
+  document.getElementById("ic-box-numbers").style.display    = (opt === "numbers")    ? "block" : "none";
+  document.getElementById("ic-box-words").style.display      = (opt === "words")      ? "block" : "none";
+  document.getElementById("ic-box-time").style.display       = (opt === "time")       ? "block" : "none";
 }
 
 function renderCoinLog() {
@@ -1521,8 +2102,8 @@ function renderCoinLog() {
   const btn = document.getElementById("btn-toss");
   if (btn) {
     btn.textContent = step < 6
-      ? `🎲 Tung 3 xu trên web (Lần ${step + 1}/6)`
-      : `✅ Đã đủ 6 lần (Bấm để tung lại)`;
+      ? `🎲 Tung 3 xu (Lần ${step + 1}/6)`
+      : `✅ Đã đủ 6 hào (Bấm để tung lại)`;
   }
   const descMap = {
     6: "6 · Lão Âm động (---x---)",
@@ -1530,14 +2111,27 @@ function renderCoinLog() {
     8: "8 · Thiếu Âm (--- ---)",
     9: "9 · Lão Dương động (---o---)"
   };
-  const logEl = document.getElementById("coin-log");
-  if (!tossedLines.length) {
-    logEl.innerHTML = "Chưa có hào nào. Bấm tung xu hoặc chọn kết quả đủ 6 lần.";
-    return;
-  }
-  logEl.innerHTML = tossedLines.map((item, i) =>
-    `Hào ${i+1}: ${item.faces ? '[' + esc(item.faces) + '] → ' : ''}<strong>${descMap[item.sum] || item.sum}</strong>`
-  ).join("<br>");
+  const html = !tossedLines.length
+    ? "Chưa có hào nào. Hãy chọn hoặc tung đủ 6 lần (từ Hào 1 lên Hào 6)."
+    : tossedLines.map((item, i) =>
+        `Hào ${i+1}: ${item.faces ? '[' + esc(item.faces) + '] → ' : ''}<strong>${descMap[item.sum] || item.sum}</strong>`
+      ).join("<br>");
+
+  const wEl = document.getElementById("coin-log-web");
+  const rEl = document.getElementById("coin-log-real");
+  if (wEl) wEl.innerHTML = html;
+  if (rEl) rEl.innerHTML = html;
+}
+
+function animateThreeCoins(coins) {
+  [1, 2, 3].forEach((idx, i) => {
+    const el = document.getElementById("coin-vis-" + idx);
+    if (!el) return;
+    el.classList.remove("is-flipping");
+    void el.offsetWidth;
+    el.classList.add("is-flipping");
+    el.textContent = coins[i].lbl.toUpperCase();
+  });
 }
 
 function addManualLine(sum, faces) {
@@ -1549,8 +2143,23 @@ function addManualLine(sum, faces) {
 
 function tossOneLine() {
   const coins = [0,1,2].map(() => Math.random() < 0.5 ? {v:2, lbl:"Sấp"} : {v:3, lbl:"Ngửa"});
+  animateThreeCoins(coins);
   const sum = coins[0].v + coins[1].v + coins[2].v;
   addManualLine(sum, coins.map(c => c.lbl).join(" · "));
+}
+
+function tossAllSixAtOnce() {
+  tossedLines = [];
+  let lastCoins = null;
+  for (let i = 0; i < 6; i++) {
+    const coins = [0,1,2].map(() => Math.random() < 0.5 ? {v:2, lbl:"Sấp"} : {v:3, lbl:"Ngửa"});
+    lastCoins = coins;
+    const sum = coins[0].v + coins[1].v + coins[2].v;
+    tossedLines.push({sum, faces: coins.map(c => c.lbl).join(" · ")});
+  }
+  if (lastCoins) animateThreeCoins(lastCoins);
+  document.getElementById("inp-lines").value = tossedLines.map(x => x.sum).join(",");
+  renderCoinLog();
 }
 
 function pickRealCoin(val) {
@@ -1583,15 +2192,66 @@ function fillRandomFavNumbers() {
   document.getElementById("inp-num-3").value = "";
 }
 
+function countWordUnits(str) {
+  // Đếm tổng chữ cái/chữ số thực (bỏ khoảng trắng) để quy ra số Mai Hoa Tự Số
+  const clean = (str || "").trim().replace(/\s+/g, "");
+  if (!clean) return 0;
+  let total = 0;
+  for (const ch of clean) {
+    total += 1;
+    // Cộng thêm dấu thanh/mũ tiếng Việt nếu có để phản ánh đúng nét chữ
+    const nfd = ch.normalize("NFD");
+    if (nfd.length > 1) total += (nfd.length - 1);
+  }
+  return total;
+}
+
+/* ============================================================================
+   INIT, SAMPLE PROFILES & ANALYZE EXECUTION
+   ============================================================================ */
+function initDefaults() {
+  const selPlace = document.getElementById("tv-place");
+  selPlace.innerHTML = PROVINCES_63.map(p => `<option value="${p}">${p}</option>`).join("");
+  const curYr = new Date().getFullYear();
+  document.getElementById("tv-target-year").value = curYr;
+  document.getElementById("num-target-year").value = curYr;
+
+  const params = new URLSearchParams(window.location.search);
+  const qMode = params.get("mode") || params.get("vibe");
+  const startVibe = (qMode === "gieo-que" || qMode === "iching")
+    ? "gieo-que"
+    : ((qMode === "tinh-duyen" || qMode === "numerology") ? "tinh-duyen" : "thuc-chien");
+  selectGuide(startVibe, params.get("pop") === "1");
+
+  if (window.ScrollCraft && typeof window.ScrollCraft.mount === "function") {
+    window.ScrollCraft.mount();
+  }
+}
+
+function esc(s) {
+  if (s === null || s === undefined) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
 function loadSampleProfile() {
-  document.getElementById("inp-name").value = "Nguyễn Minh Quân";
-  document.getElementById("inp-nickname").value = "K.B Đồ Sơn";
-  document.getElementById("inp-gender").value = "nam";
-  document.getElementById("inp-datetype").value = "solar";
-  document.getElementById("inp-date").value = "1998-08-16";
-  document.getElementById("inp-time").value = "09:30";
-  document.getElementById("inp-place").value = "Hải Phòng";
-  updateExtraSummary();
+  if (ACTIVE_VIBE === "thuc-chien") {
+    document.getElementById("tv-name").value = "Nguyễn Minh Quân";
+    document.getElementById("tv-gender").value = "nam";
+    document.getElementById("tv-datetype").value = "solar";
+    onTuviDateTypeChange();
+    document.getElementById("tv-date").value = "1996-08-16";
+    document.getElementById("tv-time").value = "09:30";
+    document.getElementById("tv-place").value = "Hải Phòng";
+  } else if (ACTIVE_VIBE === "gieo-que") {
+    document.getElementById("inp-question").value = "Tháng này chốt kèo đầu tư đất Đồ Sơn có sinh lời tốt không?";
+    selectIcOption("coins_random");
+  } else {
+    document.getElementById("num-date").value = "1998-08-16";
+    document.getElementById("num-datetype").value = "solar";
+    onNumDateTypeChange();
+    document.getElementById("num-fullname").value = "Nguyễn Minh Quân";
+    document.getElementById("num-nickname").value = "K.B Đồ Sơn";
+  }
   SELECTED_BRANCH = null;
   runAnalyze();
 }
@@ -1606,67 +2266,153 @@ function switchTab(id, btn) {
 }
 
 function stepTargetYear(delta) {
-  const el = document.getElementById("inp-target-year");
+  const el = document.getElementById("tv-target-year");
   el.value = parseInt(el.value || new Date().getFullYear(), 10) + delta;
   runAnalyze();
 }
 
 async function runAnalyze() {
-  const dateVal = document.getElementById("inp-date").value;
-  if (!dateVal) {
-    alert("Bạn chọn giúp Ngày sinh ở khung thông tin trước nhé!");
-    document.getElementById("inp-date").focus();
-    return;
-  }
+  let payload = null;
 
-  const icMethod = document.getElementById("inp-ic-method").value;
-  let linesStr = "";
-  let numbersStr = "";
-
-  if (icMethod === "manual_lines") {
-    const rawLines = document.getElementById("inp-lines").value.trim();
-    const parsed = rawLines ? rawLines.split(/[\s,;]+/).filter(Boolean).map(x => parseInt(x, 10)) : [];
-    if (parsed.length !== 6 || parsed.some(v => ![6, 7, 8, 9].includes(v))) {
-      alert("Bạn đang chọn Tự gieo quẻ Kinh Dịch: hãy bấm tung/chọn hoặc nhập đủ 6 hào (gồm các số 6, 7, 8, 9 từ Hào 1 tới Hào 6) nhé!");
-      document.getElementById("drawer-iching").open = true;
-      document.getElementById("inp-lines").focus();
+  if (ACTIVE_VIBE === "thuc-chien") {
+    const nameVal = document.getElementById("tv-name").value.trim();
+    const dateVal = document.getElementById("tv-date").value;
+    const timeVal = document.getElementById("tv-time").value;
+    if (!nameVal) {
+      alert("Ở chế độ Tử Vi, bạn vui lòng nhập Họ và tên đương số nhé!");
+      document.getElementById("tv-name").focus();
       return;
     }
-    linesStr = parsed.join(",");
-  } else if (icMethod === "numbers") {
-    const n1 = parseInt(document.getElementById("inp-num-1").value, 10);
-    const n2 = parseInt(document.getElementById("inp-num-2").value, 10);
-    const n3Raw = document.getElementById("inp-num-3").value.trim();
-    const n3 = n3Raw ? parseInt(n3Raw, 10) : NaN;
-    if (!Number.isFinite(n1) || n1 <= 0 || !Number.isFinite(n2) || n2 <= 0) {
-      alert("Bạn đang chọn Gieo quẻ theo 2 số yêu thích: hãy nhập đủ Số yêu thích 1 và Số yêu thích 2 nhé!");
-      document.getElementById("drawer-iching").open = true;
-      document.getElementById("inp-num-1").focus();
+    if (!dateVal) {
+      alert("Vui lòng chọn Ngày tháng năm sinh để lập Lá Số Tử Vi nhé!");
+      document.getElementById("tv-date").focus();
       return;
     }
-    numbersStr = (Number.isFinite(n3) && n3 > 0) ? `${n1},${n2},${n3}` : `${n1},${n2}`;
-  }
+    if (!timeVal) {
+      alert("Tử Vi 12 cung cần Giờ sinh để định cung Mệnh & Thân. Vui lòng nhập giờ sinh hoặc chọn Canh Giờ nhé!");
+      document.getElementById("tv-time").focus();
+      return;
+    }
+    const tvFocus = document.getElementById("tv-focus").value;
+    payload = {
+      name: nameVal,
+      nickname: "",
+      num_school: "vn",
+      gender: document.getElementById("tv-gender").value,
+      date_type: document.getElementById("tv-datetype").value,
+      date: dateVal,
+      is_leap: document.getElementById("tv-leap").checked,
+      time: timeVal,
+      place: document.getElementById("tv-place").value,
+      use_true_solar: true,
+      calendar_std: "vn",
+      tuvi_school: "iztro",
+      zi_sect: 2,
+      target_year: parseInt(document.getElementById("tv-target-year").value, 10) || new Date().getFullYear(),
+      question: tvFocus,
+      iching_method: "coins_random",
+      lines: "",
+      numbers: ""
+    };
+  } else if (ACTIVE_VIBE === "gieo-que") {
+    const qVal = document.getElementById("inp-question").value.trim();
+    let backendMethod = "coins_random";
+    let linesStr = "";
+    let numbersStr = "";
+    let castDtStr = "";
 
-  const payload = {
-    name: document.getElementById("inp-name").value || "Đương Số",
-    nickname: document.getElementById("inp-nickname").value || "",
-    num_school: document.getElementById("inp-numschool").value,
-    gender: document.getElementById("inp-gender").value,
-    date_type: document.getElementById("inp-datetype").value,
-    date: dateVal,
-    is_leap: document.getElementById("inp-leap").checked,
-    time: document.getElementById("inp-time").value || "12:00",
-    place: document.getElementById("inp-place").value,
-    use_true_solar: true,
-    calendar_std: "vn",
-    tuvi_school: "iztro",
-    zi_sect: 2,
-    target_year: parseInt(document.getElementById("inp-target-year").value, 10),
-    question: document.getElementById("inp-question").value,
-    iching_method: icMethod,
-    lines: linesStr,
-    numbers: numbersStr
-  };
+    if (ACTIVE_IC_OPT === "web_toss" || ACTIVE_IC_OPT === "real_coins") {
+      backendMethod = "manual_lines";
+      const rawLines = document.getElementById("inp-lines").value.trim();
+      const parsed = rawLines ? rawLines.split(/[\s,;]+/).filter(Boolean).map(x => parseInt(x, 10)) : [];
+      if (parsed.length !== 6 || parsed.some(v => ![6, 7, 8, 9].includes(v))) {
+        alert("Bạn chưa gieo đủ 6 hào! Hãy bấm tung xu hoặc chọn đủ 6 lần (từ Hào 1 tới Hào 6) trước khi lập quẻ nhé.");
+        return;
+      }
+      linesStr = parsed.join(",");
+    } else if (ACTIVE_IC_OPT === "numbers") {
+      backendMethod = "numbers";
+      const n1 = parseInt(document.getElementById("inp-num-1").value, 10);
+      const n2 = parseInt(document.getElementById("inp-num-2").value, 10);
+      const n3Raw = document.getElementById("inp-num-3").value.trim();
+      const n3 = n3Raw ? parseInt(n3Raw, 10) : NaN;
+      if (!Number.isFinite(n1) || n1 <= 0 || !Number.isFinite(n2) || n2 <= 0) {
+        alert("Vui lòng nhập đủ Số thứ 1 và Số thứ 2 (số nguyên dương) để khởi quẻ Mai Hoa nhé!");
+        document.getElementById("inp-num-1").focus();
+        return;
+      }
+      numbersStr = (Number.isFinite(n3) && n3 > 0) ? `${n1},${n2},${n3}` : `${n1},${n2}`;
+    } else if (ACTIVE_IC_OPT === "words") {
+      backendMethod = "numbers";
+      const w1 = document.getElementById("inp-word-1").value.trim();
+      const w2 = document.getElementById("inp-word-2").value.trim();
+      if (!w1 || !w2) {
+        alert("Vui lòng gõ đủ 2 chữ hoặc 2 từ bất kỳ để khởi quẻ Mai Hoa Tự Số nhé!");
+        document.getElementById("inp-word-1").focus();
+        return;
+      }
+      const c1 = countWordUnits(w1);
+      const c2 = countWordUnits(w2);
+      numbersStr = `${c1},${c2}`;
+    } else if (ACTIVE_IC_OPT === "time") {
+      backendMethod = "time";
+      castDtStr = document.getElementById("inp-cast-dt").value || "";
+    }
+
+    payload = {
+      name: "Người Hỏi Quẻ",
+      nickname: "",
+      num_school: "vn",
+      gender: "nam",
+      date_type: "solar",
+      date: "2000-01-01",
+      is_leap: false,
+      time: "12:00",
+      place: "Hải Phòng",
+      use_true_solar: true,
+      calendar_std: "vn",
+      tuvi_school: "iztro",
+      zi_sect: 2,
+      target_year: new Date().getFullYear(),
+      question: qVal || "Xin quẻ chỉ dẫn cát hung cho việc đang nghĩ trong tâm",
+      iching_method: backendMethod,
+      lines: linesStr,
+      numbers: numbersStr,
+      cast_datetime: castDtStr
+    };
+  } else {
+    // THẦN SỐ HỌC
+    const dateVal = document.getElementById("num-date").value;
+    if (!dateVal) {
+      alert("Bạn vui lòng chọn Ngày tháng năm sinh để tính Số Chủ Đạo và các chu kỳ Thần Số Học nhé!");
+      document.getElementById("num-date").focus();
+      return;
+    }
+    const fullName = document.getElementById("num-fullname").value.trim();
+    const nickName = document.getElementById("num-nickname").value.trim();
+    payload = {
+      name: fullName || "Bạn",
+      nickname: nickName,
+      num_school: document.getElementById("num-school").value,
+      gender: "nu",
+      date_type: document.getElementById("num-datetype").value,
+      date: dateVal,
+      is_leap: document.getElementById("num-leap").checked,
+      time: "12:00",
+      place: "Hải Phòng",
+      use_true_solar: true,
+      calendar_std: "vn",
+      tuvi_school: "iztro",
+      zi_sect: 2,
+      target_year: parseInt(document.getElementById("num-target-year").value, 10) || new Date().getFullYear(),
+      question: nickName
+        ? `Phân tích kỹ Thần Số Học kết hợp Tên khai sinh "${fullName}" và Nickname "${nickName}"`
+        : "Phân tích chuyên sâu hồ sơ Thần Số Học và định hướng phát triển bản thân",
+      iching_method: "coins_random",
+      lines: "",
+      numbers: ""
+    };
+  }
 
   const res = await fetch("/api/analyze", {
     method: "POST",
@@ -1675,11 +2421,21 @@ async function runAnalyze() {
   });
   const json = await res.json();
   if (!json.ok) {
-    alert("Không thể lập lá số: " + json.error);
+    alert("Không thể xử lý dữ liệu: " + json.error);
     return;
   }
   STATE = json.data;
   window.STATE = STATE;
+  RESULT_MODE = ACTIVE_VIBE;
+
+  const g = GUIDES[RESULT_MODE] || GUIDES["thuc-chien"];
+  if (typeof window.__kbSetPreferredMode === "function") {
+    window.__kbSetPreferredMode(g.aiMode, payload.question || "");
+  }
+
+  document.getElementById("result-guide-img").src = g.img;
+  document.getElementById("result-guide-title").textContent = g.resultTitle;
+  document.getElementById("result-guide-msg").textContent = g.resultMsg;
 
   document.getElementById("studio-grid").classList.add("has-results");
   document.getElementById("welcome-view").style.display = "none";
@@ -1689,10 +2445,7 @@ async function runAnalyze() {
   if (SELECTED_BRANCH === null && menhPalace) SELECTED_BRANCH = menhPalace.branch_idx;
 
   renderAll();
-
-  const g = GUIDES[ACTIVE_VIBE] || GUIDES["thuc-chien"];
-  const defaultTabBtn = document.querySelector(`.tab-btn[data-tab-id="${g.defaultTab}"]`);
-  if (defaultTabBtn) switchTab(g.defaultTab, defaultTabBtn);
+  applyVisibleTabsForMode(RESULT_MODE);
 
   document.getElementById("result-view").scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -1713,26 +2466,57 @@ function formatDateVN(isoDateTime) {
   return `${tPart} ngày ${d}/${m}/${y}`;
 }
 
+function formatOnlyDateVN(isoDate) {
+  const [y, m, d] = (isoDate || "").split("-");
+  return d ? `${d}/${m}/${y}` : isoDate;
+}
+
 function renderFriendlyProfileBar() {
   const m = STATE.meta;
+  const bannerEl = document.getElementById("sync-banner");
+
+  if (RESULT_MODE === "gieo-que") {
+    const ic = STATE.iching;
+    const pil = ic.pillars_at_cast || {};
+    bannerEl.innerHTML = `
+      <span>🎲 <strong>Chế độ:</strong> Gieo Quẻ Kinh Dịch &amp; Kỳ Môn</span>
+      <span>🕒 <strong>Giờ lập quẻ:</strong> ${esc(ic.cast_time)}</span>
+      <span>📅 <strong>Can Chi lúc gieo:</strong> Ngày ${esc(pil.day || "")} · Giờ ${esc(pil.hour || "")} (Tuần Không: ${esc(pil.tuan_khong || "")})</span>
+      ${ic.question ? `<span style="width:100%;color:var(--sc-accent);">💬 <strong>Việc hỏi:</strong> "${esc(ic.question)}"</span>` : ""}
+    `;
+    return;
+  }
+
+  if (RESULT_MODE === "tinh-duyen") {
+    const num = STATE.numerology;
+    const lpCode = num ? num.core_numbers.life_path.code : "–";
+    const pyNum = num ? num.personal_cycles.personal_year : "–";
+    const realName = (num && num.meta.clean_name) ? m.name : "(Chưa nhập tên thật)";
+    const nickTxt = m.nickname ? m.nickname : "(Chưa nhập Nickname)";
+    bannerEl.innerHTML = `
+      <span>📝 <strong>Tên thật:</strong> ${esc(realName)}</span>
+      <span>✨ <strong>Nickname:</strong> <strong style="color:var(--sc-accent)">${esc(nickTxt)}</strong></span>
+      <span>🎂 <strong>Ngày sinh Dương lịch:</strong> ${esc(formatOnlyDateVN(m.solar_date))}</span>
+      <span>🔢 <strong>Số Chủ Đạo:</strong> <strong style="color:var(--sc-accent)">${esc(lpCode)}</strong></span>
+      <span>🌊 <strong>Năm cá nhân ${num ? num.personal_cycles.target_year : ""}:</strong> Số ${esc(pyNum)}</span>
+    `;
+    return;
+  }
+
+  // Chế độ Tử Vi & Tài Bạch
   const prof = STATE.tuvi.profile;
   const tf = STATE.tuvi.target_year_fortune;
   const genderLabel = m.gender === "nam" ? "Nam" : "Nữ";
-
   let warnHtml = "";
   if (m.branch_boundary_warning) {
-    warnHtml = `<div class="warn-banner">💡 <strong>Mẹo nhỏ:</strong> Giờ sinh của bạn sát mốc chuyển canh giờ Âm lịch. Nếu đọc tính cách thấy hơi lệch nhẹ, hãy thử chỉnh lùi hoặc tiến 15 phút để so sánh nhé!</div>`;
+    warnHtml = `<div class="warn-banner">💡 <strong>Mẹo nhỏ:</strong> Giờ sinh của bạn sát mốc chuyển canh giờ Âm lịch. Nếu đọc tính cách thấy hơi lệch nhẹ, hãy thử chỉnh lùi hoặc tiến 15 phút để đối chiếu nhé!</div>`;
   }
-
-  const lpCode = STATE.numerology ? STATE.numerology.core_numbers.life_path.code : "–";
-  const pyNum = STATE.numerology ? STATE.numerology.personal_cycles.personal_year : "–";
-  document.getElementById("sync-banner").innerHTML = `
+  bannerEl.innerHTML = `
     <span>👤 <strong>${esc(m.name)}</strong> (${genderLabel})</span>
     <span>📅 <strong>Dương lịch:</strong> ${esc(formatDateVN(m.clock_time))}</span>
     <span>🌙 <strong>Âm lịch:</strong> ${esc(prof.lunar_date)} (${esc(prof.birth_hour)})</span>
     <span>📍 <strong>Nơi sinh:</strong> ${esc(m.place)}</span>
-    <span>🔢 <strong>Số Chủ Đạo:</strong> <strong style="color:var(--sc-accent)">${esc(lpCode)}</strong> (Năm cá nhân ${esc(pyNum)})</span>
-    <span>🎯 <strong>Hạn năm:</strong> ${tf.target_solar_year} (${tf.nominal_age} tuổi âm)</span>
+    <span>🎯 <strong>Hạn năm:</strong> <strong style="color:var(--sc-accent)">${tf.target_solar_year} (${tf.nominal_age} tuổi âm)</strong></span>
     ${warnHtml}
   `;
 }
@@ -1942,7 +2726,7 @@ function renderBaziPane() {
 
   const bars = Object.entries(bz.five_elements_score).map(([el, info]) => `
     <div class="eb-item">
-      <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700;">
+      <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800;">
         <span style="color:${elemColors[el]}">Hành ${esc(el)}</span><span>${info.pct}%</span>
       </div>
       <div class="eb-track"><div class="eb-fill" style="width:${Math.min(100, info.pct)}%; background:${elemColors[el]}"></div></div>
@@ -1965,14 +2749,14 @@ function renderBaziPane() {
 
       <div style="background:var(--sc-canvas); border:1px solid var(--border); padding:12px 14px; border-radius:12px; font-size:13.5px; margin-bottom:14px;">
         <div><strong>· Bản mệnh cốt lõi:</strong> Hành <strong>${esc(bz.day_master.element)} (${esc(bz.day_master.stem)})</strong> (${esc(bz.day_master.strength_assessment)})</div>
-        <div><strong>· Ngũ hành hợp vibe (nên ưu tiên):</strong> <strong style="color:var(--jade)">${esc(bz.yongshen_guidance.fuyi_favorable_elements.join(", "))}</strong></div>
+        <div><strong>· Ngũ hành trợ lực (Dụng thần, nên ưu tiên):</strong> <strong style="color:var(--jade)">${esc(bz.yongshen_guidance.fuyi_favorable_elements.join(", "))}</strong></div>
         <div><strong>· Ngũ hành nên tiết chế:</strong> <strong style="color:var(--crimson)">${esc(bz.yongshen_guidance.fuyi_unfavorable_elements.join(", "))}</strong></div>
-        <div><strong>· Gợi ý cân bằng theo mùa sinh:</strong> ${esc(bz.yongshen_guidance.qiong_tong_tiaohou)}</div>
+        <div><strong>· Gợi ý điều hòa theo mùa sinh:</strong> ${esc(bz.yongshen_guidance.qiong_tong_tiaohou)}</div>
       </div>
 
       <div style="overflow-x:auto;">
         <table class="std-table">
-          <thead><tr><th>Thành phần</th><th>Trụ Năm (Gốc gia đình)</th><th>Trụ Tháng (Sự nghiệp)</th><th>Trụ Ngày (Bản thân &amp; Tình cảm)</th><th>Trụ Giờ (Hậu vận)</th></tr></thead>
+          <thead><tr><th>Thành phần</th><th>Trụ Năm (Gia đình)</th><th>Trụ Tháng (Sự nghiệp)</th><th>Trụ Ngày (Bản thân &amp; Hôn nhân)</th><th>Trụ Giờ (Điền sản &amp; Hậu vận)</th></tr></thead>
           <tbody>
             <tr><td><strong>Vai trò</strong></td>${cols.map(c => `<td><strong>${esc(p[c].stem_ten_god)}</strong></td>`).join("")}</tr>
             <tr><td><strong>Thiên Can</strong></td>${cols.map(c => `<td style="font-size:16px;font-weight:800;color:${elemColors[p[c].stem_element]}">${esc(p[c].stem)} (${esc(p[c].stem_element)})</td>`).join("")}</tr>
@@ -1983,7 +2767,7 @@ function renderBaziPane() {
         </table>
       </div>
 
-      <h3 style="margin-top:18px;">🌊 Từng Chặng 10 Năm Cuộc Đời (Ô nổi màu là chặng hiện tại)</h3>
+      <h3 style="margin-top:18px;">🌊 Từng Đại Vận 10 Năm Cuộc Đời (Ô nổi màu là chặng hiện tại)</h3>
       <div class="dayun-grid">${dyCards}</div>
     </div>
   `;
@@ -1992,7 +2776,7 @@ function renderBaziPane() {
 function renderGrid3Box(g, title) {
   const rows = g.rows_top_to_bottom.map(r => `
     <div class="grid3-row">
-      ${r.map(c => `<div class="grid3-cell ${c.count > 0 ? 'has-num' : ''}">${c.count > 0 ? esc(c.text) : '<span style="color:#C2BACF;font-size:12px;font-weight:500;">(' + c.digit + ')</span>'}</div>`).join("")}
+      ${r.map(c => `<div class="grid3-cell ${c.count > 0 ? 'has-num' : ''}">${c.count > 0 ? esc(c.text) : '<span style="color:#C2BACF;font-size:12px;font-weight:600;">(' + c.digit + ')</span>'}</div>`).join("")}
     </div>
   `).join("");
   return `<div class="grid3-box"><div style="font-weight:800;font-size:12.5px;color:var(--navy);text-align:center;">${esc(title)}</div>${rows}</div>`;
@@ -2005,43 +2789,56 @@ function renderNumerologyPane() {
   const lp = cn.life_path;
   const pc = num.personal_cycles;
   const dm22 = num.destiny_matrix_22;
-  const ews = (STATE.cross_validation && STATE.cross_validation.east_west_synthesis) ? STATE.cross_validation.east_west_synthesis : null;
+  const nick = num.nickname_synergy;
 
   const kpis = [
     {lbl: "Năng lực Ngày Sinh", val: cn.birthday.code, sub: "Ngày sinh gốc " + cn.birthday.day_raw},
-    {lbl: "Số Thái Độ", val: cn.attitude.code, sub: "Vibe ấn tượng đầu"},
+    {lbl: "Số Thái Độ", val: cn.attitude.code, sub: "Phản xạ ấn tượng đầu"},
     {lbl: "Năm Cá Nhân " + pc.target_year, val: pc.personal_year, sub: pc.personal_year_theme.phase},
   ];
   if (cn.expression && cn.soul_urge && cn.personality && cn.maturity) {
     kpis.unshift(
-      {lbl: "Số Sứ Mệnh (Họ Tên)", val: cn.expression.code, sub: cn.expression.archetype.title},
-      {lbl: "Số Linh Hồn (Nội Tâm)", val: cn.soul_urge.code, sub: cn.soul_urge.archetype.title},
-      {lbl: "Số Nhân Cách (Bên Ngoài)", val: cn.personality.code, sub: cn.personality.archetype.title},
+      {lbl: "Sứ Mệnh (Tên Thật)", val: cn.expression.code, sub: cn.expression.archetype.title},
+      {lbl: "Linh Hồn (Nội Tâm)", val: cn.soul_urge.code, sub: cn.soul_urge.archetype.title},
+      {lbl: "Nhân Cách (Bên Ngoài)", val: cn.personality.code, sub: cn.personality.archetype.title},
       {lbl: "Số Trưởng Thành (35t+)", val: cn.maturity.code, sub: cn.maturity.archetype.title}
     );
   }
 
-  let nameBreakHtml = `<div style="padding:10px 12px;background:#FFF9E8;border:1px dashed var(--gold);border-radius:10px;font-size:13px;margin-bottom:14px;">💡 Nhập thêm <strong>Họ và tên đầy đủ có dấu</strong> ở khung thông tin để mở khóa Sứ mệnh, Linh hồn, Nhân cách và chấm rung động Nickname nhé!</div>`;
+  let nameBreakHtml = `<div style="padding:12px 14px;background:#FFF9E8;border:1.5px dashed var(--gold);border-radius:12px;font-size:13.5px;margin-bottom:14px;">💡 <strong>Bạn mới nhập Ngày sinh:</strong> Hãy điền thêm <strong>Họ và tên thật trên khai sinh</strong> (và <strong>Nickname</strong> nếu có) ở khung bên trái để mở khóa trọn bộ Chỉ số Sứ mệnh, Linh hồn, Nhân cách và Biểu đồ Bù khuyết nhé!</div>`;
   if (num.name_breakdown && num.name_breakdown.has_name) {
     const wordsHtml = num.name_breakdown.words.map(w => `
       <div style="background:#fff;border:1px dashed var(--border);border-radius:10px;padding:7px 10px;">
         <div>${w.letters.map(l => `<span class="let-pill ${l.role === 'V' ? 'let-v' : 'let-c'}">${esc(l.char)}<small style="font-size:10px;">${l.pythagorean}</small></span>`).join("")}</div>
-        <div style="text-align:center;font-size:11.5px;color:var(--sc-ink-soft);font-weight:700;margin-top:4px;">${esc(w.word)} = ${esc(w.pythagorean_reduced)}</div>
+        <div style="text-align:center;font-size:11.5px;color:var(--sc-ink-soft);font-weight:800;margin-top:4px;">${esc(w.word)} = ${esc(w.pythagorean_reduced)}</div>
       </div>
     `).join("");
     const chal = num.chaldean_name;
-    const nick = num.nickname_synergy;
+
+    const nickCompareHtml = nick ? `
+      <div style="margin-top:10px;padding:12px 14px;background:var(--sc-accent-soft);border:1.5px solid color-mix(in oklab, var(--sc-accent) 32%, transparent);border-radius:12px;">
+        <div style="font-family:var(--sc-font-display);font-size:1.05rem;font-weight:800;color:var(--sc-accent);margin-bottom:4px;">
+          ✨ Cộng hưởng từ Tên gọi / Nickname: "${esc(nick.nickname)}"
+        </div>
+        <div style="font-size:13px;">
+          · <strong>Chỉ số của riêng Nickname:</strong> Sứ mệnh <strong>${esc(nick.expression_code)}</strong> · Linh hồn <strong>${esc(nick.soul_urge_code)}</strong> · Nhân cách <strong>${esc(nick.personality_code)}</strong><br>
+          · <strong>Rung động âm thanh Chaldean:</strong> Số kép <strong>${nick.chaldean.compound_number}/${nick.chaldean.single_digit} (${esc(nick.chaldean.compound_title)} · ${esc(nick.chaldean.compound_rank)})</strong><br>
+          · <strong>Các con số Nickname bù thêm cho Ngày sinh:</strong> <strong style="color:var(--jade)">${nick.fills_birth_chart_missing_digits.join(", ") || "Giữ vững trục số sẵn có"}</strong>
+        </div>
+      </div>
+    ` : `<div style="margin-top:8px;font-size:12.5px;color:var(--sc-ink-soft);">💡 Bạn có thể nhập thêm <strong>Nickname / Tên thường gọi</strong> ở khung bên trái để xem tên gọi hàng ngày cộng hưởng thế nào với Tên thật nhé!</div>`;
+
     nameBreakHtml = `
       <div style="margin-bottom:16px;">
-        <div style="font-size:12.5px;color:var(--sc-ink-soft);margin-bottom:6px;">
-          <strong>Giải phẫu Chữ Cái (${esc(num.meta.clean_name)}):</strong> <span class="let-pill let-v" style="padding:1px 6px;">Nguyên âm (Linh hồn)</span> <span class="let-pill let-c" style="padding:1px 6px;">Phụ âm (Nhân cách)</span>
+        <div style="font-size:13px;color:var(--sc-ink-soft);margin-bottom:6px;">
+          <strong>📝 Giải phẫu Tên Khai Sinh (${esc(num.meta.clean_name)}):</strong> <span class="let-pill let-v" style="padding:1px 6px;">Nguyên âm → Linh hồn</span> <span class="let-pill let-c" style="padding:1px 6px;">Phụ âm → Nhân cách</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;">${wordsHtml}</div>
-        <div style="background:var(--sc-canvas);border:1px solid var(--border);padding:10px 14px;border-radius:10px;font-size:13px;">
-          <div>· <strong>Số Khuyết cần rèn thêm:</strong> ${num.name_breakdown.karmic_lessons_missing.join(", ") || "Đủ trọn vẹn 1 đến 9"} | <strong>Đam mê ẩn giấu:</strong> ${num.name_breakdown.hidden_passions.join(", ") || "Cân bằng"} | <strong>Số Họ tên bù cho Ngày sinh:</strong> <strong style="color:var(--jade)">${num.name_breakdown.filled_birth_chart_gaps.join(", ") || "·"}</strong></div>
-          ${chal ? `<div>· <strong>Rung động Tên Chaldean:</strong> Số kép <strong>${chal.compound_number}/${chal.single_digit} (${esc(chal.compound_title)}, ${esc(chal.compound_rank)})</strong>: ${esc(chal.compound_meaning)}</div>` : ""}
-          ${nick ? `<div style="margin-top:4px;color:var(--navy);">· <strong>Nickname (${esc(nick.nickname)}):</strong> Sứ mệnh ${nick.expression_code} · Linh hồn ${nick.soul_urge_code} · Chaldean <strong>${nick.chaldean.compound_number}/${nick.chaldean.single_digit} (${esc(nick.chaldean.compound_title)}, ${esc(nick.chaldean.compound_rank)})</strong> · Bù thêm số: ${nick.fills_birth_chart_missing_digits.join(", ") || "·"}</div>` : ""}
+        <div style="background:var(--sc-canvas);border:1px solid var(--border);padding:11px 14px;border-radius:12px;font-size:13px;">
+          <div>· <strong>Số Tên thật đã lấp chỗ trống cho Ngày sinh:</strong> <strong style="color:var(--jade)">${num.name_breakdown.filled_birth_chart_gaps.join(", ") || "·"}</strong> | <strong>Bài học số còn khuyết:</strong> ${num.name_breakdown.karmic_lessons_missing.join(", ") || "Đủ trọn vẹn 1 đến 9"}</div>
+          ${chal ? `<div style="margin-top:3px;">· <strong>Rung động Tên thật (Chaldean cổ đại):</strong> Số kép <strong>${chal.compound_number}/${chal.single_digit} (${esc(chal.compound_title)} · ${esc(chal.compound_rank)})</strong>: ${esc(chal.compound_meaning)}</div>` : ""}
         </div>
+        ${nickCompareHtml}
       </div>
     `;
   }
@@ -2089,7 +2886,7 @@ function renderNumerologyPane() {
 
   document.getElementById("pane-numerology").innerHTML = `
     <div class="card">
-      <h3>🔢 Hồ Sơ Thần Số Học &amp; Đối Chiếu Đông Tây</h3>
+      <h3>🔢 Hồ Sơ Thần Số Học: Ngày Sinh × Tên Thật × Nickname</h3>
       <div class="num-hero">
         <div class="num-orb">
           <div class="num-orb-lbl">Số Chủ Đạo</div>
@@ -2097,23 +2894,16 @@ function renderNumerologyPane() {
           <div style="font-size:11px;opacity:0.9;margin-top:2px;">VN: ${esc(lp.vn_code)} · QT: ${esc(lp.intl_code)}</div>
         </div>
         <div>
-          <div style="font-family:var(--sc-font-display);font-size:20px;font-weight:800;color:var(--sc-accent);margin-bottom:4px;">${esc(lp.archetype.title)}</div>
+          <div style="font-family:var(--sc-font-display);font-size:21px;font-weight:800;color:var(--sc-accent);margin-bottom:4px;">${esc(lp.archetype.title)}</div>
           <div style="font-size:13.5px;margin-bottom:5px;"><strong>· Điểm mạnh tự nhiên:</strong> ${esc(lp.archetype.strengths)}</div>
-          <div style="font-size:13.5px;margin-bottom:5px;"><strong>· Góc cần luyện thêm:</strong> ${esc(lp.archetype.growth)}</div>
-          <div style="font-size:13.5px;color:var(--navy);"><strong>· Hướng nghề hợp vibe:</strong> ${esc(lp.archetype.careers)}</div>
-          ${lp.school_diff_note ? `<div style="margin-top:6px;font-size:12px;color:var(--gold);font-weight:700;">ℹ ${esc(lp.school_diff_note)}</div>` : ""}
+          <div style="font-size:13.5px;margin-bottom:5px;"><strong>· Bài học trưởng thành:</strong> ${esc(lp.archetype.growth)}</div>
+          <div style="font-size:13.5px;color:var(--navy);"><strong>· Hướng nghề hợp năng lượng:</strong> ${esc(lp.archetype.careers)}</div>
+          ${lp.school_diff_note ? `<div style="margin-top:6px;font-size:12px;color:var(--gold);font-weight:800;">ℹ ${esc(lp.school_diff_note)}</div>` : ""}
         </div>
       </div>
 
-      ${ews ? `
-      <div style="margin-bottom:14px;padding:12px 14px;background:var(--navy-soft);border:1px solid #C9DCF7;border-radius:10px;font-size:13.5px;">
-        <div style="font-weight:800;color:var(--navy);margin-bottom:4px;">☯ × 🔢 Giao Thoa Đông Tây (Tử Vi × Bát Tự × Thần Số Học):</div>
-        <div>· ${esc(ews.element_number_resonance)}</div>
-        <div style="margin-top:3px;">· ${esc(ews.annual_rhythm_alignment)}</div>
-      </div>` : ""}
-
       <div class="num-kpi-grid">
-        ${kpis.map(k => `<div class="num-kpi"><div style="font-size:11.5px;color:var(--sc-ink-soft);font-weight:700;">${esc(k.lbl)}</div><div class="num-kpi-val">${esc(k.val)}</div><div style="font-size:11px;color:var(--navy);">${esc(k.sub)}</div></div>`).join("")}
+        ${kpis.map(k => `<div class="num-kpi"><div style="font-size:11.5px;color:var(--sc-ink-soft);font-weight:800;">${esc(k.lbl)}</div><div class="num-kpi-val">${esc(k.val)}</div><div style="font-size:11px;color:var(--navy);font-weight:700;">${esc(k.sub)}</div></div>`).join("")}
       </div>
 
       ${nameBreakHtml}
@@ -2121,14 +2911,14 @@ function renderNumerologyPane() {
 
       <div class="grid3-wrap">
         ${renderGrid3Box(bGrid, "Biểu Đồ Ngày Sinh (3×3)")}
-        ${renderGrid3Box(cGrid, "Biểu Đồ Tổ Hợp (Ngày Sinh + Tên)")}
+        ${renderGrid3Box(cGrid, "Biểu Đồ Tổ Hợp (Ngày Sinh + Tên Thật)")}
         <div style="flex:1;min-width:260px;font-size:13px;">
           <div style="font-weight:800;color:var(--sc-accent);margin-bottom:6px;">🎯 Các Mũi Tên Cá Tính &amp; Điểm Bù Đắp:</div>
           ${arrowsList}
         </div>
       </div>
 
-      <h3 style="margin-top:18px;">⛰️ 4 Đỉnh Cao Đời Người &amp; 4 Thử Thách</h3>
+      <h3 style="margin-top:18px;">⛰️ Kim Tự Tháp 4 Đỉnh Cao &amp; 4 Thử Thách</h3>
       <div style="overflow-x:auto;">
         <table class="std-table">
           <thead><tr><th>Chặng đời</th><th>Số Đỉnh Cao</th><th>Thử Thách</th><th>Độ tuổi</th><th>Năm Dương lịch</th><th>Chủ đề phát triển</th></tr></thead>
@@ -2140,7 +2930,7 @@ function renderNumerologyPane() {
       <p style="font-size:13px;color:var(--sc-ink-soft);margin:0 0 8px;">Gợi ý năm ${pc.target_year} (Năm cá nhân số ${pc.personal_year}): <strong>${esc(pc.personal_year_theme.advice)}</strong></p>
       <div style="overflow-x:auto;background:var(--sc-canvas);border:1px solid var(--border);border-radius:12px;padding:10px;">
         <svg viewBox="0 0 ${svgW} ${svgH}" style="width:100%;max-width:780px;height:auto;display:block;margin:0 auto;">
-          <polyline fill="none" stroke="#B67D1E" stroke-width="3" points="${polyPoints}"/>
+          <polyline fill="none" stroke="#C8337B" stroke-width="3" points="${polyPoints}"/>
           ${waveNodes}
         </svg>
       </div>
@@ -2156,13 +2946,13 @@ function renderNumerologyPane() {
     </div>
 
     <div class="card">
-      <h3>💎 Chấm Điểm Nickname, Nghệ Danh Hoặc Tên Thương Hiệu</h3>
+      <h3>💎 Thử Đặt &amp; Chấm Điểm Nhiều Nickname / Nghệ Danh / Thương Hiệu</h3>
       <p style="font-size:13px;color:var(--sc-ink-soft);margin-top:0;">
-        Nhập nhiều phương án tên (cách nhau bằng dấu phẩy) để chấm điểm độ hợp với ngày sinh hiện tại:
+        Nhập nhiều phương án tên gọi hoặc Nickname (cách nhau bằng dấu phẩy) để chấm điểm thang 100 xem phương án nào hợp nhất với ngày sinh của bạn:
       </p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-        <input id="inp-cand-names" style="flex:1;min-width:240px;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;background:var(--sc-canvas);" placeholder="VD: Leo Đồ Sơn, Minh Khôi, Hải Phát Land">
-        <button type="button" class="btn-pill" onclick="runNameCheckUI()">⚖️ Chấm Điểm Ngay</button>
+        <input id="inp-cand-names" style="flex:1;min-width:240px;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;background:var(--sc-canvas);font-family:inherit;font-weight:600;" placeholder="VD: Leo Đồ Sơn, Minh Khôi, Hải Phát Land">
+        <button type="button" class="btn-pill" onclick="runNameCheckUI()">⚖️ Chấm Điểm So Sánh</button>
       </div>
       <div id="name-check-results"></div>
     </div>
@@ -2173,7 +2963,7 @@ async function runNameCheckUI() {
   const raw = document.getElementById("inp-cand-names").value || "";
   const cands = raw.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean);
   if (!cands.length) {
-    alert("Bạn hãy nhập ít nhất 1 phương án tên để chấm điểm nhé!");
+    alert("Bạn hãy nhập ít nhất 1 phương án Nickname / Tên gọi để chấm điểm nhé!");
     return;
   }
   const res = await fetch("/api/name-check", {
@@ -2182,7 +2972,7 @@ async function runNameCheckUI() {
     body: JSON.stringify({
       date: STATE.meta.solar_date,
       candidates: cands,
-      num_school: document.getElementById("inp-numschool").value
+      num_school: document.getElementById("num-school").value
     })
   });
   const json = await res.json();
@@ -2202,7 +2992,7 @@ async function runNameCheckUI() {
   document.getElementById("name-check-results").innerHTML = `
     <div style="overflow-x:auto;">
       <table class="std-table">
-        <thead><tr><th>Hạng</th><th>Phương án Tên</th><th>Điểm Tổng</th><th>Sứ Mệnh</th><th>Linh Hồn / Nhân Cách</th><th>Chaldean Cổ Đại</th><th>Số Bù Ngày Sinh</th><th>Nợ Nghiệp</th></tr></thead>
+        <thead><tr><th>Hạng</th><th>Phương án Tên / Nickname</th><th>Điểm Hợp</th><th>Sứ Mệnh</th><th>Linh Hồn / Nhân Cách</th><th>Chaldean Cổ Đại</th><th>Số Bù Ngày Sinh</th><th>Nợ Nghiệp</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
@@ -2212,25 +3002,39 @@ async function runNameCheckUI() {
 function renderIchingPane() {
   const ic = STATE.iching;
   const ph = ic.primary_hexagram;
+  const mh = ic.mutual_hexagram;
   const ch = ic.changed_hexagram;
-  const rows = ic.lines_top_to_bottom.map(ln => {
-    const chg = ln.is_moving ? `→ <strong>${esc(ln.changed_liuqin)} ${esc(ln.changed_can_chi)}</strong>` : "·";
+  const linesTopDown = [...(ic.lines_bottom_to_top || [])].reverse();
+
+  const rows = linesTopDown.map(ln => {
+    let chgHtml = "·";
+    if (ln.is_moving && ln.changed_to) {
+      const tagsTxt = (ln.changed_to.tags && ln.changed_to.tags.length)
+        ? ` <small style="color:var(--jade);">[${esc(ln.changed_to.tags.join(", "))}]</small>`
+        : "";
+      chgHtml = `→ <strong>${esc(ln.changed_to.changed_liuqin)} ${esc(ln.changed_to.changed_can_chi)}</strong> (${esc(ln.changed_to.changed_element)})${tagsTxt}`;
+    }
+    const fushenHtml = ln.fushen ? `<div style="font-size:11px;color:var(--purple);">Ẩn (Phục): ${esc(ln.fushen)}</div>` : "";
     return `
       <tr style="${ln.is_moving ? 'background:#FFF8E6;font-weight:700;' : ''}">
-        <td>Hào ${ln.position}</td>
+        <td><strong>Hào ${ln.position}</strong></td>
         <td>${esc(ln.beast)}</td>
-        <td><strong>${esc(ln.liuqin)} ${esc(ln.can_chi)}</strong> (${esc(ln.element)})</td>
+        <td style="text-align:left;">
+          <strong>${esc(ln.liuqin)} ${esc(ln.can_chi)}</strong> (${esc(ln.element)})
+          ${fushenHtml}
+        </td>
         <td style="font-family:var(--sc-font-mono);font-weight:800;">${esc(ln.symbol)}</td>
         <td style="color:var(--sc-accent);font-weight:800;">${esc(ln.shi_ying === 'Thế' ? 'Bản thân (Thế)' : (ln.shi_ying === 'Ứng' ? 'Đối phương (Ứng)' : ''))}</td>
-        <td>${esc(ln.status_flags.join(", ") || "Ổn định")}</td>
-        <td>${chg}</td>
+        <td>${esc((ln.status_flags || []).join(", ") || "Ổn định")}</td>
+        <td style="text-align:left;">${chgHtml}</td>
       </tr>
     `;
   }).join("");
 
   const mhHtml = ic.meihua_ti_yong
-    ? `<div style="margin-bottom:14px;padding:12px 14px;background:var(--jade-soft);border:1px solid #B4E6D6;border-radius:10px;font-size:14px;">
-        <strong>🎯 Đánh giá nhanh:</strong> ${esc(ic.meihua_ti_yong.relation_verdict)}
+    ? `<div style="margin-bottom:14px;padding:12px 14px;background:var(--jade-soft);border:1px solid #B4E6D6;border-radius:12px;font-size:14px;">
+        <strong>🎯 Kết luận Thể – Dụng (Mai Hoa Dịch Số):</strong> ${esc(ic.meihua_ti_yong.relation_verdict)}
+        <div style="font-size:12.5px;color:var(--sc-ink-soft);margin-top:3px;">Quẻ Thể (Bản thân): ${esc(ic.meihua_ti_yong.ti_gua)} &nbsp;·&nbsp; Quẻ Dụng (Sự việc): ${esc(ic.meihua_ti_yong.yong_gua)}</div>
        </div>`
     : "";
 
@@ -2238,26 +3042,28 @@ function renderIchingPane() {
     <div class="card">
       <h3>☯ Kết Quả Gieo Quẻ Kinh Dịch ${ic.question ? '("' + esc(ic.question) + '")' : ''}</h3>
       <div style="font-size:12.5px;color:var(--sc-ink-soft);margin:-4px 0 12px;">
-        <strong>Phương pháp gieo:</strong> ${esc(ic.cast_method)} &nbsp;·&nbsp; <strong>Thời điểm lập quẻ:</strong> ${esc(ic.cast_time)}
+        <strong>Cách khởi quẻ:</strong> ${esc(ic.cast_method)} &nbsp;·&nbsp; <strong>Thuộc:</strong> ${esc(ph.palace)} ${mh ? `· <strong>Hổ Quái (Diễn biến ngầm):</strong> Quẻ #${mh.number} ${esc(mh.name)}` : ""}
       </div>
       ${mhHtml}
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:12px; margin-bottom:14px; font-size:13.5px;">
-        <div style="padding:12px 14px; background:var(--sc-canvas); border:1px solid var(--border); border-radius:12px;">
-          <strong style="color:var(--sc-accent);font-size:15px;">Quẻ Hiện Tại: Quẻ số ${ph.number} (${esc(ph.name)})</strong><br>
-          <div style="margin-top:6px;"><strong>Lời khuyên:</strong> ${esc(ph.core_meaning)}</div>
+        <div style="padding:13px 15px; background:var(--sc-canvas); border:1.5px solid var(--border); border-radius:12px;">
+          <strong style="color:var(--sc-accent);font-size:15.5px;">Quẻ Gốc (Hiện Tại): Quẻ #${ph.number} · ${esc(ph.name)}</strong>
+          <div style="font-size:12px;color:var(--sc-ink-soft);margin-top:2px;">Thượng ${esc(ph.upper_trigram)} · Hạ ${esc(ph.lower_trigram)}</div>
+          <div style="margin-top:6px;"><strong>Thông điệp cốt lõi:</strong> ${esc(ph.core_meaning)}</div>
         </div>
-        <div style="padding:12px 14px; background:var(--sc-canvas); border:1px solid var(--border); border-radius:12px;">
+        <div style="padding:13px 15px; background:var(--sc-canvas); border:1.5px solid var(--border); border-radius:12px;">
           ${ch
-            ? `<strong style="color:var(--navy);font-size:15px;">Xu Hướng Sắp Tới: Quẻ số ${ch.number} (${esc(ch.name)})</strong><br>
-               <div style="margin-top:6px;"><strong>Diễn biến tiếp theo:</strong> ${esc(ch.core_meaning)}</div>`
-            : `<strong style="color:var(--navy);font-size:15px;">Quẻ Tĩnh (Sự việc ít biến động)</strong><br>
-               <div style="margin-top:6px;">Cứ bám sát lời khuyên của Quẻ Hiện Tại bên cạnh nhé.</div>`
+            ? `<strong style="color:var(--navy);font-size:15.5px;">Quẻ Biến (Kết Cục Sắp Tới): Quẻ #${ch.number} · ${esc(ch.name)}</strong>
+               <div style="font-size:12px;color:var(--sc-ink-soft);margin-top:2px;">Động tại hào: ${esc((ic.moving_lines || []).join(", "))}</div>
+               <div style="margin-top:6px;"><strong>Xu hướng chuyển biến:</strong> ${esc(ch.core_meaning)}</div>`
+            : `<strong style="color:var(--navy);font-size:15.5px;">Quẻ Tĩnh (6 Hào Ổn Định)</strong>
+               <div style="margin-top:6px;">Sự việc giữ nguyên thế cục hiện tại, hãy bám sát thông điệp của Quẻ Gốc bên cạnh.</div>`
           }
         </div>
       </div>
       <div style="overflow-x:auto;">
         <table class="std-table">
-          <thead><tr><th>Hào</th><th>Thần sắc</th><th>Yếu tố đại diện</th><th>Hình hào</th><th>Vị trí</th><th>Trạng thái</th><th>Biến đổi</th></tr></thead>
+          <thead><tr><th>Hào (Trên xuống)</th><th>Lục Thần</th><th>Lục Thân &amp; Can Chi</th><th>Hình hào</th><th>Thế / Ứng</th><th>Vượng / Suy</th><th>Hào Động Biến</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>
@@ -2277,10 +3083,10 @@ function renderQimenPane() {
     const isCat = ["Khai Môn", "Hưu Môn", "Sinh Môn"].includes(cp.door);
     const doorMeaning = {
       "Khai Môn": "Rất đẹp cho công việc, khai trương, ký kết",
-      "Hưu Môn": "Rất tốt để gặp quý nhân, hòa giải, nói chuyện êm đẹp",
+      "Hưu Môn": "Rất tốt để gặp quý nhân, hòa giải, bàn bạc êm đẹp",
       "Sinh Môn": "Đại cát về tiền bạc, kinh doanh, chốt deal nhà đất",
       "Cảnh Môn": "Hợp thi cử, giấy tờ, truyền thông, tỏa sáng",
-      "Đỗ Môn": "Nên giữ kín kế hoạch, tập trung cày chuyên môn",
+      "Đỗ Môn": "Nên giữ kín kế hoạch, tập trung chuyên môn",
       "Thương Môn": "Cẩn trọng đi lại và tránh tranh luận căng thẳng",
       "Kinh Môn": "Đề phòng lo âu, lời qua tiếng lại",
       "Tử Môn": "Không nên khởi sự việc mới theo hướng này"
@@ -2290,7 +3096,7 @@ function renderQimenPane() {
       <div class="qm-box ${isCat ? 'cat-door' : ''}">
         <div style="display:flex;justify-content:space-between;font-size:12.5px;">
           <strong>Hướng ${esc(cp.direction)}</strong>
-          <span style="font-size:11px;padding:1px 7px;border-radius:999px;background:${isCat ? '#fff' : '#ECE6DC'};color:${isCat ? 'var(--jade)' : 'var(--sc-ink-soft)'};font-weight:700;">
+          <span style="font-size:11px;padding:1px 7px;border-radius:999px;background:${isCat ? '#fff' : '#ECE6DC'};color:${isCat ? 'var(--jade)' : 'var(--sc-ink-soft)'};font-weight:800;">
             ${isCat ? '★ Hướng Đẹp' : 'Bình / Chậm'}
           </span>
         </div>
@@ -2307,9 +3113,9 @@ function renderQimenPane() {
 
   document.getElementById("pane-qimen").innerHTML = `
     <div class="card">
-      <h3>🧭 Bảng Hướng Xuất Hành &amp; Gặp Gỡ Đẹp Nhất Lúc Này</h3>
+      <h3>🧭 Bảng Hướng Xuất Hành &amp; Gặp Gỡ Đẹp Nhất Theo Giờ</h3>
       <p style="font-size:13px;color:var(--sc-ink-soft);margin-top:0;">
-        Các ô màu xanh ngọc (<strong>★ Hướng Đẹp</strong>) là hướng thuận lợi nhất nếu bạn sắp đi xem đất, gặp khách hàng, đi thi hoặc hẹn hò ngay giờ này.
+        Các ô màu xanh ngọc (<strong>★ Hướng Đẹp</strong>: Khai Môn, Hưu Môn, Sinh Môn) là phương hướng cát lợi nhất để đi xem đất, ký hợp đồng, đi thi hoặc gặp gỡ đối tác.
       </p>
       <div class="qm-board">${cells}</div>
     </div>
@@ -2317,8 +3123,14 @@ function renderQimenPane() {
 }
 
 function buildMasterPrompt() {
-  const q = document.getElementById("inp-question").value;
-  const icMethod = document.getElementById("inp-ic-method").value;
+  if (RESULT_MODE === "gieo-que") {
+    const q = STATE.iching.question || "";
+    return `Hãy đóng vai bậc thầy Kinh Dịch Lục Hào Nạp Giáp, Mai Hoa Dịch Số & Kỳ Môn Độn Giáp, giải thích bằng tiếng Việt trẻ trung, súc tích, dễ hiểu và thực tế. Dữ liệu quẻ dưới đây đã được lập bằng code chuẩn 100%, bạn KHÔNG tự tính lại quẻ, hãy luận giải rõ Cát/Hung, Thế/Ứng, Dụng Thần, Hào Động -> Biến và lời khuyên hành động cụ thể cho câu hỏi "${q}":\n\n` + JSON.stringify({que_kinh_dich: STATE.iching, ky_mon_huong_tot: STATE.qimen}, null, 2);
+  }
+  if (RESULT_MODE === "tinh-duyen") {
+    return `Hãy đóng vai chuyên gia Thần Số Học Pythagoras, Nhân Số Học Việt Nam, Chaldean Babylon & Ma Trận Định Mệnh 22 Arcana, giải thích bằng tiếng Việt vui tươi, sâu sắc, dễ hiểu. Dữ liệu dưới đây đã tính chuẩn 100%, bạn KHÔNG cộng nhẩm lại số, hãy phân tích chi tiết Số Chủ Đạo, Tam Giác Vàng (Tên thật), sự cộng hưởng/bù khuyết của Nickname (nếu có), Mũi tên 3x3, 4 Đỉnh Cao và lời khuyên năm ${STATE.numerology.personal_cycles.target_year}:\n\n` + JSON.stringify(STATE.numerology, null, 2);
+  }
+  const focusTxt = document.getElementById("tv-focus")?.value || "";
   const compact = {
     thong_tin_duong_so: {
       ho_ten: STATE.meta.name,
@@ -2327,39 +3139,24 @@ function buildMasterPrompt() {
       noi_sinh: STATE.meta.place
     },
     tuvi_tong_quan: STATE.tuvi.profile,
+    tuvi_12_cung: STATE.tuvi.palaces_by_branch,
     tuvi_cach_cuc: STATE.tuvi.classic_patterns,
     tuvi_van_nam: STATE.tuvi.target_year_fortune,
     bazi_tu_tru: STATE.bazi.pillars,
     bazi_ngu_hanh: STATE.bazi.day_master,
     bazi_dung_than: STATE.bazi.yongshen_guidance,
-    bazi_dai_van_hien_tai: STATE.bazi.dayun.find(d => d.is_current),
-    kiem_chung_cheo_dong_tay: STATE.cross_validation,
-    than_so_hoc: STATE.numerology ? {
-      so_chu_dao: STATE.numerology.core_numbers.life_path,
-      su_menh: STATE.numerology.core_numbers.expression,
-      linh_hon: STATE.numerology.core_numbers.soul_urge,
-      nhan_cach: STATE.numerology.core_numbers.personality,
-      truong_thanh: STATE.numerology.core_numbers.maturity,
-      no_nghiep: STATE.numerology.karmic_debts,
-      mui_ten_day: STATE.numerology.grids_3x3.birth_chart.present_arrows,
-      mui_ten_trong: STATE.numerology.grids_3x3.birth_chart.empty_arrows,
-      dinh_cao_hien_tai: STATE.numerology.pinnacles.find(p => p.is_current),
-      nam_ca_nhan: STATE.numerology.personal_cycles,
-      chaldean_ten: STATE.numerology.chaldean_name,
-      ma_tran_dinh_menh_22: STATE.numerology.destiny_matrix_22
-    } : undefined,
-    que_kinh_dich: (q || icMethod !== "coins_random") ? STATE.iching : undefined
+    bazi_dai_van_hien_tai: STATE.bazi.dayun.find(d => d.is_current)
   };
-  return `Hãy đóng vai chuyên gia Mệnh lý Đông Tây (Tử Vi, Bát Tự, Thần Số Học Pythagoras/Chaldean và Kinh Dịch) giàu kinh nghiệm, giải thích bằng tiếng Việt trẻ trung, gần gũi, dễ hiểu và thực tế. Dưới đây là hồ sơ đã được tính toán bằng code chính xác 100%, bạn KHÔNG tự tính lại sao hay cộng nhẩm con số, hãy dựa đúng vào dữ liệu này để luận giải chi tiết về Tính cách, Sự nghiệp, Tài chính, Tình cảm, Bài học chuyển hóa và Vận hạn năm ${STATE.tuvi.target_year_fortune.target_solar_year}${q ? ' (đồng thời giải đáp kỹ câu hỏi: "' + q + '")' : ''}:\n\n` + JSON.stringify(compact, null, 2);
+  return `Hãy đóng vai chuyên gia Tử Vi Đẩu Số & Bát Tự Tứ Trụ giàu kinh nghiệm, giải thích bằng tiếng Việt gần gũi, dễ hiểu và thực tế. Dữ liệu lá số dưới đây đã được an sao bằng code chính xác 100%, bạn KHÔNG tự an sao lại, hãy luận giải chi tiết trọng tâm: "${focusTxt}" và vận hạn năm ${STATE.tuvi.target_year_fortune.target_solar_year}:\n\n` + JSON.stringify(compact, null, 2);
 }
 
 function renderAiPane() {
   const promptTxt = buildMasterPrompt();
   document.getElementById("pane-ai").innerHTML = `
     <div class="card">
-      <h3>📋 Xuất Hồ Sơ Sang ChatGPT / Google Gemini Web</h3>
+      <h3>📋 Xuất Dữ Liệu Chuẩn Sang ChatGPT / Google Gemini Web</h3>
       <p style="font-size:13.5px;color:var(--sc-ink-soft);">
-        Ngoài tính năng luận giải trực tiếp ở khung trên, bạn có thể bấm <strong>Copy Toàn Bộ Hồ Sơ</strong> bên dưới để dán sang ChatGPT hoặc Gemini cá nhân bất cứ lúc nào:
+        Ngoài tính năng luận giải trực tiếp ở khung trên, bạn có thể bấm <strong>Copy Hồ Sơ</strong> bên dưới để dán sang ứng dụng ChatGPT hoặc Gemini cá nhân bất cứ lúc nào:
       </p>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
         <button type="button" class="btn-pill" onclick="copyMasterPrompt()">📋 Copy Hồ Sơ Hỏi AI</button>
@@ -2382,7 +3179,7 @@ function downloadHtmlReport() {
   const blob = new Blob([STATE.export_html], {type: "text/html;charset=utf-8"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `HoSoTuVi_${(STATE.meta.name || 'LaSo').replace(/\s+/g, '_')}.html`;
+  a.download = `HoSo_${RESULT_MODE}_${(STATE.meta.name || 'KetQua').replace(/\s+/g, '_')}.html`;
   a.click();
 }
 

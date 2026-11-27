@@ -5,8 +5,8 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 11:46 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ TÍCH HỢP SKILL `nateherkai/scroll-craft` VÀO KHO SKILLS + LÀM MỚI TOÀN DIỆN GIAO DIỆN GEN-Z VUI TƯƠI TỐI GIẢN + MAKE-UP 3 ẢNH ĐẠI DIỆN THEO KỊCH BẢN "3 NGƯỜI · 3 PHONG CÁCH XEM" + ĐỒNG BỘ & XUẤT BẢN LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 12:13 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KB-TUVI v3.2: HIỆU ỨNG NAM THẦN BẬT LÒ XO + PHÁO BÔNG HÀI HƯỚC RỒI THU NHỎ KHI CLICK + TÁCH RIÊNG 3 BỘ FORM CHUYÊN BIỆT CHO (1) TỬ VI/TÀI BẠCH, (2) GIEO QUẺ 6 KIỂU, (3) THẦN SỐ HỌC TÊN THẬT × NICKNAME, VÀ ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -30,11 +30,11 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   - *(Giữ nguyên 6 ảnh cũ `hero_celestial.jpg`, `five_elements.jpg`, `iching_oracle.jpg`, `user_photo_1..3.png` để bảo toàn tương thích ngược 100%).*
 - `[x]` **Thiết kế lại giao diện Gen-Z Playful Mystic chuẩn `scroll-craft` (`assets/studio_gui.html` + `assets/scrollcraft/scrollcraft.css` & `scrollcraft.js`):**
   - Nhúng engine thật `scrollcraft.js` + `scrollcraft.css` (không sửa core engine; theme hoàn toàn qua design tokens nền sáng `#FAF8F4`, mực tím than `#1C1635`, 2 font chuẩn tiếng Việt `Baloo 2` + `Nunito`, `box-sizing: border-box` nội tuyến chống dính ô input, zero gradient text, zero em-dash, zero neon nặng nề).
-  - **Kịch bản Peak + Signature Move ("3 Sư Huynh · 3 Phong Cách Xem"):**
-    1. **Hệ Thực Chiến (`guide_1_cool.jpg`)** — Tông đỏ san hô `#D93848`, ưu tiên Tử Vi 12 cung & Bát Tự.
-    2. **Hệ Hỏi Vũ Trụ (`guide_2_cheer.jpg`)** — Tông xanh ngọc `#0D8A74`, tự mở sẵn ngăn Gieo Quẻ Kinh Dịch (đủ 4 cách gieo) & ưu tiên Tab Quẻ Kinh Dịch / Hướng Tốt.
-    3. **Hệ Tình Duyên & Vibe (`guide_3_love.jpg`)** — Tông hồng berry `#C8337B`, ưu tiên Tab Thần Số Học & Chấm điểm Nickname (nhắc thân thiện không cần nhớ giờ sinh).
-  - **Rút gọn Form Khai Mệnh siêu thoáng:** Chỉ hiển thị 4 ô cốt lõi ban đầu (Họ tên, Nickname, Ngày sinh, Giờ sinh); các mục phụ (Giới tính, Loại lịch, Nơi sinh 63 tỉnh thành với `Hải Phòng` đầu bảng, Năm xem hạn, Hệ Thần số học) và ngăn Gieo Quẻ Kinh Dịch được xếp gọn bằng `<details>` sạch sẽ.
+  - **Kịch bản Peak + Hiệu ứng Nam Thần Lò Xo Pháo Bông + 3 Bộ Form Chuyên Biệt:**
+    - Khi bấm vào bất kỳ ô ảnh Nam Thần nào ở trên: trang tự cuộn mượt xuống khu vực nhập liệu, Nam Thần bật nảy lò xo to giữa màn hình kèm pháo bông confetti + icon hài hước (`💰💎🏡` / `🎲🍀🔥` / `💖🦋✨`) và câu thoại vui nhộn trong ~1.65s rồi tự thu nhỏ bay gọn vào khung đầu form.
+    1. **Ô 1 — Soi Tử Vi, Tài Bạch & Điền Trạch (`guide_1_cool.jpg`, đỏ san hô `#D93848`):** Hiện trực tiếp 100% các trường bắt buộc (Họ tên, Giới tính, Loại lịch + Tháng nhuận, Ngày sinh, Giờ phút sinh + chọn nhanh 12 Canh Giờ, Nơi sinh 63 tỉnh thành với `Hải Phòng` đầu bảng, Năm xem hạn, Chủ đề soi sâu Tài Bạch/Điền Trạch/Quan Lộc/Phu Thê) — không giấu trong thu gọn.
+    2. **Ô 2 — Gieo Quẻ Hỏi Việc (`guide_2_cheer.jpg`, xanh ngọc `#0D8A74`):** Ẩn hoàn toàn Họ tên & Ngày sinh; cung cấp chip câu hỏi gợi ý nhanh và **6 phương pháp khởi quẻ đa dạng** (*Vũ trụ gieo hộ 3 xu*, *Tự tung 3 xu trên web có đồng xu lật trực quan*, *Nhập xu thật ngoài đời*, *Chọn con số bất kỳ Mai Hoa*, *Gõ 2 chữ đầu tiên Mai Hoa Tự Số*, *Khởi quẻ theo Giờ động tâm*).
+    3. **Ô 3 — Giải Mã Thần Số Học (`guide_3_love.jpg`, hồng berry `#C8337B`):** Giải thích rõ vai trò 3 tầng dữ liệu: **Ngày sinh (Bắt buộc)** + **Họ tên thật trên khai sinh (Mở Linh hồn, Sứ mệnh, Nhân cách)** + **Tên thường gọi / Nickname (Đo cộng hưởng & bù khuyết ô số trống)**, kèm công cụ chấm điểm so sánh nhiều Nickname mới.
   - Đã kiểm thử bằng headless Chrome trên Desktop (`1440×900`, `1440×3200`) & Tablet (`768px`), xác nhận 0 lỗi JS/API, nút Gemini AI (`#kb-sidebar-ai-btn`, `#kb-toolbar-ai-btn`) hòa hợp 100%, và giữ nguyên chân trang **`❤️ From K.B - Hội BĐS Đồ Sơn ❤️`**.
 - `[x]` **Nâng cấp `gui_server.py` & `sync_from_skill.py`:** Tự phục vụ và đồng bộ thêm `/assets/scrollcraft/*` sang `public/assets/scrollcraft/` cho Vercel CDN.
 

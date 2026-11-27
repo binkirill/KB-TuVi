@@ -509,6 +509,14 @@
 
   window.__kbSaveAiPrefs = saveAiPrefs;
   window.__kbRunGemini = runGeminiInterpret;
+  window.__kbSetPreferredMode = function (mode, focusQuestion) {
+    if (mode) AI_STATE.mode = mode;
+    if (typeof focusQuestion === "string") AI_STATE.focusQuestion = focusQuestion;
+    const modeEl = document.getElementById("inp-ai-mode");
+    if (modeEl && mode) modeEl.value = mode;
+    const focusEl = document.getElementById("inp-ai-focus");
+    if (focusEl && typeof focusQuestion === "string") focusEl.value = focusQuestion;
+  };
   window.__kbRunGeminiMode = function (mode) {
     AI_STATE.mode = mode || "full";
     openAiTab();
