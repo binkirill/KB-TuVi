@@ -146,19 +146,22 @@
     user-select: none;
   }
 
-  /* Stage anchors bubble bottom so portrait never jumps when line length changes */
+  /* Stage overlaps portrait top so speech bubble snuggles right beside character's head like a real comic! */
   .comic-bubble-stage {
-    min-height: 138px;
+    position: relative;
+    z-index: 25;
+    min-height: 108px;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    margin-bottom: 14px;
-    padding-inline: 4px;
+    margin-bottom: -32px;
+    padding-inline: 2px;
+    pointer-events: none;
   }
   @keyframes comicBubblePop {
-    0%   { opacity: 0; transform: translateY(10px) scale(0.86); }
-    60%  { opacity: 1; transform: translateY(-3px) scale(1.03); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0%   { opacity: 0; transform: translate3d(var(--b-tx, 5px), 14px, 0) rotate(calc(var(--b-rot, -2.6deg) * 2.1)) scale(0.82); }
+    58%  { opacity: 1; transform: translate3d(var(--b-tx, 5px), -4px, 0) rotate(calc(var(--b-rot, -2.6deg) * 0.85)) scale(1.04); }
+    100% { opacity: 1; transform: translate3d(var(--b-tx, 5px), 0, 0) rotate(var(--b-rot, -2.6deg)) scale(1); }
   }
   @keyframes mascotTalkNudge {
     0%, 100% { transform: translateY(0) scale(1); }
@@ -166,72 +169,81 @@
     75%      { transform: translateY(1px) scale(0.995) rotate(0.8deg); }
   }
   .comic-bubble {
+    --b-rot: -3.5deg;
+    --b-tx: 6px;
+    --tail-left: 48%;
+    pointer-events: auto;
     position: relative;
-    width: 100%;
-    padding: 0.85rem 1rem 0.9rem;
+    width: 96%;
+    padding: 0.78rem 0.96rem 0.84rem;
     color: #1C1635;
     background: #FFFFFF;
     cursor: pointer;
-    line-height: 1.46;
-    font-size: 0.87rem;
+    line-height: 1.44;
+    font-size: 0.855rem;
     font-weight: 700;
-    transition: transform 150ms ease;
+    transform: translate3d(var(--b-tx), 0, 0) rotate(var(--b-rot));
+    transform-origin: var(--tail-left) 100%;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .comic-bubble:hover { transform: translateY(-2px); }
+  .comic-bubble:hover {
+    transform: translate3d(var(--b-tx), -3px, 0) rotate(calc(var(--b-rot) * 0.55)) scale(1.025);
+  }
   .comic-bubble.is-popping {
-    animation: comicBubblePop 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    animation: comicBubblePop 390ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .comic-badge {
     display: inline-block;
-    font-size: 0.67rem;
+    font-size: 0.66rem;
     font-weight: 800;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    padding: 0.14rem 0.52rem;
+    padding: 0.14rem 0.54rem;
     border-radius: 999px;
-    margin-bottom: 0.36rem;
+    margin-bottom: 0.32rem;
     background: #1C1635;
     color: #FFFFFF;
+    transform: rotate(-1deg);
   }
   .comic-text {
     color: #1C1635;
     word-break: break-word;
   }
 
-  /* --- 7 DISTINCT COMIC SPEECH BUBBLE STYLES --- */
-  /* 1. Classic Marvel/Manga Speech Box */
+  /* --- 7 DISTINCT COMIC SPEECH BUBBLE STYLES (ORGANIC ASYMMETRIC SHAPES & ANGLED TAILS) --- */
+  /* 1. Classic Marvel/Manga Speech Balloon */
   .comic-bubble.bubble-classic {
     background: #FFFFFF;
     border: 3px solid #1C1635;
-    border-radius: 20px;
-    box-shadow: 5px 5px 0 #1C1635;
+    border-radius: 26px 20px 24px 18px / 22px 26px 18px 24px;
+    box-shadow: 5px 6px 0 #1C1635;
   }
   .comic-bubble.bubble-classic::after {
     content: "";
     position: absolute;
-    bottom: -11px;
-    left: 44%;
-    width: 18px;
-    height: 18px;
+    bottom: -13px;
+    left: var(--tail-left, 46%);
+    width: 20px;
+    height: 20px;
     background: #FFFFFF;
     border-right: 3px solid #1C1635;
     border-bottom: 3px solid #1C1635;
-    transform: rotate(45deg);
+    transform: rotate(38deg) skewX(-12deg);
   }
 
   /* 2. Fluffy Thought Cloud */
   .comic-bubble.bubble-cloud {
     background: #FFFDF9;
     border: 2.5px solid #2D225A;
-    border-radius: 32px 36px 28px 34px;
-    box-shadow: 0 8px 0 rgba(45, 34, 90, 0.16), inset 0 -4px 0 rgba(235, 226, 255, 0.55);
+    border-radius: 34px 28px 32px 26px;
+    box-shadow: 4px 7px 0 rgba(45, 34, 90, 0.20), inset 0 -4px 0 rgba(235, 226, 255, 0.55);
   }
   .comic-bubble.bubble-cloud .comic-badge { background: #5B3FA8; }
   .comic-bubble.bubble-cloud::before {
     content: "";
     position: absolute;
-    bottom: -12px;
-    left: 46%;
+    bottom: -13px;
+    left: var(--tail-left, 46%);
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -241,8 +253,8 @@
   .comic-bubble.bubble-cloud::after {
     content: "";
     position: absolute;
-    bottom: -21px;
-    left: 51%;
+    bottom: -23px;
+    left: calc(var(--tail-left, 46%) + 12px);
     width: 9px;
     height: 9px;
     border-radius: 50%;
@@ -254,29 +266,29 @@
   .comic-bubble.bubble-burst {
     background: #FFFBEB;
     border: 3px solid #B91C1C;
-    border-radius: 8px 22px 8px 22px;
-    box-shadow: 0 0 0 3px #FBBF24, 6px 6px 0 #991B1B;
+    border-radius: 10px 26px 9px 24px;
+    box-shadow: 0 0 0 3px #FBBF24, 6px 7px 0 #991B1B;
   }
   .comic-bubble.bubble-burst .comic-badge { background: #DC2626; color: #FEF08A; }
   .comic-bubble.bubble-burst::after {
     content: "";
     position: absolute;
-    bottom: -12px;
-    left: 40%;
-    width: 18px;
-    height: 18px;
+    bottom: -13px;
+    left: var(--tail-left, 42%);
+    width: 20px;
+    height: 20px;
     background: #FFFBEB;
     border-right: 3px solid #B91C1C;
     border-bottom: 3px solid #B91C1C;
-    transform: rotate(45deg);
+    transform: rotate(36deg) skewX(-14deg);
   }
 
   /* 4. Retro 8-Bit RPG Dialog Box */
   .comic-bubble.bubble-pixel {
     background: #F8FAFC;
     border: 3px solid #0F172A;
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 3px #CBD5E1, 5px 5px 0 #0F172A;
+    border-radius: 6px 12px 6px 10px;
+    box-shadow: inset 0 0 0 3px #CBD5E1, 5px 6px 0 #0F172A;
   }
   .comic-bubble.bubble-pixel .comic-badge {
     background: #0F766E;
@@ -285,35 +297,35 @@
   .comic-bubble.bubble-pixel::after {
     content: "";
     position: absolute;
-    bottom: -10px;
-    left: 46%;
-    width: 14px;
-    height: 14px;
+    bottom: -11px;
+    left: var(--tail-left, 46%);
+    width: 16px;
+    height: 16px;
     background: #F8FAFC;
     border-right: 3px solid #0F172A;
     border-bottom: 3px solid #0F172A;
-    transform: rotate(45deg);
+    transform: rotate(42deg) skewX(-8deg);
   }
 
   /* 5. Secret Whisper Dashed Note */
   .comic-bubble.bubble-whisper {
     background: #FEFCE8;
     border: 2.5px dashed #854D0E;
-    border-radius: 22px;
-    box-shadow: 4px 5px 0 rgba(133, 77, 14, 0.22);
+    border-radius: 26px 18px 24px 20px;
+    box-shadow: 5px 6px 0 rgba(133, 77, 14, 0.24);
   }
   .comic-bubble.bubble-whisper .comic-badge { background: #854D0E; }
   .comic-bubble.bubble-whisper::after {
     content: "";
     position: absolute;
-    bottom: -10px;
-    left: 45%;
-    width: 16px;
-    height: 16px;
+    bottom: -11px;
+    left: var(--tail-left, 45%);
+    width: 17px;
+    height: 17px;
     background: #FEFCE8;
     border-right: 2.5px dashed #854D0E;
     border-bottom: 2.5px dashed #854D0E;
-    transform: rotate(45deg);
+    transform: rotate(38deg) skewX(-10deg);
   }
 
   /* 6. Pop-Art Halftone Breaking News */
@@ -322,8 +334,8 @@
     background-image: radial-gradient(rgba(217, 56, 72, 0.12) 1.2px, transparent 1.2px);
     background-size: 9px 9px;
     border: 3px solid #1C1635;
-    border-radius: 16px;
-    box-shadow: 5px 5px 0 #06B6D4, -3px -3px 0 #EC4899;
+    border-radius: 22px 14px 20px 16px;
+    box-shadow: 5px 6px 0 #06B6D4, -3px -3px 0 #EC4899;
   }
   .comic-bubble.bubble-halftone .comic-badge {
     background: linear-gradient(90deg, #EC4899, #8B5CF6);
@@ -331,22 +343,22 @@
   .comic-bubble.bubble-halftone::after {
     content: "";
     position: absolute;
-    bottom: -11px;
-    left: 45%;
-    width: 17px;
-    height: 17px;
+    bottom: -12px;
+    left: var(--tail-left, 45%);
+    width: 18px;
+    height: 18px;
     background: #FFFFFF;
     border-right: 3px solid #1C1635;
     border-bottom: 3px solid #1C1635;
-    transform: rotate(45deg);
+    transform: rotate(38deg) skewX(-12deg);
   }
 
   /* 7. Sparkling Shoujo / Rainbow Slay Frame */
   .comic-bubble.bubble-shoujo {
     background: linear-gradient(135deg, #FFF5FA 0%, #F6F0FF 100%);
     border: 2.5px solid #DB2777;
-    border-radius: 26px;
-    box-shadow: 4px 5px 0 #F472B6, 0 10px 24px rgba(219, 39, 119, 0.20);
+    border-radius: 28px 20px 26px 22px;
+    box-shadow: 5px 6px 0 #F472B6, 0 10px 24px rgba(219, 39, 119, 0.22);
   }
   .comic-bubble.bubble-shoujo .comic-badge {
     background: linear-gradient(90deg, #E11D48, #D97706, #059669, #2563EB, #9333EA);
@@ -354,14 +366,14 @@
   .comic-bubble.bubble-shoujo::after {
     content: "";
     position: absolute;
-    bottom: -10px;
-    left: 46%;
-    width: 16px;
-    height: 16px;
+    bottom: -11px;
+    left: var(--tail-left, 46%);
+    width: 18px;
+    height: 18px;
     background: #F6F0FF;
     border-right: 2.5px solid #DB2777;
     border-bottom: 2.5px solid #DB2777;
-    transform: rotate(45deg);
+    transform: rotate(38deg) skewX(-12deg);
   }
 
   /* Mascot Portrait Stage Card */
@@ -584,6 +596,11 @@
       order: 2;
       min-height: 0;
       margin-bottom: 0;
+    }
+    .comic-bubble {
+      --b-rot: -1.6deg !important;
+      --b-tx: 0px !important;
+      width: 100%;
     }
     .comic-bubble::after,
     .comic-bubble::before { display: none; }
@@ -2837,7 +2854,7 @@
           <div class="mascot-meta">
             <div id="active-guide-title" class="mascot-name">Nam Thần Tử Vi</div>
             <div id="chibi-mood-bar" class="chibi-mood-bar" onclick="event.stopPropagation();" aria-label="Chọn biểu cảm"></div>
-            <div class="mascot-tap-hint">💋 Chạm vào em đi 😘🔥🫦</div>
+            <div class="mascot-tap-hint"><span class="emoji-vivid">💋</span> Chạm vào em đi <span class="emoji-vivid">😘🔥😍</span></div>
           </div>
         </div>
       </aside>
@@ -3738,7 +3755,7 @@ const CHIBI_EXPRESSIONS = {
   "gieo-que": {
     orig:   { icon: "📸", lbl: "📸 Ảnh gốc cực tươi",     img: "/assets/images/guide_2_cheer.jpg",  bubblePref: "bubble-classic" },
     cheer:  { icon: "💪", lbl: "💪 Mạnh mẽ lên nào!",    img: "/assets/images/chibi_c2_cheer.jpg",  bubblePref: "bubble-burst" },
-    toss:   { icon: "🪙", lbl: "🪙 Tung 3 đồng xu cổ",   img: "/assets/images/chibi_c2_toss.jpg",   bubblePref: "bubble-classic" },
+    toss:   { icon: "🎲", lbl: "🎲 Tung 3 đồng xu cổ",   img: "/assets/images/chibi_c2_toss.jpg",   bubblePref: "bubble-classic" },
     laugh:  { icon: "😄", lbl: "😄 Bưng tô bún cười tươi", img: "/assets/images/chibi_c2_laugh.jpg", bubblePref: "bubble-halftone" },
     zen:    { icon: "🧘", lbl: "🧘 Tĩnh tâm định khí",   img: "/assets/images/chibi_c2_zen.jpg",    bubblePref: "bubble-cloud" },
     warn:   { icon: "😅", lbl: "😅 Khoan đã coi chừng!", img: "/assets/images/chibi_c2_warn.jpg",   bubblePref: "bubble-whisper" },
@@ -3990,6 +4007,7 @@ function scheduleNextMascotLine() {
   }, delayMs);
 }
 
+let comicTiltFlip = 1;
 function showMascotLineEntry(entry, explicitMood) {
   const bubbleEl = document.getElementById("comic-bubble");
   const badgeEl = document.getElementById("comic-badge");
@@ -4002,6 +4020,16 @@ function showMascotLineEntry(entry, explicitMood) {
   const styleObj = pickNextBubbleStyle(ACTIVE_VIBE, moodKey);
 
   applyMascotVisual(ACTIVE_VIBE, moodKey);
+
+  // Nghiêng tự nhiên kiểu truyện tranh (luân phiên trái / phải mỗi lần đổi thoại)
+  comicTiltFlip = -comicTiltFlip;
+  const degMag = 2.8 + Math.random() * 1.8;
+  const rotDeg = (comicTiltFlip * degMag).toFixed(2) + "deg";
+  const shiftX = (comicTiltFlip * (5 + Math.random() * 6)).toFixed(1) + "px";
+  const tailLeft = comicTiltFlip < 0 ? "50%" : "40%";
+  bubbleEl.style.setProperty("--b-rot", rotDeg);
+  bubbleEl.style.setProperty("--b-tx", shiftX);
+  bubbleEl.style.setProperty("--tail-left", tailLeft);
 
   COMIC_BUBBLE_STYLES.forEach(s => bubbleEl.classList.remove(s.cls));
   bubbleEl.classList.remove("is-popping");
