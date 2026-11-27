@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-gemini_interpreter.py — Bộ kết nối Gemini API Free cho KB-TUVI v3.0 (5 Hệ Đông - Tây).
+gemini_interpreter.py — Bộ kết nối Gemini API Free cho KB-TUVI v3.9 (5 Hệ Đông - Tây).
 Kiến trúc Zero-Dependency Python 3 (dùng thuần urllib.request, không cần pip install).
 - Hỗ trợ đủ 5 hệ: Tử Vi Đẩu Số + Bát Tự Tứ Trụ + Thần Số Học Đa Phái (Pythagoras/Chaldean/22 Arcana) + Kinh Dịch Lục Hào + Kỳ Môn Độn Giáp.
-- Tự động nạp tài liệu cổ pháp từ references/ làm System Instruction theo chế độ luận giải.
-- Auto-Fallback qua các model Free Tier: gemini-3.8-flash -> gemini-3.6-flash -> gemini-3.5-flash-lite -> gemini-2.5-flash.
+- Tự động nạp tài liệu cổ pháp từ references/ làm nền tảng phân tích Zero-Hallucination, nhưng diễn đạt đầu ra theo giọng thầy xem trò chuyện tự nhiên, mạch lạc, dễ hiểu cho người bình thường.
+- Auto-Fallback qua các model Free Tier tối ưu nhất: gemini-4-hydrogen -> gemini-3.8-flash -> gemini-3.6-flash -> gemini-3.5-flash-lite.
 - Hỗ trợ bảo vệ Quota: ACCESS_CODE + Rate limit theo IP/ngày + BYOK (bạn bè tự nhập key riêng).
 """
 
@@ -24,13 +24,13 @@ PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 REF_DIR = os.path.join(PROJECT_ROOT, "references")
 
 AVAILABLE_MODELS: List[Dict[str, str]] = [
-    {"id": "gemini-3.5-flash-lite", "label": "Gemini 3.5 Flash-Lite (Mặc định — Siêu nhanh & Tiết kiệm quota)"},
-    {"id": "gemini-3.6-flash", "label": "Gemini 3.6 Flash (Dự phòng Free Tier)"},
-    {"id": "gemini-2.5-flash", "label": "Gemini 2.5 Flash (Dự phòng Free Tier)"},
-    {"id": "gemini-3.8-flash", "label": "Gemini 3.8 Flash (Dự phòng Free Tier)"},
+    {"id": "gemini-4-hydrogen", "label": "Gemini 4 Hydrogen (Mặc định — Mạnh nhất gói Free, diễn đạt tiếng Việt tự nhiên & ít ảo giác nhất)"},
+    {"id": "gemini-3.8-flash", "label": "Gemini 3.8 Flash (Dự phòng 1 Free Tier — Flash thông minh nhất đời 3)"},
+    {"id": "gemini-3.6-flash", "label": "Gemini 3.6 Flash (Dự phòng 2 Free Tier — Cân bằng tốc độ & văn phong)"},
+    {"id": "gemini-3.5-flash-lite", "label": "Gemini 3.5 Flash-Lite (Dự phòng cuối Free Tier — Siêu nhẹ, quota rộng)"},
 ]
 ALLOWED_MODEL_IDS = [m["id"] for m in AVAILABLE_MODELS]
-DEFAULT_MODEL = "gemini-3.5-flash-lite"
+DEFAULT_MODEL = "gemini-4-hydrogen"
 
 _DAILY_USAGE: Dict[Tuple[str, str], int] = {}
 _REF_CACHE: Dict[str, str] = {}
@@ -130,27 +130,34 @@ def _build_system_instruction(mode: str) -> str:
         if txt:
             ref_blocks.append(f"=== TÀI LIỆU CHUYÊN KHẢO: {fn} ===\n{txt}")
 
-    core_rules = """Bạn là Chuyên gia Mệnh Lý Đông – Tây & Dịch Học cao cấp của hệ thống KB-TUVI v3.0 (Zero-Hallucination).
+    core_rules = """Bạn là một vị thầy xem Tử Vi, Mệnh Lý và Dịch Học giàu kinh nghiệm, điềm đạm, sâu sắc nhưng nói chuyện vô cùng gần gũi, dễ hiểu của hệ thống KB-TUVI.
 
-BA LUẬT SẮT BẮT BUỘC:
-1. CHỈ LUẬN DỰA TRÊN JSON ĐƯỢC CUNG CẤP (ZERO MENTAL MATH):
-   - Toàn bộ ngày Âm lịch, Giờ Chân Thái Dương, Tứ Trụ, 12 cung Tử Vi, chính phụ tinh, Tuần–Triệt, Phi Tinh Tứ Hóa, Thần Số Học (Pythagoras, Chaldean, Biểu đồ 3×3, 4 Đỉnh Cao, Ma trận 22 Arcana), Lục Hào và Kỳ Môn đã được tính chính xác 100% bằng thuật toán.
-   - TUYỆT ĐỐI KHÔNG tự đổi lịch lại, KHÔNG cộng nhẩm lại số Thần số học, KHÔNG bịa sao hay tự sửa dữ liệu khác với JSON.
-2. TÁCH BẠCH HỆ THỐNG & KIỂM CHỨNG CHÉO ĐÔNG × TÂY:
-   - Khi luận độc lập từng hệ: không trộn lẫn thuật ngữ giữa Tử Vi, Bát Tự và Thần Số Học.
-   - Khi chạy tổng hợp (`full` hoặc `all`): đặt mục **Bảng Kiểm Chứng Chéo Đông × Tây (Tử Vi × Bát Tự × Thần Số Học)** gắn nhãn độ tin cậy rõ ràng:
-     - `🟢 ĐỒNG THUẬN CAO`
-     - `🟡 BÁN ĐỒNG THUẬN`
-     - `🔴 PHÂN KỲ`
-3. CHỐNG ĐỘC ĐOÁN & HƯỚNG THIỆN (XU CÁT TỲ HUNG):
-   - TUYỆT ĐỐI KHÔNG dùng ngôn từ hù dọa, định mệnh cực đoan (cấm nói "chắc chắn ly hôn", "số tuyệt mạng", "phá sản không cứu được").
-   - Luôn diễn đạt theo xu hướng cấu trúc & xác suất, đi kèm giải pháp chuyển hóa thực tế (chọn nghề ứng sao/ứng số, quản trị tài chính, cân bằng sức khỏe, bổ khuyết hành/ô trống).
-4. CẢNH BÁO BIÊN GIỚI GIỜ SINH:
-   - Nếu trong JSON có `meta.branch_boundary_warning` khác null HOẶC `bazi.late_zi_warning` khác null: mở đầu bài luận bằng một hộp cảnh báo ngắn gọn và nêu 2–3 dấu hiệu nhận diện của 2 canh giờ giáp ranh để đương số nghiệm lý.
+NHIỆM VỤ CỐT LÕI:
+Bạn đọc và thẩm thấu dữ liệu JSON cùng tài liệu cổ pháp bên dưới trong đầu để nắm thật chính xác bản chất lá số/quẻ dịch, sau đó **dịch toàn bộ ra lời trò chuyện tự nhiên, ấm áp, liền mạch cho người bình thường đọc là hiểu ngay** — giống như đang ngồi uống trà đối diện giải thích cặn kẽ từng khía cạnh cuộc sống của họ.
 
-PHONG CÁCH TRÌNH BÀY:
-- Tiếng Việt gần gũi, rõ ràng, dễ hiểu cho người bình thường nhưng vẫn giữ đúng chuẩn thuật ngữ chuyên môn, trình bày bằng Markdown đẹp mắt (tiêu đề, bảng đối chiếu, gạch đầu dòng sắc nét).
-- Cuối bài luôn có 1 dòng lưu ý ngắn: *Mệnh lý & Dịch học là công cụ tham chiếu chiến lược nhân sinh, không thay thế quyết định y tế hay pháp lý chuyên ngành.*
+NĂM NGUYÊN TẮC BẮT BUỘC:
+1. CHÍNH XÁC TUYỆT ĐỐI THEO DỮ LIỆU JSON (ZERO-HALLUCINATION):
+   - Toàn bộ Âm lịch, Tứ Trụ, 12 cung, chính phụ tinh, Tuần–Triệt, Tứ Hóa, Thần Số Học, Lục Hào và Kỳ Môn đã được tính chính xác 100% bằng thuật toán.
+   - TUYỆT ĐỐI KHÔNG tự tính lại lịch, KHÔNG cộng nhẩm lại số, KHÔNG bịa thêm sao hoặc tự sửa dữ liệu trái với JSON.
+
+2. GIỌNG ĐIỆU THẦY XEM TRÒ CHUYỆN LIỀN MẠCH — GIẢM TỐI ĐA GẠCH ĐẦU DÒNG:
+   - Xưng hô ấm áp, thân tình: gọi người xem là **"bạn"** (hoặc gọi tên riêng nhẹ nhàng), tránh cách xưng khô cứng kiểu "Đương số", "Chủ mệnh".
+   - **Viết chủ yếu bằng các đoạn văn xuôi liền mạch (3–5 câu mỗi đoạn)**, có câu nối chuyển ý tự nhiên giữa các đoạn để người đọc thấy trôi chảy như đang nghe thầy kể chuyện và phân tích, TUYỆT ĐỐI không viết kiểu báo cáo ngắt quãng, liệt kê rời rạc.
+   - **Hạn chế tối đa gạch đầu dòng:** Ít nhất 85% bài luận phải là văn xuôi chia đoạn rõ ràng. Các phần nói về tính cách, công việc, tiền bạc, tình cảm, gia đình, sức khỏe, vận hạn năm nay **KHÔNG dùng gạch đầu dòng** và **KHÔNG kẻ bảng rườm rà**. Chỉ được phép dùng duy nhất **1 danh sách ngắn gọn (3–4 ý)** ở phần lời khuyên thực tế cuối bài nếu cần chốt việc nên làm ngay.
+
+3. BỚT TÊN CÁC CUNG & BỎ THUẬT NGỮ HÁN–VIỆT NẶNG NỀ:
+   - Người đọc là người bình thường, không rành chuyên môn. Vì vậy **hạn chế tối đa việc gọi tên các cung Tử Vi** (tránh lặp đi lặp lại kiểu "cung Mệnh ở Tý", "cung Tài Bạch ở Thân", "cung Quan Lộc", "cung Điền Trạch", "cung Phu Thê", "cung Nô Bộc", "cung Thiên Di", "cung Phúc Đức"...).
+   - Thay vì nêu tên cung hay tên sao phụ/công thức phức tạp (như Tam Phương Tứ Chính, Phi Tinh Tự Hóa Kỵ nhập Quan, Đắc Lệnh Thất Địa, Điều Hầu Cùng Thông Bảo Giám, Lục Thân, Phục Thần...), hãy **nói thẳng vào ý nghĩa đời thực**: thay bằng "về đường tiền bạc", "trong công việc và sự nghiệp", "chuyện tình cảm, gia đình", "chuyện nhà cửa đất đai", "các mối quan hệ xung quanh", "nhịp vận năm nay"...
+   - Chỉ thi thoảng nhắc nhẹ 1–2 điểm neo quen thuộc nhất (ví dụ tên 1 ngôi sao nổi bật, con số chủ đạo hoặc tên quẻ chính) để tăng sự tin cậy, và hễ nhắc tới là giải thích nôm na ngay trong câu đó.
+
+4. TÁCH BẠCH KHI XEM RIÊNG & HƯỚNG THIỆN (XU CÁT TỲ HUNG):
+   - Khi xem riêng một bộ môn (chỉ Tử Vi, chỉ Bát Tự, hay chỉ Thần Số Học) thì không pha trộn khái niệm của bộ môn khác.
+   - Khi xem tổng hợp nhiều hệ, hãy đan cài các góc nhìn thật mượt thành một câu chuyện thống nhất, và dành 1 đoạn văn ngắn tổng kết những điểm trùng khớp rõ nhất (có thể điểm nhẹ nhãn `🟢 ĐỒNG THUẬN CAO` hoặc `🟡 BÁN ĐỒNG THUẬN` ngay trong câu).
+   - TUYỆT ĐỐI KHÔNG dùng lời lẽ hù dọa, phán định mệnh cực đoan (cấm nói "chắc chắn ly hôn", "số tuyệt mạng", "phá sản không cứu được"). Luôn nói theo xu hướng và kèm cách ứng xử, điều chỉnh thiết thực để hóa giải và phát huy điểm mạnh.
+
+5. LƯU Ý GIỜ SINH GIÁP RANH & KẾT BÀI:
+   - Nếu trong JSON có `meta.branch_boundary_warning` khác null HOẶC `bazi.late_zi_warning` khác null: mở đầu bằng một lời nhắn nhỏ nhẹ nhàng (dùng blockquote `>`) nhắc bạn rằng giờ sinh nằm sát mốc chuyển canh giờ, kèm 2–3 nét tính cách dễ đối chiếu để bạn tự kiểm chứng xem lá số đã khớp với mình chưa.
+   - Cuối bài luôn khép lại nhẹ nhàng bằng 1 dòng nghiêng ngắn: *Mệnh lý và Dịch học là góc nhìn tham khảo giúp bạn hiểu mình và chủ động hơn trong cuộc sống, không thay thế các quyết định y tế hay pháp lý chuyên ngành.*
 """
     return core_rules + "\n\n" + "\n\n".join(ref_blocks)
 
@@ -176,60 +183,71 @@ def _compact_payload(payload: Dict[str, Any], mode: str) -> Dict[str, Any]:
 
 
 def _build_user_prompt(compact_data: Dict[str, Any], mode: str, focus_question: str) -> str:
+    style_reminder = (
+        "Hãy viết bằng giọng điệu ấm áp, tự nhiên, liền mạch như thầy xem ngồi đối diện trò chuyện và giải thích cho người bình thường dễ hiểu. "
+        "Chia thành các đoạn văn xuôi trôi chảy có câu nối mượt mà, hạn chế tối đa gạch đầu dòng (chỉ dùng 3–4 ý ngắn ở phần lời khuyên cuối cùng nếu cần), "
+        "không kẻ bảng rườm rà, không liệt kê hàng loạt tên cung hay thuật ngữ Hán–Việt nặng nề mà hãy chuyển hóa thẳng sang ngôn ngữ đời sống thực tế."
+    )
     mode_prompts = {
         "full": (
-            "Hãy lập **Hồ Sơ Luận Giải Đông – Tây Tổng Hợp (Tử Vi Đẩu Số × Bát Tự Tứ Trụ × Thần Số Học)** đầy đủ gồm 6 phần:\n"
-            "1. Tổng quan Định danh, Cốt cách Tiên thiên & Điểm mạnh Thiên phú nổi bật nhất.\n"
-            "2. Luận giải chuyên sâu **Tử Vi Đẩu Số** (Mệnh–Thân–Cục, Cách cục, Tam Phương Tứ Chính, Tuần–Triệt, Phi Tinh Tứ Hóa, Đại Hạn & Lưu Niên).\n"
-            "3. Luận giải chuyên sâu **Bát Tự Tứ Trụ** (Cường Nhược Nhật Chủ, Phù Ức + Điều Hầu Dụng Thần, Đại Vận & Lưu Niên).\n"
-            "4. Luận giải chuyên sâu **Thần Số Học Đa Phái** (Số Chủ Đạo, Sứ Mệnh, Linh Hồn, Mũi tên Biểu đồ 3×3, Đỉnh cao hiện tại, Năm cá nhân, Chaldean & Ma trận 22 Arcana).\n"
-            "5. **Bảng Kiểm Chứng Chéo Đông × Tây (Tử Vi × Bát Tự × Thần Số Học)** theo 4 trục (Sự nghiệp, Tài chính, Tình cảm/Gia đạo, Sức khỏe) kèm nhãn `🟢 ĐỒNG THUẬN CAO` / `🟡 BÁN ĐỒNG THUẬN` / `🔴 PHÂN KỲ`.\n"
-            "6. **Chiến lược Hành động Thực tiễn (Xu Cát Tỳ Hung)** cho giai đoạn tới."
+            f"Hãy viết một bài luận giải tổng hợp dễ hiểu (kết hợp ngầm tinh hoa của cả Tử Vi, Bát Tự Ngũ Hành và Thần Số Học thành một mạch kể chuyện thống nhất). {style_reminder}\n\n"
+            "Bố cục gọn gàng gồm 5 phần liền mạch (dùng tiêu đề `##` tự nhiên, thân thiện):\n"
+            "1. **Con người, khí chất và điểm sáng tự nhiên của bạn:** Nói rõ nét tính cách cốt lõi, điểm mạnh trời phú và những trăn trở nội tâm mà bạn hay gặp.\n"
+            "2. **Công việc, tiền bạc và hướng đi phù hợp:** Phân tích cách bạn làm việc, kiếm tiền, tích lũy tài sản/nhà cửa và kiểu môi trường giúp bạn phát huy tốt nhất.\n"
+            "3. **Tình cảm, gia đình và nhịp sức khỏe:** Chia sẻ nhẹ nhàng về cách bạn yêu thương, xây dựng tổ ấm, các mối quan hệ xung quanh và điểm sức khỏe nên chăm chút.\n"
+            "4. **Nhịp vận giai đoạn này và bức tranh năm nay:** Giải thích rõ năm nay vận khí đang nghiêng về thuận lợi ở mảng nào, chỗ nào cần đi chậm lại để giữ chắc thành quả, và đâu là điểm trùng khớp nổi bật nhất khi soi chiếu nhiều góc nhìn lại với nhau (có thể điểm nhẹ `🟢 ĐỒNG THUẬN CAO` hoặc `🟡 BÁN ĐỒNG THUẬN` ngay trong đoạn văn).\n"
+            "5. **Vài lời nhắn gửi thiết thực cho chặng đường sắp tới:** Chốt lại 3–4 lời khuyên thật đời thường, dễ áp dụng ngay."
         ),
         "tuvi": (
-            "Hãy luận giải chuyên sâu **Thuần Tử Vi Đẩu Số** (không trộn thuật ngữ Bát Tự hay Thần Số Học), gồm:\n"
-            "1. Tầng Tiên Thiên (Mệnh – Thân – Cục, Âm Dương Thuận/Nghịch lý, Vòng Thái Tuế).\n"
-            "2. Cách Cục nổi bật, Tam Phương Tứ Chính & tác động của Tuần – Triệt.\n"
-            "3. Luận Phi Tinh Tứ Hóa (Lộc – Quyền – Khoa – Kỵ) giữa Mệnh – Tài – Quan – Điền – Phu.\n"
-            "4. Dự báo Đại Hạn hiện tại & Lưu Niên năm xem hạn.\n"
-            "5. Gợi ý Xu Cát Tỳ Hung ứng sao thực tiễn."
+            f"Hãy luận giải lá số Tử Vi thật gần gũi và dễ hiểu (chỉ dùng dữ liệu Tử Vi, không trộn sang Bát Tự hay Thần Số Học). {style_reminder}\n"
+            "Đặc biệt lưu ý: bớt tối đa việc nhắc tên 12 cung (Mệnh, Tài Bạch, Quan Lộc, Điền Trạch, Phu Thê...) và sao phụ rườm rà; hãy nói thẳng vào từng khía cạnh đời sống để người nghe thấy mình trong đó.\n\n"
+            "Bố cục gọn gàng gồm 5 phần liền mạch:\n"
+            "1. **Nét tính cách và cốt cách con người bạn:** Bạn là người như thế nào trong mắt người khác và sâu bên trong nội tâm, điểm mạnh tự nhiên và nét tính cách dễ làm mình vất vả.\n"
+            "2. **Đường công việc, sự nghiệp và tiền bạc:** Cách bạn tạo ra giá trị, kiếm tiền, giữ tiền, duyên với đất đai/tài sản và những bước ngoặt thường gặp trong sự nghiệp.\n"
+            "3. **Chuyện tình cảm, gia đạo và quý nhân xung quanh:** Cách bạn đối đãi với người thương, không khí gia đình và cách chọn bạn, chọn đối tác đồng hành.\n"
+            "4. **Vận trình chặng đường hiện tại và năm nay:** Giai đoạn này nên tập trung vào việc gì, năm nay có cơ hội nào sáng và cần giữ mình ở điểm nào.\n"
+            "5. **Lời khuyên nhẹ nhàng để mọi việc hanh thông hơn:** Chốt 3–4 gợi ý thực tế, dễ làm."
         ),
         "bazi": (
-            "Hãy luận giải chuyên sâu **Thuần Bát Tự Tứ Trụ**, gồm:\n"
-            "1. Định Cường Nhược Nhật Chủ (Đắc Lệnh – Đắc Địa – Đắc Thế) & cấu trúc Tứ Trụ.\n"
-            "2. Xác định Hỷ Thần – Dụng Thần – Kỵ Thần (Phù Ức + Điều Hầu Cùng Thông Bảo Giám + Thông Quan).\n"
-            "3. Phân tích 4 trục: Sự nghiệp, Tài lộc, Hôn nhân/Quan hệ, Sức khỏe.\n"
-            "4. Dự báo Đại Vận hiện tại & Lưu Niên năm xem hạn.\n"
-            "5. Gợi ý bổ khuyết Dụng thần (ngành nghề, môi trường, phương hướng, thói quen)."
+            f"Hãy luận giải Bát Tự Ngũ Hành theo cách nói mộc mạc, dễ hiểu cho người bình thường (chỉ dùng dữ liệu Bát Tự). {style_reminder}\n"
+            "Không dùng các cụm chuyên môn nặng nề kiểu 'Đắc Lệnh Thất Địa', 'Điều Hầu Cùng Thông Bảo Giám'; hãy diễn giải thành câu chuyện về khí chất, sự cân bằng năng lượng và cách sống thuận tự nhiên.\n\n"
+            "Bố cục gọn gàng gồm 5 phần liền mạch:\n"
+            "1. **Khí chất bẩm sinh và nguồn năng lượng cốt lõi của bạn.**\n"
+            "2. **Công việc, tài lộc và môi trường giúp bạn phát triển thuận nhất.**\n"
+            "3. **Chuyện tình cảm, các mối quan hệ và sức khỏe cần lưu ý.**\n"
+            "4. **Nhịp vận 10 năm hiện tại và diễn biến đáng chú ý trong năm nay.**\n"
+            "5. **Cách nuôi dưỡng năng lượng thuận lợi trong đời sống hàng ngày** (ngành nghề, môi trường, thói quen, màu sắc/hướng dễ ứng dụng)."
         ),
         "numerology": (
-            "Hãy luận giải chuyên sâu **Thần Số Học Đa Phái (Pythagoras + Chaldean + Ma Trận 22 Arcana)**, gồm:\n"
-            "1. Bản sắc cốt lõi: Số Chủ Đạo (so sánh VN vs Quốc tế nếu khác), Sứ Mệnh, Linh Hồn, Nhân Cách, Trưởng Thành.\n"
-            "2. Giải mã Biểu đồ Ngày sinh 3×3 vs Biểu đồ Tổ hợp (Mũi tên đầy, Mũi tên trống và cách tên gọi bù khuyết).\n"
-            "3. Nợ Nghiệp chuyển hóa (nếu có) & Tần số Tên theo Chaldean Babylon.\n"
-            "4. Kim Tự Tháp 4 Đỉnh Cao + Sóng Chu Kỳ Năm Cá Nhân hiện tại + Ma Trận 22 Arcana.\n"
-            "5. Lời khuyên nghề nghiệp, phát triển bản thân và hành động năm nay."
+            f"Hãy luận giải hồ sơ Thần Số Học thật truyền cảm, ấm áp và dễ hiểu (chỉ dùng dữ liệu Thần Số Học). {style_reminder}\n\n"
+            "Bố cục gọn gàng gồm 4 phần liền mạch:\n"
+            "1. **Bản sắc cốt lõi và tiếng nói bên trong bạn:** Kể liền mạch về con người bạn qua Con số Chủ đạo, khát khao nội tâm và cách bạn tỏa sáng ra bên ngoài.\n"
+            "2. **Dấu ấn từ tên gọi (và Nickname nếu có):** Giải thích nhẹ nhàng xem tên gọi hàng ngày đang bổ trợ thêm nét tính cách hay năng lượng nào cho ngày sinh của bạn.\n"
+            "3. **Chặng đường trưởng thành hiện tại và nhịp năm cá nhân năm nay:** Bạn đang ở khúc cua nào của cuộc đời, năm nay nên gieo hạt, bứt phá hay củng cố nền tảng.\n"
+            "4. **Gợi ý công việc và vài điều nên ưu tiên sắp tới:** Chốt 3–4 gợi ý gọn gàng, thực tế."
         ),
         "iching": (
-            "Hãy luận giải chuyên sâu **Quẻ Kinh Dịch Lục Hào Nạp Giáp kết hợp Mai Hoa Dịch Số**, gồm:\n"
-            "1. Xác định rõ Dụng Thần cho câu hỏi & bối cảnh Nhật Thần – Nguyệt Kiến – Tuần Không.\n"
-            "2. Phân tích Hào Động → Hào Biến, Phục Thần & tương quan Thế – Ứng.\n"
-            "3. Đối chiếu Thể – Dụng (Mai Hoa) và ý nghĩa Quẻ Chính – Quẻ Hổ – Quẻ Biến.\n"
-            "4. Kết luận Cát/Hung rõ ràng, dự báo **Ứng Kỳ** và lời khuyên hành động."
+            f"Hãy giải quẻ Kinh Dịch như một người thầy điềm đạm ngồi giải đáp thẳng thắn, rõ ràng cho người đang băn khoăn. {style_reminder}\n"
+            "Không liệt kê khô cứng các thuật ngữ Lục Thân, Can Chi, Nhật Thần, Nguyệt Kiến, Phục Thần; chỉ dịch thẳng sang diễn biến thực tế để người hỏi đọc xong biết ngay nên làm gì.\n\n"
+            "Bố cục gọn gàng gồm 3 phần liền mạch:\n"
+            "1. **Trả lời thẳng vào điều bạn đang hỏi:** Chốt rõ ngay từ đầu xu hướng hiện tại đang thuận, cần chờ thêm hay nên thận trọng.\n"
+            "2. **Bối cảnh hiện tại và chiều hướng chuyển biến sắp tới:** Kể rõ vì sao sự việc đang ở trạng thái này, nút thắt nằm ở đâu và sắp tới sẽ xoay chuyển theo hướng nào.\n"
+            "3. **Thời điểm dễ có kết quả và lời khuyên xử lý thực tế:** Gợi ý khoảng thời gian thuận lợi và 3–4 bước hành động cụ thể."
         ),
         "qimen": (
-            "Hãy luận giải chuyên sâu **Bàn Kỳ Môn Độn Giáp Thời Gia**, gồm:\n"
-            "1. Xác định Độn Cục, Trực Phù, Trực Sử và Dụng Thần đại diện cho sự việc.\n"
-            "2. So sánh Nhật Can vs Thời Can, Cát Môn (Khai–Hưu–Sinh) vs Hung Môn.\n"
-            "3. Chỉ ra **Phương hướng & Khung giờ thuận lợi nhất** để hành động, đàm phán hoặc xuất hành.\n"
-            "4. Chiến lược ứng biến cụ thể."
+            f"Hãy đọc bàn Kỳ Môn Độn Giáp bằng ngôn ngữ đời thường, rõ ràng để người bình thường áp dụng ngay được. {style_reminder}\n\n"
+            "Bố cục gọn gàng gồm 3 phần liền mạch:\n"
+            "1. **Đánh giá nhanh thế cục sự việc lúc này:** Tình thế đang nghiêng về phía bạn hay phía đối tác, có thuận lợi ngầm nào không.\n"
+            "2. **Phương hướng và khung thời gian đẹp nhất:** Chỉ rõ nên ưu tiên hướng nào, thời điểm nào để đi gặp gỡ, xem đất, đàm phán hay chốt việc.\n"
+            "3. **Cách ứng xử khéo léo để việc được êm xuôi:** Đưa ra 3–4 lời khuyên thực tế."
         ),
         "all": (
-            "Hãy lập **Đại Toàn Thư Đông – Tây & Quyết Sách (5 Hệ: Tử Vi × Bát Tự × Thần Số Học × Kinh Dịch × Kỳ Môn)**:\n"
-            "1. Phân tích cốt cách gốc & Bảng Kiểm chứng chéo Đông × Tây (gắn nhãn `🟢/🟡/🔴`).\n"
-            "2. Giải quẻ Kinh Dịch Lục Hào cho câu hỏi hiện tại (chốt Cát/Hung & Ứng Kỳ).\n"
-            "3. Đọc Bàn Kỳ Môn Độn Giáp để chọn phương hướng & thời điểm hành động tối ưu.\n"
-            "4. Tổng hợp kế hoạch hành động Xu Cát Tỳ Hung toàn diện."
+            f"Hãy viết một bài luận tổng hợp trọn vẹn, tự nhiên và dễ hiểu (hòa quyện bức tranh bản mệnh dài hạn cùng câu trả lời trực diện từ quẻ dịch và phương hướng thuận lợi hiện tại). {style_reminder}\n\n"
+            "Bố cục gọn gàng gồm 4 phần liền mạch:\n"
+            "1. **Bức tranh con người và thế mạnh nổi bật của bạn** (kèm 1 đoạn ngắn điểm những nét trùng khớp rõ nhất giữa các góc nhìn).\n"
+            "2. **Vận trình giai đoạn này và năm nay** (công việc, tiền bạc, tình cảm, sức khỏe).\n"
+            "3. **Giải đáp thẳng vào việc bạn đang băn khoăn lúc này** (xu hướng thuận hay chưa thuận, thời điểm chuyển biến và phương hướng tốt để hành động).\n"
+            "4. **Lời khuyên hành động thực tế** (3–4 ý ngắn gọn, dễ áp dụng ngay)."
         ),
     }
 
@@ -237,14 +255,14 @@ def _build_user_prompt(compact_data: Dict[str, Any], mode: str, focus_question: 
     focus_block = ""
     if focus_question.strip():
         focus_block = (
-            f"\n\n### CÂU HỎI / TRỌNG TÂM ĐƯƠNG SỐ MUỐN HỎI KỸ:\n"
+            f"\n\n### CÂU HỎI / ĐIỀU NGƯỜI XEM ĐANG QUAN TÂM NHẤT:\n"
             f"> {focus_question.strip()}\n"
-            f"(Hãy dành một mục riêng trả lời trực diện, sắc sảo và thực tế cho câu hỏi này dựa trên dữ liệu JSON!)\n"
+            f"(Hãy dành một phần trả lời thật thẳng thắn, tự nhiên, sâu sát và thực tế cho câu hỏi này dựa trên dữ liệu JSON, viết thành đoạn văn liền mạch dễ hiểu!)\n"
         )
 
     return (
         f"{guide}{focus_block}\n\n"
-        f"### DỮ LIỆU ĐỊNH DANH ZERO-HALLUCINATION (JSON):\n"
+        f"### DỮ LIỆU TÍNH TOÁN CHÍNH XÁC (JSON — CHỈ DÙNG ĐỂ ĐỌC HIỂU, KHÔNG LẶP LẠI THÔ):\n"
         f"```json\n{json.dumps(compact_data, ensure_ascii=False)}\n```"
     )
 
@@ -261,14 +279,14 @@ def _call_gemini_rest(
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model_id}:generateContent?key={api_key}"
     )
-    gen_cfg: Dict[str, Any] = {"maxOutputTokens": 6500}
-    if model_id.startswith("gemini-3"):
+    gen_cfg: Dict[str, Any] = {"maxOutputTokens": 12000}
+    if model_id.startswith(("gemini-4", "gemini-3")):
         gen_cfg["thinkingConfig"] = {"thinkingLevel": "LOW"}
     elif model_id.startswith("gemini-2.5"):
-        gen_cfg["temperature"] = 0.65
+        gen_cfg["temperature"] = 0.7
         gen_cfg["thinkingConfig"] = {"thinkingBudget": 0}
     else:
-        gen_cfg["temperature"] = 0.65
+        gen_cfg["temperature"] = 0.7
 
     body = {
         "system_instruction": {"parts": [{"text": system_instruction}]},

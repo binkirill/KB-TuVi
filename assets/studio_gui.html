@@ -5376,12 +5376,13 @@ function renderQimenPane() {
 }
 
 function buildMasterPrompt() {
+  const voiceRule = `Hãy đóng vai một vị thầy giàu kinh nghiệm đang ngồi trò chuyện trực tiếp, giải thích thật gần gũi, dễ hiểu cho người bình thường. Viết thành các đoạn văn xuôi liền mạch, có câu chuyển ý tự nhiên, giảm tối đa gạch đầu dòng (chỉ dùng 3–4 ý ngắn ở phần lời khuyên cuối bài), không liệt kê hàng loạt tên cung hay thuật ngữ Hán–Việt nặng nề mà dịch thẳng sang câu chuyện đời sống thực tế. Dữ liệu bên dưới đã tính chuẩn 100%, tuyệt đối KHÔNG tự tính lại.`;
   if (RESULT_MODE === "gieo-que") {
     const q = STATE.iching.question || "";
-    return `Hãy đóng vai bậc thầy Kinh Dịch Lục Hào Nạp Giáp, Mai Hoa Dịch Số & Kỳ Môn Độn Giáp, giải thích bằng tiếng Việt trẻ trung, súc tích, dễ hiểu và thực tế. Dữ liệu quẻ dưới đây đã được lập bằng code chuẩn 100%, bạn KHÔNG tự tính lại quẻ, hãy luận giải rõ Cát/Hung, Thế/Ứng, Dụng Thần, Hào Động -> Biến và lời khuyên hành động cụ thể cho câu hỏi "${q}":\n\n` + JSON.stringify({que_kinh_dich: STATE.iching, ky_mon_huong_tot: STATE.qimen}, null, 2);
+    return `${voiceRule} Hãy giải đáp thẳng thắn, rõ ràng xu hướng thuận/chưa thuận, diễn biến sắp tới, thời điểm chuyển biến và lời khuyên xử lý thực tế cho câu hỏi "${q}":\n\n` + JSON.stringify({que_kinh_dich: STATE.iching, ky_mon_huong_tot: STATE.qimen}, null, 2);
   }
   if (RESULT_MODE === "tinh-duyen") {
-    return `Hãy đóng vai chuyên gia Thần Số Học Pythagoras, Nhân Số Học Việt Nam, Chaldean Babylon & Ma Trận Định Mệnh 22 Arcana, giải thích bằng tiếng Việt vui tươi, duyên dáng, sâu sắc, dễ hiểu. Dữ liệu dưới đây đã tính chuẩn 100%, bạn KHÔNG cộng nhẩm lại số, hãy phân tích chi tiết Số Chủ Đạo, Tam Giác Vàng (Tên thật), sự cộng hưởng/bù khuyết của Nickname (nếu có), Mũi tên 3x3, 4 Đỉnh Cao và lời khuyên năm ${STATE.numerology.personal_cycles.target_year}:\n\n` + JSON.stringify(STATE.numerology, null, 2);
+    return `${voiceRule} Hãy kể liền mạch về con người, khát khao nội tâm, dấu ấn từ tên thật và Nickname (nếu có), chặng đường hiện tại cùng lời khuyên thiết thực cho năm ${STATE.numerology.personal_cycles.target_year}:\n\n` + JSON.stringify(STATE.numerology, null, 2);
   }
   const focusTxt = document.getElementById("tv-focus")?.value || "";
   const compact = {
@@ -5400,7 +5401,7 @@ function buildMasterPrompt() {
     bazi_dung_than: STATE.bazi.yongshen_guidance,
     bazi_dai_van_hien_tai: STATE.bazi.dayun.find(d => d.is_current)
   };
-  return `Hãy đóng vai chuyên gia Tử Vi Đẩu Số & Bát Tự Tứ Trụ giàu kinh nghiệm, giải thích bằng tiếng Việt gần gũi, dễ hiểu và thực tế. Dữ liệu lá số dưới đây đã được an sao bằng code chính xác 100%, bạn KHÔNG tự an sao lại, hãy luận giải chi tiết trọng tâm: "${focusTxt}" và vận hạn năm ${STATE.tuvi.target_year_fortune.target_solar_year}:\n\n` + JSON.stringify(compact, null, 2);
+  return `${voiceRule} Hãy phân tích tính cách, công việc, tiền bạc, tình cảm, gia đạo, trọng tâm "${focusTxt}" và bức tranh vận trình năm ${STATE.tuvi.target_year_fortune.target_solar_year}:\n\n` + JSON.stringify(compact, null, 2);
 }
 
 function renderAiPane() {

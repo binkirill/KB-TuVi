@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.8.1 Kuang Bin Studio · Polish & Smart VN Date Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.9 Kuang Bin Studio · Natural Teacher Voice & Gemini 4 Hydrogen Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 14:26 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.8.1: SỬA TƯƠNG PHẢN CHỮ ĐẬM RÕ NÉT CHO BÓNG THOẠI CHÀO MỪNG `.namthan-pop-bubble` TRONG DARK MODE (`gieo-que`) + THAY THÔNG BÁO CHỜ AI HÀI HƯỚC `"🔥💸 Đang đốt token AI của Kuang Bin để luận giải, hãy thương lấy Kuang nhiều hơn nhé 🥺👉👈🍜"` + GIỮ TRỌN BỘ CẢI TIẾN v3.8 (ĐA FONT, TRỘN NGẪU NHIÊN ẢNH GỐC & CHIBI, NHẬP NGÀY SINH CHUẨN VN, TIÊU ĐỀ `PHẦN 01..06` ĐA MÀU) & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 14:30 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.9: CHUYỂN TOÀN BỘ VĂN PHONG LUẬN GIẢI AI SANG GIỌNG THẦY XEM TRÒ CHUYỆN TỰ NHIÊN, LIỀN MẠCH, DỄ HIỂU CHO NGƯỜI BÌNH THƯỜNG (VĂN XUÔI CHIA ĐOẠN, GIẢM TỐI ĐA GẠCH ĐẦU DÒNG, BỚT TÊN CÁC CUNG & THUẬT NGỮ HÁN–VIỆT NẶNG NỀ) + NÂNG CẤP MODEL GEMINI FREE MẶC ĐỊNH SANG `gemini-4-hydrogen` (FALLBACK `gemini-3.8-flash` -> `gemini-3.6-flash` -> `gemini-3.5-flash-lite`, `thinkingLevel: LOW`, `maxOutputTokens: 12000`) + TỐI ƯU TYPOGRAPHY ĐỌC VĂN XUÔI `.ai-report-body` + GIỮ TRỌN BỘ CẢI TIẾN v3.8.1 & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -40,9 +40,11 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
     - Ô 1 (`thuc-chien`): Hiện 100% trường bắt buộc Tử Vi / Tài Bạch / Điền Trạch (không giấu trong thu gọn), bắn pháo hoa liên tục.
     - Ô 2 (`gieo-que`): Ẩn Họ tên & Ngày sinh, cung cấp 6 phương pháp khởi quẻ Kinh Dịch đa dạng, bắn pháo hoa liên tục.
     - Ô 3 (`tinh-duyen`): Nhân vật LGBT (`Bà Hoàng Thần Số Học 🏳️‍🌈💅`), bắn mưa trái tim 7 màu cầu vồng bay lung tung khắp màn hình, giải thích rõ **Ngày sinh + Tên thật + Nickname**, tích hợp sẵn bộ ví dụ & chip chọn nhanh **`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`** ở cả ô nhập Nickname lẫn bàn chấm điểm Nickname cuối trang.
-- `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py`, `api/interpret_edge.js` & `gemini_ai_addon.js` (v3.4.3 — Mặc định `gemini-3.5-flash-lite` + Ẩn chọn Model + Edge Streaming):**
+- `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py`, `api/interpret_edge.js` & `gemini_ai_addon.js` (v3.9 — Mặc định `gemini-4-hydrogen` + Giọng Thầy Xem Tự Nhiên + Edge Streaming):**
   - Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
-  - Khóa mặc định model chính là **`gemini-3.5-flash-lite`** (siêu nhanh & tiết kiệm quota nhất trên gói Free, tự fallback ngầm nếu bận) và **bỏ hoàn toàn ô chọn model Gemini trên giao diện** theo yêu cầu của anh.
+  - Nâng cấp model mặc định gói Free lên **`gemini-4-hydrogen`** (`thinkingLevel: LOW`, `maxOutputTokens: 12000`), chuỗi dự phòng tự động `gemini-3.8-flash` → `gemini-3.6-flash` → `gemini-3.5-flash-lite` (đã loại bỏ `gemini-2.5-flash` sắp bị Google ngừng nhận trực tiếp từ 01/12/2026), tiếp tục ẩn ô chọn model trên giao diện.
+  - Viết lại toàn bộ System Instruction & Prompt các chế độ (`full`, `tuvi`, `bazi`, `numerology`, `iching`, `qimen`, `all`, và `buildMasterPrompt()`) sang văn phong thầy xem trò chuyện trực tiếp, đoạn văn liền mạch dễ hiểu cho người thường, giảm tối đa gạch đầu dòng và bớt nhắc tên 12 cung/thuật ngữ nặng nề.
+  - Nâng cấp CSS đọc bài luận `.ai-report-body` (`15px`, `line-height: 1.88`, giãn đoạn rõ ràng) giúp đọc văn xuôi êm mắt.
   - Khắc phục triệt để lỗi `FUNCTION_INVOCATION_TIMEOUT` trên Vercel bằng kiến trúc **2 bước (Python `action="prepare"` ký HMAC-SHA256 `< 80ms` + Vercel Edge Runtime `api/interpret_edge.js` stream SSE chữ chạy trực tiếp lên tới 300s)**.
 - `[x]` **Landing Page 3 Ảnh Tách Biệt + Nút "Quay trở lại chọn tiếp viên" + 3 Giao Diện/Màu Nền Riêng (v3.5):**
   - Khi mở web (`data-stage="landing"`), chỉ hiện gọn màn hình Landing 3 ảnh tiếp viên ở chính giữa viewport; click vào 1 ảnh mới chuyển sang `data-stage="workspace"` mở khung làm việc kèm pháo hoa / mưa tim 7 màu LGBT bật lò xo.

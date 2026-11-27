@@ -11,7 +11,7 @@
   const SERVER_CFG = {
     server_has_key: false,
     requires_access_code: false,
-    default_model: "gemini-3.5-flash-lite"
+    default_model: "gemini-4-hydrogen"
   };
 
   const AI_STATE = {
@@ -21,7 +21,7 @@
     metaInfo: null,
     mode: "full",
     focusQuestion: "",
-    model: "gemini-3.5-flash-lite",
+    model: "gemini-4-hydrogen",
     elapsed: 0
   };
   let timerHandle = null;
@@ -95,21 +95,27 @@
       }
       .ai-report-body {
         background: #fffefc; border: 1px solid var(--border, #dcd1bf); border-top: none;
-        border-radius: 0 0 8px 8px; padding: 20px 24px; line-height: 1.75; font-size: 14.2px;
-        color: #241f1b;
+        border-radius: 0 0 10px 10px; padding: 24px 28px; line-height: 1.88; font-size: 15px;
+        color: #2b241e;
+      }
+      .ai-report-body p {
+        margin: 0 0 14px;
+      }
+      .ai-report-body p:last-child {
+        margin-bottom: 0;
       }
       .ai-report-body h1, .ai-report-body h2 {
-        color: #8f1d1d; border-bottom: 1.5px solid #eee4d3; padding-bottom: 5px;
-        margin: 22px 0 10px; font-size: 17.5px;
+        color: #8f1d1d; border-bottom: 1.5px solid #eee4d3; padding-bottom: 6px;
+        margin: 26px 0 12px; font-size: 18px; line-height: 1.4;
       }
       .ai-report-body h1:first-child, .ai-report-body h2:first-child { margin-top: 2px; }
-      .ai-report-body h3 { color: #1d4675; margin: 16px 0 7px; font-size: 15.2px; }
-      .ai-report-body h4 { color: #a87928; margin: 12px 0 5px; font-size: 14px; }
-      .ai-report-body ul, .ai-report-body ol { padding-left: 22px; margin: 6px 0 12px; }
-      .ai-report-body li { margin-bottom: 5px; }
+      .ai-report-body h3 { color: #1d4675; margin: 18px 0 8px; font-size: 15.8px; line-height: 1.45; }
+      .ai-report-body h4 { color: #a87928; margin: 14px 0 6px; font-size: 14.5px; }
+      .ai-report-body ul, .ai-report-body ol { padding-left: 22px; margin: 8px 0 15px; }
+      .ai-report-body li { margin-bottom: 8px; }
       .ai-report-body blockquote {
-        margin: 12px 0; padding: 10px 14px; background: #fcf6e8;
-        border-left: 4px solid #a87928; border-radius: 0 6px 6px 0; color: #4a3714;
+        margin: 14px 0; padding: 12px 16px; background: #fcf6e8;
+        border-left: 4px solid #a87928; border-radius: 0 8px 8px 0; color: #4a3714;
       }
       .ai-report-body table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
       .ai-report-body th, .ai-report-body td { border: 1px solid #dcd1bf; padding: 8px 10px; text-align: left; }
@@ -240,7 +246,7 @@
       return JSON.parse(raw);
     } catch (_) {
       if (res.status === 504 || raw.includes("FUNCTION_INVOCATION_TIMEOUT") || raw.includes("An error occurred")) {
-        throw new Error("Máy chủ phản hồi quá thời gian chờ (Timeout). Hãy thử lại hoặc chọn model Gemini 3.5 Flash-Lite siêu nhanh!");
+        throw new Error("Máy chủ phản hồi quá thời gian chờ (Timeout). Bạn vui lòng bấm thử lại sau vài giây nhé!");
       }
       throw new Error(`Phản hồi máy chủ không hợp lệ (HTTP ${res.status}): ${raw.slice(0, 120)}`);
     }
@@ -462,19 +468,19 @@
     }
 
     return `
-      <h3>✨ Luận Giải Trực Tiếp Bằng AI Gemini (Siêu Tốc — Chuẩn Cổ Pháp)</h3>
+      <h3>✨ Thầy AI Luận Giải Dễ Hiểu (Ngôn Ngữ Tự Nhiên · Trò Chuyện Trực Tiếp)</h3>
       ${statusHtml}
       <div class="ai-controls">
         <div class="ai-field" style="margin-bottom:10px;">
-          <label>Chế độ luận giải chuyên sâu</label>
+          <label>Chọn góc nhìn muốn thầy giải thích</label>
           <select id="inp-ai-mode" onchange="window.__kbSaveAiPrefs()">
-            <option value="full" ${AI_STATE.mode === "full" ? "selected" : ""}>⚖️ Đông – Tây Tổng Hợp (Tử Vi × Bát Tự × Thần Số Học — Khuyên dùng)</option>
-            <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Thuần Tử Vi Đẩu Số (12 Cung, Tuần Triệt, Phi Tinh)</option>
-            <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Thuần Bát Tự Tứ Trụ (Dụng Thần, Điều Hầu, Đại Vận)</option>
-            <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Thuần Thần Số Học (Pythagoras, Chaldean, 22 Arcana)</option>
-            <option value="iching" ${AI_STATE.mode === "iching" ? "selected" : ""}>☯️ Giải Quẻ Kinh Dịch Lục Hào + Mai Hoa</option>
-            <option value="qimen" ${AI_STATE.mode === "qimen" ? "selected" : ""}>🧭 Giải Bàn Kỳ Môn Độn Giáp (Hướng & Giờ Tốt)</option>
-            <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Hồ Sơ Đại Toàn Thư (Tổng hợp cả 5 Hệ)</option>
+            <option value="full" ${AI_STATE.mode === "full" ? "selected" : ""}>⚖️ Tổng Hợp Dễ Hiểu (Tử Vi × Ngũ Hành × Thần Số Học — Khuyên dùng)</option>
+            <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Luận Lá Số Tử Vi (Tính cách, Sự nghiệp, Tiền bạc, Tình cảm &amp; Vận năm)</option>
+            <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Luận Bát Tự Ngũ Hành (Khí chất, Năng lượng hợp &amp; Nhịp vận)</option>
+            <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Luận Thần Số Học (Số Chủ Đạo, Tên gọi, Nickname &amp; Năm cá nhân)</option>
+            <option value="iching" ${AI_STATE.mode === "iching" ? "selected" : ""}>☯️ Giải Quẻ Kinh Dịch (Chốt Cát/Hung, Diễn biến &amp; Lời khuyên)</option>
+            <option value="qimen" ${AI_STATE.mode === "qimen" ? "selected" : ""}>🧭 Xem Hướng &amp; Giờ Đẹp (Kỳ Môn Độn Giáp)</option>
+            <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Luận Trọn Gói Toàn Diện (Bản mệnh + Quẻ Dịch + Hướng Đẹp)</option>
           </select>
         </div>
 
@@ -641,7 +647,7 @@
       const json = await res.json();
       if (json.ok && json.config) {
         Object.assign(SERVER_CFG, json.config);
-        AI_STATE.model = "gemini-3.5-flash-lite";
+        AI_STATE.model = SERVER_CFG.default_model || "gemini-4-hydrogen";
         renderSidebarAiStatus();
         mountGeminiCard();
       }

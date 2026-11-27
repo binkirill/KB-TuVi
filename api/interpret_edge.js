@@ -2,7 +2,7 @@
  * Vercel Edge Runtime Streaming Endpoint: POST /api/interpret_edge
  * - Chạy trên V8 Edge Runtime (khởi động < 50ms, stream SSE lên tới 300s trên gói Hobby Free, KHÔNG BAO GIỜ bị lỗi 10s/60s FUNCTION_INVOCATION_TIMEOUT của Python Serverless).
  * - Bảo mật 100%: GEMINI_API_KEY nằm kín trên Server, xác thực chữ ký HMAC-SHA256 từ bước prepare để chống lạm dụng.
- * - Tự động fallback qua danh sách model Free Tier (gemini-3.8-flash -> gemini-3.6-flash -> gemini-3.5-flash-lite -> gemini-2.5-flash) và đặt thinkingLevel="LOW" để trả chữ đầu tiên sau ~1.5s!
+ * - Tự động fallback qua danh sách model Free Tier tối ưu nhất (gemini-4-hydrogen -> gemini-3.8-flash -> gemini-3.6-flash -> gemini-3.5-flash-lite) với thinkingLevel="LOW" để vừa nhanh vừa viết tiếng Việt tự nhiên, mạch lạc!
  */
 export const config = {
   runtime: "edge",
@@ -42,14 +42,15 @@ async function hmacSha256Hex(secret, message) {
 }
 
 function buildGenerationConfig(modelId) {
-  const cfg = { maxOutputTokens: 6500 };
-  if (String(modelId).startsWith("gemini-3")) {
+  const cfg = { maxOutputTokens: 12000 };
+  const id = String(modelId || "");
+  if (id.startsWith("gemini-4") || id.startsWith("gemini-3")) {
     cfg.thinkingConfig = { thinkingLevel: "LOW" };
-  } else if (String(modelId).startsWith("gemini-2.5")) {
-    cfg.temperature = 0.65;
+  } else if (id.startsWith("gemini-2.5")) {
+    cfg.temperature = 0.7;
     cfg.thinkingConfig = { thinkingBudget: 0 };
   } else {
-    cfg.temperature = 0.65;
+    cfg.temperature = 0.7;
   }
   return cfg;
 }
@@ -97,10 +98,10 @@ export default async function handler(req) {
   const mode = String(body.mode || "full");
   const ts = Number(body.ts || 0);
   const sig = String(body.sig || "");
-  const primaryModel = String(body.primary_model || "gemini-3.5-flash-lite");
+  const primaryModel = String(body.primary_model || "gemini-4-hydrogen");
   const modelsToTry = Array.isArray(body.models_to_try) && body.models_to_try.length
     ? body.models_to_try
-    : [primaryModel, "gemini-3.6-flash", "gemini-2.5-flash", "gemini-3.8-flash"];
+    : [primaryModel, "gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite"];
 
   if (!systemInstruction || !userPrompt) {
     return new Response(
