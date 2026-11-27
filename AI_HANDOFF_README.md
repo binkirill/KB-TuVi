@@ -5,8 +5,8 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 14:53 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v4.0: BỔ SUNG THUẬT TOÁN TÍNH VẬN 12 THÁNG CHÍNH XÁC 100% (ZERO-HALLUCINATION) VÀO CẢ 3 ENGINE (`engine_tuvi.py` Lưu Nguyệt Đẩu Quân 12 tháng, `engine_bazi.py` 12 Lưu Nguyệt Tiết Khí + tương tác Xung/Hợp/Hình, `engine_numerology.py` 12 Tháng Cá Nhân) + CHẾ ĐỘ XEM CHUYÊN SÂU THỰC SỰ CHO TỪNG MỤC (6 CHỦ ĐỀ: TỔNG QUAN, TIỀN BẠC & ĐẦU TƯ, NHÀ CỬA & ĐẤT ĐAI, SỰ NGHIỆP, TÌNH CẢM & GIA ĐẠO, VẬN HẠN & SỨC KHỎE 12 THÁNG) VỚI LỘ TRÌNH TỪNG THÁNG 1→12, VẬN HẠN, RỦI RO & CHÚ Ý CỤ THỂ + 6 CHIP CHỌN NHANH TRONG TAB AI + TĂNG `maxOutputTokens: 16384` + GIỮ VĂN PHONG THẦY XEM TỰ NHIÊN LIỀN MẠCH & MODEL `gemini-4-hydrogen` & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 15:01 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v4.0.1: BIẾN BANNER CHỜ ĐỐT TOKEN AI (`.ai-loader`) THÀNH HERO BANNER NỔI BẬT RỰC LỬA (GRADIENT ĐỎ CAM HOÀNG GIA + VIỀN VÀNG KIM PHÁT SÁNG + ÁNH SÁNG LƯỚT SHEEN + VÒNG XOAY LỬA NHÚN + ĐỒNG HỒ ĐẾM GIÂY BADGE VÀNG NỔI + THANH LỬA CHẠY ĐÁY) + GIỮ TRỌN BỘ v4.0 (VẬN 12 THÁNG ZERO-HALLUCINATION, CHUYÊN SÂU 6 CHỦ ĐỀ, VĂN PHONG THẦY XEM TỰ NHIÊN & `gemini-4-hydrogen`) & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`

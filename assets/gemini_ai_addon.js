@@ -123,15 +123,106 @@
       }
       .ai-byok-box summary { cursor: pointer; font-weight: 700; color: var(--navy, #1d4675); }
       .ai-loader {
-        display: flex; align-items: center; gap: 12px; padding: 16px;
-        background: #fcf6e8; border: 1px solid #e7d1a0; border-radius: 8px;
-        font-weight: 700; color: #6e4c10; margin: 12px 0;
+        position: relative; overflow: hidden;
+        display: flex; align-items: center; gap: 16px;
+        padding: 20px 22px 24px; margin: 16px 0 18px;
+        border-radius: 16px;
+        background: linear-gradient(125deg, #2b0912 0%, #8c1623 48%, #c2410c 85%, #d97706 100%);
+        border: 2px solid #fbbf24;
+        box-shadow: 0 14px 34px -8px rgba(185, 28, 28, 0.50), 0 0 0 4px rgba(251, 191, 36, 0.22);
+        color: #ffffff;
+        animation: kbBurnGlow 2.4s ease-in-out infinite;
+      }
+      .ai-loader::before {
+        content: ""; position: absolute; top: 0; bottom: 0; left: -45%; width: 42%;
+        background: linear-gradient(105deg, transparent 0%, rgba(255, 248, 200, 0.22) 50%, transparent 100%);
+        animation: kbBurnSheen 2.8s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .ai-loader-orb {
+        position: relative; width: 52px; height: 52px; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
       }
       .ai-spinner {
-        width: 22px; height: 22px; border: 3px solid #e7d1a0; border-top-color: #8f1d1d;
-        border-radius: 50%; animation: kbAiSpin 0.8s linear infinite; flex-shrink: 0;
+        position: absolute; inset: 0;
+        border: 4px solid rgba(254, 240, 138, 0.28);
+        border-top-color: #fde047; border-right-color: #fb923c;
+        border-radius: 50%; animation: kbAiSpin 0.85s linear infinite;
+      }
+      .ai-loader-fire {
+        font-size: 24px; line-height: 1;
+        animation: kbFireBounce 1.1s ease-in-out infinite;
+      }
+      .ai-loader-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
+      .ai-loader-top {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 7px;
+      }
+      .ai-burn-badge {
+        display: inline-flex; align-items: center; gap: 5px;
+        padding: 3px 10px; border-radius: 999px;
+        background: rgba(254, 240, 138, 0.18); border: 1px solid rgba(253, 224, 71, 0.65);
+        color: #fef08a; font-size: 11px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+      }
+      .ai-burn-dot {
+        width: 7px; height: 7px; border-radius: 50%; background: #fde047;
+        box-shadow: 0 0 8px #fde047; animation: kbDotPulse 1s ease-in-out infinite;
+      }
+      .ai-timer-pill {
+        display: inline-flex; align-items: center; gap: 4px;
+        padding: 3px 11px; border-radius: 999px;
+        background: #fde047; color: #450a0a;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 13px; font-weight: 900;
+        box-shadow: 0 3px 10px rgba(253, 224, 71, 0.45);
+      }
+      .ai-loader-headline {
+        font-size: 16.5px; font-weight: 800; line-height: 1.48; color: #ffffff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      }
+      .ai-burn-hl {
+        color: #fde047;
+        text-decoration: underline;
+        text-decoration-color: rgba(253, 224, 71, 0.55);
+        text-underline-offset: 3px;
+      }
+      .ai-loader-sub {
+        font-size: 13.2px; font-weight: 600; color: #fef3c7;
+        margin-top: 6px; line-height: 1.48; opacity: 0.96;
+      }
+      .ai-burn-bar {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
+        background: rgba(0, 0, 0, 0.28); overflow: hidden;
+      }
+      .ai-burn-bar::after {
+        content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 48%;
+        background: linear-gradient(90deg, transparent, #f97316, #fde047, #ffffff, #f97316, transparent);
+        animation: kbBurnBar 1.6s linear infinite;
+      }
+      @media (max-width: 600px) {
+        .ai-loader { flex-direction: column; align-items: flex-start; padding: 16px 16px 22px; gap: 11px; }
+        .ai-loader-headline { font-size: 15px; }
       }
       @keyframes kbAiSpin { to { transform: rotate(360deg); } }
+      @keyframes kbFireBounce {
+        0%, 100% { transform: scale(1) rotate(-4deg); }
+        50% { transform: scale(1.18) rotate(6deg); }
+      }
+      @keyframes kbBurnSheen {
+        0% { left: -45%; }
+        55%, 100% { left: 125%; }
+      }
+      @keyframes kbBurnBar {
+        0% { left: -48%; }
+        100% { left: 105%; }
+      }
+      @keyframes kbDotPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.35; transform: scale(0.75); }
+      }
+      @keyframes kbBurnGlow {
+        0%, 100% { box-shadow: 0 14px 34px -8px rgba(185, 28, 28, 0.48), 0 0 0 3px rgba(251, 191, 36, 0.20); }
+        50% { box-shadow: 0 16px 40px -6px rgba(234, 88, 12, 0.68), 0 0 0 5px rgba(251, 191, 36, 0.38); }
+      }
       .ai-error {
         padding: 12px 14px; background: #fdf2f0; border: 1px solid #ebb7b2;
         border-left: 4px solid #8f1d1d; border-radius: 7px; color: #7e1515;
@@ -488,13 +579,22 @@
     let resultHtml = "";
     if (AI_STATE.loading) {
       resultHtml = `
-        <div class="ai-loader">
-          <div class="ai-spinner"></div>
-          <div>
-            🔥💸 Đang đốt token AI của Kuang Bin để luận giải, hãy thương lấy Kuang nhiều hơn nhé 🥺👉👈🍜
-            <span id="kb-ai-timer-sec">${AI_STATE.elapsed}s</span>
-            <div style="font-size:12px;font-weight:600;color:#7a6235;margin-top:3px;">Bài luận sẽ hiện chữ trực tiếp ngay khi AI vắt chất xám phân tích xong từng mục... 🤪✨</div>
+        <div class="ai-loader" role="status" aria-live="polite">
+          <div class="ai-loader-orb" aria-hidden="true">
+            <div class="ai-spinner"></div>
+            <span class="ai-loader-fire">🔥</span>
           </div>
+          <div class="ai-loader-content">
+            <div class="ai-loader-top">
+              <span class="ai-burn-badge"><span class="ai-burn-dot"></span> ĐANG ĐỐT TOKEN AI</span>
+              <span class="ai-timer-pill">⏱ <span id="kb-ai-timer-sec">${AI_STATE.elapsed}s</span></span>
+            </div>
+            <div class="ai-loader-headline">
+              🔥💸 Đang <span class="ai-burn-hl">đốt token AI của Kuang Bin</span> để luận giải, hãy <span class="ai-burn-hl">thương lấy Kuang nhiều hơn nhé</span> 🥺👉👈🍜
+            </div>
+            <div class="ai-loader-sub">Bài luận sẽ hiện chữ trực tiếp ngay khi AI vắt chất xám phân tích xong từng mục... 🤪✨</div>
+          </div>
+          <div class="ai-burn-bar" aria-hidden="true"></div>
         </div>`;
     } else if (AI_STATE.error) {
       resultHtml = `<div class="ai-error"><strong>⚠️ Không thể luận giải:</strong> ${escHtml(AI_STATE.error)}</div>`;
