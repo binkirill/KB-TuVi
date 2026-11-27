@@ -1,0 +1,2 @@
+# KB-TUVI Web Studio chạy 100% Zero-Dependency bằng thư viện chuẩn Python 3.
+# Không cần cài thêm thư viện ngoài nào!
