@@ -59,11 +59,22 @@ def load_local_dotenv() -> None:
         pass
 
 
+def _get_server_api_key() -> str:
+    """Đọc API Key từ biến môi trường (hỗ trợ cả GEMINI_API_KEY và GOOGLE_API_KEY, tự lọc dấu nháy thừa)."""
+    raw = (
+        os.environ.get("GEMINI_API_KEY")
+        or os.environ.get("GOOGLE_API_KEY")
+        or os.environ.get("GEMINI_KEY")
+        or ""
+    )
+    return raw.strip().strip('"').strip("'")
+
+
 def get_public_config() -> Dict[str, Any]:
     """Trả về cấu hình công khai cho frontend (KHÔNG bao giờ lộ API Key hay Access Code)."""
     load_local_dotenv()
-    server_key = os.environ.get("GEMINI_API_KEY", "").strip()
-    access_code = os.environ.get("ACCESS_CODE", "").strip()
+    server_key = _get_server_api_key()
+    access_code = os.environ.get("ACCESS_CODE", "").strip().strip('"').strip("'")
     env_model = os.environ.get("GEMINI_MODEL", DEFAULT_MODEL).strip()
     if env_model not in ALLOWED_MODEL_IDS:
         env_model = DEFAULT_MODEL
@@ -250,13 +261,14 @@ def _call_gemini_rest(
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model_id}:generateContent?key={api_key}"
     )
+    gen_cfg: Dict[str, Any] = {"maxOutputTokens": 6500}
+    if not model_id.startswith("gemini-3"):
+        gen_cfg["temperature"] = 0.65
+
     body = {
         "system_instruction": {"parts": [{"text": system_instruction}]},
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
-        "generationConfig": {
-            "temperature": 0.65,
-            "maxOutputTokens": 6500,
-        },
+        "generationConfig": gen_cfg,
     }
     raw = json.dumps(body, ensure_ascii=False).encode("utf-8")
     req = urllib.request.Request(
@@ -327,18 +339,18 @@ def interpret_with_gemini(
     using_byok = bool(user_key)
 
     if using_byok:
-        api_key = user_key
+        api_key = user_key.strip('"').strip("'")
     else:
-        api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+        api_key = _get_server_api_key()
         if not api_key:
             raise PermissionError(
                 "Máy chủ chưa cấu hình GEMINI_API_KEY. "
                 "Vui lòng nhập Gemini API Key miễn phí của bạn tại mục '🔑 Dùng API Key riêng' "
-                "(hoặc chủ web cấu hình biến GEMINI_API_KEY trên Vercel/Render)."
+                "(hoặc chủ web cấu hình biến GEMINI_API_KEY trên Vercel/Render rồi bấm Redeploy)."
             )
-        expected_code = os.environ.get("ACCESS_CODE", "").strip()
+        expected_code = os.environ.get("ACCESS_CODE", "").strip().strip('"').strip("'")
         if expected_code and provided_code != expected_code:
-            raise PermissionError("Mã mời (Access Code) không đúng. Hãy hỏi chủ web để lấy mã hoặc nhập Gemini API Key riêng của bạn.")
+            raise PermissionError("Mã mời (Access Code) chưa đúng hoặc đang để trống. Hãy nhập đúng ACCESS_CODE đã cài trên Vercel (hoặc xóa biến ACCESS_CODE trên Vercel nếu muốn mở công khai không cần mã).")
         limit_err = _check_and_increment_rate_limit(client_ip)
         if limit_err:
             raise RuntimeError(limit_err)

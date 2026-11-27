@@ -218,11 +218,17 @@
   function saveAiPrefs() {
     const keyEl = document.getElementById("inp-user-apikey");
     const codeEl = document.getElementById("inp-access-code");
+    const sideCodeEl = document.getElementById("kb-sidebar-access-code");
     const modeEl = document.getElementById("inp-ai-mode");
     const modelEl = document.getElementById("inp-ai-model");
     const focusEl = document.getElementById("inp-ai-focus");
     if (keyEl) localStorage.setItem("kb_tuvi_user_api_key", keyEl.value.trim());
-    if (codeEl) localStorage.setItem("kb_tuvi_access_code", codeEl.value.trim());
+    if (codeEl) {
+      localStorage.setItem("kb_tuvi_access_code", codeEl.value.trim());
+      if (sideCodeEl && sideCodeEl.value !== codeEl.value) sideCodeEl.value = codeEl.value.trim();
+    } else if (sideCodeEl) {
+      localStorage.setItem("kb_tuvi_access_code", sideCodeEl.value.trim());
+    }
     if (modeEl) AI_STATE.mode = modeEl.value;
     if (modelEl) AI_STATE.model = modelEl.value;
     if (focusEl) AI_STATE.focusQuestion = focusEl.value;
@@ -421,6 +427,49 @@
     card.innerHTML = buildGeminiCardHtml();
   }
 
+  function renderSidebarAiStatus() {
+    const aiBtn = document.getElementById("kb-sidebar-ai-btn");
+    if (!aiBtn) return;
+    let box = document.getElementById("kb-sidebar-ai-status");
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "kb-sidebar-ai-status";
+      box.style.cssText = "margin-top:7px;padding:8px 11px;border-radius:10px;font-size:12.2px;line-height:1.45;";
+      aiBtn.insertAdjacentElement("afterend", box);
+    }
+    const savedCode = localStorage.getItem("kb_tuvi_access_code") || "";
+    const savedKey = localStorage.getItem("kb_tuvi_user_api_key") || "";
+    if (SERVER_CFG.server_has_key) {
+      box.style.background = "#e9f9f2";
+      box.style.border = "1px solid #b4e4ce";
+      box.style.color = "#136548";
+      if (SERVER_CFG.requires_access_code) {
+        box.innerHTML = `
+          <div style="font-weight:700;">🟢 Đã nhận Gemini API Key trên Server (${escHtml(SERVER_CFG.default_model)})</div>
+          <div style="margin-top:5px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <span style="font-size:11.5px;color:#4f4438;font-weight:600;">🔐 Mã mời (ACCESS_CODE):</span>
+            <input type="password" id="kb-sidebar-access-code" value="${escHtml(savedCode)}"
+              placeholder="Nhập mã mời anh đặt trên Vercel..."
+              oninput="localStorage.setItem('kb_tuvi_access_code', this.value.trim())"
+              style="flex:1;min-width:150px;padding:5px 8px;border:1px solid #b4e4ce;border-radius:7px;background:#fff;color:#1C1635;font-size:12px;font-family:inherit;">
+          </div>
+        `;
+      } else {
+        box.innerHTML = `<div style="font-weight:700;">🟢 Đã kết nối Gemini API Free (${escHtml(SERVER_CFG.default_model)}) · Bấm nút trên để luận giải ngay!</div>`;
+      }
+    } else if (savedKey) {
+      box.style.background = "#eef4ff";
+      box.style.border = "1px solid #c5daf6";
+      box.style.color = "#1d4675";
+      box.innerHTML = `<div style="font-weight:700;">🔑 Đang dùng Gemini API Key cá nhân trên trình duyệt</div>`;
+    } else {
+      box.style.background = "#fff8e7";
+      box.style.border = "1px solid #f0d799";
+      box.style.color = "#805600";
+      box.innerHTML = `<div style="font-weight:600;">🟡 Chưa phát hiện Key trên Server (nếu vừa thêm trên Vercel hãy Redeploy) hoặc bấm để nhập Key riêng.</div>`;
+    }
+  }
+
   function injectShortcutButtons() {
     // 1. Nút tắt trên Sidebar (ngay sau nút Xem Lá Số Ngay)
     const primaryBtn = document.querySelector(".sidebar .btn-primary");
@@ -431,6 +480,8 @@
       aiBtn.className = "btn-ai-cta";
       aiBtn.textContent = "✨ LUẬN GIẢI AI (GEMINI)";
       aiBtn.onclick = async function () {
+        const sideCode = document.getElementById("kb-sidebar-access-code");
+        if (sideCode) localStorage.setItem("kb_tuvi_access_code", sideCode.value.trim());
         if (!getStudioState() && typeof window.runAnalyze === "function") {
           await window.runAnalyze();
         }
@@ -441,6 +492,7 @@
       };
       primaryBtn.insertAdjacentElement("afterend", aiBtn);
     }
+    renderSidebarAiStatus();
 
     // 2. Nút tắt trên thanh công cụ kết quả
     const toolbar = document.querySelector(".toolbar-right");
@@ -495,11 +547,12 @@
 
   async function loadServerConfig() {
     try {
-      const res = await fetch("/api/config");
+      const res = await fetch("/api/config", { cache: "no-store" });
       const json = await res.json();
       if (json.ok && json.config) {
         Object.assign(SERVER_CFG, json.config);
         AI_STATE.model = SERVER_CFG.default_model || "gemini-3.8-flash";
+        renderSidebarAiStatus();
         mountGeminiCard();
       }
     } catch (e) {

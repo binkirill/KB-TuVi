@@ -40,7 +40,9 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
     - Ô 1 (`thuc-chien`): Hiện 100% trường bắt buộc Tử Vi / Tài Bạch / Điền Trạch (không giấu trong thu gọn), bắn pháo hoa liên tục.
     - Ô 2 (`gieo-que`): Ẩn Họ tên & Ngày sinh, cung cấp 6 phương pháp khởi quẻ Kinh Dịch đa dạng, bắn pháo hoa liên tục.
     - Ô 3 (`tinh-duyen`): Nhân vật LGBT (`Bà Hoàng Thần Số Học 🏳️‍🌈💅`), bắn mưa trái tim 7 màu cầu vồng bay lung tung khắp màn hình, giải thích rõ **Ngày sinh + Tên thật + Nickname**, tích hợp sẵn bộ ví dụ & chip chọn nhanh **`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`** ở cả ô nhập Nickname lẫn bàn chấm điểm Nickname cuối trang.
-- `[x]` **Nâng cấp `gui_server.py` & `sync_from_skill.py`:** Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
+- `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py` & `gemini_ai_addon.js` (v3.4.1):**
+  - Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
+  - Tự động đọc cả `GEMINI_API_KEY` lẫn `GOOGLE_API_KEY` (lọc dấu nháy thừa), gỡ bỏ tham số `temperature` đã deprecated trên dòng model `gemini-3.*` (`gemini-3.8-flash`, `gemini-3.6-flash`, `gemini-3.5-flash-lite`), và hiển thị trực tiếp hộp trạng thái `🟢 Đã nhận Gemini API Key trên Server` kèm ô nhập nhanh `ACCESS_CODE` (nếu có bật trên Vercel) ngay dưới nút AI ở cột trái.
 
 ### Các hướng có thể triển khai tiếp theo yêu cầu anh (`[ ]`)
 - `[ ]` Bổ sung hiệu ứng âm thanh vui nhộn nhẹ (tiếng pháo nổ / tiếng lắc xu, có nút bật/tắt) nếu anh muốn.
