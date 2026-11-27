@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.4 Kuang Bin Studio · Scroll-Craft Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.5 Kuang Bin Studio · 3-Room Theme Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 12:45 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.4: THAY ẢNH Ô 3 BẰNG `guide_3_lgbt.jpg` (TỪ `3.png` TRONG DOWNLOAD MAKE-UP CẦU VỒNG LGBT) + THU NHỎ 3 KHUNG ẢNH GỌN VÀO TRUNG TÂM (`max-width: 820px`) + HIỆU ỨNG Ô ẢNH HƠI MỜ KHI NGHỈ, RÊ CHUỘT VÀO MỚI RÕ NÉT & CHẠY ANIMATION + KHẮC PHỤC TRIỆT ĐỂ FONT TIẾNG VIỆT BẰNG `Be Vietnam Pro` + VÍ DỤ NICKNAME VUI NHỘN (`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`) + HIỆU ỨNG CHIỀU SÂU `/scroll-craft` (MULTI-PLANE POINTER PARALLAX, SPOTLIGHT, MAGNET, ASTROLABE WHEEL THEO CUỘN TRANG) & ĐỒNG BỘ LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 13:38 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.5: TÁCH RIÊNG LANDING PAGE CHỈ HIỂN THỊ 3 ẢNH TIẾP VIÊN (`data-stage="landing"`) → CLICK VÀO TỪNG ẢNH MỚI MỞ KHUNG LÀM VIỆC (`data-stage="workspace"`) + BỔ SUNG NÚT `← Quay trở lại chọn tiếp viên` (TRÊN TOP-BAR VÀ ĐẦU KHUNG LÀM VIỆC) + 3 GIAO DIỆN & MÀU NỀN RIÊNG BIỆT CHO TỪNG ẢNH (PHÒNG HOÀNG KIM ĐỎ-VÀNG, PHÒNG NGỌC BÍCH DARK-EMERALD, PHÒNG CẦU VỒNG PASTEL HỒNG-TÍM) & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -43,6 +43,13 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
 - `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py` & `gemini_ai_addon.js` (v3.4.1):**
   - Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
   - Tự động đọc cả `GEMINI_API_KEY` lẫn `GOOGLE_API_KEY` (lọc dấu nháy thừa), gỡ bỏ tham số `temperature` đã deprecated trên dòng model `gemini-3.*` (`gemini-3.8-flash`, `gemini-3.6-flash`, `gemini-3.5-flash-lite`), và hiển thị trực tiếp hộp trạng thái `🟢 Đã nhận Gemini API Key trên Server` kèm ô nhập nhanh `ACCESS_CODE` (nếu có bật trên Vercel) ngay dưới nút AI ở cột trái.
+- `[x]` **Landing Page 3 Ảnh Tách Biệt + Nút "Quay trở lại chọn tiếp viên" + 3 Giao Diện/Màu Nền Riêng (v3.5):**
+  - Khi mở web (`data-stage="landing"`), chỉ hiện gọn màn hình Landing 3 ảnh tiếp viên ở chính giữa viewport; click vào 1 ảnh mới chuyển sang `data-stage="workspace"` mở khung làm việc kèm pháo hoa / mưa tim 7 màu LGBT bật lò xo.
+  - Bổ sung nút **`← Quay trở lại chọn tiếp viên`** (`backToGuideSelection()`) nổi bật ở cả thanh Top Bar lẫn đầu khung làm việc.
+  - Mỗi ảnh sở hữu 1 giao diện, màu nền và chất liệu khác hẳn nhau:
+    - **Ô 1 (`thuc-chien` — Tử Vi):** *Phòng Hoàng Kim Đế Vương* (nền lụa vàng champagne, topbar/footer đỏ nâu hoàng gia `#2A1115`, viền đôi vàng kim cổ điển).
+    - **Ô 2 (`gieo-que` — Gieo Quẻ):** *Phòng Ngọc Bích Đêm Huyền Bí* (Dark Mode xanh ngọc bích sâu `#071D22`, kính tối viền neon ngọc `#2DD4BF`, độ tương phản cao).
+    - **Ô 3 (`tinh-duyen` — Thần Số Học):** *Phòng Cầu Vồng Mộng Mơ* (nền pastel hồng – tím – xanh aurora, viền topbar cầu vồng 7 sắc, card bo tròn mềm `28px`, sidebar đảo sang cánh phải khi hiện kết quả).
 
 ### Các hướng có thể triển khai tiếp theo yêu cầu anh (`[ ]`)
 - `[ ]` Bổ sung hiệu ứng âm thanh vui nhộn nhẹ (tiếng pháo nổ / tiếng lắc xu, có nút bật/tắt) nếu anh muốn.

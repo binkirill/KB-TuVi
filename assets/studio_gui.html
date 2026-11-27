@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" data-vibe="thuc-chien">
+<html lang="vi" data-vibe="thuc-chien" data-stage="landing">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,6 +75,395 @@
   html[data-vibe="tinh-duyen"] {
     --sc-accent: #C8337B;
     --sc-accent-soft: #FDF0F7;
+  }
+
+  /* ==========================================================================
+     STAGE SWITCHING: LANDING (3 ẢNH TIẾP VIÊN) <-> WORKSPACE (KHUNG LÀM VIỆC)
+     ========================================================================== */
+  html[data-stage="landing"] #act-studio,
+  html[data-stage="landing"] .astrolabe-bridge,
+  html[data-stage="landing"] .workspace-only {
+    display: none !important;
+  }
+  html[data-stage="workspace"] #act-guides,
+  html[data-stage="workspace"] .astrolabe-bridge,
+  html[data-stage="workspace"] .landing-only {
+    display: none !important;
+  }
+  html[data-stage="landing"] .guides-act {
+    min-height: calc(100vh - 185px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: clamp(1.2rem, 2.8vw, 2.2rem) clamp(2rem, 3.8vw, 3rem);
+  }
+  html[data-stage="workspace"] .studio-act {
+    border-top: none;
+    min-height: calc(100vh - 150px);
+    padding-top: clamp(1.1rem, 2.2vw, 1.75rem);
+    animation: fadeTab 320ms var(--sc-ease-out);
+  }
+
+  /* Back-to-landing toolbar & theme badge */
+  .workspace-back-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-width: 770px;
+    margin: 0 auto 1.1rem;
+    transition: max-width 240ms var(--sc-ease-out);
+  }
+  .studio-shell.is-wide .workspace-back-bar {
+    max-width: none;
+  }
+  .btn-back-guide {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    padding: 0.56rem 1.15rem;
+    border-radius: var(--sc-r-pill);
+    border: 1.5px solid var(--gold-line);
+    background: #FFFFFF;
+    color: var(--sc-ink);
+    font-weight: 800;
+    font-size: 0.86rem;
+    cursor: pointer;
+    box-shadow: var(--sc-e1);
+    transition: transform 160ms var(--sc-ease-out), background-color 180ms var(--sc-ease-out), border-color 180ms var(--sc-ease-out), color 180ms var(--sc-ease-out);
+  }
+  .btn-back-guide:hover {
+    transform: translateX(-3px);
+    background: var(--sc-accent);
+    border-color: var(--sc-accent);
+    color: #FFFFFF;
+  }
+  .room-theme-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    padding: 0.42rem 0.92rem;
+    border-radius: var(--sc-r-pill);
+    background: var(--sc-accent-soft);
+    border: 1.5px solid color-mix(in oklab, var(--sc-accent) 32%, transparent);
+    color: var(--sc-accent);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+  .guide-theme-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--sc-ink-soft);
+    margin: -0.25rem 0 0.55rem;
+  }
+
+  /* ==========================================================================
+     3 DISTINCT WORKSPACE THEMES (MỖI TIẾP VIÊN 1 GIAO DIỆN & MÀU NỀN RIÊNG BIỆT)
+     ========================================================================== */
+
+  /* --- PHÒNG 1 (Ô 1 - TỬ VI): HOÀNG KIM ĐẾ VƯƠNG (Vàng Champagne + Đỏ Son Cổ Điển) --- */
+  html[data-stage="workspace"][data-vibe="thuc-chien"] {
+    --sc-canvas: #F6E9CE;
+    --sc-surface: #FFFDF7;
+    --sc-surface-2: #FBF1DB;
+    --sc-ink: #2A1610;
+    --sc-ink-soft: #6C4A3A;
+    --sc-accent: #B91C2E;
+    --sc-accent-soft: #FCEAED;
+    --border: #DFC394;
+    --gold-line: #C79233;
+    --sc-r-md: 12px;
+    --sc-r-lg: 15px;
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] body {
+    background-color: #F6E9CE;
+    background-image:
+      radial-gradient(circle at 12% 14%, rgba(185, 28, 46, 0.13), transparent 44%),
+      radial-gradient(circle at 88% 82%, rgba(199, 146, 51, 0.24), transparent 48%),
+      linear-gradient(155deg, #FBF1DC 0%, #F2E0BC 52%, #F9EED7 100%);
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar {
+    background: linear-gradient(90deg, rgba(44, 16, 20, 0.96), rgba(62, 22, 26, 0.96));
+    border-bottom: 2px solid #C79233;
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .wordmark { color: #FCE2A6; }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .wordmark-badge {
+    background: rgba(252, 226, 166, 0.14);
+    border-color: rgba(252, 226, 166, 0.36);
+    color: #FCE2A6;
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .btn-back-guide,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .btn-pill--ghost {
+    background: rgba(255, 248, 232, 0.12);
+    color: #FFF5DD;
+    border-color: rgba(242, 207, 131, 0.45);
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .btn-back-guide:hover,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .top-bar .btn-pill--ghost:hover {
+    background: #C79233;
+    border-color: #FCE2A6;
+    color: #240E10;
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .studio-act { background: transparent; }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .sidebar,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .card,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .welcome-strip,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .cheer-strip,
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .profile-bar {
+    background: linear-gradient(180deg, #FFFDF8 0%, #FDF6E7 100%);
+    border: 2px solid #CFA04B;
+    box-shadow: 0 14px 34px -10px rgba(96, 48, 12, 0.18), inset 0 0 0 3px rgba(207, 160, 75, 0.12);
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .btn-primary {
+    background: linear-gradient(135deg, #C82333 0%, #8E111E 100%);
+    border: 1px solid rgba(252, 226, 166, 0.5);
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .site-footer {
+    background: #241013;
+    border-top: 2px solid #C79233;
+    color: #E8D5B7;
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .site-footer .footer-note { color: #D4BDA0; }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .site-footer .footer-copyright {
+    background: rgba(252, 226, 166, 0.12);
+    border-color: #C79233;
+    color: #FCE2A6;
+  }
+
+  /* --- PHÒNG 2 (Ô 2 - GIEO QUẺ): BÍ CẢNH NGỌC BÍCH ĐÊM (Dark Emerald Mystic Glass) --- */
+  html[data-stage="workspace"][data-vibe="gieo-que"] {
+    --sc-canvas: #071D22;
+    --sc-surface: #0D2B33;
+    --sc-surface-2: #113842;
+    --sc-ink: #E8FFFA;
+    --sc-ink-soft: #96CFCB;
+    --sc-accent: #14B8A6;
+    --sc-accent-soft: rgba(20, 184, 166, 0.16);
+    --ink: #E8FFFA;
+    --muted: #96CFCB;
+    --border: #1E535F;
+    --gold-line: #2DD4BF;
+    --panel: #0D2B33;
+    --navy: #7DD3FC;
+    --navy-soft: rgba(56, 189, 248, 0.16);
+    --jade: #34D399;
+    --jade-soft: rgba(16, 185, 129, 0.18);
+    --crimson: #FB7185;
+    --crimson-soft: rgba(244, 63, 94, 0.18);
+    --gold: #FBBF24;
+    --gold-soft: rgba(251, 191, 36, 0.16);
+    --sc-r-md: 16px;
+    --sc-r-lg: 20px;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] body {
+    background-color: #071D22;
+    background-image:
+      radial-gradient(circle at 16% 18%, rgba(20, 184, 166, 0.24), transparent 44%),
+      radial-gradient(circle at 84% 78%, rgba(14, 165, 233, 0.20), transparent 46%),
+      linear-gradient(155deg, #06171C 0%, #0B2A32 52%, #051519 100%);
+    color: #E8FFFA;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ambient-mandala { opacity: 0.28; }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .top-bar {
+    background: rgba(6, 24, 29, 0.90);
+    border-bottom: 1.5px solid rgba(45, 212, 191, 0.35);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .top-bar .wordmark { color: #99F6E4; }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-back-guide,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-pill--ghost,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .action-btn {
+    background: rgba(13, 47, 56, 0.92);
+    color: #CCFBF1;
+    border-color: rgba(45, 212, 191, 0.42);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-back-guide:hover,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-pill--ghost:hover,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .action-btn:hover {
+    background: #14B8A6;
+    border-color: #5EEAD4;
+    color: #042126;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .studio-act { background: transparent; }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sidebar,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .card,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .welcome-strip,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .cheer-strip,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .profile-bar {
+    background: rgba(11, 39, 46, 0.90);
+    border: 1.5px solid rgba(45, 212, 191, 0.36);
+    box-shadow: 0 18px 42px -12px rgba(0, 0, 0, 0.55);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .vibe-pill,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ic-method-card,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .topic-chip,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .coin-box,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-sec,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .coin-pick-btn,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .tab-btn,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .qm-box {
+    background: rgba(7, 27, 33, 0.88);
+    border-color: #1F5B67;
+    color: #CCFBF1;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ic-method-card.is-selected,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .topic-chip.is-picked,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .qm-box.cat-door {
+    background: rgba(20, 184, 166, 0.22);
+    border-color: #2DD4BF;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .vibe-pill.active,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .tab-btn.active {
+    background: linear-gradient(135deg, #14B8A6, #059669);
+    color: #032221;
+    border-color: #5EEAD4;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field input,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field select,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field textarea,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .prompt-area {
+    background: #061A20;
+    border-color: #21606E;
+    color: #ECFEFF;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field input:focus,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field select:focus,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .field textarea:focus {
+    background: #08232B;
+    border-color: #2DD4BF;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-primary {
+    background: linear-gradient(135deg, #14B8A6 0%, #059669 100%);
+    color: #042220;
+    box-shadow: 0 10px 26px rgba(20, 184, 166, 0.35);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .btn-demo {
+    background: rgba(20, 184, 166, 0.10);
+    border-color: rgba(45, 212, 191, 0.45);
+    color: #99F6E4;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] #kb-sidebar-ai-btn {
+    background: linear-gradient(135deg, #164E63, #0F766E) !important;
+    border-color: #5EEAD4 !important;
+    color: #FFFFFF !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] table.std-table th {
+    background: #082229;
+    color: #99F6E4;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] table.std-table td {
+    background: rgba(9, 32, 38, 0.72);
+    color: #E8FFFA;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] #pane-iching tr[style*="FFF8E6"] td {
+    background: rgba(251, 191, 36, 0.16) !important;
+    color: #FEF3C7 !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] #pane-iching div[style*="background:#FCF9F2"] {
+    background: #082229 !important;
+    border-color: #21606E !important;
+    color: #E8FFFA !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ai-controls {
+    background: #082229 !important;
+    border-color: #21606E !important;
+    color: #E8FFFA !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ai-controls label { color: #99F6E4 !important; }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ai-controls input,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ai-controls select {
+    background: #061A20 !important;
+    border-color: #21606E !important;
+    color: #ECFEFF !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .ai-byok-box {
+    background: #061A20 !important;
+    border-color: #21606E !important;
+    color: #96CFCB !important;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .site-footer {
+    background: rgba(5, 20, 24, 0.94);
+    border-top: 1.5px solid rgba(45, 212, 191, 0.30);
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .site-footer .footer-copyright {
+    background: rgba(20, 184, 166, 0.16);
+    border-color: #2DD4BF;
+    color: #99F6E4;
+  }
+
+  /* --- PHÒNG 3 (Ô 3 - THẦN SỐ HỌC): MỘNG ĐIỆP CẦU VỒNG (Pastel Pink-Lavender + Soft Pillowy UI) --- */
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] {
+    --sc-canvas: #FDF0F8;
+    --sc-surface: #FFFFFF;
+    --sc-surface-2: #FCEBF6;
+    --sc-ink: #38143A;
+    --sc-ink-soft: #7B4B7E;
+    --sc-accent: #C82578;
+    --sc-accent-soft: #FFEBF6;
+    --border: #F2C4E4;
+    --gold-line: #E879F9;
+    --sc-r-sm: 14px;
+    --sc-r-md: 20px;
+    --sc-r-lg: 28px;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] body {
+    background-color: #FDF0F8;
+    background-image:
+      radial-gradient(circle at 12% 16%, rgba(244, 114, 182, 0.28), transparent 44%),
+      radial-gradient(circle at 88% 18%, rgba(192, 132, 252, 0.26), transparent 44%),
+      radial-gradient(circle at 50% 90%, rgba(96, 165, 250, 0.20), transparent 48%),
+      linear-gradient(145deg, #FFF0F7 0%, #F5ECFF 50%, #EDF6FF 100%);
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .top-bar {
+    background: rgba(255, 245, 252, 0.90);
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, #FF0018, #FF8C00, #FFEE00, #00C853, #00B0FF, #AA00FF) 1;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-act { background: transparent; }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .sidebar,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .card,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .welcome-strip,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .cheer-strip,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .profile-bar {
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid #F0B2E5;
+    box-shadow: 0 16px 38px -12px rgba(200, 37, 120, 0.18);
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .field input,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .field select,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .field textarea,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .num-rule-tile,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .num-hero,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .num-kpi,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .grid3-box {
+    background: #FFF7FC;
+    border-color: #F2C4E4;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results {
+    grid-template-columns: minmax(0, 1fr) 365px;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .sidebar {
+    order: 2;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .main {
+    order: 1;
+  }
+  @media (max-width: 1100px) {
+    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results {
+      grid-template-columns: 1fr;
+    }
+    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .sidebar,
+    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .main {
+      order: initial;
+    }
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .site-footer {
+    background: linear-gradient(90deg, rgba(255, 240, 248, 0.94), rgba(244, 234, 255, 0.94), rgba(236, 247, 255, 0.94));
+    border-top: 2px solid #F0B2E5;
   }
 
   html, body {
@@ -1665,15 +2054,16 @@
 <!-- HEADER: KUANG BIN STUDIO + FUNNY MYSTIC EMOJIS -->
 <header class="top-bar">
   <div class="top-bar__inner">
-    <a href="#act-guides" class="wordmark">
+    <a href="#act-guides" class="wordmark" onclick="event.preventDefault(); backToGuideSelection();">
       <span class="wm-orb">🔮</span>
       <span>🧙‍♂️ Kuang Bin Studio</span>
       <span class="wm-spark">✨</span>
       <span class="wordmark-badge">🧿 Huyền Học Vui Nhộn 🤪</span>
     </a>
     <nav class="top-nav" aria-label="Điều hướng nhanh">
-      <button type="button" class="btn-pill btn-pill--ghost" data-sc-magnet="0.22" onclick="loadSampleProfile()">✨ Xem Mẫu Thử</button>
-      <a href="#act-studio" class="btn-pill" data-sc-magnet="0.22">👇 Điền Thông Tin</a>
+      <span class="wordmark-badge landing-only" style="margin-left:0;">👇 Chọn 1 tiếp viên để vào phòng riêng</span>
+      <button type="button" class="btn-back-guide workspace-only" onclick="backToGuideSelection()">← Quay trở lại chọn tiếp viên</button>
+      <button type="button" class="btn-pill btn-pill--ghost workspace-only" data-sc-magnet="0.22" onclick="loadSampleProfile()">✨ Xem Mẫu Thử</button>
     </nav>
   </div>
 </header>
@@ -1709,6 +2099,7 @@
             <div class="guide-body">
               <span class="guide-tag">Ô 1 · Tử Vi · Tài Bạch · Điền Trạch</span>
               <h2 class="guide-title">Nam Thần Tử Vi &amp; Tài Lộc</h2>
+              <span class="guide-theme-chip">🎨 Giao diện: Hoàng Kim Đế Vương (Vàng Đỏ)</span>
               <p class="guide-desc">
                 Lập lá số 12 cung theo ngày giờ sinh, soi nét cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc &amp; Bát Tự.
               </p>
@@ -1737,6 +2128,7 @@
             <div class="guide-body">
               <span class="guide-tag">Ô 2 · Lục Hào · Mai Hoa · Kỳ Môn</span>
               <h2 class="guide-title">Nam Thần Gieo Quẻ</h2>
+              <span class="guide-theme-chip">🎨 Giao diện: Ngọc Bích Đêm Huyền Bí (Dark)</span>
               <p class="guide-desc">
                 "Mạnh mẽ lên nào!" Khỏi cần ngày sinh: tự tung xu, nhờ gieo hộ, chọn số, gõ 2 chữ hoặc khởi theo giờ!
               </p>
@@ -1765,6 +2157,7 @@
             <div class="guide-body">
               <span class="guide-tag">Ô 3 · Thần Số Học · Hệ Cầu Vồng 🏳️‍🌈</span>
               <h2 class="guide-title">Bà Hoàng Thần Số Học 💅</h2>
+              <span class="guide-theme-chip">🎨 Giao diện: Hồng Tím Cầu Vồng Mộng Mơ</span>
               <p class="guide-desc">
                 Đang bấm máy check var số mệnh cưng đó nha! "Mình yêu nhau nhé", để chị soi Ngày sinh &amp; Nickname xem độ slay 🌈
               </p>
@@ -1794,7 +2187,11 @@
 
 <!-- ZONE 2: WORKING SURFACE CÓ HOA VĂN CỔ PHÁP + SPOTLIGHT + 3 BỘ FORM RIÊNG BIỆT -->
 <section id="act-studio" class="studio-act" data-sc-act="flow">
-  <div class="studio-shell">
+  <div id="studio-shell" class="studio-shell">
+    <div class="workspace-back-bar">
+      <button type="button" class="btn-back-guide" onclick="backToGuideSelection()">← Quay trở lại chọn tiếp viên</button>
+      <span id="room-theme-badge" class="room-theme-badge">🎨 Phòng Hoàng Kim Đế Vương</span>
+    </div>
     <div id="studio-grid" class="studio-grid">
 
       <!-- SIDEBAR / INPUT CARD (Giữ class .sidebar và .btn-primary cho plugin Gemini AI) -->
@@ -2203,6 +2600,7 @@ const LGBT_RAINBOW_STOPS = ["#FF0018", "#FF8C00", "#FFEE00", "#00C853", "#00B0FF
 const GUIDES = {
   "thuc-chien": {
     img: "/assets/images/guide_1_cool.jpg",
+    roomTheme: "🎨 Phòng Hoàng Kim Đế Vương (Vàng Đỏ Cổ Điển)",
     title: "Nam Thần Tử Vi, Tài Bạch & Điền Trạch",
     say: "Điền đầy đủ các mục bắt buộc bên dưới để an chuẩn 12 cung Tử Vi, Tài Bạch, Điền Trạch & Bát Tự nhé!",
     fxType: "fireworks",
@@ -2225,6 +2623,7 @@ const GUIDES = {
   },
   "gieo-que": {
     img: "/assets/images/guide_2_cheer.jpg",
+    roomTheme: "🎨 Phòng Ngọc Bích Đêm Huyền Bí (Dark Emerald)",
     title: "Nam Thần Gieo Quẻ Kinh Dịch",
     say: "\"Mạnh mẽ lên nào!\" Không cần ngày sinh hay tên tuổi. Nhập việc cần hỏi rồi chọn 1 trong 6 kiểu gieo quẻ bên dưới!",
     fxType: "fireworks",
@@ -2247,6 +2646,7 @@ const GUIDES = {
   },
   "tinh-duyen": {
     img: "/assets/images/guide_3_lgbt.jpg",
+    roomTheme: "🎨 Phòng Cầu Vồng Mộng Mơ (Hồng Tím Pastel)",
     title: "Bà Hoàng Thần Số Học 🏳️‍🌈💅",
     say: "\"Mình yêu nhau nhé cưng ơi!\" Nhập Ngày sinh + Tên khai sinh + Nickname (VD: Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...) để chị đẹp hệ cầu vồng soi trọn tần số năng lượng!",
     fxType: "lgbt_hearts",
@@ -2655,10 +3055,21 @@ function applyVisibleTabsForMode(modeKey) {
   if (defBtn) switchTab(g.defaultTab, defBtn);
 }
 
+function backToGuideSelection() {
+  dismissNamThanPop();
+  stopContinuousFx();
+  document.documentElement.setAttribute("data-stage", "landing");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function selectGuide(vibeKey, fromTopCard) {
   const g = GUIDES[vibeKey] || GUIDES["thuc-chien"];
   ACTIVE_VIBE = vibeKey;
   document.documentElement.setAttribute("data-vibe", vibeKey);
+
+  if (fromTopCard) {
+    document.documentElement.setAttribute("data-stage", "workspace");
+  }
 
   document.querySelectorAll(".guide-card").forEach(el => {
     el.classList.toggle("is-selected", el.getAttribute("data-card-vibe") === vibeKey);
@@ -2678,6 +3089,17 @@ function selectGuide(vibeKey, fromTopCard) {
   document.getElementById("main-demo-btn").textContent = g.demoLbl;
   document.getElementById("welcome-strip-title").textContent = g.welcomeTitle;
   document.getElementById("welcome-strip-desc").textContent = g.welcomeDesc;
+  const themeBadge = document.getElementById("room-theme-badge");
+  if (themeBadge && g.roomTheme) themeBadge.textContent = g.roomTheme;
+
+  // Khi chuyển sang tiếp viên khác với kết quả cũ, trả về khung nhập sạch sẽ của phòng mới
+  if (STATE && RESULT_MODE !== vibeKey) {
+    document.getElementById("studio-grid").classList.remove("has-results");
+    const shell = document.getElementById("studio-shell");
+    if (shell) shell.classList.remove("is-wide");
+    document.getElementById("welcome-view").style.display = "block";
+    document.getElementById("result-view").style.display = "none";
+  }
 
   if (typeof window.__kbSetPreferredMode === "function") {
     const focusQ = vibeKey === "thuc-chien"
@@ -2687,11 +3109,10 @@ function selectGuide(vibeKey, fromTopCard) {
   }
 
   if (fromTopCard) {
-    const studioEl = document.getElementById("act-studio");
-    if (studioEl) studioEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "instant" });
     setTimeout(() => {
       triggerNamThanSpringShow(vibeKey);
-    }, 340);
+    }, 140);
   }
 }
 
@@ -2902,7 +3323,13 @@ function initDefaults() {
   const startVibe = (qMode === "gieo-que" || qMode === "iching")
     ? "gieo-que"
     : ((qMode === "tinh-duyen" || qMode === "numerology") ? "tinh-duyen" : "thuc-chien");
-  selectGuide(startVibe, params.get("pop") === "1");
+  if (qMode) {
+    document.documentElement.setAttribute("data-stage", "workspace");
+    selectGuide(startVibe, params.get("pop") === "1");
+  } else {
+    document.documentElement.setAttribute("data-stage", "landing");
+    selectGuide(startVibe, false);
+  }
 
   if (window.ScrollCraft && typeof window.ScrollCraft.mount === "function") {
     window.ScrollCraft.mount();
@@ -2917,6 +3344,7 @@ function esc(s) {
 
 function loadSampleProfile() {
   dismissNamThanPop();
+  document.documentElement.setAttribute("data-stage", "workspace");
   if (ACTIVE_VIBE === "thuc-chien") {
     document.getElementById("tv-name").value = "Nguyễn Minh Quân";
     document.getElementById("tv-gender").value = "nam";
@@ -3120,6 +3548,8 @@ async function runAnalyze() {
   document.getElementById("result-guide-msg").textContent = g.resultMsg;
 
   document.getElementById("studio-grid").classList.add("has-results");
+  const shellEl = document.getElementById("studio-shell");
+  if (shellEl) shellEl.classList.add("is-wide");
   document.getElementById("welcome-view").style.display = "none";
   document.getElementById("result-view").style.display = "block";
 
