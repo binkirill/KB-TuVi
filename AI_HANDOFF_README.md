@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.1 Gen-Z Playful Mystic Scroll-Craft)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.4 Kuang Bin Studio · Scroll-Craft Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 12:30 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.3: BỎ ZONE ĐẦU VÀO THẲNG 3 Ô ẢNH + ĐỔI TÊN `🔮🧙‍♂️ Kuang Bin Studio ✨` + ẢNH NỀN SÁNG HOA VĂN VÂN MÂY CỔ PHÁP (`bg_mystic_pattern.jpg`) + HỌA TIẾT VIỀN VÀNG & ANIMATION TOÀN TRANG + PHÁO HOA BẮN LIÊN TỤC (Ô 1 & 2) / MƯA TRÁI TIM 7 MÀU LGBT BAY LUNG TUNG (Ô 3) CHỜ CLICK BẤT KỲ MỚI THU NHỎ, VÀ ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 12:45 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.4: THAY ẢNH Ô 3 BẰNG `guide_3_lgbt.jpg` (TỪ `3.png` TRONG DOWNLOAD MAKE-UP CẦU VỒNG LGBT) + THU NHỎ 3 KHUNG ẢNH GỌN VÀO TRUNG TÂM (`max-width: 820px`) + HIỆU ỨNG Ô ẢNH HƠI MỜ KHI NGHỈ, RÊ CHUỘT VÀO MỚI RÕ NÉT & CHẠY ANIMATION + KHẮC PHỤC TRIỆT ĐỂ FONT TIẾNG VIỆT BẰNG `Be Vietnam Pro` + VÍ DỤ NICKNAME VUI NHỘN (`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`) + HIỆU ỨNG CHIỀU SÂU `/scroll-craft` (MULTI-PLANE POINTER PARALLAX, SPOTLIGHT, MAGNET, ASTROLABE WHEEL THEO CUỘN TRANG) & ĐỒNG BỘ LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -23,28 +23,28 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
 - `[x]` **Bộ chỉ thị trung tâm Skill v3.0 & 5 Engine tính toán chuẩn Zero-Hallucination:** `SKILL.md`, `scripts/core_calendar.py`, `scripts/engine_tuvi.py`, `scripts/engine_bazi.py`, `scripts/engine_numerology.py`, `scripts/web_numerology_sdk.js`, `scripts/engine_iching.py`, `scripts/gemini_interpreter.py`, `assets/gemini_ai_addon.js`, và kho cổ thư `references/`.
 - `[x]` **Bộ ảnh minh họa Gen-Z Huyền Học mới + Make-up vui tươi 3 ảnh đại diện (`assets/images/`):**
   - `assets/images/bg_mystic_pattern.jpg`: Ảnh nền sáng màu kem ngọc trai vẽ hoa văn vân mây cát tường, hoa sen, nhật nguyệt & vòng tinh bàn vàng champagne tinh xảo.
-  - `assets/images/hero_genz_sky.jpg`: Nền trời mây pastel ngọc trai + vòng tinh bàn vàng champagne sáng thoáng (Risograph-gouache).
-  - `assets/images/elements_genz_banner.jpg`: 5 bùa Ngũ Hành (Kim–Mộc–Thủy–Hỏa–Thổ) phong cách pastel hiện đại.
-  - `assets/images/guide_1_cool.jpg`: Make-up từ `user_photo_1.png` (giữ nguyên khuôn mặt & dáng kính râm ngược cực ngầu, thêm viền sticker trắng, tia sao vàng trên mắt kính, la bàn & chòm sao nền san hô – kem nắng).
-  - `assets/images/guide_2_cheer.jpg`: Make-up từ `user_photo_2.png` (giữ nguyên biểu cảm hài hước dễ thương, xóa sạch chữ cũ, thêm nền tia nắng xanh bạc hà, 3 đồng xu Kinh Dịch vàng lấp lánh & tua rua đỏ may mắn).
-  - `assets/images/guide_3_love.jpg`: Make-up từ `user_photo_3.png` (giữ nguyên cặp đôi ngọt ngào, xóa sạch chữ cũ, thêm viền sticker, bướm phát sáng, trái tim bokeh & chòm sao nền hồng phấn – tím oải hương).
-  - *(Giữ nguyên 6 ảnh cũ `hero_celestial.jpg`, `five_elements.jpg`, `iching_oracle.jpg`, `user_photo_1..3.png` để bảo toàn tương thích ngược 100%).*
-- `[x]` **Thiết kế lại giao diện Gen-Z Playful Mystic chuẩn `scroll-craft` (`assets/studio_gui.html` + `assets/scrollcraft/scrollcraft.css` & `scrollcraft.js`):**
-  - Nhúng engine thật `scrollcraft.js` + `scrollcraft.css` (không sửa core engine; theme hoàn toàn qua design tokens nền sáng `#FAF8F4`, mực tím than `#1C1635`, 2 font chuẩn tiếng Việt `Baloo 2` + `Nunito`, `box-sizing: border-box` nội tuyến chống dính ô input, zero gradient text, zero em-dash, zero neon nặng nề).
-  - **Kịch bản Vào Thẳng 3 Ô + Pháo Hoa Liên Tục / Tim 7 Màu LGBT (Click Mới Thu Nhỏ) + 3 Bộ Form Chuyên Biệt:**
-    - Đổi thương hiệu đầu trang thành **`🔮🧙‍♂️ Kuang Bin Studio ✨`** kèm badge **`🧿 Huyền Học Vui Nhộn 🤪`**, bỏ hẳn Hero đầu trang để mở web là hiện trọn 3 khung ảnh ngay màn hình đầu tiên, kết hợp họa tiết góc vàng cổ pháp (`#mystic-corner-svg`), vòng hào quang xoay, mandala nền xoay chậm và ánh sáng quét mượt.
-    - Khi bấm vào 1 trong 3 ô ảnh: trang tự cuộn mượt xuống khu vực nhập liệu, nhân vật bật nảy lò xo to giữa màn hình và **giữ nguyên bắn hiệu ứng liên tục cho tới khi người dùng click bất kỳ đâu mới thu nhỏ bay vào đầu form**:
-      - **Ô 1 & Ô 2 (Nam Thần Tử Vi & Nam Thần Gieo Quẻ):** Bắn pháo hoa nhiều đợt liên tục khắp màn hình kèm tia sáng, vòng sóng và icon hài hước.
-      - **Ô 3 (Bà Hoàng Thần Số Học 🏳️‍🌈💅 — Nhân vật LGBT):** Bắn mưa **trái tim 7 màu cầu vồng LGBT** kèm `🏳️‍🌈🌈💅🦄` bay lượn lung tung khắp màn hình và câu thoại tấu hài cực duyên.
-    1. **Ô 1 — Soi Tử Vi, Tài Bạch & Điền Trạch (`guide_1_cool.jpg`, đỏ san hô `#D93848`):** Hiện trực tiếp 100% các trường bắt buộc (Họ tên, Giới tính, Loại lịch + Tháng nhuận, Ngày sinh, Giờ phút sinh + chọn nhanh 12 Canh Giờ, Nơi sinh 63 tỉnh thành với `Hải Phòng` đầu bảng, Năm xem hạn, Chủ đề soi sâu Tài Bạch/Điền Trạch/Quan Lộc/Phu Thê) — không giấu trong thu gọn.
-    2. **Ô 2 — Gieo Quẻ Hỏi Việc (`guide_2_cheer.jpg`, xanh ngọc `#0D8A74`):** Ẩn hoàn toàn Họ tên & Ngày sinh; cung cấp chip câu hỏi gợi ý nhanh và **6 phương pháp khởi quẻ đa dạng** (*Vũ trụ gieo hộ 3 xu*, *Tự tung 3 xu trên web có đồng xu lật trực quan*, *Nhập xu thật ngoài đời*, *Chọn con số bất kỳ Mai Hoa*, *Gõ 2 chữ đầu tiên Mai Hoa Tự Số*, *Khởi quẻ theo Giờ động tâm*).
-    3. **Ô 3 — Giải Mã Thần Số Học (`guide_3_love.jpg`, hồng berry `#C8337B`):** Giải thích rõ vai trò 3 tầng dữ liệu: **Ngày sinh (Bắt buộc)** + **Họ tên thật trên khai sinh (Mở Linh hồn, Sứ mệnh, Nhân cách)** + **Tên thường gọi / Nickname (Đo cộng hưởng & bù khuyết ô số trống)**, kèm công cụ chấm điểm so sánh nhiều Nickname mới.
-  - Đã kiểm thử bằng headless Chrome trên Desktop (`1440×900`, `1440×3200`) & Tablet (`768px`), xác nhận 0 lỗi JS/API, nút Gemini AI (`#kb-sidebar-ai-btn`, `#kb-toolbar-ai-btn`) hòa hợp 100%, và giữ nguyên chân trang **`❤️ From K.B - Hội BĐS Đồ Sơn ❤️`**.
-- `[x]` **Nâng cấp `gui_server.py` & `sync_from_skill.py`:** Tự phục vụ và đồng bộ thêm `/assets/scrollcraft/*` sang `public/assets/scrollcraft/` cho Vercel CDN.
+  - `assets/images/hero_genz_sky.jpg` & `assets/images/elements_genz_banner.jpg`: Trời mây pastel & 5 bùa Ngũ Hành hiện đại.
+  - `assets/images/guide_1_cool.jpg`: Make-up từ `user_photo_1.png` (Nam Thần Tử Vi & Tài Lộc).
+  - `assets/images/guide_2_cheer.jpg`: Make-up từ `user_photo_2.png` (Nam Thần Gieo Quẻ).
+  - `assets/images/guide_3_lgbt.jpg`: Make-up từ `C:\Users\Quang\Downloads\3.png` (nhân vật áo đen JUMP tô son đỏ bấm điện thoại, xóa sạch timestamp góc phải dưới, bọc viền sticker kem trắng trên nền cầu vồng 7 màu, trái tim LGBT & tinh bàn Thần Số Học).
+  - *(Giữ nguyên các ảnh cũ `hero_celestial.jpg`, `five_elements.jpg`, `iching_oracle.jpg`, `guide_3_love.jpg`, `user_photo_1..3.png` để bảo toàn tương thích ngược 100%).*
+- `[x]` **Thiết kế giao diện Kuang Bin Studio v3.4 chuẩn `scroll-craft` (`assets/studio_gui.html` + `assets/scrollcraft/scrollcraft.css` & `scrollcraft.js`):**
+  - **Typography Tiếng Việt Sắc Nét Tuyệt Đối:** Chuyển toàn bộ tiêu đề tiếng Việt, nút bấm (`Click mở khung Tử Vi`, `Click mở khung Gieo Quẻ`, `Click mở Thần Số Học`), nhãn & nội dung sang **`Be Vietnam Pro`** (`letter-spacing: 0`, không dùng `preserve-3d` hay `backdrop-filter` làm nhòe bitmap chữ tiếng Việt), giữ `Baloo 2` cho logo chữ Latin `Kuang Bin Studio`.
+  - **Bố cục 3 Khung Ảnh Thu Nhỏ Gọn Giữa Tâm & Hover Focus-Reveal:**
+    - Gom cụm `.guides-grid` vào trung tâm (`max-width: 820px; margin-inline: auto; gap: 1.15rem;`), tỷ lệ khung gọn gàng vừa tầm mắt trên mọi màn hình laptop/PC.
+    - Mặc định khi chưa rê chuột (desktop fine pointer): 3 ô ảnh hơi mờ nhẹ (`opacity: 0.68; filter: blur(1.3px) saturate(0.76);`) và **tạm dừng toàn bộ animation** (`animation-play-state: paused`). Khi rê chuột vào ô nào, ô đó lập tức rõ nét 100% (`opacity: 1; filter: none`), nổi bật lên và kích hoạt đồng bộ vòng hào quang xoay, bùa lắc lư, sao lấp lánh, tia sáng lướt qua ảnh và mũi tên nhấp nháy.
+  - **Hiệu ứng Chiều Sâu `/scroll-craft` Nâng Cao:**
+    - Multi-plane pointer parallax (`--mx`, `--my` nội suy mượt `0.08` trên `requestAnimationFrame`) dịch chuyển đa lớp giữa tầng Mandala sâu (`-24px`), tầng bùa nổi (`+18px`) và vầng hào quang sân khấu 3 thẻ (`guides-stage-aura`).
+    - Tích hợp `data-sc-spotlight` quét vầng sáng theo chuột trên khung nhập liệu & thẻ chào mừng, `data-sc-magnet="0.22"` hút nhẹ nút điều hướng đầu trang, `data-sc-stagger="90"` xuất hiện tuần tự, thanh tiến trình cuộn 7 màu (ở chế độ 3) và bánh xe tinh bàn `.astrolabe-wheel` xoay đồng bộ theo độ cuộn trang (`--sc-scroll-deg`).
+  - **Kịch bản Bật Lò Xo + Pháo Hoa Liên Tục / Mưa Tim 7 Màu LGBT (Click Mới Thu Nhỏ) & 3 Bộ Form Chuyên Biệt:**
+    - Ô 1 (`thuc-chien`): Hiện 100% trường bắt buộc Tử Vi / Tài Bạch / Điền Trạch (không giấu trong thu gọn), bắn pháo hoa liên tục.
+    - Ô 2 (`gieo-que`): Ẩn Họ tên & Ngày sinh, cung cấp 6 phương pháp khởi quẻ Kinh Dịch đa dạng, bắn pháo hoa liên tục.
+    - Ô 3 (`tinh-duyen`): Nhân vật LGBT (`Bà Hoàng Thần Số Học 🏳️‍🌈💅`), bắn mưa trái tim 7 màu cầu vồng bay lung tung khắp màn hình, giải thích rõ **Ngày sinh + Tên thật + Nickname**, tích hợp sẵn bộ ví dụ & chip chọn nhanh **`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`** ở cả ô nhập Nickname lẫn bàn chấm điểm Nickname cuối trang.
+- `[x]` **Nâng cấp `gui_server.py` & `sync_from_skill.py`:** Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
 
 ### Các hướng có thể triển khai tiếp theo yêu cầu anh (`[ ]`)
-- `[ ]` Bổ sung thêm câu thoại hài hước riêng hoặc hiệu ứng âm thanh tung đồng xu nhẹ (có nút bật/tắt) khi gieo quẻ ở Hệ Hỏi Vũ Trụ.
-- `[ ]` Tích hợp thêm tính năng check độ hợp đôi (2 ngày sinh/tên) cho Hệ Tình Duyên & Vibe hoặc Tab Xem Tuổi Mua Nhà / Hướng Đất Bát Trạch cho Hội BĐS Đồ Sơn.
+- `[ ]` Bổ sung hiệu ứng âm thanh vui nhộn nhẹ (tiếng pháo nổ / tiếng lắc xu, có nút bật/tắt) nếu anh muốn.
+- `[ ]` Tích hợp thêm tính năng check độ hợp đôi hoặc Tab Xem Tuổi Mua Nhà / Hướng Đất Bát Trạch cho Hội BĐS Đồ Sơn.
 
 ---
 
@@ -65,7 +65,7 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   ```
 - **Đồng bộ & đẩy thẳng lên Vercel (`https://kb-tu-vi.vercel.app`):**
   ```
-  python -X utf8 "G:/My Drive/Antigravity/kb-tuvi-web/sync_from_skill.py" --push -m "Gen-Z playful mystic scroll-craft UI with 3 stylized persona guides"
+  python -X utf8 "G:/My Drive/Antigravity/kb-tuvi-web/sync_from_skill.py" --push -m "v3.4 Kuang Bin Studio update"
   ```
 
 ---
@@ -73,5 +73,5 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
 ## 5. Resume Prompt Mẫu
 
 ```text
-Đọc ngay file bàn giao G:\My Drive\Antigravity\Skills\kb-tuvi\AI_HANDOFF_README.md và G:\My Drive\Antigravity\Skills\kb-tuvi\SKILL.md để tiếp quản dự án KB-TUVI v3.1 (giao diện Gen-Z vui tươi chuẩn scroll-craft với 3 Sư Huynh đại diện 3 phong cách xem). Giữ nguyên mọi mục [x] đã hoàn thành, tuân thủ nghiêm ngặt luật cấm PowerShell, và thực hiện yêu cầu tiếp theo của anh: [NHẬP YÊU CẦU MỚI]
+Đọc ngay file bàn giao G:\My Drive\Antigravity\Skills\kb-tuvi\AI_HANDOFF_README.md và G:\My Drive\Antigravity\Skills\kb-tuvi\SKILL.md để tiếp quản dự án KB-TUVI v3.4 (Kuang Bin Studio chuẩn scroll-craft với 3 nhân vật đại diện 3 phong cách xem). Giữ nguyên mọi mục [x] đã hoàn thành, tuân thủ nghiêm ngặt luật cấm PowerShell, và thực hiện yêu cầu tiếp theo của anh: [NHẬP YÊU CẦU MỚI]
 ```

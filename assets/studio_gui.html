@@ -6,45 +6,50 @@
 <title>🔮🧙‍♂️ Kuang Bin Studio ✨☯️ · Tử Vi, Gieo Quẻ &amp; Thần Số Học</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/scrollcraft/scrollcraft.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
   /* ==========================================================================
-     KUANG BIN STUDIO · PLAYFUL MYSTIC ORNAMENTAL EDITION (v3.3)
-     100% Native Vietnamese Fonts: Baloo 2 (Display) + Nunito (Body & UI)
-     Instant 3-Card Entry · Rich Ornaments & Animations · Click-to-Shrink FX
+     KUANG BIN STUDIO · SCROLL-CRAFT MYSTIC EDITION (v3.4)
+     100% Native Vietnamese Typography: Be Vietnam Pro (UI/Display) + Baloo 2 (Brand)
+     Hover-Focus Photo Cards · Compact Centered Stage · Multi-Plane Depth
      ========================================================================== */
   :root {
     --sc-canvas:      #FCF9F2;
-    --sc-surface:     rgba(255, 255, 255, 0.94);
-    --sc-surface-2:   rgba(248, 242, 230, 0.88);
+    --sc-surface:     #FFFFFF;
+    --sc-surface-2:   rgba(248, 242, 230, 0.90);
     --sc-ink:         #1C1635;
-    --sc-ink-soft:    #594F72;
+    --sc-ink-soft:    #564C70;
     --sc-accent:      #D93848;
     --sc-accent-soft: #FFF0F2;
     --sc-accent-ink:  #FFFFFF;
 
-    --sc-font-display: "Baloo 2", "Nunito", "Segoe UI", system-ui, sans-serif;
-    --sc-font-text:    "Nunito", "Segoe UI", system-ui, sans-serif;
+    --sc-font-brand:   "Baloo 2", "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+    --sc-font-display: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+    --sc-font-text:    "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
     --sc-font-mono:    ui-monospace, SFMono-Regular, Consolas, monospace;
 
+    --mx: 0;
+    --my: 0;
+    --sc-scroll-deg: 0deg;
+
     --sc-r-sm: 11px;
-    --sc-r-md: 18px;
-    --sc-r-lg: 26px;
+    --sc-r-md: 16px;
+    --sc-r-lg: 22px;
     --sc-r-pill: 999px;
 
     --sc-shadow-color: 252 30% 16%;
     --sc-e1: 0 3px 10px hsl(var(--sc-shadow-color) / 0.06),
              0 1px 3px hsl(var(--sc-shadow-color) / 0.04);
-    --sc-e2: 0 10px 28px -6px hsl(var(--sc-shadow-color) / 0.11),
+    --sc-e2: 0 10px 26px -6px hsl(var(--sc-shadow-color) / 0.11),
              0 3px 8px hsl(var(--sc-shadow-color) / 0.05);
-    --sc-e3: 0 20px 48px -12px hsl(var(--sc-shadow-color) / 0.17),
-             0 5px 14px hsl(var(--sc-shadow-color) / 0.07);
+    --sc-e3: 0 22px 50px -12px hsl(var(--sc-shadow-color) / 0.20),
+             0 6px 16px hsl(var(--sc-shadow-color) / 0.08);
 
     --ink: #1C1635;
-    --muted: #594F72;
+    --muted: #564C70;
     --border: #E4D8C3;
     --gold-line: #D4AF6A;
     --panel: #FFFFFF;
@@ -80,20 +85,48 @@
     margin: 0;
     background-color: var(--sc-canvas);
     background-image:
-      linear-gradient(180deg, rgba(252, 249, 242, 0.72) 0%, rgba(252, 249, 242, 0.80) 100%),
+      linear-gradient(180deg, rgba(252, 249, 242, 0.72) 0%, rgba(252, 249, 242, 0.82) 100%),
       url("/assets/images/bg_mystic_pattern.jpg");
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
     color: var(--sc-ink);
     font-family: var(--sc-font-text);
-    line-height: 1.6;
+    letter-spacing: 0;
+    line-height: 1.58;
     font-synthesis-weight: auto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     position: relative;
+  }
+  button, input, select, textarea {
+    font-family: var(--sc-font-text);
+    letter-spacing: 0;
+    font-synthesis-weight: auto;
+  }
+
+  /* Upgrade ScrollCraft top progress rail */
+  [data-sc-progress] {
+    height: 3.5px;
+    background: linear-gradient(90deg, var(--gold), var(--sc-accent));
+    box-shadow: 0 1px 8px color-mix(in oklab, var(--sc-accent) 45%, transparent);
+  }
+  html[data-vibe="tinh-duyen"] [data-sc-progress] {
+    background: linear-gradient(90deg, #FF0018, #FF8C00, #FFEE00, #00C853, #00B0FF, #2962FF, #AA00FF);
+  }
+
+  /* Tune ScrollCraft spotlight sheen for warm cream surfaces */
+  [data-sc-spotlight]::after {
+    border-radius: inherit;
+    background: radial-gradient(
+      24rem 24rem at calc(var(--sc-mx, 0.5) * 100%) calc(var(--sc-my, 0.5) * 100%),
+      color-mix(in oklab, var(--sc-accent) 11%, rgba(212, 175, 106, 0.14)),
+      transparent 70%
+    );
   }
 
   /* ==========================================================================
-     AMBIENT MYSTIC BACKGROUND ANIMATIONS (FLOATING MANDALAS & SPARKLES)
+     MULTI-PLANE AMBIENT DEPTH (SCROLL-CRAFT POINTER + SCROLL PARALLAX)
      ========================================================================== */
   .ambient-mystic-layer {
     position: fixed;
@@ -102,33 +135,44 @@
     z-index: 0;
     overflow: hidden;
   }
+  .ambient-plane {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+  }
+  .ambient-plane--deep {
+    transform: translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -18px), 0);
+  }
+  .ambient-plane--mid {
+    transform: translate3d(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 14px), 0);
+  }
   .ambient-mandala {
     position: absolute;
-    width: clamp(280px, 34vw, 480px);
-    height: clamp(280px, 34vw, 480px);
-    opacity: 0.16;
+    width: clamp(260px, 31vw, 440px);
+    height: clamp(260px, 31vw, 440px);
+    opacity: 0.17;
     will-change: transform;
   }
   .ambient-mandala--left {
-    top: 48px;
-    left: -130px;
-    animation: mysticSpinSlow 46s linear infinite;
+    top: 42px;
+    left: -120px;
+    animation: mysticSpinSlow 48s linear infinite;
   }
   .ambient-mandala--right {
-    bottom: -110px;
-    right: -120px;
-    animation: mysticSpinReverse 52s linear infinite;
+    bottom: -105px;
+    right: -115px;
+    animation: mysticSpinReverse 54s linear infinite;
   }
   .ambient-float-icon {
     position: absolute;
-    font-size: 1.5rem;
-    opacity: 0.32;
+    font-size: 1.45rem;
+    opacity: 0.34;
     animation: mysticBob 5.5s ease-in-out infinite;
   }
-  .ambient-float-icon.i1 { top: 15%; left: 5%; animation-delay: 0s; }
-  .ambient-float-icon.i2 { top: 22%; right: 6%; animation-delay: 1.4s; }
-  .ambient-float-icon.i3 { top: 64%; left: 3.5%; animation-delay: 2.6s; }
-  .ambient-float-icon.i4 { top: 72%; right: 4.5%; animation-delay: 0.8s; }
+  .ambient-float-icon.i1 { top: 15%; left: 5.5%; animation-delay: 0s; }
+  .ambient-float-icon.i2 { top: 21%; right: 6.5%; animation-delay: 1.4s; }
+  .ambient-float-icon.i3 { top: 64%; left: 4%; animation-delay: 2.6s; }
+  .ambient-float-icon.i4 { top: 72%; right: 5%; animation-delay: 0.8s; }
 
   @keyframes mysticSpinSlow {
     from { transform: rotate(0deg); }
@@ -140,19 +184,23 @@
   }
   @keyframes mysticBob {
     0%, 100% { transform: translate3d(0, 0, 0) rotate(-4deg); }
-    50%      { transform: translate3d(0, -14px, 0) rotate(6deg); }
+    50%      { transform: translate3d(0, -13px, 0) rotate(6deg); }
   }
   @keyframes emojiWiggle {
-    0%, 100% { transform: rotate(-7deg) scale(1); }
-    50%      { transform: rotate(9deg) scale(1.14); }
+    0%, 100% { transform: rotate(-8deg) scale(1); }
+    50%      { transform: rotate(10deg) scale(1.15); }
   }
   @keyframes emojiTwinkle {
-    0%, 100% { transform: scale(0.92); opacity: 0.8; }
-    50%      { transform: scale(1.2); opacity: 1; }
+    0%, 100% { transform: scale(0.9); opacity: 0.78; }
+    50%      { transform: scale(1.22); opacity: 1; }
   }
   @keyframes cardGentleFloat {
     0%, 100% { transform: translate3d(0, 0, 0); }
     50%      { transform: translate3d(0, -5px, 0); }
+  }
+  @keyframes ctaArrowNudge {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(4px); }
   }
   @keyframes btnSheen {
     0%   { transform: translateX(-140%) skewX(-22deg); }
@@ -186,12 +234,13 @@
   .wordmark {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    font-family: var(--sc-font-display);
+    gap: 0.42rem;
+    font-family: var(--sc-font-brand);
     font-weight: 800;
-    font-size: clamp(1.2rem, 2.2vw, 1.48rem);
+    font-size: clamp(1.18rem, 2vw, 1.44rem);
     color: var(--sc-ink);
     text-decoration: none;
+    white-space: nowrap;
   }
   .wordmark .wm-orb {
     display: inline-block;
@@ -211,10 +260,11 @@
     color: var(--sc-accent);
     font-family: var(--sc-font-text);
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-left: 0.25rem;
+    white-space: nowrap;
   }
-  @media (max-width: 720px) { .wordmark-badge { display: none; } }
+  @media (max-width: 900px) { .wordmark-badge { display: none; } }
 
   .top-nav {
     display: flex;
@@ -293,119 +343,142 @@
     animation: mysticSpinSlow 10s linear infinite;
   }
 
-  /* -------------------------------------- ZONE 1: 3 CARDS IMMEDIATELY -- */
+  /* -------------------------------------- ZONE 1: COMPACT CENTERED 3 CARDS -- */
   .guides-act {
     position: relative;
     z-index: 2;
-    padding-block: clamp(1.4rem, 3vw, 2.4rem) clamp(2.4rem, 4.5vw, 3.6rem);
+    padding-block: clamp(1.1rem, 2.2vw, 1.75rem) clamp(1.6rem, 3vw, 2.3rem);
   }
   .section-head {
     text-align: center;
-    max-width: 52rem;
-    margin: 0 auto clamp(1.35rem, 2.5vw, 2rem);
+    max-width: 44rem;
+    margin: 0 auto clamp(1rem, 1.9vw, 1.4rem);
   }
   .head-kicker {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.28rem 0.95rem;
+    gap: 0.4rem;
+    padding: 0.24rem 0.85rem;
     border-radius: var(--sc-r-pill);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     border: 1.5px solid var(--gold-line);
     color: var(--gold);
-    font-size: 0.8rem;
-    font-weight: 800;
-    margin-bottom: 0.55rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    margin-bottom: 0.45rem;
     box-shadow: var(--sc-e1);
   }
   .section-head h1 {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: clamp(1.65rem, 3.1vw, 2.45rem);
-    line-height: 1.15;
+    font-size: clamp(1.42rem, 2.4vw, 1.98rem);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
     color: var(--sc-ink);
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.3rem;
   }
   .section-head p {
     margin: 0 auto;
-    font-size: 0.98rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 500;
     color: var(--sc-ink-soft);
-    max-width: 58ch;
+    max-width: 56ch;
+    line-height: 1.5;
+  }
+
+  /* Compact, centered stage right in the eye's natural focal field */
+  .guides-stage-wrap {
+    position: relative;
+    max-width: 820px;
+    margin-inline: auto;
+  }
+  .guides-stage-aura {
+    position: absolute;
+    inset: -24px -32px;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 36px;
+    background: radial-gradient(
+      52% 58% at calc(50% + var(--mx, 0) * 26%) calc(48% + var(--my, 0) * 22%),
+      color-mix(in oklab, var(--sc-accent) 13%, rgba(212, 175, 106, 0.18)),
+      transparent 74%
+    );
+    filter: blur(16px);
+    transition: background 320ms var(--sc-ease-out);
   }
 
   .guides-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.4rem;
+    gap: 1.15rem;
+    max-width: 820px;
+    margin-inline: auto;
     align-items: stretch;
   }
-  @media (max-width: 920px) {
-    .guides-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+  @media (max-width: 860px) {
+    .guides-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+  }
+  @media (max-width: 680px) {
+    .guides-grid { grid-template-columns: 1fr; max-width: 340px; }
   }
 
+  /* Animations PAUSED at rest — ONLY run when hovering that card! */
   .guide-card-wrap {
-    animation: cardGentleFloat 4.8s ease-in-out infinite;
     display: flex;
+    animation: cardGentleFloat 3.4s ease-in-out infinite;
+    animation-play-state: paused;
   }
-  .guide-card-wrap:nth-child(2) { animation-delay: 1.2s; }
-  .guide-card-wrap:nth-child(3) { animation-delay: 2.4s; }
 
   .guide-card {
     position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background: var(--sc-surface);
-    border: 2.5px solid var(--border);
+    background: #FFFFFF;
+    border: 2px solid var(--border);
     border-radius: var(--sc-r-lg);
     overflow: hidden;
     cursor: pointer;
     text-align: left;
     padding: 0;
     box-shadow: var(--sc-e2);
-    backdrop-filter: blur(8px);
-    transition: transform 220ms var(--sc-ease-out), border-color 220ms var(--sc-ease-out), box-shadow 220ms var(--sc-ease-out);
+    transition:
+      opacity 260ms var(--sc-ease-out),
+      filter 260ms var(--sc-ease-out),
+      transform 260ms var(--sc-ease-out),
+      border-color 220ms var(--sc-ease-out),
+      box-shadow 260ms var(--sc-ease-out);
   }
-  @media (hover: hover) and (pointer: fine) {
-    .guide-card:hover {
-      box-shadow: var(--sc-e3);
-      border-color: var(--card-tone);
-    }
-  }
-  .guide-card:active { transform: scale(0.98); }
   .guide-card.is-selected {
-    border-color: var(--card-tone);
-    box-shadow: var(--sc-e3);
+    border-color: color-mix(in oklab, var(--card-tone) 65%, var(--border));
   }
   .guide-card[data-card-vibe="thuc-chien"] { --card-tone: #D93848; --card-bg: #FFF0F2; }
   .guide-card[data-card-vibe="gieo-que"]   { --card-tone: #0D8A74; --card-bg: #E8FBF5; }
   .guide-card[data-card-vibe="tinh-duyen"] { --card-tone: #C8337B; --card-bg: #FDF0F7; }
 
-  /* Rainbow animated border sheen specifically for Card 3 (LGBT Pride) */
-  .guide-card[data-card-vibe="tinh-duyen"].is-selected,
-  .guide-card[data-card-vibe="tinh-duyen"]:hover {
-    border-color: #D63384;
-    box-shadow:
-      0 14px 36px -8px rgba(214, 51, 132, 0.25),
-      0 0 0 2px rgba(255, 165, 44, 0.28);
-  }
-
   .guide-media {
     position: relative;
-    aspect-ratio: 1 / 0.94;
+    aspect-ratio: 1 / 0.88;
     overflow: hidden;
     background: var(--card-bg);
   }
-  /* Rotating celestial halo ring inside every photo frame */
+  /* Rotating celestial halo ring inside photo frame — paused until hover */
   .guide-halo-ring {
     position: absolute;
-    inset: 12px;
+    inset: 10px;
     border-radius: 50%;
-    border: 1.5px dashed rgba(182, 125, 30, 0.45);
+    border: 1.5px dashed rgba(182, 125, 30, 0.52);
     pointer-events: none;
     z-index: 1;
-    animation: mysticSpinSlow 24s linear infinite;
+    opacity: 0.25;
+    animation: mysticSpinSlow 14s linear infinite;
+    animation-play-state: paused;
+    transition: opacity 240ms var(--sc-ease-out), border-color 240ms var(--sc-ease-out);
   }
   .guide-media img {
     position: relative;
@@ -413,55 +486,65 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 340ms var(--sc-ease-out);
+    object-position: center 16%;
+    transition: transform 380ms var(--sc-ease-out);
   }
-  @media (hover: hover) and (pointer: fine) {
-    .guide-card:hover .guide-media img { transform: scale(1.055); }
-  }
-  /* Shimmer sweep across photo frame on hover */
+  /* Shimmer sweep across photo frame ONLY on hover */
   .guide-media::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 3;
     pointer-events: none;
-    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.42) 50%, transparent 70%);
-    transform: translateX(-130%);
-    transition: transform 650ms var(--sc-ease-out);
-  }
-  .guide-card:hover .guide-media::after {
-    transform: translateX(130%);
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.48) 50%, transparent 70%);
+    transform: translateX(-135%);
+    transition: transform 680ms var(--sc-ease-out);
   }
 
   .guide-floating-charm {
     position: absolute;
-    bottom: 10px;
-    left: 12px;
+    bottom: 9px;
+    left: 10px;
     z-index: 4;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.95);
     border: 1.5px solid var(--gold-line);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.15rem;
+    font-size: 1rem;
     box-shadow: var(--sc-e1);
-    animation: emojiWiggle 3s ease-in-out infinite;
+    animation: emojiWiggle 1.8s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .guide-sparkle-orb {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    z-index: 4;
+    font-size: 0.92rem;
+    opacity: 0;
+    pointer-events: none;
+    animation: emojiTwinkle 1.3s ease-in-out infinite;
+    animation-play-state: paused;
+    transition: opacity 220ms var(--sc-ease-out);
   }
 
   .guide-active-badge {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 9px;
+    right: 9px;
     z-index: 4;
-    padding: 0.3rem 0.78rem;
+    padding: 0.22rem 0.62rem;
     border-radius: var(--sc-r-pill);
     background: var(--card-tone);
     color: #fff;
-    font-size: 0.76rem;
-    font-weight: 800;
+    font-family: var(--sc-font-text);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0;
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity 200ms var(--sc-ease-out), transform 200ms var(--sc-ease-out);
@@ -473,23 +556,25 @@
   .guide-card.is-selected .guide-active-badge { opacity: 1; transform: translateY(0); }
 
   .guide-body {
-    padding: 1.15rem 1.3rem 1.3rem;
+    padding: 0.85rem 0.95rem 0.95rem;
     display: flex;
     flex-direction: column;
     flex: 1;
     position: relative;
+    background: #FFFFFF;
   }
   .guide-tag {
     display: inline-block;
     align-self: flex-start;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
+    font-family: var(--sc-font-text);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0;
     color: var(--card-tone);
     background: var(--card-bg);
-    padding: 0.24rem 0.7rem;
+    padding: 0.2rem 0.58rem;
     border-radius: var(--sc-r-pill);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.38rem;
   }
   .guide-card[data-card-vibe="tinh-duyen"] .guide-tag {
     background: linear-gradient(90deg, #FFE8EC, #FFF4E0, #E8FBF0, #EEF2FF, #F8EAFF);
@@ -498,29 +583,159 @@
   }
   .guide-title {
     font-family: var(--sc-font-display);
-    font-size: 1.46rem;
+    font-size: 1.08rem;
     font-weight: 800;
+    letter-spacing: -0.005em;
     color: var(--sc-ink);
-    margin: 0 0 0.35rem;
-    line-height: 1.15;
+    margin: 0 0 0.3rem;
+    line-height: 1.25;
   }
   .guide-desc {
-    font-size: 0.91rem;
-    font-weight: 600;
+    font-family: var(--sc-font-text);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0;
     color: var(--sc-ink-soft);
-    margin: 0 0 1rem;
-    line-height: 1.52;
+    margin: 0 0 0.72rem;
+    line-height: 1.46;
     flex: 1;
   }
+  /* Crisp Vietnamese CTA Pill Bar inside each card */
   .guide-pick-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.78rem;
-    border-top: 1px dashed var(--border);
-    font-size: 0.87rem;
-    font-weight: 800;
+    gap: 0.4rem;
+    padding: 0.48rem 0.72rem;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid color-mix(in oklab, var(--card-tone) 24%, transparent);
+    font-family: var(--sc-font-text);
+    font-size: 0.81rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.3;
     color: var(--card-tone);
+    transition: background 220ms var(--sc-ease-out), color 220ms var(--sc-ease-out), border-color 220ms var(--sc-ease-out);
+  }
+  .guide-cta-arrow {
+    display: inline-block;
+    animation: ctaArrowNudge 1.05s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  /* ==========================================================================
+     MISTY / DIMMED PHOTO IDLE -> CRISP PHOTO + ACTIVE ANIMATION ON HOVER
+     (Vietnamese text stays 100% sharp ClearType at all times!)
+     ========================================================================== */
+  @media (hover: hover) and (pointer: fine) {
+    .guide-card {
+      opacity: 0.80;
+      transform: scale(0.985);
+    }
+    .guide-card .guide-media img {
+      filter: blur(2.2px) saturate(0.72) brightness(0.97);
+      transition: transform 380ms var(--sc-ease-out), filter 280ms var(--sc-ease-out);
+    }
+    .guides-grid:hover .guide-card:not(:hover):not(:focus-visible) {
+      opacity: 0.54;
+      transform: scale(0.968);
+    }
+    .guides-grid:hover .guide-card:not(:hover):not(:focus-visible) .guide-media img {
+      filter: blur(3px) saturate(0.58) brightness(0.95);
+    }
+    .guide-card:hover,
+    .guide-card:focus-visible {
+      opacity: 1 !important;
+      transform: translateY(-6px) scale(1.022);
+      border-color: var(--card-tone);
+      box-shadow: var(--sc-e3);
+    }
+    .guide-card:hover .guide-media img,
+    .guide-card:focus-visible .guide-media img {
+      filter: none !important;
+      transform: scale(1.06);
+    }
+    .guide-card[data-card-vibe="tinh-duyen"]:hover,
+    .guide-card[data-card-vibe="tinh-duyen"]:focus-visible {
+      border-color: #D63384;
+      box-shadow:
+        0 18px 42px -10px rgba(214, 51, 132, 0.30),
+        0 0 0 2px rgba(255, 165, 44, 0.34);
+    }
+    /* Activate ALL card animations ONLY when hovering that card! */
+    .guide-card-wrap:hover,
+    .guide-card-wrap:focus-within {
+      animation-play-state: running;
+      z-index: 5;
+    }
+    .guide-card:hover .guide-halo-ring,
+    .guide-card:focus-visible .guide-halo-ring {
+      animation-play-state: running;
+      opacity: 0.95;
+      border-color: var(--card-tone);
+    }
+    .guide-card:hover .guide-floating-charm,
+    .guide-card:focus-visible .guide-floating-charm,
+    .guide-card:hover .guide-cta-arrow,
+    .guide-card:focus-visible .guide-cta-arrow,
+    .guide-card:hover .guide-sparkle-orb,
+    .guide-card:focus-visible .guide-sparkle-orb {
+      animation-play-state: running;
+      opacity: 1;
+    }
+    .guide-card:hover .guide-media img {
+      transform: scale(1.06);
+    }
+    .guide-card:hover .guide-media::after {
+      transform: translateX(135%);
+    }
+    .guide-card:hover .guide-pick-row,
+    .guide-card:focus-visible .guide-pick-row {
+      background: var(--card-tone);
+      color: #FFFFFF;
+      border-color: var(--card-tone);
+    }
+    .guide-card[data-card-vibe="tinh-duyen"]:hover .guide-pick-row,
+    .guide-card[data-card-vibe="tinh-duyen"]:focus-visible .guide-pick-row {
+      background: linear-gradient(90deg, #E40303, #FF8C00, #008026, #004DFF, #750787);
+      border-color: transparent;
+      color: #FFFFFF;
+    }
+    .guide-card:hover .orn-corner--tl { transform: translate(-2px, -2px); }
+    .guide-card:hover .orn-corner--tr { transform: translate(2px, -2px) scaleX(-1); }
+    .guide-card:hover .orn-corner--bl { transform: translate(-2px, 2px) scaleY(-1); }
+    .guide-card:hover .orn-corner--br { transform: translate(2px, 2px) scale(-1, -1); }
+  }
+  .guide-card:active { transform: scale(0.98) !important; }
+
+  /* Scroll-driven celestial astrolabe seal between Zone 1 and Zone 2 */
+  .astrolabe-bridge {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin: -1.45rem auto -1.45rem;
+    pointer-events: none;
+  }
+  .astrolabe-wheel {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid var(--gold-line);
+    box-shadow: var(--sc-e1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(var(--sc-scroll-deg, 0deg));
+    will-change: transform;
+  }
+  .astrolabe-wheel svg {
+    width: 34px;
+    height: 34px;
   }
 
   /* ======================= SPRING BOUNCE + CONTINUOUS FX OVERLAY ======= */
@@ -1406,25 +1621,29 @@
   </defs>
 </svg>
 
-<!-- AMBIENT FLOATING MYSTIC MANDALAS & SPARKLES -->
+<!-- AMBIENT MULTI-PLANE MYSTIC LAYER (SCROLL-CRAFT POINTER & SCROLL PARALLAX) -->
 <div class="ambient-mystic-layer" aria-hidden="true">
-  <svg class="ambient-mandala ambient-mandala--left" viewBox="0 0 300 300" fill="none">
-    <circle cx="150" cy="150" r="140" stroke="#B67D1E" stroke-width="1.2" stroke-dasharray="6 6"/>
-    <circle cx="150" cy="150" r="112" stroke="#B67D1E" stroke-width="1"/>
-    <polygon points="150,22 261,214 39,214" stroke="#B67D1E" stroke-width="0.9"/>
-    <polygon points="150,278 261,86 39,86" stroke="#B67D1E" stroke-width="0.9"/>
-    <circle cx="150" cy="150" r="56" stroke="#B67D1E" stroke-width="1.2" stroke-dasharray="4 5"/>
-  </svg>
-  <svg class="ambient-mandala ambient-mandala--right" viewBox="0 0 300 300" fill="none">
-    <circle cx="150" cy="150" r="138" stroke="#C8337B" stroke-width="1.2" stroke-dasharray="8 6"/>
-    <circle cx="150" cy="150" r="100" stroke="#B67D1E" stroke-width="1"/>
-    <rect x="65" y="65" width="170" height="170" stroke="#B67D1E" stroke-width="0.9" transform="rotate(45 150 150)"/>
-    <rect x="65" y="65" width="170" height="170" stroke="#B67D1E" stroke-width="0.9"/>
-  </svg>
-  <span class="ambient-float-icon i1">🔮</span>
-  <span class="ambient-float-icon i2">✨</span>
-  <span class="ambient-float-icon i3">☯️</span>
-  <span class="ambient-float-icon i4">🧿</span>
+  <div class="ambient-plane ambient-plane--deep">
+    <svg class="ambient-mandala ambient-mandala--left" viewBox="0 0 300 300" fill="none">
+      <circle cx="150" cy="150" r="140" stroke="#B67D1E" stroke-width="1.2" stroke-dasharray="6 6"/>
+      <circle cx="150" cy="150" r="112" stroke="#B67D1E" stroke-width="1"/>
+      <polygon points="150,22 261,214 39,214" stroke="#B67D1E" stroke-width="0.9"/>
+      <polygon points="150,278 261,86 39,86" stroke="#B67D1E" stroke-width="0.9"/>
+      <circle cx="150" cy="150" r="56" stroke="#B67D1E" stroke-width="1.2" stroke-dasharray="4 5"/>
+    </svg>
+    <svg class="ambient-mandala ambient-mandala--right" viewBox="0 0 300 300" fill="none">
+      <circle cx="150" cy="150" r="138" stroke="#C8337B" stroke-width="1.2" stroke-dasharray="8 6"/>
+      <circle cx="150" cy="150" r="100" stroke="#B67D1E" stroke-width="1"/>
+      <rect x="65" y="65" width="170" height="170" stroke="#B67D1E" stroke-width="0.9" transform="rotate(45 150 150)"/>
+      <rect x="65" y="65" width="170" height="170" stroke="#B67D1E" stroke-width="0.9"/>
+    </svg>
+  </div>
+  <div class="ambient-plane ambient-plane--mid">
+    <span class="ambient-float-icon i1">🔮</span>
+    <span class="ambient-float-icon i2">✨</span>
+    <span class="ambient-float-icon i3">☯️</span>
+    <span class="ambient-float-icon i4">🧿</span>
+  </div>
 </div>
 
 <!-- CANVAS PHÁO HOA / MƯA TIM 7 MÀU LGBT + SÂN KHẤU BẬT LÒ XO (CLICK MỚI BÉ XUỐNG) -->
@@ -1453,115 +1672,133 @@
       <span class="wordmark-badge">🧿 Huyền Học Vui Nhộn 🤪</span>
     </a>
     <nav class="top-nav" aria-label="Điều hướng nhanh">
-      <button type="button" class="btn-pill btn-pill--ghost" onclick="loadSampleProfile()">✨ Xem Mẫu Thử</button>
-      <a href="#act-studio" class="btn-pill">👇 Điền Thông Tin</a>
+      <button type="button" class="btn-pill btn-pill--ghost" data-sc-magnet="0.22" onclick="loadSampleProfile()">✨ Xem Mẫu Thử</button>
+      <a href="#act-studio" class="btn-pill" data-sc-magnet="0.22">👇 Điền Thông Tin</a>
     </nav>
   </div>
 </header>
 
-<!-- ZONE ĐẦU TIÊN NGAY KHI VÀO WEB: 3 Ô ẢNH ĐẠI DIỆN 3 PHONG CÁCH XEM -->
+<!-- ZONE ĐẦU TIÊN NGAY KHI VÀO WEB: 3 Ô ẢNH NHỎ GỌN TRUNG TÂM, RÊ CHUỘT MỚI NÉT & CHẠY ANIMATION -->
 <section id="act-guides" class="guides-act" data-sc-act="flow">
   <div class="sc-wrap">
     <div class="section-head">
       <div class="head-kicker">🧿 ĐÀI THIÊN VĂN KUANG BIN · CHUẨN CỔ PHÁP MÀ VẪN VUI TƯƠI 🔮</div>
       <h1>Hôm nay bạn muốn thỉnh vị nào ra tay? 🧙‍♂️✨</h1>
       <p>
-        Chạm vào 1 trong 3 khung bên dưới để cuộn xuống mở đúng bí kíp riêng (Tử Vi Tài Bạch · Gieo Quẻ Hỏi Việc · Thần Số Học)!
+        Rê chuột vào từng ô để đánh thức cao nhân, bấm chọn để bung pháo hoa mở bí kíp riêng!
       </p>
     </div>
 
-    <div class="guides-grid">
-      <!-- Ô 1: NAM THẦN TỬ VI, TÀI BẠCH, ĐIỀN TRẠCH -->
-      <div class="guide-card-wrap">
-        <button type="button" class="guide-card orn-box is-selected" data-card-vibe="thuc-chien" data-sc-tilt="5" onclick="selectGuide('thuc-chien', true)">
-          <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
-          <div class="guide-media">
-            <div class="guide-halo-ring"></div>
-            <img src="/assets/images/guide_1_cool.jpg" alt="Ô 1: Nam Thần Tử Vi, Tài Bạch, Điền Trạch" width="800" height="800">
-            <span class="guide-floating-charm" aria-hidden="true">💰</span>
-            <span class="guide-active-badge">✓ Đang chọn</span>
-          </div>
-          <div class="guide-body">
-            <span class="guide-tag">Ô 1 · Tử Vi · Tài Bạch · Điền Trạch</span>
-            <h2 class="guide-title">Nam Thần Tử Vi &amp; Tài Lộc</h2>
-            <p class="guide-desc">
-              Lập lá số 12 cung đầy đủ theo ngày giờ sinh, soi nét căng cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc và Ngũ Hành Bát Tự.
-            </p>
-            <div class="guide-pick-row">
-              <span>Thỉnh Nam Thần Tử Vi</span>
-              <span aria-hidden="true">🎆 →</span>
+    <div class="guides-stage-wrap">
+      <div class="guides-stage-aura" aria-hidden="true"></div>
+      <div class="guides-grid">
+        <!-- Ô 1: NAM THẦN TỬ VI, TÀI BẠCH, ĐIỀN TRẠCH -->
+        <div class="guide-card-wrap">
+          <button type="button" class="guide-card orn-box is-selected" data-card-vibe="thuc-chien" onclick="selectGuide('thuc-chien', true)">
+            <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
+            <div class="guide-media">
+              <div class="guide-halo-ring"></div>
+              <img src="/assets/images/guide_1_cool.jpg" alt="Ô 1: Nam Thần Tử Vi, Tài Bạch, Điền Trạch" width="600" height="600">
+              <span class="guide-sparkle-orb" aria-hidden="true">✨</span>
+              <span class="guide-floating-charm" aria-hidden="true">💰</span>
+              <span class="guide-active-badge">✓ Đang chọn</span>
             </div>
-          </div>
-        </button>
-      </div>
+            <div class="guide-body">
+              <span class="guide-tag">Ô 1 · Tử Vi · Tài Bạch · Điền Trạch</span>
+              <h2 class="guide-title">Nam Thần Tử Vi &amp; Tài Lộc</h2>
+              <p class="guide-desc">
+                Lập lá số 12 cung theo ngày giờ sinh, soi nét cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc &amp; Bát Tự.
+              </p>
+              <div class="guide-pick-row">
+                <span>Click mở khung Tử Vi</span>
+                <span class="guide-cta-arrow" aria-hidden="true">🎆 →</span>
+              </div>
+            </div>
+          </button>
+        </div>
 
-      <!-- Ô 2: NAM THẦN GIEO QUẺ KINH DỊCH -->
-      <div class="guide-card-wrap">
-        <button type="button" class="guide-card orn-box" data-card-vibe="gieo-que" data-sc-tilt="5" onclick="selectGuide('gieo-que', true)">
-          <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
-          <div class="guide-media">
-            <div class="guide-halo-ring"></div>
-            <img src="/assets/images/guide_2_cheer.jpg" alt="Ô 2: Nam Thần Gieo Quẻ Kinh Dịch" width="800" height="800">
-            <span class="guide-floating-charm" aria-hidden="true">☯️</span>
-            <span class="guide-active-badge">✓ Đang chọn</span>
-          </div>
-          <div class="guide-body">
-            <span class="guide-tag">Ô 2 · Lục Hào · Mai Hoa · Kỳ Môn</span>
-            <h2 class="guide-title">Nam Thần Gieo Quẻ</h2>
-            <p class="guide-desc">
-              "Mạnh mẽ lên nào!" Khỏi cần tên tuổi hay ngày sinh: tự tung xu, nhờ gieo hộ, bốc con số, gõ 2 chữ hoặc khởi theo giờ động tâm!
-            </p>
-            <div class="guide-pick-row">
-              <span>Thỉnh Nam Thần Gieo Quẻ</span>
-              <span aria-hidden="true">🎆 →</span>
+        <!-- Ô 2: NAM THẦN GIEO QUẺ KINH DỊCH -->
+        <div class="guide-card-wrap">
+          <button type="button" class="guide-card orn-box" data-card-vibe="gieo-que" onclick="selectGuide('gieo-que', true)">
+            <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
+            <div class="guide-media">
+              <div class="guide-halo-ring"></div>
+              <img src="/assets/images/guide_2_cheer.jpg" alt="Ô 2: Nam Thần Gieo Quẻ Kinh Dịch" width="600" height="600">
+              <span class="guide-sparkle-orb" aria-hidden="true">✨</span>
+              <span class="guide-floating-charm" aria-hidden="true">☯️</span>
+              <span class="guide-active-badge">✓ Đang chọn</span>
             </div>
-          </div>
-        </button>
-      </div>
+            <div class="guide-body">
+              <span class="guide-tag">Ô 2 · Lục Hào · Mai Hoa · Kỳ Môn</span>
+              <h2 class="guide-title">Nam Thần Gieo Quẻ</h2>
+              <p class="guide-desc">
+                "Mạnh mẽ lên nào!" Khỏi cần ngày sinh: tự tung xu, nhờ gieo hộ, chọn số, gõ 2 chữ hoặc khởi theo giờ!
+              </p>
+              <div class="guide-pick-row">
+                <span>Click mở khung Gieo Quẻ</span>
+                <span class="guide-cta-arrow" aria-hidden="true">🎆 →</span>
+              </div>
+            </div>
+          </button>
+        </div>
 
-      <!-- Ô 3: BÀ HOÀNG CẦU VỒNG LGBT · XEM THẦN SỐ HỌC -->
-      <div class="guide-card-wrap">
-        <button type="button" class="guide-card orn-box" data-card-vibe="tinh-duyen" data-sc-tilt="5" onclick="selectGuide('tinh-duyen', true)">
-          <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
-          <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
-          <div class="guide-media">
-            <div class="guide-halo-ring"></div>
-            <img src="/assets/images/guide_3_love.jpg" alt="Ô 3: Bà Hoàng Cầu Vồng xem Thần Số Học" width="800" height="800">
-            <span class="guide-floating-charm" aria-hidden="true">🏳️‍🌈</span>
-            <span class="guide-active-badge">✓ Đang chọn</span>
-          </div>
-          <div class="guide-body">
-            <span class="guide-tag">Ô 3 · Thần Số Học · Hệ Cầu Vồng 🏳️‍🌈</span>
-            <h2 class="guide-title">Bà Hoàng Thần Số Học 💅</h2>
-            <p class="guide-desc">
-              "Mình yêu nhau nhé cưng ơi!" Để chị đẹp hệ cầu vồng soi tần số Ngày sinh, Tên Thật &amp; Nickname xem độ slay tới cỡ nào 🌈💖
-            </p>
-            <div class="guide-pick-row">
-              <span>Thỉnh Bà Hoàng Cầu Vồng</span>
-              <span aria-hidden="true">🏳️‍🌈 →</span>
+        <!-- Ô 3: BÀ HOÀNG CẦU VỒNG LGBT · XEM THẦN SỐ HỌC -->
+        <div class="guide-card-wrap">
+          <button type="button" class="guide-card orn-box" data-card-vibe="tinh-duyen" onclick="selectGuide('tinh-duyen', true)">
+            <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
+            <div class="guide-media">
+              <div class="guide-halo-ring"></div>
+              <img src="/assets/images/guide_3_lgbt.jpg" alt="Ô 3: Bà Hoàng Cầu Vồng xem Thần Số Học" width="600" height="600">
+              <span class="guide-sparkle-orb" aria-hidden="true">🌈</span>
+              <span class="guide-floating-charm" aria-hidden="true">🏳️‍🌈</span>
+              <span class="guide-active-badge">✓ Đang chọn</span>
             </div>
-          </div>
-        </button>
+            <div class="guide-body">
+              <span class="guide-tag">Ô 3 · Thần Số Học · Hệ Cầu Vồng 🏳️‍🌈</span>
+              <h2 class="guide-title">Bà Hoàng Thần Số Học 💅</h2>
+              <p class="guide-desc">
+                Đang bấm máy check var số mệnh cưng đó nha! "Mình yêu nhau nhé", để chị soi Ngày sinh &amp; Nickname xem độ slay 🌈
+              </p>
+              <div class="guide-pick-row">
+                <span>Click mở Thần Số Học</span>
+                <span class="guide-cta-arrow" aria-hidden="true">🏳️‍🌈 →</span>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ZONE 2: WORKING SURFACE CÓ HOA VĂN CỔ PHÁP + 3 BỘ FORM RIÊNG BIỆT -->
+<!-- SCROLL-LINKED ASTROLABE WHEEL DIVIDER -->
+<div class="astrolabe-bridge" aria-hidden="true">
+  <div class="astrolabe-wheel">
+    <svg viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="28" stroke="#B67D1E" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polygon points="32,8 52,44 12,44" stroke="#C93040" stroke-width="1.2"/>
+      <polygon points="32,56 52,20 12,20" stroke="#0E7C66" stroke-width="1.2"/>
+      <circle cx="32" cy="32" r="5" fill="#B67D1E"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ZONE 2: WORKING SURFACE CÓ HOA VĂN CỔ PHÁP + SPOTLIGHT + 3 BỘ FORM RIÊNG BIỆT -->
 <section id="act-studio" class="studio-act" data-sc-act="flow">
   <div class="studio-shell">
     <div id="studio-grid" class="studio-grid">
 
       <!-- SIDEBAR / INPUT CARD (Giữ class .sidebar và .btn-primary cho plugin Gemini AI) -->
-      <aside class="sidebar orn-box">
+      <aside class="sidebar orn-box" data-sc-spotlight data-sc-in>
         <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
         <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
         <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
@@ -1839,7 +2076,13 @@
 
           <div class="field">
             <label for="num-nickname">Tên thường gọi / Nickname / Nghệ danh <span class="sub">(Nếu có, để xem bù khuyết với Tên thật)</span></label>
-            <input id="num-nickname" placeholder="VD: K.B Đồ Sơn, Bin, Leo Quân...">
+            <input id="num-nickname" placeholder="VD: Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...">
+            <div class="chip-row" aria-label="Ví dụ Nickname vui nhộn">
+              <button type="button" class="topic-chip" onclick="pickNicknameChip('Dủng Dỉnh', this)">😜 Dủng Dỉnh</button>
+              <button type="button" class="topic-chip" onclick="pickNicknameChip('Sâm Héo', this)">🌿 Sâm Héo</button>
+              <button type="button" class="topic-chip" onclick="pickNicknameChip('Hoàng Mười', this)">👑 Hoàng Mười</button>
+              <button type="button" class="topic-chip" onclick="pickNicknameChip('Hải Ly', this)">🌊 Hải Ly</button>
+            </div>
           </div>
 
           <div class="row-2">
@@ -1864,7 +2107,7 @@
       <!-- MAIN AREA: WELCOME STRIP OR INTERACTIVE RESULT BOARD -->
       <main class="main">
         <div id="welcome-view">
-          <div class="welcome-strip orn-box" data-sc-in>
+          <div class="welcome-strip orn-box" data-sc-spotlight data-sc-in>
             <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
             <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
             <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
@@ -2003,21 +2246,21 @@ const GUIDES = {
     firstInputId: "inp-question"
   },
   "tinh-duyen": {
-    img: "/assets/images/guide_3_love.jpg",
+    img: "/assets/images/guide_3_lgbt.jpg",
     title: "Bà Hoàng Thần Số Học 🏳️‍🌈💅",
-    say: "\"Mình yêu nhau nhé cưng ơi!\" Nhập Ngày sinh + Tên khai sinh + Nickname để chị đẹp hệ cầu vồng soi trọn tần số năng lượng!",
+    say: "\"Mình yêu nhau nhé cưng ơi!\" Nhập Ngày sinh + Tên khai sinh + Nickname (VD: Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...) để chị đẹp hệ cầu vồng soi trọn tần số năng lượng!",
     fxType: "lgbt_hearts",
     popSticker: "SLAY ĐỈNH NÓC!! 🏳️‍🌈💅",
     popTitle: "Bà Hoàng Cầu Vồng giáng trần! 🌈✨",
-    popSub: "\"Mình yêu nhau nhé cưng ơi!! Để chị soi xem số mệnh cưng hệ gì mà bóng bẩy slay dữ thần vậy nè!!\" 💅🦄",
+    popSub: "\"Khoan bấm điện thoại đã cưng ơi, mình yêu nhau nhé!! Đưa Ngày sinh & Nickname (Dủng Dỉnh, Sâm Héo...) đây chị soi độ slay tới nóc!!\" 💅🦄",
     emojis: ["🏳️‍🌈", "🌈", "💅", "🦄", "💖", "✨"],
     colors: LGBT_RAINBOW_STOPS,
     submitLbl: "🏳️‍🌈 GIẢI MÃ THẦN SỐ HỌC NGAY 💅",
-    demoLbl: "✨ Xem thử 1 hồ sơ Thần Số Học + Nickname mẫu",
+    demoLbl: "✨ Xem thử hồ sơ Thần Số Học + Nickname Dủng Dỉnh",
     welcomeTitle: "Chế độ 3: Thần Số Học Cầu Vồng · Tên Thật × Nickname",
-    welcomeDesc: "Giải mã Số Chủ Đạo, Tam Giác Vàng (Linh Hồn · Sứ Mệnh · Nhân Cách), Sóng 9 Năm, 22 Arcana và đo độ bù khuyết của Nickname.",
+    welcomeDesc: "Giải mã Số Chủ Đạo, Tam Giác Vàng (Linh Hồn · Sứ Mệnh · Nhân Cách), Sóng 9 Năm, 22 Arcana và đo độ bù khuyết của Nickname (Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...).",
     resultTitle: "✦ Bà Hoàng Thần Số Học nhắn nhủ:",
-    resultMsg: "\"Mình yêu nhau nhé!\" Kéo xuống cuối trang còn có bàn chấm điểm đọ độ slay cho hàng loạt Nickname mới nữa đó nha cưng! 💅🌈",
+    resultMsg: "\"Mình yêu nhau nhé!\" Kéo xuống cuối trang còn có bàn chấm điểm đọ độ slay cho dàn Nickname (Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...) nữa đó nha cưng! 💅🌈",
     visibleTabs: ["numerology", "ai"],
     defaultTab: "numerology",
     aiMode: "numerology",
@@ -2604,6 +2847,49 @@ function countWordUnits(str) {
 /* ============================================================================
    INIT, SAMPLE PROFILES & ANALYZE EXECUTION
    ============================================================================ */
+function pickNicknameChip(nick, btn) {
+  const inp = document.getElementById("num-nickname");
+  if (inp) inp.value = nick;
+  document.querySelectorAll("#panel-form-numerology .topic-chip").forEach(c => c.classList.remove("is-picked"));
+  if (btn) btn.classList.add("is-picked");
+}
+
+function initMultiPlaneScrollCraftDepth() {
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  const root = document.documentElement;
+
+  // Scroll-linked astrolabe wheel rotation
+  function syncScrollDeg() {
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const ratio = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    root.style.setProperty("--sc-scroll-deg", (ratio * 320).toFixed(1) + "deg");
+  }
+  window.addEventListener("scroll", syncScrollDeg, { passive: true });
+  syncScrollDeg();
+
+  // Multi-plane pointer parallax (damped 0.08 rAF loop on fine pointers)
+  if (window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    function stepPointer() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      root.style.setProperty("--mx", cx.toFixed(4));
+      root.style.setProperty("--my", cy.toFixed(4));
+      if (Math.abs(tx - cx) > 0.0008 || Math.abs(ty - cy) > 0.0008) {
+        raf = requestAnimationFrame(stepPointer);
+      } else {
+        raf = 0;
+      }
+    }
+    window.addEventListener("pointermove", (e) => {
+      tx = (e.clientX / Math.max(1, window.innerWidth)) - 0.5;
+      ty = (e.clientY / Math.max(1, window.innerHeight)) - 0.5;
+      if (!raf) raf = requestAnimationFrame(stepPointer);
+    }, { passive: true });
+  }
+}
+
 function initDefaults() {
   const selPlace = document.getElementById("tv-place");
   selPlace.innerHTML = PROVINCES_63.map(p => `<option value="${p}">${p}</option>`).join("");
@@ -2621,6 +2907,7 @@ function initDefaults() {
   if (window.ScrollCraft && typeof window.ScrollCraft.mount === "function") {
     window.ScrollCraft.mount();
   }
+  initMultiPlaneScrollCraftDepth();
 }
 
 function esc(s) {
@@ -2646,7 +2933,7 @@ function loadSampleProfile() {
     document.getElementById("num-datetype").value = "solar";
     onNumDateTypeChange();
     document.getElementById("num-fullname").value = "Nguyễn Minh Quân";
-    document.getElementById("num-nickname").value = "K.B Đồ Sơn";
+    document.getElementById("num-nickname").value = "Dủng Dỉnh";
   }
   SELECTED_BRANCH = null;
   runAnalyze();
@@ -3355,12 +3642,20 @@ function renderNumerologyPane() {
         Nhập nhiều phương án Nickname hoặc tên gọi (cách nhau bằng dấu phẩy) để chấm điểm thang 100 xem tên nào hợp nhất với ngày sinh của cưng:
       </p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-        <input id="inp-cand-names" style="flex:1;min-width:240px;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;background:#FCF9F2;font-family:inherit;font-weight:600;" placeholder="VD: Leo Đồ Sơn, Minh Khôi, Hải Phát Land">
+        <input id="inp-cand-names" style="flex:1;min-width:240px;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;background:#FCF9F2;font-family:inherit;font-weight:600;" placeholder="VD: Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...">
+        <button type="button" class="btn-pill btn-pill--ghost" onclick="fillSampleCandNames()">✨ Điền mẫu vui</button>
         <button type="button" class="btn-pill" onclick="runNameCheckUI()">⚖️ Chấm Điểm Ngay</button>
       </div>
       <div id="name-check-results"></div>
     </div>
   `;
+}
+
+function fillSampleCandNames() {
+  const inp = document.getElementById("inp-cand-names");
+  if (!inp) return;
+  inp.value = "Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly";
+  runNameCheckUI();
 }
 
 async function runNameCheckUI() {
