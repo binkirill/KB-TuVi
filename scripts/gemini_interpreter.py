@@ -24,13 +24,13 @@ PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 REF_DIR = os.path.join(PROJECT_ROOT, "references")
 
 AVAILABLE_MODELS: List[Dict[str, str]] = [
-    {"id": "gemini-3.8-flash", "label": "Gemini 3.8 Flash (Mặc định — Mạnh nhất, Free Tier)"},
-    {"id": "gemini-3.6-flash", "label": "Gemini 3.6 Flash (Ổn định — Free Tier)"},
-    {"id": "gemini-3.5-flash-lite", "label": "Gemini 3.5 Flash-Lite (Siêu nhanh — Tiết kiệm quota)"},
-    {"id": "gemini-2.5-flash", "label": "Gemini 2.5 Flash (Dự phòng cho Key cũ)"},
+    {"id": "gemini-3.5-flash-lite", "label": "Gemini 3.5 Flash-Lite (Mặc định — Siêu nhanh & Tiết kiệm quota)"},
+    {"id": "gemini-3.6-flash", "label": "Gemini 3.6 Flash (Dự phòng Free Tier)"},
+    {"id": "gemini-2.5-flash", "label": "Gemini 2.5 Flash (Dự phòng Free Tier)"},
+    {"id": "gemini-3.8-flash", "label": "Gemini 3.8 Flash (Dự phòng Free Tier)"},
 ]
 ALLOWED_MODEL_IDS = [m["id"] for m in AVAILABLE_MODELS]
-DEFAULT_MODEL = "gemini-3.8-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 
 _DAILY_USAGE: Dict[Tuple[str, str], int] = {}
 _REF_CACHE: Dict[str, str] = {}
@@ -77,15 +77,11 @@ def get_public_config() -> Dict[str, Any]:
     load_local_dotenv()
     server_key = _get_server_api_key()
     access_code = os.environ.get("ACCESS_CODE", "").strip().strip('"').strip("'")
-    env_model = os.environ.get("GEMINI_MODEL", DEFAULT_MODEL).strip()
-    if env_model not in ALLOWED_MODEL_IDS:
-        env_model = DEFAULT_MODEL
     daily_limit = int(os.environ.get("DAILY_LIMIT_PER_IP", "20") or "20")
     return {
         "server_has_key": bool(server_key),
         "requires_access_code": bool(access_code),
-        "default_model": env_model,
-        "available_models": AVAILABLE_MODELS,
+        "default_model": DEFAULT_MODEL,
         "daily_limit_per_ip": daily_limit,
     }
 
@@ -364,11 +360,7 @@ def interpret_with_gemini(
         if limit_err:
             raise RuntimeError(limit_err)
 
-    env_default = os.environ.get("GEMINI_MODEL", DEFAULT_MODEL).strip()
-    primary_model = requested_model if requested_model in ALLOWED_MODEL_IDS else (
-        env_default if env_default in ALLOWED_MODEL_IDS else DEFAULT_MODEL
-    )
-
+    primary_model = DEFAULT_MODEL
     models_to_try = [primary_model] + [m for m in ALLOWED_MODEL_IDS if m != primary_model]
 
     system_instruction = _build_system_instruction(mode)

@@ -40,10 +40,10 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
     - Ô 1 (`thuc-chien`): Hiện 100% trường bắt buộc Tử Vi / Tài Bạch / Điền Trạch (không giấu trong thu gọn), bắn pháo hoa liên tục.
     - Ô 2 (`gieo-que`): Ẩn Họ tên & Ngày sinh, cung cấp 6 phương pháp khởi quẻ Kinh Dịch đa dạng, bắn pháo hoa liên tục.
     - Ô 3 (`tinh-duyen`): Nhân vật LGBT (`Bà Hoàng Thần Số Học 🏳️‍🌈💅`), bắn mưa trái tim 7 màu cầu vồng bay lung tung khắp màn hình, giải thích rõ **Ngày sinh + Tên thật + Nickname**, tích hợp sẵn bộ ví dụ & chip chọn nhanh **`Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...`** ở cả ô nhập Nickname lẫn bàn chấm điểm Nickname cuối trang.
-- `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py`, `api/interpret_edge.js` & `gemini_ai_addon.js` (v3.4.2 Zero-Timeout Edge Streaming):**
+- `[x]` **Nâng cấp `gui_server.py`, `sync_from_skill.py`, `gemini_interpreter.py`, `api/interpret_edge.js` & `gemini_ai_addon.js` (v3.4.3 — Mặc định `gemini-3.5-flash-lite` + Ẩn chọn Model + Edge Streaming):**
   - Tự phục vụ và đồng bộ đầy đủ `/assets/scrollcraft/*` & `/assets/images/*` sang `public/assets/` cho Vercel CDN.
-  - Khắc phục triệt để lỗi `FUNCTION_INVOCATION_TIMEOUT` (`Unexpected token 'A', "An error o"...`) trên Vercel gói Hobby bằng kiến trúc **2 bước (Python `action="prepare"` ký HMAC-SHA256 `< 80ms` + Vercel Edge Runtime `api/interpret_edge.js` stream SSE trực tiếp chữ chạy real-time lên tới 300s)** kết hợp `thinkingLevel: "LOW"` trên dòng `gemini-3.*` và tự động fallback Localhost.
-  - Tự động đọc cả `GEMINI_API_KEY` lẫn `GOOGLE_API_KEY` (lọc dấu nháy thừa), hiển thị trực tiếp hộp trạng thái `🟢 Đã nhận Gemini API Key trên Server` kèm ô nhập nhanh `ACCESS_CODE` ngay dưới nút AI ở cột trái.
+  - Khóa mặc định model chính là **`gemini-3.5-flash-lite`** (siêu nhanh & tiết kiệm quota nhất trên gói Free, tự fallback ngầm nếu bận) và **bỏ hoàn toàn ô chọn model Gemini trên giao diện** theo yêu cầu của anh.
+  - Khắc phục triệt để lỗi `FUNCTION_INVOCATION_TIMEOUT` trên Vercel bằng kiến trúc **2 bước (Python `action="prepare"` ký HMAC-SHA256 `< 80ms` + Vercel Edge Runtime `api/interpret_edge.js` stream SSE chữ chạy trực tiếp lên tới 300s)**.
 - `[x]` **Landing Page 3 Ảnh Tách Biệt + Nút "Quay trở lại chọn tiếp viên" + 3 Giao Diện/Màu Nền Riêng (v3.5):**
   - Khi mở web (`data-stage="landing"`), chỉ hiện gọn màn hình Landing 3 ảnh tiếp viên ở chính giữa viewport; click vào 1 ảnh mới chuyển sang `data-stage="workspace"` mở khung làm việc kèm pháo hoa / mưa tim 7 màu LGBT bật lò xo.
   - Bổ sung nút **`← Quay trở lại chọn tiếp viên`** (`backToGuideSelection()`) nổi bật ở cả thanh Top Bar lẫn đầu khung làm việc.

@@ -97,10 +97,10 @@ export default async function handler(req) {
   const mode = String(body.mode || "full");
   const ts = Number(body.ts || 0);
   const sig = String(body.sig || "");
-  const primaryModel = String(body.primary_model || "gemini-3.8-flash");
+  const primaryModel = String(body.primary_model || "gemini-3.5-flash-lite");
   const modelsToTry = Array.isArray(body.models_to_try) && body.models_to_try.length
     ? body.models_to_try
-    : [primaryModel, "gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash"];
+    : [primaryModel, "gemini-3.6-flash", "gemini-2.5-flash", "gemini-3.8-flash"];
 
   if (!systemInstruction || !userPrompt) {
     return new Response(

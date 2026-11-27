@@ -6,7 +6,7 @@
 <title>🔮🧙‍♂️ Kuang Bin Studio ✨☯️ · Tử Vi, Gieo Quẻ &amp; Thần Số Học</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Chakra+Petch:wght@600;700&family=Paytone+One&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Playpen+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/scrollcraft/scrollcraft.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -480,15 +480,62 @@
   .mascot-name {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: 1.02rem;
+    font-size: 1.34rem;
     color: var(--sc-ink);
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  html[data-vibe="thuc-chien"] .mascot-name,
+  .guide-card[data-card-vibe="thuc-chien"] .guide-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 800;
+    font-size: 1.42rem;
+    color: #9E1B2B;
+    letter-spacing: 0.01em;
+  }
+  html[data-vibe="gieo-que"] .mascot-name,
+  .guide-card[data-card-vibe="gieo-que"] .guide-title {
+    font-family: "Chakra Petch", "Be Vietnam Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.38rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .mascot-name {
+    color: #5EEAD4;
+    text-shadow: 0 2px 12px rgba(45, 212, 191, 0.35);
+  }
+  .guide-card[data-card-vibe="gieo-que"] .guide-title {
+    color: #0B7A67;
+  }
+  html[data-vibe="tinh-duyen"] .mascot-name,
+  .guide-card[data-card-vibe="tinh-duyen"] .guide-title {
+    font-family: "Playpen Sans", "Be Vietnam Pro", cursive;
+    font-weight: 800;
+    font-size: 1.32rem;
+    background: linear-gradient(90deg, #E11D48, #D97706, #059669, #2563EB, #9333EA);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @keyframes sexyPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.045); }
   }
   .mascot-tap-hint {
-    margin-top: 0.25rem;
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: var(--sc-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    margin-top: 0.45rem;
+    padding: 0.28rem 0.85rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #FF2A6D, #FF7B54);
+    color: #FFFFFF;
+    font-family: "Playpen Sans", "Be Vietnam Pro", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(255, 42, 109, 0.28);
+    animation: sexyPulse 2s ease-in-out infinite;
   }
   html[data-stage="workspace"][data-vibe="thuc-chien"] .mascot-portrait-card {
     background: #FFFDF8;
@@ -1132,41 +1179,64 @@
     z-index: 2;
     padding-block: clamp(1.1rem, 2.2vw, 1.75rem) clamp(1.6rem, 3vw, 2.3rem);
   }
+  @keyframes heroGradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes samBadgeFloat {
+    0%, 100% { transform: translateY(0) rotate(-0.8deg); }
+    50%      { transform: translateY(-3px) rotate(0.8deg); }
+  }
   .section-head {
     text-align: center;
-    max-width: 44rem;
-    margin: 0 auto clamp(1rem, 1.9vw, 1.4rem);
+    max-width: min(96vw, 1160px);
+    margin: 0 auto clamp(1rem, 1.9vw, 1.45rem);
   }
-  .head-kicker {
+  .section-head h1 {
+    font-family: "Paytone One", "Be Vietnam Pro", sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.32rem, 2.35vw, 2.08rem);
+    line-height: 1.28;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.42rem;
+    background: linear-gradient(90deg, #9E1136 0%, #D93848 25%, #B67D1E 50%, #0D8A74 75%, #9333EA 100%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 10px rgba(182, 125, 30, 0.16));
+    animation: heroGradientFlow 7s linear infinite;
+  }
+  .sam-subline {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.24rem 0.85rem;
-    border-radius: var(--sc-r-pill);
-    background: rgba(255, 255, 255, 0.92);
-    border: 1.5px solid var(--gold-line);
-    color: var(--gold);
-    font-size: 0.74rem;
-    font-weight: 700;
-    margin-bottom: 0.45rem;
-    box-shadow: var(--sc-e1);
-  }
-  .section-head h1 {
-    font-family: var(--sc-font-display);
+    margin: 0 auto 0.52rem;
+    padding: 0.28rem 1.05rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #FFF5E1, #FFE8F2, #EAFBF5);
+    border: 1.5px dashed #D97706;
+    font-family: "Playpen Sans", "Be Vietnam Pro", cursive;
+    font-size: clamp(0.86rem, 1.3vw, 1.02rem);
     font-weight: 800;
-    font-size: clamp(1.42rem, 2.4vw, 1.98rem);
-    line-height: 1.22;
-    letter-spacing: -0.01em;
-    color: var(--sc-ink);
-    margin: 0 0 0.3rem;
+    color: #9A3412;
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.14);
+    animation: samBadgeFloat 3.2s ease-in-out infinite;
   }
   .section-head p {
     margin: 0 auto;
-    font-size: 0.88rem;
-    font-weight: 500;
+    font-size: clamp(0.84rem, 1.18vw, 0.96rem);
+    font-weight: 700;
     color: var(--sc-ink-soft);
-    max-width: 56ch;
-    line-height: 1.5;
+    max-width: none;
+    line-height: 1.45;
+  }
+  @media (min-width: 880px) {
+    .section-head h1,
+    .section-head p {
+      white-space: nowrap;
+    }
   }
 
   /* Compact, centered stage right in the eye's natural focal field */
@@ -2269,14 +2339,149 @@
     margin-bottom: 1.1rem;
     box-shadow: var(--sc-e1);
   }
-  .card h3 {
-    font-family: var(--sc-font-display);
-    margin: 0 0 0.85rem;
+  /* SMART VIETNAMESE DATE INPUT (DD / MM / YYYY — NO MORE MM/DD SWAP!) */
+  .vn-date-group {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1.35fr;
+    align-items: center;
+    gap: 0.32rem;
+    background: #FCF9F2;
+    border: 1.5px solid var(--border);
+    border-radius: var(--sc-r-sm);
+    padding: 0.22rem 0.48rem;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  }
+  .vn-date-group:focus-within {
+    border-color: var(--sc-accent);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--sc-accent) 14%, transparent);
+  }
+  .vn-date-group input.vn-d-part {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-align: center;
+    padding: 0.5rem 0.2rem !important;
+    font-size: 0.98rem !important;
+    font-weight: 800 !important;
     color: var(--sc-ink);
-    font-size: 1.35rem;
+    width: 100%;
+  }
+  .vn-date-sep {
+    color: var(--sc-ink-soft);
     font-weight: 800;
-    border-bottom: 1.5px dashed var(--border);
-    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.65;
+    user-select: none;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .vn-date-group {
+    background: #061A20;
+    border-color: #21606E;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .vn-date-group:focus-within {
+    background: #08232B;
+    border-color: #2DD4BF;
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .vn-date-group {
+    background: #FFF7FC;
+    border-color: #F2C4E4;
+  }
+
+  /* BOLD, COLOR-CODED SECTION HEADERS IN RESULT VIEW (EASY SCANNING, ZERO TEXT FATIGUE) */
+  .card h3,
+  .sec-hero-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.62rem;
+    font-family: "Paytone One", "Be Vietnam Pro", sans-serif;
+    margin: 0 0 1.05rem;
+    font-size: clamp(1.24rem, 1.85vw, 1.52rem);
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    padding: 0.72rem 1rem;
+    border-radius: 14px;
+    border: none;
+    border-left: 6px solid var(--sec-color, var(--sc-accent));
+    background: var(--sec-bg, var(--sc-accent-soft));
+    color: var(--sec-color, var(--sc-accent));
+  }
+  .sec-num-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.22rem 0.72rem;
+    border-radius: 999px;
+    background: var(--sec-color, var(--sc-accent));
+    color: #FFFFFF;
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+  }
+  .sec-tone-1 { --sec-color: #C81E3A; --sec-bg: rgba(200, 30, 58, 0.10); }
+  .sec-tone-2 { --sec-color: #0D8A74; --sec-bg: rgba(13, 138, 116, 0.11); }
+  .sec-tone-3 { --sec-color: #7C3AED; --sec-bg: rgba(124, 58, 237, 0.11); }
+  .sec-tone-4 { --sec-color: #1D4ED8; --sec-bg: rgba(29, 78, 216, 0.10); }
+  .sec-tone-5 { --sec-color: #C2410C; --sec-bg: rgba(194, 65, 12, 0.11); }
+  .sec-tone-6 { --sec-color: #BE185D; --sec-bg: rgba(190, 24, 93, 0.11); }
+
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-1 { --sec-color: #FB7185; --sec-bg: rgba(251, 113, 133, 0.15); }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-2 { --sec-color: #2DD4BF; --sec-bg: rgba(45, 212, 191, 0.16); }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-3 { --sec-color: #C084FC; --sec-bg: rgba(192, 132, 252, 0.16); }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-4 { --sec-color: #38BDF8; --sec-bg: rgba(56, 189, 248, 0.16); }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-5 { --sec-color: #FBBF24; --sec-bg: rgba(251, 191, 36, 0.16); }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .sec-tone-6 { --sec-color: #F472B6; --sec-bg: rgba(244, 114, 182, 0.16); }
+
+  /* Upgrade numbered form step labels & AI markdown headings too! */
+  .step-label-lg {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 1.06rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 0.55rem !important;
+  }
+  .step-badge-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: var(--sc-accent);
+    color: #FFFFFF;
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+  .ai-report-body h1,
+  .ai-report-body h2 {
+    font-family: "Paytone One", "Be Vietnam Pro", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 1.38rem !important;
+    color: #B91C2E !important;
+    background: #FFF1F3;
+    border-left: 5px solid #D93848;
+    border-bottom: none !important;
+    padding: 0.62rem 0.95rem !important;
+    border-radius: 10px;
+    margin: 1.5rem 0 0.8rem !important;
+  }
+  .ai-report-body h3 {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: #0F766E !important;
+    background: #ECFDF5;
+    border-left: 4px solid #10B981;
+    padding: 0.42rem 0.78rem;
+    border-radius: 8px;
+    margin: 1.15rem 0 0.55rem !important;
   }
 
   table.std-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
@@ -2460,9 +2665,8 @@
   <div class="sc-wrap">
     <div class="section-head">
       <h1>Xin mời quý khách lựa chọn 1 nam hoặc nữ tiếp viên 🤪🕺💃</h1>
-      <p>
-        Rê chuột vào từng ảnh để đánh thức tiếp viên, bấm chọn để bung pháo hoa mở phòng riêng!
-      </p>
+      <div class="sam-subline">🃏 hoặc quý khách có thể chơi sâm nếu mún 🌿😏🔥</div>
+      <p>Rê chuột vào từng ảnh để đánh thức tiếp viên, bấm chọn để bung pháo hoa mở phòng riêng!</p>
     </div>
 
     <div class="guides-stage-wrap">
@@ -2477,15 +2681,15 @@
             <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
             <div class="guide-media">
               <div class="guide-halo-ring"></div>
-              <img src="/assets/images/guide_1_cool.jpg" alt="Nam Thần Tử Vi, Tài Bạch, Điền Trạch" width="600" height="600">
+              <img src="/assets/images/guide_1_cool.jpg" alt="Nam Thần Tử Vi" width="600" height="600">
               <span class="guide-sparkle-orb" aria-hidden="true">✨</span>
               <span class="guide-floating-charm" aria-hidden="true">💰</span>
               <span class="guide-active-badge">✓ Đang chọn</span>
             </div>
             <div class="guide-body">
               <span class="guide-tag">Tử Vi · Tài Bạch · Điền Trạch</span>
-              <h2 class="guide-title">Nam Thần Tử Vi &amp; Tài Lộc</h2>
-              <span class="guide-theme-chip">🎨 Giao diện: Hoàng Kim Đế Vương (Vàng Đỏ)</span>
+              <h2 class="guide-title">Nam Thần Tử Vi</h2>
+              <span class="guide-theme-chip">🎨 Phòng Hoàng Kim Đế Vương</span>
               <p class="guide-desc">
                 Lập lá số 12 cung theo ngày giờ sinh, soi nét cung Mệnh, Tài Bạch, Điền Trạch, Quan Lộc &amp; Bát Tự.
               </p>
@@ -2506,7 +2710,7 @@
             <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
             <div class="guide-media">
               <div class="guide-halo-ring"></div>
-              <img src="/assets/images/guide_2_cheer.jpg" alt="Nam Thần Gieo Quẻ Kinh Dịch" width="600" height="600">
+              <img src="/assets/images/guide_2_cheer.jpg" alt="Nam Thần Gieo Quẻ" width="600" height="600">
               <span class="guide-sparkle-orb" aria-hidden="true">✨</span>
               <span class="guide-floating-charm" aria-hidden="true">☯️</span>
               <span class="guide-active-badge">✓ Đang chọn</span>
@@ -2514,7 +2718,7 @@
             <div class="guide-body">
               <span class="guide-tag">Lục Hào · Mai Hoa · Kỳ Môn</span>
               <h2 class="guide-title">Nam Thần Gieo Quẻ</h2>
-              <span class="guide-theme-chip">🎨 Giao diện: Ngọc Bích Đêm Huyền Bí (Dark)</span>
+              <span class="guide-theme-chip">🎨 Phòng Ngọc Bích Đêm Huyền Bí</span>
               <p class="guide-desc">
                 "Mạnh mẽ lên nào!" Khỏi cần ngày sinh: tự tung xu, nhờ gieo hộ, chọn số, gõ 2 chữ hoặc khởi theo giờ!
               </p>
@@ -2535,15 +2739,15 @@
             <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
             <div class="guide-media">
               <div class="guide-halo-ring"></div>
-              <img src="/assets/images/guide_3_lgbt.jpg" alt="Bà Hoàng Cầu Vồng xem Thần Số Học" width="600" height="600">
+              <img src="/assets/images/guide_3_lgbt.jpg" alt="Bà Hoàng Thần Số" width="600" height="600">
               <span class="guide-sparkle-orb" aria-hidden="true">🌈</span>
               <span class="guide-floating-charm" aria-hidden="true">🏳️‍🌈</span>
               <span class="guide-active-badge">✓ Đang chọn</span>
             </div>
             <div class="guide-body">
               <span class="guide-tag">Thần Số Học · Hệ Cầu Vồng 🏳️‍🌈</span>
-              <h2 class="guide-title">Bà Hoàng Thần Số Học 💅</h2>
-              <span class="guide-theme-chip">🎨 Giao diện: Hồng Tím Cầu Vồng Mộng Mơ</span>
+              <h2 class="guide-title">Bà Hoàng Thần Số 💅</h2>
+              <span class="guide-theme-chip">🎨 Phòng Cầu Vồng Mộng Mơ</span>
               <p class="guide-desc">
                 Đang bấm máy check var số mệnh cưng đó nha! "Mình yêu nhau nhé", để chị soi Ngày sinh &amp; Nickname xem độ slay 🌈
               </p>
@@ -2589,20 +2793,19 @@
           </div>
         </div>
 
-        <div id="mascot-portrait-card" class="mascot-portrait-card orn-box" onclick="nextMascotLine(true)" title="Chạm vào Chibi để nghe câu nói khác!">
+        <div id="mascot-portrait-card" class="mascot-portrait-card orn-box" onclick="nextMascotLine(true)" title="Chạm vào em đi!">
           <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
           <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
           <div class="mascot-img-wrap">
-            <button type="button" id="btn-toggle-chibi" class="mascot-style-toggle" onclick="event.stopPropagation(); toggleChibiPhotoMode();" title="Đổi giữa Chibi biểu cảm và Ảnh thật">📷 Ảnh thật</button>
-            <img id="active-guide-img" src="/assets/images/chibi_c1_cool.jpg" alt="Chibi tiếp viên đại diện" width="340" height="340">
+            <img id="active-guide-img" src="/assets/images/chibi_c1_cool.jpg" alt="Tiếp viên đại diện" width="340" height="340">
             <span id="mascot-mood-pill" class="mascot-mood-pill">😎 Chủ tịch ngầu lòi</span>
           </div>
           <div class="mascot-meta">
-            <div id="active-guide-title" class="mascot-name">Nam Thần Tử Vi, Tài Bạch &amp; Điền Trạch</div>
-            <div id="chibi-mood-bar" class="chibi-mood-bar" onclick="event.stopPropagation();" aria-label="Chọn biểu cảm Chibi"></div>
-            <div class="mascot-tap-hint">💬 Biểu cảm Chibi tự đổi khớp lời thoại (3–10s)</div>
+            <div id="active-guide-title" class="mascot-name">Nam Thần Tử Vi</div>
+            <div id="chibi-mood-bar" class="chibi-mood-bar" onclick="event.stopPropagation();" aria-label="Chọn biểu cảm"></div>
+            <div class="mascot-tap-hint">💋 Chạm vào em đi 😘🔥🫦</div>
           </div>
         </div>
       </aside>
@@ -2662,8 +2865,15 @@
               </select>
             </div>
             <div class="field">
-              <label for="tv-date">Ngày tháng năm sinh <span class="req">*</span></label>
-              <input type="date" id="tv-date">
+              <label for="tv-date-d">Ngày tháng năm sinh <span class="req">*</span> <span class="sub">(Ngày / Tháng / Năm)</span></label>
+              <div class="vn-date-group" id="tv-date-wrap">
+                <input id="tv-date-d" class="vn-d-part" type="text" inputmode="numeric" maxlength="2" placeholder="Ngày" aria-label="Ngày sinh" oninput="onVnDatePartInput('tv', 'd', event)" onpaste="onVnDatePaste('tv', event)">
+                <span class="vn-date-sep">/</span>
+                <input id="tv-date-m" class="vn-d-part" type="text" inputmode="numeric" maxlength="2" placeholder="Tháng" aria-label="Tháng sinh" oninput="onVnDatePartInput('tv', 'm', event)" onkeydown="onVnDateKeyDown('tv', 'm', event)" onpaste="onVnDatePaste('tv', event)">
+                <span class="vn-date-sep">/</span>
+                <input id="tv-date-y" class="vn-d-part" type="text" inputmode="numeric" maxlength="4" placeholder="Năm (1996)" aria-label="Năm sinh" oninput="onVnDatePartInput('tv', 'y', event)" onkeydown="onVnDateKeyDown('tv', 'y', event)" onpaste="onVnDatePaste('tv', event)">
+              </div>
+              <input type="hidden" id="tv-date" value="">
             </div>
           </div>
 
@@ -2724,7 +2934,7 @@
              ============================================================== -->
         <div id="panel-form-gieoque" class="mode-form-panel">
           <div class="field">
-            <label for="inp-question">1. Việc bạn đang muốn hỏi quẻ <span class="sub">(Tập trung nghĩ rõ 1 việc cụ thể)</span></label>
+            <label for="inp-question" class="step-label-lg"><span class="step-badge-num">01</span> Việc bạn đang muốn hỏi quẻ <span class="sub">(Nghĩ rõ 1 việc cụ thể)</span></label>
             <textarea id="inp-question" placeholder="VD: Tháng này chốt mảnh đất / dự án này có sinh lời tốt không? Hoặc: Kỳ thi / công việc sắp tới thuận lợi không?"></textarea>
             <div class="chip-row">
               <button type="button" class="topic-chip" onclick="pickQuestionChip('Thương vụ đầu tư / tài chính sắp tới có thuận lợi và sinh lời tốt không?', this)">💰 Đầu tư &amp; Tài lộc</button>
@@ -2736,7 +2946,7 @@
           </div>
 
           <div class="field">
-            <label>2. Chọn phương pháp khởi quẻ Kinh Dịch <span class="req">*</span></label>
+            <label class="step-label-lg"><span class="step-badge-num" style="background:#0D8A74;">02</span> Chọn phương pháp khởi quẻ Kinh Dịch <span class="req">*</span></label>
             <div class="ic-method-grid">
               <button type="button" class="ic-method-card is-selected" data-ic-opt="coins_random" onclick="selectIcOption('coins_random')">
                 <strong>🎲 Vũ Trụ Gieo Hộ</strong>
@@ -2865,8 +3075,15 @@
 
           <div class="row-2">
             <div class="field">
-              <label for="num-date">Ngày tháng năm sinh <span class="req">*</span></label>
-              <input type="date" id="num-date">
+              <label for="num-date-d">Ngày tháng năm sinh <span class="req">*</span> <span class="sub">(Ngày / Tháng / Năm)</span></label>
+              <div class="vn-date-group" id="num-date-wrap">
+                <input id="num-date-d" class="vn-d-part" type="text" inputmode="numeric" maxlength="2" placeholder="Ngày" aria-label="Ngày sinh" oninput="onVnDatePartInput('num', 'd', event)" onpaste="onVnDatePaste('num', event)">
+                <span class="vn-date-sep">/</span>
+                <input id="num-date-m" class="vn-d-part" type="text" inputmode="numeric" maxlength="2" placeholder="Tháng" aria-label="Tháng sinh" oninput="onVnDatePartInput('num', 'm', event)" onkeydown="onVnDateKeyDown('num', 'm', event)" onpaste="onVnDatePaste('num', event)">
+                <span class="vn-date-sep">/</span>
+                <input id="num-date-y" class="vn-d-part" type="text" inputmode="numeric" maxlength="4" placeholder="Năm (1998)" aria-label="Năm sinh" oninput="onVnDatePartInput('num', 'y', event)" onkeydown="onVnDateKeyDown('num', 'y', event)" onpaste="onVnDatePaste('num', event)">
+              </div>
+              <input type="hidden" id="num-date" value="">
             </div>
             <div class="field">
               <label for="num-datetype">Loại lịch trên giấy tờ</label>
@@ -3017,12 +3234,12 @@ const LGBT_RAINBOW_STOPS = ["#FF0018", "#FF8C00", "#FFEE00", "#00C853", "#00B0FF
 const GUIDES = {
   "thuc-chien": {
     img: "/assets/images/guide_1_cool.jpg",
-    roomTheme: "🎨 Phòng Hoàng Kim Đế Vương (Vàng Đỏ Cổ Điển)",
-    title: "Nam Thần Tử Vi, Tài Bạch & Điền Trạch",
+    roomTheme: "🎨 Phòng Hoàng Kim Đế Vương",
+    title: "Nam Thần Tử Vi",
     say: "Điền đầy đủ các mục bắt buộc bên dưới để an chuẩn 12 cung Tử Vi, Tài Bạch, Điền Trạch & Bát Tự nhé!",
     fxType: "fireworks",
     popSticker: "CHỐT LỘC!! 💰🎆",
-    popTitle: "Nam Thần Tử Vi & Tài Bạch lộ diện!",
+    popTitle: "Nam Thần Tử Vi lộ diện!",
     popSub: "Bật kính soi Mệnh · Tài Bạch · Điền Trạch cực nét nào anh em ơi!",
     emojis: ["💰", "💎", "🏡", "🚀", "⭐", "🔥", "👑"],
     colors: ["#FF2A54", "#FFB703", "#FB8500", "#00F5D4", "#FFD166", "#FF5D8F"],
@@ -3030,7 +3247,7 @@ const GUIDES = {
     demoLbl: "✨ Điền thử 1 lá số Tử Vi mẫu",
     welcomeTitle: "Chế độ 1: Tử Vi 12 Cung · Tài Bạch · Điền Trạch",
     welcomeDesc: "An chuẩn hơn 105 sao Tử Vi, vẽ tia chiếu Tam Phương Tứ Chính, tính tỷ lệ Ngũ Hành Bát Tự và soi sâu Tài Bạch, Điền Trạch.",
-    resultTitle: "✦ Nam Thần Tử Vi & Tài Bạch nhắn nhủ:",
+    resultTitle: "✦ Nam Thần Tử Vi nhắn nhủ:",
     resultMsg: "Lá số đã lên sóng! Bấm vào cung Mệnh, Tài Bạch, Điền Trạch hoặc Quan Lộc trên bàn cờ để xem tia sao chiếu nhé.",
     visibleTabs: ["tuvi", "bazi", "qimen", "ai"],
     defaultTab: "tuvi",
@@ -3040,8 +3257,8 @@ const GUIDES = {
   },
   "gieo-que": {
     img: "/assets/images/guide_2_cheer.jpg",
-    roomTheme: "🎨 Phòng Ngọc Bích Đêm Huyền Bí (Dark Emerald)",
-    title: "Nam Thần Gieo Quẻ Kinh Dịch",
+    roomTheme: "🎨 Phòng Ngọc Bích Đêm Huyền Bí",
+    title: "Nam Thần Gieo Quẻ",
     say: "\"Mạnh mẽ lên nào!\" Không cần ngày sinh hay tên tuổi. Nhập việc cần hỏi rồi chọn 1 trong 6 kiểu gieo quẻ bên dưới!",
     fxType: "fireworks",
     popSticker: "MẠNH MẼ LÊN!! 🎲🎆",
@@ -3063,12 +3280,12 @@ const GUIDES = {
   },
   "tinh-duyen": {
     img: "/assets/images/guide_3_lgbt.jpg",
-    roomTheme: "🎨 Phòng Cầu Vồng Mộng Mơ (Hồng Tím Pastel)",
-    title: "Bà Hoàng Thần Số Học 🏳️‍🌈💅",
+    roomTheme: "🎨 Phòng Cầu Vồng Mộng Mơ",
+    title: "Bà Hoàng Thần Số 💅",
     say: "\"Mình yêu nhau nhé cưng ơi!\" Nhập Ngày sinh + Tên khai sinh + Nickname (VD: Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...) để chị đẹp hệ cầu vồng soi trọn tần số năng lượng!",
     fxType: "lgbt_hearts",
     popSticker: "SLAY ĐỈNH NÓC!! 🏳️‍🌈💅",
-    popTitle: "Bà Hoàng Cầu Vồng giáng trần! 🌈✨",
+    popTitle: "Bà Hoàng Thần Số giáng trần! 🌈✨",
     popSub: "\"Khoan bấm điện thoại đã cưng ơi, mình yêu nhau nhé!! Đưa Ngày sinh & Nickname (Dủng Dỉnh, Sâm Héo...) đây chị soi độ slay tới nóc!!\" 💅🦄",
     emojis: ["🏳️‍🌈", "🌈", "💅", "🦄", "💖", "✨"],
     colors: LGBT_RAINBOW_STOPS,
@@ -3076,13 +3293,13 @@ const GUIDES = {
     demoLbl: "✨ Xem thử hồ sơ Thần Số Học + Nickname Dủng Dỉnh",
     welcomeTitle: "Chế độ 3: Thần Số Học Cầu Vồng · Tên Thật × Nickname",
     welcomeDesc: "Giải mã Số Chủ Đạo, Tam Giác Vàng (Linh Hồn · Sứ Mệnh · Nhân Cách), Sóng 9 Năm, 22 Arcana và đo độ bù khuyết của Nickname (Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...).",
-    resultTitle: "✦ Bà Hoàng Thần Số Học nhắn nhủ:",
+    resultTitle: "✦ Bà Hoàng Thần Số nhắn nhủ:",
     resultMsg: "\"Mình yêu nhau nhé!\" Kéo xuống cuối trang còn có bàn chấm điểm đọ độ slay cho dàn Nickname (Dủng Dỉnh, Sâm Héo, Hoàng Mười, Hải Ly...) nữa đó nha cưng! 💅🌈",
     visibleTabs: ["numerology", "ai"],
     defaultTab: "numerology",
     aiMode: "numerology",
     panelId: "panel-form-numerology",
-    firstInputId: "num-date"
+    firstInputId: "num-date-d"
   }
 };
 

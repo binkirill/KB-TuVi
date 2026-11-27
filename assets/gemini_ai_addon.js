@@ -11,13 +11,7 @@
   const SERVER_CFG = {
     server_has_key: false,
     requires_access_code: false,
-    default_model: "gemini-3.8-flash",
-    available_models: [
-      { id: "gemini-3.8-flash", label: "Gemini 3.8 Flash (Mặc định — Mạnh nhất, Free Tier)" },
-      { id: "gemini-3.6-flash", label: "Gemini 3.6 Flash (Ổn định — Free Tier)" },
-      { id: "gemini-3.5-flash-lite", label: "Gemini 3.5 Flash-Lite (Siêu nhanh — Tiết kiệm quota)" },
-      { id: "gemini-2.5-flash", label: "Gemini 2.5 Flash (Dự phòng cho Key cũ)" }
-    ]
+    default_model: "gemini-3.5-flash-lite"
   };
 
   const AI_STATE = {
@@ -27,7 +21,7 @@
     metaInfo: null,
     mode: "full",
     focusQuestion: "",
-    model: "gemini-3.8-flash",
+    model: "gemini-3.5-flash-lite",
     elapsed: 0
   };
   let timerHandle = null;
@@ -220,7 +214,6 @@
     const codeEl = document.getElementById("inp-access-code");
     const sideCodeEl = document.getElementById("kb-sidebar-access-code");
     const modeEl = document.getElementById("inp-ai-mode");
-    const modelEl = document.getElementById("inp-ai-model");
     const focusEl = document.getElementById("inp-ai-focus");
     if (keyEl) localStorage.setItem("kb_tuvi_user_api_key", keyEl.value.trim());
     if (codeEl) {
@@ -230,7 +223,6 @@
       localStorage.setItem("kb_tuvi_access_code", sideCodeEl.value.trim());
     }
     if (modeEl) AI_STATE.mode = modeEl.value;
-    if (modelEl) AI_STATE.model = modelEl.value;
     if (focusEl) AI_STATE.focusQuestion = focusEl.value;
   }
 
@@ -427,12 +419,8 @@
     const savedCode = localStorage.getItem("kb_tuvi_access_code") || "";
 
     const statusHtml = SERVER_CFG.server_has_key
-      ? `<span class="ai-status-pill ai-status-ok">🟢 Đã kết nối Gemini API Free${SERVER_CFG.requires_access_code ? " (Cần Mã mời)" : " — Sẵn sàng luận giải"}</span>`
+      ? `<span class="ai-status-pill ai-status-ok">🟢 Đã kết nối Gemini AI Siêu tốc${SERVER_CFG.requires_access_code ? " (Cần Mã mời)" : " — Sẵn sàng luận giải"}</span>`
       : `<span class="ai-status-pill ai-status-warn">🟡 Chế độ BYOK — Dán Gemini API Key miễn phí của bạn bên dưới</span>`;
-
-    const modelOpts = (SERVER_CFG.available_models || []).map(m =>
-      `<option value="${escHtml(m.id)}" ${AI_STATE.model === m.id ? "selected" : ""}>${escHtml(m.label)}</option>`
-    ).join("");
 
     const codeHtml = SERVER_CFG.requires_access_code ? `
       <div class="ai-field" style="margin-bottom:10px;">
@@ -446,9 +434,9 @@
         <div class="ai-loader">
           <div class="ai-spinner"></div>
           <div>
-            Đang luận giải chuyên sâu theo cổ pháp Đông – Tây bằng <code>${escHtml(AI_STATE.model)}</code>...
+            Đang luận giải chuyên sâu theo cổ pháp Đông – Tây...
             <span id="kb-ai-timer-sec">${AI_STATE.elapsed}s</span>
-            <div style="font-size:12px;font-weight:400;color:#7a6235;margin-top:2px;">Thường mất 8–20 giây để đối chiếu cổ thư & kiểm chứng chéo 5 hệ.</div>
+            <div style="font-size:12px;font-weight:400;color:#7a6235;margin-top:2px;">Bài luận sẽ hiện chữ trực tiếp ngay khi AI phân tích xong từng mục.</div>
           </div>
         </div>`;
     } else if (AI_STATE.error) {
@@ -458,13 +446,12 @@
     if (AI_STATE.markdown) {
       const info = AI_STATE.metaInfo || {};
       const srcLbl = info.key_source === "user_byok" ? "Key cá nhân" : "Key Free máy chủ";
-      const fbTxt = info.fallback_used ? " (Auto-fallback)" : "";
       const curState = getStudioState();
       const personName = (curState && curState.meta && curState.meta.name) ? curState.meta.name : "ĐƯƠNG SỐ";
       resultHtml += `
         <div style="margin-top:12px;">
           <div class="ai-report-header">
-            <div>✨ <strong>BÀI LUẬN MỆNH THƯ AI — ${escHtml(personName.toUpperCase())}</strong> &nbsp;|&nbsp; <code>${escHtml(info.model_used || AI_STATE.model)}</code>${fbTxt} • ${info.elapsed_sec || 0}s • ${srcLbl}</div>
+            <div>✨ <strong>BÀI LUẬN MỆNH THƯ AI — ${escHtml(personName.toUpperCase())}</strong> &nbsp;|&nbsp; ${info.elapsed_sec || 0}s • ${srcLbl}</div>
             <div style="display:flex;gap:6px;">
               <button type="button" class="btn-sec" onclick="window.__kbCopyAiReport()">📋 Copy Bài Luận</button>
               <button type="button" class="btn-sec" onclick="downloadHtmlReport()">💾 Tải Hồ Sơ + AI</button>
@@ -475,26 +462,20 @@
     }
 
     return `
-      <h3>✨ Luận Giải Trực Tiếp Bằng AI Gemini (Miễn Phí — Chuẩn Cổ Pháp)</h3>
+      <h3>✨ Luận Giải Trực Tiếp Bằng AI Gemini (Siêu Tốc — Chuẩn Cổ Pháp)</h3>
       ${statusHtml}
       <div class="ai-controls">
-        <div class="ai-grid-2">
-          <div class="ai-field">
-            <label>Chế độ luận giải chuyên sâu</label>
-            <select id="inp-ai-mode" onchange="window.__kbSaveAiPrefs()">
-              <option value="full" ${AI_STATE.mode === "full" ? "selected" : ""}>⚖️ Đông – Tây Tổng Hợp (Tử Vi × Bát Tự × Thần Số Học — Khuyên dùng)</option>
-              <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Thuần Tử Vi Đẩu Số (12 Cung, Tuần Triệt, Phi Tinh)</option>
-              <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Thuần Bát Tự Tứ Trụ (Dụng Thần, Điều Hầu, Đại Vận)</option>
-              <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Thuần Thần Số Học (Pythagoras, Chaldean, 22 Arcana)</option>
-              <option value="iching" ${AI_STATE.mode === "iching" ? "selected" : ""}>☯️ Giải Quẻ Kinh Dịch Lục Hào + Mai Hoa</option>
-              <option value="qimen" ${AI_STATE.mode === "qimen" ? "selected" : ""}>🧭 Giải Bàn Kỳ Môn Độn Giáp (Hướng & Giờ Tốt)</option>
-              <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Hồ Sơ Đại Toàn Thư (Tổng hợp cả 5 Hệ)</option>
-            </select>
-          </div>
-          <div class="ai-field">
-            <label>Model Gemini Free Tier (Tự chuyển dự phòng nếu bận)</label>
-            <select id="inp-ai-model" onchange="window.__kbSaveAiPrefs()">${modelOpts}</select>
-          </div>
+        <div class="ai-field" style="margin-bottom:10px;">
+          <label>Chế độ luận giải chuyên sâu</label>
+          <select id="inp-ai-mode" onchange="window.__kbSaveAiPrefs()">
+            <option value="full" ${AI_STATE.mode === "full" ? "selected" : ""}>⚖️ Đông – Tây Tổng Hợp (Tử Vi × Bát Tự × Thần Số Học — Khuyên dùng)</option>
+            <option value="tuvi" ${AI_STATE.mode === "tuvi" ? "selected" : ""}>🌌 Thuần Tử Vi Đẩu Số (12 Cung, Tuần Triệt, Phi Tinh)</option>
+            <option value="bazi" ${AI_STATE.mode === "bazi" ? "selected" : ""}>📜 Thuần Bát Tự Tứ Trụ (Dụng Thần, Điều Hầu, Đại Vận)</option>
+            <option value="numerology" ${AI_STATE.mode === "numerology" ? "selected" : ""}>🔢 Thuần Thần Số Học (Pythagoras, Chaldean, 22 Arcana)</option>
+            <option value="iching" ${AI_STATE.mode === "iching" ? "selected" : ""}>☯️ Giải Quẻ Kinh Dịch Lục Hào + Mai Hoa</option>
+            <option value="qimen" ${AI_STATE.mode === "qimen" ? "selected" : ""}>🧭 Giải Bàn Kỳ Môn Độn Giáp (Hướng & Giờ Tốt)</option>
+            <option value="all" ${AI_STATE.mode === "all" ? "selected" : ""}>🏛️ Hồ Sơ Đại Toàn Thư (Tổng hợp cả 5 Hệ)</option>
+          </select>
         </div>
 
         <div class="ai-field" style="margin-bottom:10px;">
@@ -554,17 +535,17 @@
       box.style.color = "#136548";
       if (SERVER_CFG.requires_access_code) {
         box.innerHTML = `
-          <div style="font-weight:700;">🟢 Đã nhận Gemini API Key trên Server (${escHtml(SERVER_CFG.default_model)})</div>
+          <div style="font-weight:700;">🟢 Đã kết nối Gemini AI trên Server</div>
           <div style="margin-top:5px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
             <span style="font-size:11.5px;color:#4f4438;font-weight:600;">🔐 Mã mời (ACCESS_CODE):</span>
             <input type="password" id="kb-sidebar-access-code" value="${escHtml(savedCode)}"
-              placeholder="Nhập mã mời anh đặt trên Vercel..."
+              placeholder="Nhập mã mời..."
               oninput="localStorage.setItem('kb_tuvi_access_code', this.value.trim())"
               style="flex:1;min-width:150px;padding:5px 8px;border:1px solid #b4e4ce;border-radius:7px;background:#fff;color:#1C1635;font-size:12px;font-family:inherit;">
           </div>
         `;
       } else {
-        box.innerHTML = `<div style="font-weight:700;">🟢 Đã kết nối Gemini API Free (${escHtml(SERVER_CFG.default_model)}) · Bấm nút trên để luận giải ngay!</div>`;
+        box.innerHTML = `<div style="font-weight:700;">🟢 Đã kết nối Gemini AI Siêu tốc · Bấm nút trên để luận giải ngay!</div>`;
       }
     } else if (savedKey) {
       box.style.background = "#eef4ff";
@@ -660,7 +641,7 @@
       const json = await res.json();
       if (json.ok && json.config) {
         Object.assign(SERVER_CFG, json.config);
-        AI_STATE.model = SERVER_CFG.default_model || "gemini-3.8-flash";
+        AI_STATE.model = "gemini-3.5-flash-lite";
         renderSidebarAiStatus();
         mountGeminiCard();
       }
