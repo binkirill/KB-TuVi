@@ -27,6 +27,7 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   - `assets/images/guide_1_cool.jpg`: Make-up từ `user_photo_1.png` (Nam Thần Tử Vi & Tài Lộc).
   - `assets/images/guide_2_cheer.jpg`: Make-up từ `user_photo_2.png` (Nam Thần Gieo Quẻ).
   - `assets/images/guide_3_lgbt.jpg`: Make-up từ `C:\Users\Quang\Downloads\3.png` (nhân vật áo đen JUMP tô son đỏ bấm điện thoại, xóa sạch timestamp góc phải dưới, bọc viền sticker kem trắng trên nền cầu vồng 7 màu, trái tim LGBT & tinh bàn Thần Số Học).
+  - `assets/images/og_kuang_bin_studio.jpg`: Ảnh đại diện OpenGraph `1:1` (`1024×1024`) khi chia sẻ link lên Telegram/Zalo/Facebook (tranh vẽ Comic/Webtoon chủ tịch cầm quạt vàng & ngọc Âm Dương chuẩn theo ảnh thật).
   - *(Giữ nguyên các ảnh cũ `hero_celestial.jpg`, `five_elements.jpg`, `iching_oracle.jpg`, `guide_3_love.jpg`, `user_photo_1..3.png` để bảo toàn tương thích ngược 100%).*
 - `[x]` **Thiết kế giao diện Kuang Bin Studio v3.4 chuẩn `scroll-craft` (`assets/studio_gui.html` + `assets/scrollcraft/scrollcraft.css` & `scrollcraft.js`):**
   - **Khung Hội Thoại Truyện Tranh Sát Nhân Vật & Nghiêng Tự Nhiên (v3.4.6):** Kéo `.comic-bubble-stage` ôm sát đè nhẹ lên mép trên khung chân dung (`margin-bottom: -32px`), tạo dáng bóng thoại bất đối xứng và tự động nghiêng luân phiên trái/phải (`±2.8°..4.6°`) kèm đuôi trỏ chéo thẳng về phía đầu nhân vật đúng chất truyện tranh Manga/Marvel.
