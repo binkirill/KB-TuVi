@@ -208,10 +208,10 @@ def dispatch_get(path: str) -> Tuple[int, str, bytes]:
     if clean_path in ("/", "/index.html", "/api/index", "/api/index.py"):
         with open(GUI_HTML_PATH, "rb") as f:
             return 200, "text/html; charset=utf-8", f.read()
-    if clean_path == "/assets/gemini_ai_addon.js":
+    if clean_path in ("/assets/gemini_ai_addon.js", "/api/addon", "/api/addon.py"):
         with open(AI_ADDON_JS_PATH, "rb") as f:
             return 200, "application/javascript; charset=utf-8", f.read()
-    if clean_path == "/sdk/numerology.js":
+    if clean_path in ("/sdk/numerology.js", "/api/sdk-numerology", "/api/sdk-numerology.py"):
         with open(JS_SDK_PATH, "rb") as f:
             return 200, "application/javascript; charset=utf-8", f.read()
     if clean_path == "/api/health":

@@ -30,7 +30,7 @@ WEB_REPO = r"G:\My Drive\Antigravity\kb-tuvi-web"
 
 SYNC_FOLDERS = ("assets", "references", "scripts")
 SYNC_FILES = ("SKILL.md",)
-ADDON_TAG = '<script src="/assets/gemini_ai_addon.js"></script>'
+ADDON_TAG = '<script src="/api/addon"></script>'
 
 
 def ensure_addon_tag_in_html(html_path: str) -> bool:
@@ -39,15 +39,17 @@ def ensure_addon_tag_in_html(html_path: str) -> bool:
         return False
     with open(html_path, "r", encoding="utf-8") as f:
         text = f.read()
-    if "gemini_ai_addon.js" in text:
+    if "/api/addon" in text:
         return False
-    if "</body>" in text:
+    if '<script src="/assets/gemini_ai_addon.js"></script>' in text:
+        updated = text.replace('<script src="/assets/gemini_ai_addon.js"></script>', ADDON_TAG)
+    elif "</body>" in text:
         updated = text.replace("</body>", f"{ADDON_TAG}\n</body>", 1)
     else:
         updated = text + f"\n{ADDON_TAG}\n"
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(updated)
-    print(f"  [AUTO-INJECT] Đã tự động gắn lại {ADDON_TAG} vào {html_path}")
+    print(f"  [AUTO-INJECT] Đã tự động gắn {ADDON_TAG} vào {html_path}")
     return True
 
 
