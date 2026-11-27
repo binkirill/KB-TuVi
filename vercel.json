@@ -10,6 +10,14 @@
     {
       "source": "/",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/assets/gemini_ai_addon.js",
+      "destination": "/api/addon.py"
+    },
+    {
+      "source": "/sdk/numerology.js",
+      "destination": "/api/sdk-numerology.py"
     }
   ]
 }

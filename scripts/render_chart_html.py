@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-render_chart_html.py — Trình xuất Lá Số Tử Vi 12 Cung + Bát Tự Tứ Trụ + Quẻ Dịch ra file HTML đơn (Self-contained)
-Thiết kế chuẩn thẩm mỹ Đông Phương cổ điển pha hiện đại, rõ nét để mở xem trên trình duyệt hoặc in PDF.
+render_chart_html.py — Trình xuất Hồ Sơ Đông - Tây Toàn Thư (Tử Vi 12 Cung + Bát Tự Tứ Trụ + Thần Số Học Đa Phái + Quẻ Dịch + Kỳ Môn) ra file HTML đơn (Self-contained)
+Thiết kế chuẩn thẩm mỹ Á - Âu sang trọng, rõ nét để mở xem trên trình duyệt hoặc in PDF.
 """
 
 from __future__ import annotations
 import html
-from typing import Dict, Optional, List
+from typing import Any, Dict, List
 
 
 def _esc(s: object) -> str:
@@ -76,9 +76,201 @@ def _render_palace_cell(p: Dict[str, object]) -> str:
     """
 
 
-def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ Mệnh Lý Tổng Hợp — kb-tuvi") -> str:
+def _render_3x3_box(grid_obj: Dict[str, Any], label: str) -> str:
+    rows_html = ""
+    for row in grid_obj.get("rows_top_to_bottom", []):
+        cells = ""
+        for c in row:
+            active_cls = "num-cell-has" if c["count"] > 0 else "num-cell-empty"
+            val_txt = _esc(c["text"]) if c["count"] > 0 else f'<span style="color:#ccc;">({c["digit"]})</span>'
+            cells += f'<div class="num-cell {active_cls}">{val_txt}</div>'
+        rows_html += f'<div class="num-row">{cells}</div>'
+    return f"""
+    <div class="num-grid-card">
+      <div class="num-grid-title">{_esc(label)}</div>
+      <div class="num-grid-3x3">{rows_html}</div>
+    </div>
+    """
+
+
+def _render_numerology_section(num: Dict[str, Any], cross_val: Any = None) -> str:
+    cn = num["core_numbers"]
+    lp = cn["life_path"]
+    bd = cn["birthday"]
+    att = cn["attitude"]
+    expr = cn.get("expression")
+    soul = cn.get("soul_urge")
+    pers = cn.get("personality")
+    mat = cn.get("maturity")
+    chal = num.get("chaldean_name")
+    dm22 = num["destiny_matrix_22"]
+    pc = num["personal_cycles"]
+
+    cards = [
+        ("Số Chủ Đạo (Đường Đời)", lp["code"], lp["archetype"]["title"]),
+        ("Năng Lực Ngày Sinh", bd["code"], f"Ngày sinh gốc {bd['day_raw']}"),
+        ("Số Thái Độ Phản Xạ", att["code"], "Ấn tượng đầu tiên"),
+    ]
+    if expr and soul and pers and mat:
+        cards.extend([
+            ("Số Sứ Mệnh (Họ Tên)", expr["code"], expr["archetype"]["title"]),
+            ("Số Linh Hồn (Nội Tâm)", soul["code"], soul["archetype"]["title"]),
+            ("Số Nhân Cách (Vỏ Bọc)", pers["code"], pers["archetype"]["title"]),
+            ("Số Trưởng Thành (Tuổi 35+)", mat["code"], mat["archetype"]["title"]),
+            ("Sức Mạnh Tiềm Thức", f"{cn.get('subconscious_self', 0)}/9", f"Cầu nối LH-NC: {cn['bridges']['soul_to_personality']}"),
+        ])
+
+    cards_html = "".join(
+        f"""<div class="num-stat-card">
+              <div class="nsc-lbl">{_esc(lbl)}</div>
+              <div class="nsc-val">{_esc(val)}</div>
+              <div class="nsc-sub">{_esc(sub)}</div>
+            </div>"""
+        for lbl, val, sub in cards
+    )
+
+    diff_banner = (
+        f'<div class="ys-box" style="margin-bottom:10px;"><strong>Đối chiếu song chuẩn:</strong> {_esc(lp["school_diff_note"])}</div>'
+        if lp.get("school_diff_note") else ""
+    )
+
+    # Bảng chữ cái Họ tên & Chaldean
+    name_html = ""
+    if num["name_breakdown"].get("has_name"):
+        word_chips = []
+        for w in num["name_breakdown"]["words"]:
+            lets = "".join(
+                f'<span class="let-chip {"let-v" if l["role"] == "V" else "let-c"}">{_esc(l["char"])}<small>{l["pythagorean"]}</small></span>'
+                for l in w["letters"]
+            )
+            word_chips.append(f'<div class="word-block">{lets}<div class="word-sum">{_esc(w["word"])} = {_esc(w["pythagorean_reduced"])}</div></div>')
+
+        missing_str = ", ".join(str(x) for x in num["name_breakdown"]["karmic_lessons_missing"]) or "Không khuyết con số nào (Đủ 1–9)"
+        passion_str = ", ".join(str(x) for x in num["name_breakdown"]["hidden_passions"]) or "Cân bằng"
+        filled_str = ", ".join(str(x) for x in num["name_breakdown"]["filled_birth_chart_gaps"]) or "—"
+
+        chal_box = ""
+        if chal:
+            chal_box = (
+                f"<div><strong>Chaldean Cổ Đại (Rung động âm thanh):</strong> Số kép <strong>{chal['compound_number']}/{chal['single_digit']}</strong> — "
+                f"<strong>{_esc(chal['compound_title'])}</strong> [{_esc(chal['compound_rank'])}]: {_esc(chal['compound_meaning'])}</div>"
+            )
+
+        nick_box = ""
+        if num.get("nickname_synergy"):
+            ns = num["nickname_synergy"]
+            nc = ns["chaldean"]
+            nick_box = (
+                f"<div style='margin-top:4px;'><strong>Chấm điểm Tên thường gọi / Thương hiệu ({_esc(ns['nickname'])}):</strong> "
+                f"Sứ mệnh {ns['expression_code']} • Linh hồn {ns['soul_urge_code']} • Chaldean <strong>{nc['compound_number']}/{nc['single_digit']} ({_esc(nc['compound_title'])} - {_esc(nc['compound_rank'])})</strong> "
+                f"• Lấp thêm số trống ngày sinh: {', '.join(str(x) for x in ns['fills_birth_chart_missing_digits']) or '—'}</div>"
+            )
+
+        name_html = f"""
+        <div style="margin: 12px 0;">
+          <div style="font-size:12.5px;color:var(--muted);margin-bottom:6px;">
+            <strong>Giải phẫu Họ Tên ({_esc(num['meta']['clean_name'])}):</strong> Ô nền hồng = Nguyên âm (Linh hồn), Ô nền xám = Phụ âm (Nhân cách)
+          </div>
+          <div class="words-wrap">{''.join(word_chips)}</div>
+          <div class="ys-box" style="margin-top:8px;">
+            <div><strong>Số Khuyết (Bài học nghiệp):</strong> {_esc(missing_str)} | <strong>Đam mê ẩn giấu:</strong> {_esc(passion_str)} | <strong>Số Họ tên bù vào Ngày sinh:</strong> {_esc(filled_str)}</div>
+            {chal_box}
+            {nick_box}
+          </div>
+        </div>
+        """
+
+    # Ma trận 3x3 & Mũi tên
+    b_grid = num["grids_3x3"]["birth_chart"]
+    c_grid = num["grids_3x3"]["composite_chart"]
+    arrows_present = "".join(f"<li><strong style='color:var(--jade)'>✓ {_esc(a['name'])}:</strong> {_esc(a['meaning'])}</li>" for a in b_grid["present_arrows"]) or "<li>Không có mũi tên đầy nguyên bản (cần kết hợp lực bù từ Họ tên).</li>"
+    arrows_empty = "".join(f"<li><strong style='color:var(--accent)'>○ {_esc(a['name'])}:</strong> {_esc(a['meaning'])}</li>" for a in b_grid["empty_arrows"]) or "<li>Không bị mũi tên trống nào trên biểu đồ ngày sinh.</li>"
+
+    karmic_html = ""
+    if num.get("karmic_debts"):
+        kd_items = "".join(
+            f"<li><strong>{_esc(k['title'])}</strong> (tại {_esc(', '.join(k['found_in']))}): {_esc(k['lesson'])}</li>"
+            for k in num["karmic_debts"]
+        )
+        karmic_html = f'<div class="ys-box" style="border-left-color:var(--accent);background:#fff5f4;"><strong>Bài học Nợ Nghiệp Chuyển Hóa:</strong><ul style="margin:4px 0 0 18px;">{kd_items}</ul></div>'
+
+    # 4 Đỉnh cao & Sóng 9 năm
+    pin_rows = "".join(
+        f"""<tr class="{'moving-row' if p['is_current'] else ''}">
+              <td><strong>Đỉnh #{p['stage']}</strong> {'(Hiện tại)' if p['is_current'] else ''}</td>
+              <td><strong class="bz-big">{_esc(p['pinnacle_code'])}</strong></td>
+              <td>Thử thách <strong>{p['challenge_number']}</strong></td>
+              <td>{_esc(p['age_range'])}</td>
+              <td>{_esc(p['year_range'])}</td>
+              <td style="text-align:left;">{_esc(p['theme'])}</td>
+            </tr>"""
+        for p in num["pinnacles"]
+    )
+
+    wave_cards = "".join(
+        f"""<div class="dy-box {'dy-active' if w['is_target_year'] else ''}">
+              <div class="dy-yr">Năm {w['year']} ({w['age']}t)</div>
+              <div class="dy-cc">Số {w['personal_year']}</div>
+              <div style="font-size:10.5px;">{_esc(w['phase'])}</div>
+            </div>"""
+        for w in pc["nine_year_wave"]
+    )
+
+    ew_box = ""
+    if isinstance(cross_val, dict) and cross_val.get("east_west_synthesis"):
+        ews = cross_val["east_west_synthesis"]
+        ew_box = f"""
+        <div class="ys-box" style="margin-top:12px; border-left-color:var(--navy); background:#f1f6fd;">
+          <div style="font-weight:800;color:var(--navy);margin-bottom:4px;">☯️ × 🔢 HỘI TỤ ĐÔNG – TÂY (Tử Vi × Bát Tự × Thần Số Học):</div>
+          <div>• {_esc(ews['element_number_resonance'])}</div>
+          <div>• {_esc(ews['annual_rhythm_alignment'])}</div>
+        </div>
+        """
+
+    return f"""
+    <section class="card-section">
+      <h2>Thần Số Học Đa Phái (Pythagoras × Chaldean × Ma Trận 22 Arcana)</h2>
+      <p class="sub-info">
+        <strong>Trường phái:</strong> {_esc(num['meta']['school_used'])} |
+        <strong>Năm Cá Nhân {pc['target_year']}:</strong> <strong>Số {pc['personal_year']} — {_esc(pc['personal_year_theme']['phase'])}</strong> ({_esc(pc['personal_year_theme']['advice'])})
+      </p>
+      {diff_banner}
+      <div class="num-stats-grid">{cards_html}</div>
+      {name_html}
+      <div class="num-grids-layout">
+        {_render_3x3_box(b_grid, "Biểu Đồ Ngày Sinh (3×3)")}
+        {_render_3x3_box(c_grid, "Biểu Đồ Tổ Hợp (Ngày Sinh + Họ Tên)")}
+        <div style="flex:1;min-width:280px;font-size:12.5px;">
+          <strong>Các Mũi Tên Nổi Trội & Bài Học Rèn Luyện:</strong>
+          <ul style="margin:6px 0 8px 18px;">{arrows_present}{arrows_empty}</ul>
+        </div>
+      </div>
+      {karmic_html}
+      <h3 style="font-size:15px;color:var(--navy);margin:14px 0 6px;">Kim Tự Tháp 4 Đỉnh Cao Đời Người & 4 Thử Thách</h3>
+      <table class="bazi-table">
+        <thead><tr><th>Giai đoạn</th><th>Số Đỉnh Cao</th><th>Số Thử Thách</th><th>Độ tuổi</th><th> Giai đoạn năm</th><th>Chủ đề trọng tâm</th></tr></thead>
+        <tbody>{pin_rows}</tbody>
+      </table>
+      <h3 style="font-size:15px;color:var(--navy);margin:14px 0 6px;">Chu Kỳ Sóng 9 Năm Cá Nhân</h3>
+      <div class="dayun-strip">{wave_cards}</div>
+      <div class="ys-box" style="margin-top:12px;">
+        <strong>Ma Trận Định Mệnh (22 Arcana Core):</strong>
+        Bản thể (0t): <strong>#{dm22['portrait_0y']['arcana']}</strong> |
+        Thiên mệnh (20t): <strong>#{dm22['spiritual_20y']['arcana']}</strong> |
+        Tài chính (40t): <strong>#{dm22['material_40y']['arcana']}</strong> |
+        Nút nghiệp (60t): <strong>#{dm22['karmic_tail_60y']['arcana']}</strong> |
+        Tâm Vùng Thoải Mái: <strong>#{dm22['comfort_zone_center']['arcana']} ({_esc(dm22['comfort_zone_center']['title'])})</strong>
+      </div>
+      {ew_box}
+    </section>
+    """
+
+
+def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ Mệnh Lý & Thần Số Học Đông-Tây — kb-tuvi") -> str:
     tuvi = payload.get("tuvi")
     bazi = payload.get("bazi")
+    numerology = payload.get("numerology")
+    cross_val = payload.get("cross_validation")
     iching = payload.get("iching")
     qimen = payload.get("qimen")
     meta = payload.get("meta", {})
@@ -95,11 +287,6 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
             for pt in tuvi.get("classic_patterns", [])  # type: ignore
         )
 
-        # Lưới 4x4 truyền thống:
-        # Hàng 1: Tỵ (5), Ngọ (6), Mùi (7), Thân (8)
-        # Hàng 2: Thìn (4), [Thiên Bàn 2x2], Dậu (9)
-        # Hàng 3: Mão (3), [Thiên Bàn 2x2], Tuất (10)
-        # Hàng 4: Dần (2), Sửu (1), Tý (0), Hợi (11)
         tuvi_grid = f"""
         <section class="card-section">
           <h2>I. Lá Số Tử Vi Đẩu Số (Nam Phái VN × Trung Châu × Phi Tinh)</h2>
@@ -198,7 +385,11 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
         """
         sections.append(bazi_sec)
 
-    # 3. Bảng Quẻ Kinh Dịch Lục Hào
+    # 3. Thần Số Học Đa Phái & Kiểm Chứng Chéo Đông - Tây
+    if isinstance(numerology, dict):
+        sections.append(_render_numerology_section(numerology, cross_val=cross_val))
+
+    # 4. Bảng Quẻ Kinh Dịch Lục Hào
     if isinstance(iching, dict):
         ph = iching["primary_hexagram"]  # type: ignore
         ch = iching.get("changed_hexagram")
@@ -224,7 +415,7 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
             """
         iching_sec = f"""
         <section class="card-section">
-          <h2>III. Quẻ Kinh Dịch — Lục Hào Nạp Giáp & Mai Hoa</h2>
+          <h2>Quẻ Kinh Dịch — Lục Hào Nạp Giáp & Mai Hoa</h2>
           <p class="sub-info">
             <strong>Câu hỏi:</strong> {_esc(iching.get('question') or 'Tổng quan sự việc')} |
             <strong>Tứ Trụ giờ gieo:</strong> Năm {_esc(pc['year'])} - Tháng {_esc(pc['month'])} - Ngày {_esc(pc['day'])} - Giờ {_esc(pc['hour'])} (Tuần Không: {_esc(pc['tuan_khong'])})
@@ -241,7 +432,7 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
         """
         sections.append(iching_sec)
 
-    # 4. Kỳ Môn Độn Giáp Cửu Cung
+    # 5. Kỳ Môn Độn Giáp Cửu Cung
     if isinstance(qimen, dict):
         qm_cells = ""
         for cp in qimen.get("palaces", []):  # type: ignore
@@ -257,7 +448,7 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
                 """
         sections.append(f"""
         <section class="card-section">
-          <h2>IV. Bàn Kỳ Môn Độn Giáp Thời Gia</h2>
+          <h2>Bàn Kỳ Môn Độn Giáp Thời Gia</h2>
           <p class="sub-info"><strong>Cục:</strong> {_esc(qimen['dun_type'])} | <strong>Trực Phù:</strong> {_esc(qimen['zhifu_star'])} | <strong>Trực Sử:</strong> {_esc(qimen['zhishi_door'])}</p>
           <div class="qm-grid">{qm_cells}</div>
         </section>
@@ -333,13 +524,33 @@ def render_full_html_report(payload: Dict[str, object], title: str = "Hồ Sơ M
   .qm-top {{ display: flex; justify-content: space-between; color: var(--muted); font-size: 11.5px; margin-bottom: 6px; }}
   .qm-mid {{ font-size: 14px; color: var(--accent); margin-bottom: 6px; }}
   .sub-info {{ font-size: 13px; margin: 4px 0 8px; }}
+  /* Numerology Styles */
+  .num-stats-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 8px; margin: 10px 0; }}
+  .num-stat-card {{ border: 1px solid var(--border); border-radius: 8px; padding: 10px; background: #fff; text-align: center; }}
+  .nsc-lbl {{ font-size: 11.5px; color: var(--muted); font-weight: 700; }}
+  .nsc-val {{ font-size: 24px; font-weight: 900; color: var(--accent); margin: 3px 0; }}
+  .nsc-sub {{ font-size: 11px; color: var(--navy); }}
+  .words-wrap {{ display: flex; flex-wrap: wrap; gap: 10px; }}
+  .word-block {{ border: 1px dashed var(--border); border-radius: 7px; padding: 6px 8px; background: #fff; }}
+  .let-chip {{ display: inline-flex; flex-direction: column; align-items: center; padding: 2px 6px; margin-right: 3px; border-radius: 4px; font-weight: 700; font-size: 12px; }}
+  .let-v {{ background: #fdecec; color: var(--accent); border: 1px solid #f4c2c2; }}
+  .let-c {{ background: #f2f4f7; color: #333; border: 1px solid #d5dbe3; }}
+  .word-sum {{ font-size: 11px; color: var(--muted); text-align: center; margin-top: 4px; font-weight: 700; }}
+  .num-grids-layout {{ display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; margin: 12px 0; }}
+  .num-grid-card {{ border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: #fff; }}
+  .num-grid-title {{ font-size: 12px; font-weight: 800; color: var(--navy); text-align: center; margin-bottom: 6px; }}
+  .num-grid-3x3 {{ display: flex; flex-direction: column; gap: 4px; }}
+  .num-row {{ display: grid; grid-template-columns: repeat(3, 62px); gap: 4px; }}
+  .num-cell {{ height: 48px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 6px; font-weight: 800; font-size: 15px; }}
+  .num-cell-has {{ background: #fff8ec; color: var(--accent); border-color: var(--gold); }}
+  .num-cell-empty {{ background: #fafafa; font-weight: 400; font-size: 12px; }}
   .disclaimer {{ max-width: 1280px; margin: 12px auto 0; text-align: center; font-size: 12px; color: var(--muted); }}
 </style>
 </head>
 <body>
   <h1>{_esc(title)}</h1>
-  <div class="subtitle">Hệ thống tính toán định danh Zero-Hallucination (kb-tuvi) — Lịch Thiên Văn UTC+7 & Cổ Thư Đối Chiếu</div>
+  <div class="subtitle">Hệ thống tính toán định danh Đông – Tây Zero-Hallucination (kb-tuvi v3.0) — Lịch Thiên Văn UTC+7 × Cổ Thư × Pythagoras/Chaldean</div>
   {"".join(sections)}
-  <div class="disclaimer">Lưu ý văn hóa: Mệnh lý & Dịch học phương Đông là hệ quy chiếu chiêm nghiệm nhân sinh, tâm lý và quản trị rủi ro; không thay thế chẩn đoán y khoa, tư vấn pháp lý hay cam kết đầu tư tài chính tuyệt đối.</div>
+  <div class="disclaimer">Lưu ý văn hóa: Mệnh lý phương Đông & Thần số học phương Tây là bộ công cụ tham chiếu nhận thức bản thân, tâm lý và quản trị chiến lược; không thay thế chẩn đoán y khoa, tư vấn pháp lý hay cam kết đầu tư tài chính tuyệt đối.</div>
 </body>
 </html>"""
