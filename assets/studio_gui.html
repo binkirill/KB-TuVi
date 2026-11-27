@@ -111,12 +111,351 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.75rem;
-    max-width: 770px;
-    margin: 0 auto 1.1rem;
+    max-width: 1140px;
+    margin: 0 auto 1.15rem;
     transition: max-width 240ms var(--sc-ease-out);
   }
   .studio-shell.is-wide .workspace-back-bar {
     max-width: none;
+  }
+
+  /* ==========================================================================
+     2-ZONE WORKSPACE LAYOUT: LEFT MASCOT + COMIC BUBBLE | RIGHT WORKING ZONE
+     ========================================================================== */
+  .workspace-layout {
+    display: grid;
+    grid-template-columns: 315px minmax(0, 790px);
+    justify-content: center;
+    gap: 1.85rem;
+    align-items: start;
+  }
+  .studio-shell.is-wide .workspace-layout {
+    grid-template-columns: 300px minmax(0, 1fr);
+    justify-content: stretch;
+  }
+  .workspace-right {
+    min-width: 0;
+  }
+  .mascot-zone {
+    position: sticky;
+    top: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 12;
+    user-select: none;
+  }
+
+  /* Stage anchors bubble bottom so portrait never jumps when line length changes */
+  .comic-bubble-stage {
+    min-height: 138px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 14px;
+    padding-inline: 4px;
+  }
+  @keyframes comicBubblePop {
+    0%   { opacity: 0; transform: translateY(10px) scale(0.86); }
+    60%  { opacity: 1; transform: translateY(-3px) scale(1.03); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes mascotTalkNudge {
+    0%, 100% { transform: translateY(0) scale(1); }
+    40%      { transform: translateY(-5px) scale(1.025) rotate(-1deg); }
+    75%      { transform: translateY(1px) scale(0.995) rotate(0.8deg); }
+  }
+  .comic-bubble {
+    position: relative;
+    width: 100%;
+    padding: 0.85rem 1rem 0.9rem;
+    color: #1C1635;
+    background: #FFFFFF;
+    cursor: pointer;
+    line-height: 1.46;
+    font-size: 0.87rem;
+    font-weight: 700;
+    transition: transform 150ms ease;
+  }
+  .comic-bubble:hover { transform: translateY(-2px); }
+  .comic-bubble.is-popping {
+    animation: comicBubblePop 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .comic-badge {
+    display: inline-block;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.14rem 0.52rem;
+    border-radius: 999px;
+    margin-bottom: 0.36rem;
+    background: #1C1635;
+    color: #FFFFFF;
+  }
+  .comic-text {
+    color: #1C1635;
+    word-break: break-word;
+  }
+
+  /* --- 7 DISTINCT COMIC SPEECH BUBBLE STYLES --- */
+  /* 1. Classic Marvel/Manga Speech Box */
+  .comic-bubble.bubble-classic {
+    background: #FFFFFF;
+    border: 3px solid #1C1635;
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 #1C1635;
+  }
+  .comic-bubble.bubble-classic::after {
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    left: 44%;
+    width: 18px;
+    height: 18px;
+    background: #FFFFFF;
+    border-right: 3px solid #1C1635;
+    border-bottom: 3px solid #1C1635;
+    transform: rotate(45deg);
+  }
+
+  /* 2. Fluffy Thought Cloud */
+  .comic-bubble.bubble-cloud {
+    background: #FFFDF9;
+    border: 2.5px solid #2D225A;
+    border-radius: 32px 36px 28px 34px;
+    box-shadow: 0 8px 0 rgba(45, 34, 90, 0.16), inset 0 -4px 0 rgba(235, 226, 255, 0.55);
+  }
+  .comic-bubble.bubble-cloud .comic-badge { background: #5B3FA8; }
+  .comic-bubble.bubble-cloud::before {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 46%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #FFFDF9;
+    border: 2.5px solid #2D225A;
+  }
+  .comic-bubble.bubble-cloud::after {
+    content: "";
+    position: absolute;
+    bottom: -21px;
+    left: 51%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #FFFDF9;
+    border: 2px solid #2D225A;
+  }
+
+  /* 3. Manga Action Shout / Starburst Energy */
+  .comic-bubble.bubble-burst {
+    background: #FFFBEB;
+    border: 3px solid #B91C1C;
+    border-radius: 8px 22px 8px 22px;
+    box-shadow: 0 0 0 3px #FBBF24, 6px 6px 0 #991B1B;
+  }
+  .comic-bubble.bubble-burst .comic-badge { background: #DC2626; color: #FEF08A; }
+  .comic-bubble.bubble-burst::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 40%;
+    width: 18px;
+    height: 18px;
+    background: #FFFBEB;
+    border-right: 3px solid #B91C1C;
+    border-bottom: 3px solid #B91C1C;
+    transform: rotate(45deg);
+  }
+
+  /* 4. Retro 8-Bit RPG Dialog Box */
+  .comic-bubble.bubble-pixel {
+    background: #F8FAFC;
+    border: 3px solid #0F172A;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 3px #CBD5E1, 5px 5px 0 #0F172A;
+  }
+  .comic-bubble.bubble-pixel .comic-badge {
+    background: #0F766E;
+    border-radius: 3px;
+  }
+  .comic-bubble.bubble-pixel::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 46%;
+    width: 14px;
+    height: 14px;
+    background: #F8FAFC;
+    border-right: 3px solid #0F172A;
+    border-bottom: 3px solid #0F172A;
+    transform: rotate(45deg);
+  }
+
+  /* 5. Secret Whisper Dashed Note */
+  .comic-bubble.bubble-whisper {
+    background: #FEFCE8;
+    border: 2.5px dashed #854D0E;
+    border-radius: 22px;
+    box-shadow: 4px 5px 0 rgba(133, 77, 14, 0.22);
+  }
+  .comic-bubble.bubble-whisper .comic-badge { background: #854D0E; }
+  .comic-bubble.bubble-whisper::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 45%;
+    width: 16px;
+    height: 16px;
+    background: #FEFCE8;
+    border-right: 2.5px dashed #854D0E;
+    border-bottom: 2.5px dashed #854D0E;
+    transform: rotate(45deg);
+  }
+
+  /* 6. Pop-Art Halftone Breaking News */
+  .comic-bubble.bubble-halftone {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(rgba(217, 56, 72, 0.12) 1.2px, transparent 1.2px);
+    background-size: 9px 9px;
+    border: 3px solid #1C1635;
+    border-radius: 16px;
+    box-shadow: 5px 5px 0 #06B6D4, -3px -3px 0 #EC4899;
+  }
+  .comic-bubble.bubble-halftone .comic-badge {
+    background: linear-gradient(90deg, #EC4899, #8B5CF6);
+  }
+  .comic-bubble.bubble-halftone::after {
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    left: 45%;
+    width: 17px;
+    height: 17px;
+    background: #FFFFFF;
+    border-right: 3px solid #1C1635;
+    border-bottom: 3px solid #1C1635;
+    transform: rotate(45deg);
+  }
+
+  /* 7. Sparkling Shoujo / Rainbow Slay Frame */
+  .comic-bubble.bubble-shoujo {
+    background: linear-gradient(135deg, #FFF5FA 0%, #F6F0FF 100%);
+    border: 2.5px solid #DB2777;
+    border-radius: 26px;
+    box-shadow: 4px 5px 0 #F472B6, 0 10px 24px rgba(219, 39, 119, 0.20);
+  }
+  .comic-bubble.bubble-shoujo .comic-badge {
+    background: linear-gradient(90deg, #E11D48, #D97706, #059669, #2563EB, #9333EA);
+  }
+  .comic-bubble.bubble-shoujo::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 46%;
+    width: 16px;
+    height: 16px;
+    background: #F6F0FF;
+    border-right: 2.5px solid #DB2777;
+    border-bottom: 2.5px solid #DB2777;
+    transform: rotate(45deg);
+  }
+
+  /* Mascot Portrait Stage Card */
+  .mascot-portrait-card {
+    background: var(--sc-surface);
+    border: 2px solid var(--gold-line);
+    border-radius: var(--sc-r-lg);
+    overflow: hidden;
+    box-shadow: var(--sc-e2);
+    cursor: pointer;
+    transition: transform 200ms var(--sc-ease-out), box-shadow 200ms var(--sc-ease-out);
+  }
+  .mascot-portrait-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sc-e3);
+  }
+  .mascot-portrait-card.is-talking .mascot-img-wrap img {
+    animation: mascotTalkNudge 460ms ease;
+  }
+  .mascot-img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1.02;
+    overflow: hidden;
+    background: var(--sc-accent-soft);
+  }
+  .mascot-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    transition: transform 320ms var(--sc-ease-out);
+  }
+  .mascot-portrait-card:hover .mascot-img-wrap img {
+    transform: scale(1.04);
+  }
+  .mascot-meta {
+    padding: 0.78rem 0.95rem 0.85rem;
+    text-align: center;
+    background: var(--sc-surface);
+    border-top: 1.5px dashed var(--border);
+  }
+  .mascot-name {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: 1.02rem;
+    color: var(--sc-ink);
+    line-height: 1.25;
+  }
+  .mascot-tap-hint {
+    margin-top: 0.25rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--sc-accent);
+  }
+  html[data-stage="workspace"][data-vibe="thuc-chien"] .mascot-portrait-card {
+    background: #FFFDF8;
+    border: 2px solid #CFA04B;
+  }
+  html[data-stage="workspace"][data-vibe="gieo-que"] .mascot-portrait-card,
+  html[data-stage="workspace"][data-vibe="gieo-que"] .mascot-meta {
+    background: rgba(11, 39, 46, 0.92);
+    border-color: rgba(45, 212, 191, 0.42);
+  }
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .mascot-portrait-card,
+  html[data-stage="workspace"][data-vibe="tinh-duyen"] .mascot-meta {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: #F0B2E5;
+  }
+
+  @media (max-width: 1020px) {
+    .workspace-layout,
+    .studio-shell.is-wide .workspace-layout {
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+    }
+    .mascot-zone {
+      position: static;
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 0.9rem;
+      align-items: center;
+    }
+    .mascot-portrait-card { order: 1; }
+    .comic-bubble-stage {
+      order: 2;
+      min-height: 0;
+      margin-bottom: 0;
+    }
+    .comic-bubble::after,
+    .comic-bubble::before { display: none; }
+    .mascot-meta { padding: 0.45rem 0.4rem; }
+    .mascot-name { font-size: 0.78rem; }
+    .mascot-tap-hint { display: none; }
   }
   .btn-back-guide {
     display: inline-flex;
@@ -442,24 +781,6 @@
   html[data-stage="workspace"][data-vibe="tinh-duyen"] .grid3-box {
     background: #FFF7FC;
     border-color: #F2C4E4;
-  }
-  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results {
-    grid-template-columns: minmax(0, 1fr) 365px;
-  }
-  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .sidebar {
-    order: 2;
-  }
-  html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .main {
-    order: 1;
-  }
-  @media (max-width: 1100px) {
-    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results {
-      grid-template-columns: 1fr;
-    }
-    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .sidebar,
-    html[data-stage="workspace"][data-vibe="tinh-duyen"] .studio-grid.has-results .main {
-      order: initial;
-    }
   }
   html[data-stage="workspace"][data-vibe="tinh-duyen"] .site-footer {
     background: linear-gradient(90deg, rgba(255, 240, 248, 0.94), rgba(244, 234, 255, 0.94), rgba(236, 247, 255, 0.94));
@@ -1267,7 +1588,8 @@
     75%  { transform: scale(0.92) rotate(-3deg); }
     100% { transform: scale(1) rotate(0deg); }
   }
-  .guide-mini-bar img.is-docked {
+  .guide-mini-bar img.is-docked,
+  .mascot-img-wrap img.is-docked {
     animation: avatarDockPulse 480ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -1280,24 +1602,21 @@
     background: linear-gradient(180deg, rgba(248, 241, 228, 0.58) 0%, rgba(252, 249, 242, 0.78) 100%);
   }
   .studio-shell {
-    max-width: 84rem;
+    max-width: 92rem;
     margin-inline: auto;
     padding-inline: var(--sc-gutter);
   }
 
   .studio-grid {
     display: grid;
-    grid-template-columns: minmax(0, 770px);
-    justify-content: center;
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem;
     align-items: start;
   }
   .studio-grid.has-results {
-    grid-template-columns: 365px minmax(0, 1fr);
-    justify-content: stretch;
+    grid-template-columns: minmax(0, 1fr);
   }
   @media (max-width: 1100px) {
-    .studio-grid.has-results { grid-template-columns: 1fr; }
     .sidebar { position: static !important; }
   }
 
@@ -1306,18 +1625,13 @@
     background: rgba(255, 255, 255, 0.96);
     border: 2px solid var(--gold-line);
     border-radius: var(--sc-r-lg);
-    padding: 1.85rem 1.8rem;
+    padding: 1.65rem 1.7rem;
     box-shadow: var(--sc-e2);
     backdrop-filter: blur(10px);
   }
   .studio-grid.has-results .sidebar {
-    position: sticky;
-    top: 72px;
-    padding: 1.35rem;
+    padding: 1.25rem 1.4rem;
   }
-  .studio-grid.has-results .row-2 { grid-template-columns: minmax(0, 1fr); }
-  .studio-grid.has-results .ic-method-grid { grid-template-columns: minmax(0, 1fr); }
-  .studio-grid.has-results .num-rules-grid { grid-template-columns: 1fr; }
 
   /* Active Guide Header inside Form */
   .guide-mini-bar {
@@ -2184,33 +2498,59 @@
   </div>
 </div>
 
-<!-- ZONE 2: WORKING SURFACE CÓ HOA VĂN CỔ PHÁP + SPOTLIGHT + 3 BỘ FORM RIÊNG BIỆT -->
+<!-- ZONE 2: LEFT MASCOT STAGE (COMIC SPEECH BUBBLE) + RIGHT WORKING ZONE -->
 <section id="act-studio" class="studio-act" data-sc-act="flow">
   <div id="studio-shell" class="studio-shell">
     <div class="workspace-back-bar">
       <button type="button" class="btn-back-guide" onclick="backToGuideSelection()">← Quay trở lại chọn tiếp viên</button>
       <span id="room-theme-badge" class="room-theme-badge">🎨 Phòng Hoàng Kim Đế Vương</span>
     </div>
-    <div id="studio-grid" class="studio-grid">
 
-      <!-- SIDEBAR / INPUT CARD (Giữ class .sidebar và .btn-primary cho plugin Gemini AI) -->
-      <aside class="sidebar orn-box" data-sc-spotlight data-sc-in>
-        <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
-        <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
-        <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
-        <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
-
-        <div class="mystic-divider" aria-hidden="true">
-          <span>✦</span><span class="spin-yinyang">☯</span><span>✦</span>
-        </div>
-
-        <div class="guide-mini-bar">
-          <img id="active-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Cao nhân đồng hành" width="64" height="64">
-          <div>
-            <div id="active-guide-title" class="guide-mini-bar__title">Nam Thần Tử Vi, Tài Bạch &amp; Điền Trạch</div>
-            <div id="active-guide-say" class="guide-mini-bar__say">Điền đầy đủ các thông tin bắt buộc bên dưới để an chuẩn 12 cung Tử Vi và Tứ Trụ nhé!</div>
+    <div class="workspace-layout">
+      <!-- ZONE BÊN TRÁI: ẢNH NHÂN VẬT ĐẠI DIỆN + KHUNG THOẠI TRUYỆN TRANH (3-10s TỰ ĐỔI) -->
+      <aside id="mascot-zone" class="mascot-zone" aria-label="Nhân vật đồng hành">
+        <div class="comic-bubble-stage">
+          <div id="comic-bubble" class="comic-bubble bubble-classic" onclick="nextMascotLine(true)" title="Bấm vào khung thoại để đổi câu nói mới!">
+            <span id="comic-badge" class="comic-badge">💬 TIẾP VIÊN BẬT MÍ</span>
+            <div id="comic-text" class="comic-text">Đeo kính râm không phải cho ngầu đâu, tại cung Tài Bạch của bạn sáng chói quá đó! 😎💰</div>
           </div>
         </div>
+
+        <div id="mascot-portrait-card" class="mascot-portrait-card orn-box" onclick="nextMascotLine(true)" title="Chạm vào tiếp viên để nghe câu nói khác!">
+          <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
+          <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
+          <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
+          <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
+          <div class="mascot-img-wrap">
+            <img id="active-guide-img" src="/assets/images/guide_1_cool.jpg" alt="Nhân vật đại diện" width="340" height="340">
+          </div>
+          <div class="mascot-meta">
+            <div id="active-guide-title" class="mascot-name">Nam Thần Tử Vi, Tài Bạch &amp; Điền Trạch</div>
+            <div class="mascot-tap-hint">💬 Chạm để nghe câu khác · Tự nói mỗi 3–10s</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ZONE BÊN PHẢI: KHUNG LÀM VIỆC & KẾT QUẢ -->
+      <div class="workspace-right">
+        <div id="studio-grid" class="studio-grid">
+
+          <!-- SIDEBAR / INPUT CARD (Giữ class .sidebar và .btn-primary cho plugin Gemini AI) -->
+          <aside class="sidebar orn-box" data-sc-spotlight data-sc-in>
+            <svg class="orn-corner orn-corner--tl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--tr"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--bl"><use href="#mystic-corner-svg"/></svg>
+            <svg class="orn-corner orn-corner--br"><use href="#mystic-corner-svg"/></svg>
+
+            <div class="mystic-divider" aria-hidden="true">
+              <span>✦</span><span class="spin-yinyang">☯</span><span>✦</span>
+            </div>
+
+            <div class="guide-mini-bar" style="padding:0.75rem 1rem;">
+              <div>
+                <div id="active-guide-say" class="guide-mini-bar__say" style="margin-top:0;">Điền đầy đủ các thông tin bắt buộc bên dưới để an chuẩn 12 cung Tử Vi và Tứ Trụ nhé!</div>
+              </div>
+            </div>
 
         <!-- 3 nút chuyển nhanh giữa 3 chế độ -->
         <div class="vibe-pills" role="tablist" aria-label="Chọn chế độ xem">
@@ -2561,6 +2901,8 @@
           <div id="pane-ai" class="tab-pane"></div>
         </div>
       </main>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3054,9 +3396,215 @@ function applyVisibleTabsForMode(modeKey) {
   if (defBtn) switchTab(g.defaultTab, defBtn);
 }
 
+/* ============================================================================
+   COMIC SPEECH BUBBLE ENGINE (7 BUBBLE STYLES × 32 FUNNY LINES PER CHARACTER)
+   Auto-cycles every 3-10 seconds in workspace + click to advance immediately!
+   ============================================================================ */
+const COMIC_BUBBLE_STYLES = [
+  { cls: "bubble-classic",  badges: ["💬 TIẾP VIÊN BẬT MÍ", "🗨️ TÂM SỰ MỎNG", "😎 PHÁN CHUẨN ĐÉT"] },
+  { cls: "bubble-cloud",    badges: ["💭 ĐANG NGHĨ BỤNG...", "☁️ GÓC SUY TƯ", "🔮 VŨ TRỤ THÌ THẦM"] },
+  { cls: "bubble-burst",    badges: ["💥 CHẤN ĐỘNG!!", "⚡ BÍ KÍP NÓNG!", "🔥 NGHE KỸ NÈ!"] },
+  { cls: "bubble-pixel",    badges: ["▶ NPC FUNNY TIP", "🎮 +99 LỘC LÁ", "👾 HỆ THỐNG BÁO"] },
+  { cls: "bubble-whisper",  badges: ["🤫 NÓI NHỎ NGHE NÈ", "🕵️ MẬT THƯ ĐỒ SƠN", "👀 ĐỪNG KỂ AI NHA"] },
+  { cls: "bubble-halftone", badges: ["📢 LOA PHƯỜNG PHÁT", "🗞️ TIN NÓNG HỔI", "🎯 MẸO ĐẮT GIÁ"] },
+  { cls: "bubble-shoujo",   badges: ["💖 VŨ TRỤ NHẮN NHỦ", "✨ BÙA MAY MẮN", "🌈 NĂNG LƯỢNG CAO"] }
+];
+
+const MASCOT_LINES = {
+  "thuc-chien": [
+    "Đeo kính râm không phải cho ngầu đâu, tại cung Tài Bạch của bạn sáng chói quá đó! 😎💰",
+    "Mẹo nhỏ nè: Cung Vô Chính Diệu không xấu đâu nha, giống lô đất trống mặt biển dễ quy hoạch cực kỳ! 🏗️🌊",
+    "Nhớ nhập chuẩn giờ sinh nha anh em, lệch 15 phút qua canh giờ khác là từ Chủ tịch sang... Chủ nợ liền đó! ⏰🤣",
+    "Điền Trạch mà có Vũ Khúc, Thiên Phủ chiếu về thì sớm muộn két sắt cũng chật ních sổ đỏ! 📕🏡",
+    "Gặp Tuần hay Triệt đóng ở Mệnh đừng hoảng! Tuần Triệt đầu đời rèn bản lĩnh, hậu vận cực kỳ lì đòn! 🛡️🔥",
+    "Muốn biết nửa kia tương lai hiền hay dữ thì bấm thử vô ô Cung Phu Thê trên bàn cờ nha, cấm khóc! 💍😜",
+    "Sao Hóa Lộc là tiền vô cửa trước, còn Hóa Kỵ mà không cẩn thận là... chốt đơn Shopee cửa sau! 🛒💸",
+    "Ngũ hành thiếu Thủy thì nhớ uống đủ 2 lít nước mỗi ngày trước khi bàn chuyện phong thủy cao siêu nha! 💧😂",
+    "Ở Đồ Sơn gió biển thổi mát rượi mà sao nhìn ví cuối tháng vẫn hơi lạnh sống lưng anh em nhỉ? 🌬️💸",
+    "Tip Tử Vi: Thân cư Tài Bạch là mẫu người nửa đêm nằm ngủ vẫn mơ thấy biểu đồ nến xanh đỏ! 📈😴",
+    "Thiên Cơ chủ về trí tuệ mưu lược, nhưng nghĩ nhiều quá coi chừng rụng tóc trước khi phát tài nha! 🧠🧴",
+    "Ai mệnh Thất Sát, Phá Quân, Tham Lang là hội không thích ngồi yên một chỗ, càng xông pha càng ra lộc! 🚀🔥",
+    "Bát Tự khuyết Mộc thì trồng thêm chậu cây trên bàn làm việc, vừa hợp mệnh vừa đỡ mỏi mắt nhìn màn hình! 🌿💻",
+    "Đừng thấy sao Đào Hoa mà mừng vội, có khi đào hoa nở rộ ở... nhân viên gọi tư vấn thẻ tín dụng đó! 📞🌸",
+    "Cung Quan Lộc có Hóa Quyền là tố chất làm sếp, còn làm sếp ở công ty hay sếp... ở nhà thì phải xem Phu Thê! 👑🤭",
+    "Mẹo nghiệm lý: Người sinh đúng giao thời 2 canh giờ nhớ xem thử cả 2 lá số coi tính nết giống bên nào hơn nhé! ⚖️🧐",
+    "Thiên Mã gặp Lộc Tồn gọi là Lộc Mã Giao Trì — càng đi xa, càng chạy dự án ngoài đường càng hốt bạc! 🐎💎",
+    "Ngồi xem lá số nhớ thẳng lưng lên bạn ơi, cung Tật Ách đang nhắc cột sống kêu cứu kìa! 🦴🤣",
+    "Cung Nô Bộc đẹp nghĩa là ra đường toàn gặp quý nhân, đi ăn nhậu toàn gặp người... giành trả tiền! 🍻🥳",
+    "Tử Vi có câu: Mệnh tốt không bằng Vận tốt, Vận tốt không bằng chọn đúng lô đất đẹp Đồ Sơn! 🏖️💰",
+    "Sao Thiên Lương là ngôi sao phúc thọ che chở, gặp chuyện khó thường có người tự dưng xuất hiện cứu bồ! 🍀🙏",
+    "Đừng sợ sao Địa Không – Địa Kiếp, thời đại AI dân công nghệ có Không Kiếp đắc địa hay nảy ý tưởng triệu đô lắm! 💡⚡",
+    "Hôm nay nhìn thần sắc bạn tươi lắm, khả năng cao sắp có tin vui tiền bạc hoặc được bao trà sữa! 🧋😎",
+    "Đại vận 10 năm giống như thời tiết vậy: biết sắp mưa thì thủ sẵn áo mưa, nắng đẹp lên là bung lụa chốt lời! ☀️📈",
+    "Cung Phúc Đức là gốc rễ của cả 12 cung — sống hiền lành vui vẻ là cách kích phong thủy mạnh nhất trần đời! 🪷✨",
+    "Sao Thái Âm sáng sủa cực hợp tích lũy bất động sản và tài sản dài hạn, cứ âm thầm mà giàu thôi! 🌙🏦",
+    "Chấm lá số xong nhớ bấm vô từng ô cung để tia chiếu Tam Phương Tứ Chính bắn ra nhìn mê lắm nha! 🎯🌌",
+    "Người có Văn Xương, Văn Khúc nói chuyện ngọt như mía lùi, đi đàm phán chốt hợp đồng khách mê tít! 🎤🍯",
+    "Bát Tự vượng Hỏa quá thì bớt nóng tính lại xíu nha, nổi nóng mất khôn lại tốn tiền mua trà đào hạ nhiệt! 🍹🔥",
+    "Lộc Tồn đóng đâu là của để dành nằm đó, nhưng đi kèm Cô Thần Quả Tú thì giữ tiền kỹ tới mức... quên tiêu! 🔒😂",
+    "Cứ điền thông tin thật chuẩn vào khung bên phải đi, việc đau đầu tính toán thiên văn để anh lo hết! 🕶️🧭",
+    "Chạm nhẹ vô người anh là đổi bí kíp mới liền nha, kho tàng 105 sao Tử Vi nói cả ngày không hết chuyện! 💬✨"
+  ],
+  "gieo-que": [
+    "Mạnh mẽ lên nào!! Quẻ có động có biến, chưa tới phút 90 chưa biết ai thắng ai đâu nha! 💪🎲",
+    "Mẹo cổ nhân: Bất thành bất chiếm — trước khi bấm tung xu nhớ hít sâu 1 hơi, nghĩ đúng 1 việc thôi nghen! 🧘‍♂️🪙",
+    "Đừng gieo đi gieo lại 1 câu hỏi 5 lần liên tiếp nha, Thần Quẻ cũng biết quạo như sếp dí deadline đó! 😅⚡",
+    "Hào Thế đại diện cho bạn, Hào Ứng là đối phương — Thế sinh Ứng nghĩa là bạn đang chiều người ta hơi quá rồi! 🤭💘",
+    "Gặp Quẻ Địa Sơn Khiêm là đại cát nha: 6 hào đều tốt, càng khiêm tốn thực chất càng thắng lớn bền lâu! ⛰️🍀",
+    "Đi ký hợp đồng hay đi xem đất nhớ ngó qua tab Hướng & Giờ Đẹp chọn cửa Sinh Môn, Khai Môn mà xuất phát! 🧭💰",
+    "Mạnh mẽ lên nào! Gặp quẻ Thủy Lôi Truân chỉ là vạn sự khởi đầu nan thôi, kiên trì ắt thông suốt! 🌱🔥",
+    "Mẹo Lục Hào: Hào động giống như nút thắt câu chuyện vậy, chuyện chuyển biến tốt hay xấu nằm hết ở đó! 🎯☯️",
+    " Hôm nay phân vân trưa ăn bún cá cay Hải Phòng hay cơm tấm? Gieo nhẹ 1 quẻ Mai Hoa là khỏi cãi nhau! 🍜🤣",
+    "Tuần Không nghĩa là việc đang rỗng hoặc chưa tới lúc, cứ bình tĩnh chờ xuất Không là đâu vào đó! ⏳✨",
+    "Gieo bằng 2 con số bất kỳ nảy ra trong đầu gọi là Mai Hoa Dịch Số — càng tự nhiên không gượng ép càng linh! 🔢⚡",
+    "Thấy chữ Nguyệt Phá trong bảng quẻ thì khoan tất tay vội nha, giữ chặt ví đợi qua tháng sau tính tiếp! 🛡️💼",
+    "Cửa Hưu Môn cực hợp đi gặp quý nhân, bàn bạc hòa giải hay rủ crush đi cà phê chữa lành đó nha! ☕🌿",
+    "Nếu bạn có sẵn 3 đồng xu thật ngoài đời, cứ tự lắc 6 lần rồi nhập mặt Sấp/Ngửa vào mục Nhập Xu Thật nhé! 🤲🪙",
+    "Quẻ Thuần Càn 6 rồng bay lên trời: khí thế cực thịnh nhưng lên đỉnh nhớ đừng tự mãn kẻo 'kháng long hữu hối'! 🐉🔥",
+    "Hồi Đầu Sinh là tín hiệu cực đẹp trong Lục Hào: việc tưởng khó mà càng về sau lại càng có lực nâng đỡ! 🌟🙌",
+    "Cửa Cảnh Môn chủ về giấy tờ, truyền thông, thi cử — hôm nào cần thuyết trình nhớ chọn hướng Cảnh Môn! 📜🎤",
+    "Mạnh mẽ lên nào! Đầm cạn hết nước (Trạch Thủy Khốn) chỉ thử thách bản lĩnh tạm thời của bậc trượng phu thôi! 💎💪",
+    "Mai Hoa Tự Số cực thú vị: gõ đại 2 chữ đầu tiên lướt qua tâm trí, chữ nghĩa cũng mang tần số dịch lý đó! ✍️🔮",
+    "Cửa Tử Môn nghe tên hơi rén vậy thôi chứ đi săn đất giá ngộp hoặc dứt điểm chuyện cũ lại có lý riêng! 🧐🏡",
+    "Hào Thê Tài vượng tướng không chỉ báo tin vui tiền bạc, mà mấy anh độc thân hỏi duyên cũng dễ có tin mừng! 💸❤️",
+    "Thanh Long lâm hào Tài động: tiền về chính đáng, vui vẻ, dễ có lộc ăn uống tiệc tùng linh đình! 🐉🥂",
+    "Chu Tước mà động ở hào Quan Quỷ hay Huynh Đệ thì nhớ giữ mồm giữ miệng, tránh tranh luận trên mạng nha! 🦜📵",
+    "Quẻ Địa Thiên Thái là trời đất giao hòa, trong ấm ngoài êm, hợp tác chốt kèo giai đoạn này cực kỳ mát tay! 🤝🌈",
+    "Đằng Xà chủ về lo âu vẩn vơ hoặc nằm mơ linh tinh — bình tâm ngủ sớm lúc 11h đêm là hóa giải được 50% rồi! 🐍😴",
+    "Quẻ Tĩnh (không có hào nào động) nghĩa là tình hình ít biến động, cứ giữ nguyên chiến thuật hiện tại mà đi! ⚓😌",
+    "Mẹo hỏi quẻ chuẩn: Thay vì hỏi chung chung 'Tôi có giàu không?', hãy hỏi rõ 'Thương vụ X quý này có lợi không?' 🎯💡",
+    "Kỳ Môn Độn Giáp ngày xưa Gia Cát Lượng dùng mượn gió Đông, ngày nay anh em dùng chọn giờ đi chốt cọc! 🪭🏡",
+    "Bạch Hổ nghe dữ dằn nhưng nếu đi cùng hào tốt thì lại tượng trưng cho sự quyết đoán, tốc chiến tốc thắng! 🐯⚡",
+    "Huyền Vũ động thì nhớ kiểm tra kỹ điều khoản nhỏ xíu trong hợp đồng trước khi đặt bút ký nha! 🔍📝",
+    "Tâm sáng thì quẻ sáng! Hít một hơi thật sâu, mỉm cười một cái rồi bấm nút khởi quẻ bên phải nào! 😄🎲",
+    "Bấm vào người tui bất cứ lúc nào để nạp thêm vitamin 'Mạnh mẽ lên nào!' nha người anh em thiện lành! 💪✨"
+  ],
+  "tinh-duyen": [
+    "Mấy bà có biết quê tui ở Xì Gòn hông dzị? 🤪💅🌴",
+    "Ê khoan lướt Tóp Tóp nữa mấy ní ơi, quăng cái ngày sinh vô bên phải tui check var liền coi! 📱👀✨",
+    "Biểu đồ ngày sinh mà thiếu số 8 là hay chốt đơn lúc nửa đêm bằng cảm xúc lắm nghen, trúng tim đen chưa?! 💸🤭",
+    "Nhìn giao diện lạnh lùng boy phố dzị thôi chớ Số Linh Hồn số 2 toàn đòi ôm gấu bông nghe nhạc suy hà! 🧸😭🌈",
+    "Đặt Nickname là Dủng Dỉnh hay Sâm Héo nghe vô tri dzị chớ bù khuyết biểu đồ ngày sinh hơi bị đỉnh đó nha! 😜🌿",
+    "Trời đất ơi Năm Cá Nhân số 9 là năm tổng vệ sinh tâm hồn, ai toxic tệ bạc thì tiễn vong lẹ giùm chị cái! 🧹🚪💅",
+    "Mấy bà cứ chê tui tô son đỏ đậm chớ màu này kích năng lượng tự tin slay banh nóc nhà đó nghen! 💄🔥",
+    "Ngồi thẳng cái lưng lên coi cưng, vừa soi Thần Số Học vừa cong lưng như con tôm tích Đồ Sơn dzị trời! 🦐🤣",
+    "Ai trống trơn trục 4-5-6 (Mũi tên Uất Hận) thì làm ơn bớt tự biên tự diễn buồn vu vơ lúc 2 giờ sáng lại! 🌙🤡",
+    "Chị tuy hệ cầu vồng 7 sắc lung linh nhưng cộng số Pythagoras là nét căng không lệch nửa nhịp nha cưng! 🏳️‍🌈🧮",
+    "Tên thiệt trên giấy khai sinh là hệ điều hành gốc, còn Nickname gọi mỗi ngày là bản DLC nâng cấp độ slay đó! 💻✨",
+    "Ai mang Số Chủ Đạo 11/2 hay 22/4 là hệ Master đó nghen, hơi áp lực xíu thôi chớ bật lên là đỉnh của chóp! 👑💎",
+    "Khỏi giấu chị nha, nhìn mắt cưng sáng rực là biết đang tính lấy ngày sinh crush vô soi lén rồi đúng hông?! 😏💘",
+    "Ở Xì Gòn người ta uống bạc xỉu đá, ra Đồ Sơn hóng gió biển mà thần thái chị vẫn sang chấn tâm lý nè! ☕🏖️💃",
+    "Số Chủ Đạo 10 là đặc sản trường phái Nhân Số Học Việt Nam đó, quảng giao linh hoạt để đâu cũng sống khỏe! 🌟🇻🇳",
+    "Mấy cưng Số 7 bớt đa nghi lại xíu nha, người ta khen đẹp thiệt lòng mà cứ tưởng người ta gài hàng không hà! 🕵️‍♀️😂",
+    "Năm Cá Nhân số 1 là năm gieo hạt mở màn chu kỳ mới, mạnh dạn đổi kiểu tóc hay học kỹ năng mới liền đi bà! 💇‍♀️🚀",
+    "Chữ Y trong tên tiếng Việt như Quỳnh, Nguyễn, Yến với Ý, My, Kỳ tính nguyên âm phụ âm khác nhau đó, để máy chị lo! 🔤🤓",
+    "Số Thái Độ là cái mặt tiền lúc mới gặp đó cưng: có bà chưa quen tưởng chảnh mà thân rồi cười như địa chấn! 🤣🎭",
+    "Kim Tự Tháp 4 Đỉnh Cao chưa tới tuổi nổ lộc thì cứ bình tĩnh đắp mặt nạ uống trà đào đi, gấp gáp làm chi! 🧋😌",
+    "Ai có Mũi Tên Kế Hoạch 1-2-3 là chúa lập bảng Excel đi du lịch, mà tới ngày đi có dậy đúng giờ hông thì hên xui! 📊⏰",
+    "Số Chủ Đạo 3 với Số 5 mà ngồi chung một bàn là cái quán cà phê thành cái chợ nổi Cái Răng liền luôn á! 🗣️🎉",
+    "Đừng thấy chữ 'Nợ Nghiệp 13/4, 14/5, 16/7, 19/1' mà sợ nha má, chỉ là bài tập nâng cao giúp mình trưởng thành x2 thôi! 📚💪",
+    "Chaldean Babylon cổ đại tính rung động âm thanh của tên gọi cực chuẩn, nhớ kéo xuống cuối trang chấm thử Nickname nha! 🎶⚖️",
+    "Mấy cưng Số 6 thương người vừa vừa thôi nghen, lo chuyện bao đồng riết quên luôn chăm sóc bản thân là chị mắng á! 💖🫂",
+    "Tâm Vùng Thoải Mái trong 22 Arcana cho biết lúc nào linh hồn mình thấy chill nhất — đọc thử coi chuẩn hông nha! 🧘‍♀️✨",
+    "Hải Ly với Hoàng Mười nghe tên như phim kiếm hiệp TVB dzị mà chấm điểm hợp ngày sinh có khi lên tới 95/100 đó! 🎬🏆",
+    "Năm Cá Nhân số 4 hoặc số 7 là năm trau dồi nội lực, tém tém cái nết tiêu xài bốc đồng lại giùm chị đẹp nha! 🐷🔒",
+    "Bấm vô người chị cái nữa đi cưng, chị còn cả rổ chuyện thâm cung bí sử Xì Gòn – Hải Phòng chưa kể hết nè! 🤪💅",
+    "Số Trưởng Thành phát huy mạnh nhất từ ngoài 30–35 tuổi, nên tuổi đôi mươi có vấp xíu cũng là chuyện thường phố huyện! 🌱🌈",
+    "Ai nhiều số 1 quá trong ngày sinh nhớ tập lắng nghe thêm xíu, cái tôi cao quá đụng trần nhà rớt thạch cao đó bà! 🏗️🤭",
+    "Mình yêu nhau nhé cưng ơi!! Điền ngày sinh với Nickname lẹ lẹ để chị xuất chiêu cầu vồng 7 sắc nào! 🏳️‍🌈💖🦄"
+  ]
+};
+
+let mascotTalkTimer = null;
+let mascotLineQueues = { "thuc-chien": [], "gieo-que": [], "tinh-duyen": [] };
+let lastBubbleStyleIdx = -1;
+let shownSgIntroOnce = false;
+
+function shuffleArrayCopy(arr) {
+  const copy = arr.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = tmp;
+  }
+  return copy;
+}
+
+function pullNextQuoteForVibe(vibeKey) {
+  const bank = MASCOT_LINES[vibeKey] || MASCOT_LINES["thuc-chien"];
+  if (vibeKey === "tinh-duyen" && !shownSgIntroOnce) {
+    shownSgIntroOnce = true;
+    mascotLineQueues[vibeKey] = shuffleArrayCopy(bank.slice(1));
+    return bank[0];
+  }
+  if (!mascotLineQueues[vibeKey] || mascotLineQueues[vibeKey].length === 0) {
+    mascotLineQueues[vibeKey] = shuffleArrayCopy(bank);
+  }
+  return mascotLineQueues[vibeKey].pop();
+}
+
+function pickNextBubbleStyle(vibeKey) {
+  let candidates = COMIC_BUBBLE_STYLES.map((_, idx) => idx).filter(idx => idx !== lastBubbleStyleIdx);
+  const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
+  lastBubbleStyleIdx = chosenIdx;
+  const st = COMIC_BUBBLE_STYLES[chosenIdx];
+  let badge = st.badges[Math.floor(Math.random() * st.badges.length)];
+  if (vibeKey === "tinh-duyen" && Math.random() < 0.55) {
+    const lgbtBadges = ["💅 BÀ HOÀNG TÂM SỰ", "🏳️‍🌈 GÓC XÌ GÒN", "🤪 SLAY TIP ✨", "🌈 CHECK VAR LIỀN", "💄 CHỊ ĐẸP DẶN"];
+    badge = lgbtBadges[Math.floor(Math.random() * lgbtBadges.length)];
+  }
+  return { cls: st.cls, badge };
+}
+
+function stopMascotTalkLoop() {
+  if (mascotTalkTimer) {
+    clearTimeout(mascotTalkTimer);
+    mascotTalkTimer = null;
+  }
+}
+
+function scheduleNextMascotLine() {
+  stopMascotTalkLoop();
+  if (document.documentElement.getAttribute("data-stage") !== "workspace") return;
+  // Khoảng thời gian ngẫu nhiên từ 3 đến 10 giây (3500ms -> 9500ms)
+  const delayMs = 3500 + Math.floor(Math.random() * 6001);
+  mascotTalkTimer = setTimeout(() => {
+    nextMascotLine(false);
+  }, delayMs);
+}
+
+function nextMascotLine(manualClick) {
+  const bubbleEl = document.getElementById("comic-bubble");
+  const badgeEl = document.getElementById("comic-badge");
+  const textEl = document.getElementById("comic-text");
+  const portraitCard = document.getElementById("mascot-portrait-card");
+  if (!bubbleEl || !textEl || !badgeEl) return;
+
+  const quote = pullNextQuoteForVibe(ACTIVE_VIBE);
+  const styleObj = pickNextBubbleStyle(ACTIVE_VIBE);
+
+  COMIC_BUBBLE_STYLES.forEach(s => bubbleEl.classList.remove(s.cls));
+  bubbleEl.classList.remove("is-popping");
+  void bubbleEl.offsetWidth;
+  bubbleEl.classList.add(styleObj.cls, "is-popping");
+
+  badgeEl.textContent = styleObj.badge;
+  textEl.textContent = quote;
+
+  if (portraitCard) {
+    portraitCard.classList.remove("is-talking");
+    void portraitCard.offsetWidth;
+    portraitCard.classList.add("is-talking");
+  }
+
+  scheduleNextMascotLine();
+}
+
 function backToGuideSelection() {
   dismissNamThanPop();
   stopContinuousFx();
+  stopMascotTalkLoop();
   document.documentElement.setAttribute("data-stage", "landing");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -3112,6 +3660,10 @@ function selectGuide(vibeKey, fromTopCard) {
     setTimeout(() => {
       triggerNamThanSpringShow(vibeKey);
     }, 140);
+  }
+
+  if (document.documentElement.getAttribute("data-stage") === "workspace") {
+    nextMascotLine(false);
   }
 }
 

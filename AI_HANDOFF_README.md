@@ -1,12 +1,12 @@
-# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.5 Kuang Bin Studio · 3-Room Theme Edition)
+# 📋 AI_HANDOFF_README — HỒ SƠ TIẾP QUẢN DỰ ÁN `KB-TUVI` (v3.6 Kuang Bin Studio · Comic Mascot Edition)
 
 Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô hình AI mới nào đọc vào là nắm trọn 100% kiến trúc, thông số đã khóa và tiếp quản công việc ngay lập tức mà không phải dò lại từ đầu.
 
 ---
 
 ## 1. Thời Điểm Cập Nhật & Trạng Thái Hiện Tại
-- **Thời điểm cập nhật:** `2026-11-27 13:38 (UTC+7)`
-- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.5: TÁCH RIÊNG LANDING PAGE CHỈ HIỂN THỊ 3 ẢNH TIẾP VIÊN (`data-stage="landing"`) → CLICK VÀO TỪNG ẢNH MỚI MỞ KHUNG LÀM VIỆC (`data-stage="workspace"`) + BỔ SUNG NÚT `← Quay trở lại chọn tiếp viên` (TRÊN TOP-BAR VÀ ĐẦU KHUNG LÀM VIỆC) + 3 GIAO DIỆN & MÀU NỀN RIÊNG BIỆT CHO TỪNG ẢNH (PHÒNG HOÀNG KIM ĐỎ-VÀNG, PHÒNG NGỌC BÍCH DARK-EMERALD, PHÒNG CẦU VỒNG PASTEL HỒNG-TÍM) & ĐẨY LÊN GITHUB/VERCEL.**
+- **Thời điểm cập nhật:** `2026-11-27 13:52 (UTC+7)`
+- **Trạng thái dừng:** **ĐÃ NÂNG CẤP KUANG BIN STUDIO v3.6: CHIA WORKSPACE THÀNH 2 ZONE (TRÁI: SÂN KHẤU NHÂN VẬT ĐẠI DIỆN + 7 KHUNG THOẠI TRUYỆN TRANH ĐỔI TỰ ĐỘNG MỖI 3–10 GIÂY VỚI 96 CÂU THOẠI HÀI HƯỚC / FUNNY TIPS, RIÊNG BÀ HOÀNG LGBT ĐẶC SẮC GIỌNG XÌ GÒN | PHẢI: ZONE LÀM VIỆC & KẾT QUẢ) & ĐẨY LÊN GITHUB/VERCEL.**
 - **Thư mục Nguồn Sự Thật Duy Nhất (Single Source of Truth):**
   - Bản gốc chỉnh sửa chính: `G:\My Drive\Antigravity\Skills\kb-tuvi\`
   - Bản đồng bộ nạp Skill hệ thống: `D:\AI\Skills\kb-tuvi\`
@@ -49,7 +49,11 @@ Tài liệu bàn giao chuẩn hóa giúp bất kỳ phiên hội thoại / mô h
   - Mỗi ảnh sở hữu 1 giao diện, màu nền và chất liệu khác hẳn nhau:
     - **Ô 1 (`thuc-chien` — Tử Vi):** *Phòng Hoàng Kim Đế Vương* (nền lụa vàng champagne, topbar/footer đỏ nâu hoàng gia `#2A1115`, viền đôi vàng kim cổ điển).
     - **Ô 2 (`gieo-que` — Gieo Quẻ):** *Phòng Ngọc Bích Đêm Huyền Bí* (Dark Mode xanh ngọc bích sâu `#071D22`, kính tối viền neon ngọc `#2DD4BF`, độ tương phản cao).
-    - **Ô 3 (`tinh-duyen` — Thần Số Học):** *Phòng Cầu Vồng Mộng Mơ* (nền pastel hồng – tím – xanh aurora, viền topbar cầu vồng 7 sắc, card bo tròn mềm `28px`, sidebar đảo sang cánh phải khi hiện kết quả).
+    - **Ô 3 (`tinh-duyen` — Thần Số Học):** *Phòng Cầu Vồng Mộng Mơ* (nền pastel hồng – tím – xanh aurora, viền topbar cầu vồng 7 sắc, card bo tròn mềm `28px`).
+- `[x]` **Sân Khấu Tiếp Viên Trái + Bóng Thoại Truyện Tranh Biến Hóa (v3.6):**
+  - Dịch Zone làm việc sang phải (`.workspace-right`), dành Zone bên trái (`.mascot-zone`, sticky theo cuộn trang) cho **ảnh chân dung lớn của Tiếp viên đại diện** và **Khung bóng thoại truyện tranh (`COMIC_BUBBLE_STYLES`)**.
+  - Gồm **7 kiểu khung thoại truyện tranh khác nhau** (`bubble-classic`, `bubble-cloud`, `bubble-burst`, `bubble-pixel`, `bubble-whisper`, `bubble-halftone`, `bubble-shoujo`) tự động đổi ngẫu nhiên sau mỗi **3–10 giây** (hoặc chạm vào nhân vật / bóng thoại để nghe câu mới ngay).
+  - Kho **96 câu thoại không lặp (32 câu/nhân vật)** pha trộn mẹo Tử Vi / Kinh Dịch / Thần Số Học, cà khịa vui đời thường & BĐS Đồ Sơn; riêng nhân vật LGBT mở màn bằng câu *"Mấy bà có biết quê tui ở Xì Gòn hông dzị? 🤪💅🌴"* cùng 31 câu thoại cực hài hước.
 
 ### Các hướng có thể triển khai tiếp theo yêu cầu anh (`[ ]`)
 - `[ ]` Bổ sung hiệu ứng âm thanh vui nhộn nhẹ (tiếng pháo nổ / tiếng lắc xu, có nút bật/tắt) nếu anh muốn.
