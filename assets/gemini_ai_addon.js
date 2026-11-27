@@ -242,6 +242,18 @@
     }
   }
 
+  async function parseJsonSafe(res) {
+    const raw = await res.text();
+    try {
+      return JSON.parse(raw);
+    } catch (_) {
+      if (res.status === 504 || raw.includes("FUNCTION_INVOCATION_TIMEOUT") || raw.includes("An error occurred")) {
+        throw new Error("Máy chủ phản hồi quá thời gian chờ (Timeout). Hãy thử lại hoặc chọn model Gemini 3.5 Flash-Lite siêu nhanh!");
+      }
+      throw new Error(`Phản hồi máy chủ không hợp lệ (HTTP ${res.status}): ${raw.slice(0, 120)}`);
+    }
+  }
+
   async function runGeminiInterpret() {
     const curState = getStudioState();
     if (!curState) {
@@ -268,6 +280,8 @@
 
     AI_STATE.loading = true;
     AI_STATE.error = "";
+    AI_STATE.markdown = "";
+    AI_STATE.metaInfo = null;
     AI_STATE.elapsed = 0;
     mountGeminiCard();
 
@@ -286,10 +300,12 @@
       const headers = { "Content-Type": "application/json" };
       if (userApiKey) headers["X-Gemini-Api-Key"] = userApiKey;
 
-      const res = await fetch("/api/interpret", {
+      // Bước 1: Chuẩn bị prompt & chữ ký HMAC siêu tốc (< 80ms trên Python)
+      const prepRes = await fetch("/api/interpret", {
         method: "POST",
         headers,
         body: JSON.stringify({
+          action: "prepare",
           payload: cleanPayload,
           mode: AI_STATE.mode,
           focus_question: focusQuestion,
@@ -297,12 +313,105 @@
           access_code: accessCode
         })
       });
-      const json = await res.json();
-      if (!json.ok) {
-        AI_STATE.error = json.error || "Có lỗi xảy ra khi gọi Gemini API.";
-      } else {
-        AI_STATE.markdown = json.data.markdown || "";
-        AI_STATE.metaInfo = json.data;
+      const prepJson = await parseJsonSafe(prepRes);
+      if (!prepJson.ok) {
+        AI_STATE.error = prepJson.error || "Không thể khởi tạo phiên luận giải AI.";
+        return;
+      }
+
+      const prepData = prepJson.data || {};
+
+      // Bước 2: Thử gọi Vercel Edge Streaming (/api/interpret_edge) để stream chữ trực tiếp & không bao giờ bị Timeout!
+      let usedEdgeStream = false;
+      try {
+        const edgeRes = await fetch("/api/interpret_edge", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(prepData)
+        });
+
+        const ct = (edgeRes.headers.get("content-type") || "").toLowerCase();
+        if (edgeRes.ok && ct.includes("text/event-stream") && edgeRes.body) {
+          usedEdgeStream = true;
+          const reader = edgeRes.body.getReader();
+          const decoder = new TextDecoder();
+          let buf = "";
+          let lastRenderMs = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            const lines = buf.split(/\r?\n/);
+            buf = lines.pop() || "";
+
+            for (const ln of lines) {
+              const trimmed = ln.trim();
+              if (!trimmed.startsWith("data:")) continue;
+              const rawEvt = trimmed.slice(5).trim();
+              if (!rawEvt) continue;
+              let evt = null;
+              try { evt = JSON.parse(rawEvt); } catch (_) { continue; }
+              if (!evt) continue;
+
+              if (evt.type === "meta") {
+                AI_STATE.metaInfo = {
+                  model_used: evt.model_used || AI_STATE.model,
+                  fallback_used: Boolean(evt.fallback_used),
+                  key_source: evt.key_source || "server_free",
+                  elapsed_sec: AI_STATE.elapsed
+                };
+              } else if (evt.type === "chunk" && evt.text) {
+                AI_STATE.markdown += evt.text;
+                const now = Date.now();
+                if (now - lastRenderMs > 140) {
+                  lastRenderMs = now;
+                  if (AI_STATE.metaInfo) {
+                    AI_STATE.metaInfo.elapsed_sec = Math.round(((now - startMs) / 1000) * 10) / 10;
+                  }
+                  mountGeminiCard();
+                }
+              } else if (evt.type === "done") {
+                if (!AI_STATE.metaInfo) AI_STATE.metaInfo = {};
+                AI_STATE.metaInfo.elapsed_sec = evt.elapsed_sec || Math.round(((Date.now() - startMs) / 1000) * 10) / 10;
+                AI_STATE.metaInfo.usage = evt.usage || {};
+              } else if (evt.type === "error") {
+                AI_STATE.error = evt.error || "Có lỗi khi stream từ Gemini API.";
+              }
+            }
+          }
+        } else if (edgeRes.status !== 404) {
+          const edgeErrJson = await parseJsonSafe(edgeRes);
+          if (edgeErrJson && edgeErrJson.error) {
+            AI_STATE.error = edgeErrJson.error;
+            usedEdgeStream = true;
+          }
+        }
+      } catch (edgeNetErr) {
+        // Nếu đang chạy Localhost không có Edge runtime thì tự động fallback xuống /api/interpret chuẩn
+        usedEdgeStream = false;
+      }
+
+      // Bước 3: Dự phòng cho Localhost Python server (khi không có /api/interpret_edge)
+      if (!usedEdgeStream) {
+        const res = await fetch("/api/interpret", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            payload: cleanPayload,
+            mode: AI_STATE.mode,
+            focus_question: focusQuestion,
+            model: AI_STATE.model,
+            access_code: accessCode
+          })
+        });
+        const json = await parseJsonSafe(res);
+        if (!json.ok) {
+          AI_STATE.error = json.error || "Có lỗi xảy ra khi gọi Gemini API.";
+        } else {
+          AI_STATE.markdown = json.data.markdown || "";
+          AI_STATE.metaInfo = json.data;
+        }
       }
     } catch (err) {
       AI_STATE.error = "Lỗi kết nối máy chủ AI: " + err.message;

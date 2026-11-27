@@ -9,6 +9,8 @@ Kiến trúc Zero-Dependency Python 3 (dùng thuần urllib.request, không cầ
 """
 
 from __future__ import annotations
+import hashlib
+import hmac
 import json
 import os
 import time
@@ -158,8 +160,10 @@ PHONG CÁCH TRÌNH BÀY:
 
 
 def _compact_payload(payload: Dict[str, Any], mode: str) -> Dict[str, Any]:
-    """Lọc bỏ dữ liệu thừa (như export_html) để tối ưu tốc độ và token."""
-    out: Dict[str, Any] = {"meta": payload.get("meta", {})}
+    """Lọc bỏ dữ liệu thừa (như export_html, time_sync_verification) để tối ưu tốc độ và token."""
+    raw_meta = dict(payload.get("meta") or {})
+    raw_meta.pop("time_sync_verification", None)
+    out: Dict[str, Any] = {"meta": raw_meta}
     if mode in ("full", "tuvi", "all") and "tuvi" in payload:
         out["tuvi"] = payload["tuvi"]
     if mode in ("full", "bazi", "all") and "bazi" in payload:
@@ -262,7 +266,12 @@ def _call_gemini_rest(
         f"{model_id}:generateContent?key={api_key}"
     )
     gen_cfg: Dict[str, Any] = {"maxOutputTokens": 6500}
-    if not model_id.startswith("gemini-3"):
+    if model_id.startswith("gemini-3"):
+        gen_cfg["thinkingConfig"] = {"thinkingLevel": "LOW"}
+    elif model_id.startswith("gemini-2.5"):
+        gen_cfg["temperature"] = 0.65
+        gen_cfg["thinkingConfig"] = {"thinkingBudget": 0}
+    else:
         gen_cfg["temperature"] = 0.65
 
     body = {
@@ -365,6 +374,27 @@ def interpret_with_gemini(
     system_instruction = _build_system_instruction(mode)
     compact_data = _compact_payload(payload, mode)
     user_prompt = _build_user_prompt(compact_data, mode, focus_question)
+
+    # Chế độ "prepare": Trả siêu tốc (< 80ms) gói prompt đã ký HMAC để Vercel Edge Function stream SSE không bao giờ timeout!
+    if str(req_data.get("action", "")).strip().lower() == "prepare":
+        ts = int(time.time())
+        sig = ""
+        if not using_byok:
+            sys_h = hashlib.sha256(system_instruction.encode("utf-8")).hexdigest()
+            usr_h = hashlib.sha256(user_prompt.encode("utf-8")).hexdigest()
+            msg = f"{ts}:{mode}:{sys_h}:{usr_h}".encode("ascii")
+            sig = hmac.new(api_key.encode("utf-8"), msg, hashlib.sha256).hexdigest()
+        return {
+            "prepared": True,
+            "mode": mode,
+            "primary_model": primary_model,
+            "models_to_try": models_to_try,
+            "system_instruction": system_instruction,
+            "user_prompt": user_prompt,
+            "using_byok": using_byok,
+            "ts": ts,
+            "sig": sig,
+        }
 
     t0 = time.time()
     last_error = ""
